@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/19 13:28:53 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/19 15:33:59 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Wextra -Werror -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Wextra -Werror -I $(LIBFT_DIR)
 RM			= rm -f
 
 # Libft
@@ -34,7 +34,8 @@ LIBFT_DIR	= libft
 LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 
 # Source / OBJ files / Includes
-SRC 		= ./src/main.c
+SRC 		= ./src/main.c ./src/envp_tools.c \
+			./src/list_tools.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 
@@ -59,6 +60,7 @@ clean:
 fclean:		clean 
 	@echo "$(GREEN)Deleting minishell... $(DEF_COLOR)"
 	$(RM) $(NAME) $(LIBFT_LIB)
+	@make fclean -C $(LIBFT_DIR) --no-print-directory
 	@echo "$(GREEN)CLEAR $(DEF_COLOR)"
 
 re: 		fclean all
