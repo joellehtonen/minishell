@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/19 11:00:24 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/19 13:28:53 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,11 +26,15 @@ NAME		= minishell
 
 # Compiler
 CC 			= cc
-CFLAGS		= -Wall -Wextra -Werror -lpthread
+CFLAGS		= -Wall -Wextra -Werror -I $(LIBFT_DIR)
 RM			= rm -f
 
+# Libft
+LIBFT_DIR	= libft
+LIBFT_LIB	= $(LIBFT_DIR)/libft.a
+
 # Source / OBJ files / Includes
-SRC 		= 
+SRC 		= ./src/main.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 
@@ -41,16 +45,20 @@ all:		$(NAME)
 	$(CC) $(CFLAGS) $(INCLUDE) $^ -c -o $@
 
 $(NAME):	$(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE) -o $(NAME)
+	@echo "$(GREEN)Compiling libft... $(DEF_COLOR)"
+	@make -C $(LIBFT_DIR)  --no-print-directory		# make libft
+	@cp $(LIBFT_LIB) $(NAME)	# copy libft to current
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)SUCCESS, MINISHELL IS READY $(DEF_COLOR)"
 
 clean:
 	@echo "$(GREEN)Deleting object files... $(DEF_COLOR)"
 	$(RM) $(OBJ)
+	@make clean -C $(LIBFT_DIR) --no-print-directory
 
-fclean:		clean
+fclean:		clean 
 	@echo "$(GREEN)Deleting minishell... $(DEF_COLOR)"
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT_LIB)
 	@echo "$(GREEN)CLEAR $(DEF_COLOR)"
 
 re: 		fclean all
