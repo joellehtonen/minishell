@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/20 13:23:56 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:53:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,18 @@ static void	argc_check(int argc)
 
 static void	printing_tests(t_shell shell)
 {
+	printf("Our ENVP\n");
 	while (shell.envp_copy)
 	{
 		printf("%s\n", shell.envp_copy->line);
 		shell.envp_copy = shell.envp_copy->next;
 	}
+	printf("\n\n\n\nOur PATH divided into nodes\n");
 	while (shell.path)
 	{
 		printf("%s\n", shell.path->line);
 		shell.path = shell.path->next;
 	}
+	printf("\n\n\n\nExtracted username\n");
 	printf("%s\n", shell.uname);
 }
