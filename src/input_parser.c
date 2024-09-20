@@ -6,14 +6,20 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/20 13:53:16 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/20 15:16:44 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void input_parser(t_shell *shell)
+void tokenize_input(t_shell *shell)
 {
-	if (check_if_even_chars(shell) == false); // MAKE LATER. checks if there is an even amount of quotes, brackets, etc. OR Maybe can be done later too?
-		return ;
+	int	index;
+
+	index = 0;
+	while (shell->user_input)
+	{
+		index++;
+	}
+	// check if there is an even amount of quotes, brackets, etc
 }
