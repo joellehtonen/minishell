@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/19 15:31:39 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:02:38 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ int	main(int argc, char *argv[], char *envp[])
 	
 	(void)argv;
 	argc_check(argc);
+	ft_memset(&shell, 0, sizeof(t_shell));
 	if (copy_envp(&shell.envp_copy, envp) == 1)
 	{
 		perror("Malloc failed");
 		return (1);
 	}
 	printf("%s\n", shell.envp_copy->line);
+	shell.exit_code = read_input(&shell);
+	
 /* while (shell.envp_copy)
 	{
 		printf("%s\n", shell.envp_copy->line);
