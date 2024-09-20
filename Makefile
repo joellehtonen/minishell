@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/19 15:33:59 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/20 14:27:14 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 
 # Source / OBJ files / Includes
 SRC 		= ./src/main.c ./src/envp_tools.c \
-			./src/list_tools.c
+			./src/list_tools.c ./src/ft_split_list.c \
+			./src/read_input.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 
