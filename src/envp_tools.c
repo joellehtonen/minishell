@@ -6,45 +6,95 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:43:33 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/19 15:31:01 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:22:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	count_envp(char *envp[]);
+static int	add_envp(t_envp **envp_copy);
 
-int copy_envp(t_envp **envp_copy, char *envp[])
+static int	copy_path(t_envp **path, t_envp *envp_copy);
+
+static int	copy_uname(char **uname, t_envp *envp_copy);
+
+int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 {
 	int		i;
 	t_envp	*new;
 
-	//(void)envp_copy;
-	//(void)envp;
+	if (envp == NULL || envp[0] == NULL)
+		return (add_envp(envp_copy));
 	i = 0;
-	envp_copy = (t_envp **)malloc((count_envp(envp) + 1) * sizeof(t_envp));
+	*envp_copy = NULL;
 	while (envp[i])
 	{
 		new = ft_lstnew_ms(envp[i]);
-		//printf("%s\n", new->line);
 		if (new == NULL)
 		{
 			//free_lists(...);
 			return(1);
 		}
 		ft_lstadd_back_ms(envp_copy, new);
-		//printf("%s\n", (*envp_copy)->line);
 		i++;
 	}
+	if (copy_path(&shell->path, *envp_copy) == 1)
+		return (1); // 
+	return (copy_uname(&shell->uname, *envp_copy));
+}
+
+static int	add_envp(t_envp **envp_copy)
+{
+	t_envp	*new;
+	
+	*envp_copy = NULL;
+	new = ft_lstnew_ms(getenv("HOME"));
+	if (new == NULL)
+	{
+		//free_lists(...);
+		return(1);
+	}
+	ft_lstadd_back_ms(envp_copy, new);
+	new = ft_lstnew_ms(getenv("PATH"));
+	if (new == NULL)
+	{
+		//free_lists(...);
+		return(1);
+	}
+	ft_lstadd_back_ms(envp_copy, new);
+	new = ft_lstnew_ms(getenv("USER"));
+	if (new == NULL)
+	{
+		//free_lists(...);
+		return(1);
+	}
+	ft_lstadd_back_ms(envp_copy, new);
 	return (0);
 }
 
-static int	count_envp(char *envp[])
+static int	copy_path(t_envp **path, t_envp *envp_copy)
 {
-	int		count;
-	
-	count = 0;
-	while (envp[count])
-		count++;
-	return (count);
+	while (envp_copy)
+	{
+		if (ft_strncmp(envp_copy->line, "PATH", 4) == 0)
+			return (ft_split_list(path, envp_copy->line + 5, ':'));
+		envp_copy = envp_copy->next;
+	}
+	return (1);
+}
+
+static int	copy_uname(char **uname, t_envp *envp_copy)
+{
+	while (envp_copy)
+	{
+		if (ft_strncmp(envp_copy->line, "USER", 4) == 0)
+		{
+			*uname = ft_substr(envp_copy->line, 5, ft_strlen(envp_copy->line + 5));
+			if (*uname == NULL)
+				return (1);
+			return (0);
+		}
+		envp_copy = envp_copy->next;
+	}
+	return (1);
 }

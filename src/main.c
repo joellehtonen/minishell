@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/19 15:31:39 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:23:56 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,20 @@
 
 static void	argc_check(int argc);
 
+static void	printing_tests(t_shell shell);
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_shell	shell;
 	
 	(void)argv;
 	argc_check(argc);
-	if (copy_envp(&shell.envp_copy, envp) == 1)
+	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
 	{
 		perror("Malloc failed");
 		return (1);
 	}
-	printf("%s\n", shell.envp_copy->line);
-/* while (shell.envp_copy)
-	{
-		printf("%s\n", shell.envp_copy->line);
-		shell.envp_copy = shell.envp_copy->next;
-	} */
-/* 	int i = 0;
-	while (envp[i])
-		printf("%s\n", envp[i++]); */
+	printing_tests(shell);
 	return (0);
 }
 
@@ -46,4 +40,19 @@ static void	argc_check(int argc)
 		printf("No extra arguments needed\n");
 		exit(1);
 	}
+}
+
+static void	printing_tests(t_shell shell)
+{
+	while (shell.envp_copy)
+	{
+		printf("%s\n", shell.envp_copy->line);
+		shell.envp_copy = shell.envp_copy->next;
+	}
+	while (shell.path)
+	{
+		printf("%s\n", shell.path->line);
+		shell.path = shell.path->next;
+	}
+	printf("%s\n", shell.uname);
 }
