@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/20 14:14:42 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/20 14:16:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("%s\n", shell.envp_copy->line);
 	shell.exit_code = read_input(&shell);
 	// adding stuff to test
+	// adding stuff
 	
 /* while (shell.envp_copy)
 	{
