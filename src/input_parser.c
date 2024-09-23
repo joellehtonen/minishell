@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/23 11:37:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:57:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void tokenize_input(t_shell *shell)
 	{
 		if (shell->user_input[index] == ' ') // add other white spaces as well, maybe define in the header
 			index++;
+		if (isalpha(shell->user_input[index]) == true)
 		
 		index++;
 	}
-	// check if there is an even amount of quotes, brackets, etc
 }
