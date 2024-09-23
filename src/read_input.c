@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/23 13:14:01 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:48:44 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,21 @@
 
 int read_input(t_shell *shell)
 {
+	char	*prompt;
+	
+	shell->pwd = ft_strdup("~");
 	while (true) 
 	{
-		shell->user_input = readline("Our_shell: ");
+		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
+		shell->user_input = readline(prompt);
+		if (builtins(shell) == 1) // for testing purposes
+		{
+			//free_and_exit();
+		}
 		//if (tokenize_input(shell) == true)
 		// 	shell->exit_code = execute(shell->token_pointer); // MAKE LATER
 		// add_history(shell->user_input);
+		free(prompt);
 	}
 	free(shell->user_input); // replace with custom free function?
 	return (shell->exit_code);
