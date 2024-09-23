@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/23 11:57:04 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:37:59 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ void input_error_check(t_shell *shell)
 		index++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		free_and_exit(); //error message? bash is waiting for another quote, I believe...
-}
+		free_and_exit(); //error message?
 
 void tokenize_input(t_shell *shell)
 {

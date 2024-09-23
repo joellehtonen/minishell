@@ -6,11 +6,20 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 13:22:47 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 14:41:31 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	ft_print_node_content(t_token *lst)
+{
+	while (lst->next != NULL)
+	{
+		printf("Token: %s\n", lst->line);
+		lst = lst->next;
+	}
+}
 
 void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
