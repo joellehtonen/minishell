@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 11:13:38 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:49:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_envp
 typedef struct	s_token
 {
 	char			*line;
-	int				level;
+	float			level;
 	int				if_command;
 	int				if_argument;
 	struct s_token	*next;
