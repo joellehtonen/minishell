@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:43:33 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/20 14:37:11 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:25:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 	*envp_copy = NULL;
 	while (envp[i])
 	{
-		new = ft_lstnew_ms(envp[i]);
+		new = ft_lstnew_envp(envp[i]);
 		if (new == NULL)
 		{
 			//free_lists(...);
 			return(1);
 		}
-		ft_lstadd_back_ms(envp_copy, new);
+		ft_lstadd_back_envp(envp_copy, new);
 		i++;
 	}
 	if (copy_path(&shell->path, *envp_copy) == 1)
@@ -48,27 +48,27 @@ static int	add_envp(t_envp **envp_copy)
 	t_envp	*new;
 	
 	*envp_copy = NULL;
-	new = ft_lstnew_ms(getenv("HOME"));
+	new = ft_lstnew_envp(getenv("HOME"));
 	if (new == NULL)
 	{
 		//free_lists(...);
 		return(1);
 	}
-	ft_lstadd_back_ms(envp_copy, new);
-	new = ft_lstnew_ms(getenv("PATH"));
+	ft_lstadd_back_envp(envp_copy, new);
+	new = ft_lstnew_envp(getenv("PATH"));
 	if (new == NULL)
 	{
 		//free_lists(...);
 		return(1);
 	}
-	ft_lstadd_back_ms(envp_copy, new);
-	new = ft_lstnew_ms(getenv("USER"));
+	ft_lstadd_back_envp(envp_copy, new);
+	new = ft_lstnew_envp(getenv("USER"));
 	if (new == NULL)
 	{
 		//free_lists(...);
 		return(1);
 	}
-	ft_lstadd_back_ms(envp_copy, new);
+	ft_lstadd_back_envp(envp_copy, new);
 	return (0);
 }
 

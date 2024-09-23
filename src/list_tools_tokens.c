@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_tools.c                                       :+:      :+:    :+:   */
+/*   list_tools_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/19 15:19:25 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:22:47 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	ft_lstadd_back_ms(t_envp **lst, t_envp *new)
+void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
-	t_envp	*temp;
+	t_token	*temp;
 
 	if ((!lst) || (!new))
 		return ;
@@ -22,27 +22,30 @@ void	ft_lstadd_back_ms(t_envp **lst, t_envp *new)
 		*lst = new;
 	else
 	{
-		temp = ft_lstlast_ms(*lst);
+		temp = ft_lstlast_token(*lst);
 		temp->next = new;
 	}
 	return ;
 }
 
-t_envp	*ft_lstnew_ms(char *content)
+t_token	*ft_lstnew_token(char *content)
 {
-	t_envp	*new;
+	t_token	*new;
 
-	new = (t_envp *)malloc(sizeof(*new));
+	new = (t_token *)malloc(sizeof(*new));
 	if (new == NULL)
 		return ((void *) 0);
 	new->line = content;
 	new->next = NULL;
+	new->if_argument = 0;
+	new->if_command = 0;
+	new->level = 0;
 	return (new);
 }
 
-t_envp	*ft_lstlast_ms(t_envp *lst)
+t_token	*ft_lstlast_token(t_token *lst)
 {
-	t_envp	*temp;
+	t_token	*temp;
 
 	if (lst == NULL)
 		return ((void *) 0);

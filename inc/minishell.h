@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 11:49:42 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:24:22 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,14 @@ typedef struct	s_shell
 
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
 int read_input(t_shell *shell);
-void ft_lstadd_back_ms(t_envp **lst, t_envp *new);
-t_envp *ft_lstnew_ms(char *content);
-t_envp *ft_lstlast_ms(t_envp *lst);
 int ft_split_list(t_envp **path, char const *s, char c);
+// list envp functions
+void ft_lstadd_back_envp(t_envp **lst, t_envp *new);
+t_envp *ft_lstnew_envp(char *content);
+t_envp *ft_lstlast_envp(t_envp *lst);
+// list token functions
+void	ft_lstadd_back_token(t_token **lst, t_token *new);
+t_token	*ft_lstnew_token(char *content);
+t_token	*ft_lstlast_token(t_token *lst);
 
 #endif /* MINISHELL_H */

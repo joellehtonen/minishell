@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:12:55 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/20 12:40:01 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/23 13:26:07 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ int ft_split_list(t_envp **path, char const *s, char c)
 				//free_lists(...);
 				return(1);
 			}
-			new = ft_lstnew_ms(temp);
+			new = ft_lstnew_envp(temp);
 			//printf("%s\n", new->line);
 			if (new == NULL)
 			{
 				//free_lists(...);
 				return(1);
 			}
-			ft_lstadd_back_ms(path, new);
+			ft_lstadd_back_envp(path, new);
 			s = s + nextc(s, c);
 		}
 	}
