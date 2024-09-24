@@ -67,6 +67,8 @@ t_token	*ft_lstlast_token(t_token *lst);
 int	builtins(t_shell *shell);
 int	cd_exec(t_shell *shell);
 char *get_pwd(char *home);
+int	too_many_arg_cd(char *input);
+int	only_spaces(char *str);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);

@@ -43,7 +43,7 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/read_input.c \
 			./src/builtins.c \
 			./src/printing_tools.c \
-			./src/exec_cd.c \
+			./src/cd.c \
 			./src/builtins_tools.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"

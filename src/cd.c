@@ -6,8 +6,6 @@ static char	*no_white_spaces(char *str);
 
 static int	count_w_sp(char *str);
 
-static int	only_spaces(char *str);
-
 int	cd_exec(t_shell *shell)
 {
 	char	*old_path;
@@ -15,8 +13,7 @@ int	cd_exec(t_shell *shell)
 	int		len;
 	
 	if (ft_strlen(shell->user_input) == 2 ||\
-	(ft_strlen(shell->user_input) == 3 && ft_strncmp(shell->user_input, "cd ", 3) == 0)) /* ||\
-	ft_strncmp(shell->user_input, "cd ~ ", 5) == 0) */
+	(ft_strlen(shell->user_input) == 3 && ft_strncmp(shell->user_input, "cd ", 3) == 0))
 	{
 		if (chdir(shell->home) == -1)
 		{
@@ -25,11 +22,17 @@ int	cd_exec(t_shell *shell)
 		}
 		return (0);
 	}
-	//new path
-	shell->user_input = no_white_spaces(shell->user_input);
-	//printf("user->input %s\n", shell->user_input);
+	if (too_many_arg_cd(shell->user_input) == 1)
+	{
+		printing("cd", ": too many arguments\n", 2);
+		//free_and_exit();
+		//exit(1); // can add when in child process
+		return (1);
+	}
+	// ------ filtering old path provided by user
 	if (ft_strncmp(shell->user_input, "cd ~", 4) == 0)
 	{
+		shell->user_input = no_white_spaces(shell->user_input);
 		len = ft_strlen(shell->home) + ft_strlen(shell->user_input + 1) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
@@ -60,6 +63,7 @@ int	cd_exec(t_shell *shell)
 			//free_and_exit();
 		}
 		printf("old path - %s\n", old_path);
+		shell->user_input = no_white_spaces(shell->user_input);
 		len = ft_strlen(old_path) + ft_strlen(shell->user_input) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
@@ -99,10 +103,8 @@ static char	*no_white_spaces(char *str)
 	int		new_len;
 
 	str = str + 3;
-	//printf("count_w_sp: %d\n", count_w_sp(str));
 	new_len = ft_strlen(str) - count_w_sp(str);
 	new_str = (char *)malloc((new_len + 1) * sizeof(char));
-	//printf("new_len: %d\n", new_len);
 	while (*str == ' ')
 		str++;
 	while(*str)
@@ -113,15 +115,12 @@ static char	*no_white_spaces(char *str)
 		else
 		{
 			*new_str = *str;
-			//char c = *str;
-			//write(1, &c, 1);
 			str++;
 			new_str++;
 		}
 	}
 	*new_str = '\0';
 	new_str = new_str - new_len;
-	//printf("new_str: %s\n", new_str);
 	return (new_str);
 }
 
@@ -145,16 +144,3 @@ static int	count_w_sp(char *str)
 	}
 	return (count);
 }
-
-static int	only_spaces(char *str)
-{
-	while (*str)
-	{
-		if (*str != ' ')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-//reproduce the error "too many arguments"?
