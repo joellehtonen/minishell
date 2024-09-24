@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 13:24:22 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/24 10:33:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct	s_token
 	float			level;
 	int				if_command;
 	int				if_argument;
+	//int				token_number; do we need the number of tokens? maybe not
 	struct s_token	*next;
 }				t_token;
 
