@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/24 11:26:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:30:19 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct	s_shell
 	t_envp	*path; //username from envp
 	char	*uname; //username from envp
 	char	*pwd; //current location
-	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
+	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input
 	char 	*user_input; //whatever readline reads is saved into this array
 	int		exit_code;
 }				t_shell;
