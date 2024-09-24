@@ -39,7 +39,7 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 		i++;
 	}
 	if (copy_path(&shell->path, *envp_copy) == 1)
-		return (1); // 
+		return (1);
 	return (copy_uname(&shell->uname, *envp_copy));
 }
 
@@ -87,6 +87,13 @@ static int	copy_uname(char **uname, t_envp *envp_copy)
 {
 	while (envp_copy)
 	{
+		if (ft_strncmp(envp_copy->line, "USERNAME", 8) == 0)
+		{
+			*uname = ft_substr(envp_copy->line, 9, ft_strlen(envp_copy->line + 9));
+			if (*uname == NULL)
+				return (1);
+			return (0);
+		}
 		if (ft_strncmp(envp_copy->line, "USER", 4) == 0)
 		{
 			*uname = ft_substr(envp_copy->line, 5, ft_strlen(envp_copy->line + 5));

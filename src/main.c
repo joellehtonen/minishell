@@ -14,6 +14,8 @@
 
 static void	argc_check(int argc);
 
+static void	get_home(t_shell *shell);
+
 static void	printing_tests(t_shell shell);
 
 int	main(int argc, char *argv[], char *envp[])
@@ -23,10 +25,11 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	argc_check(argc);
 	ft_memset(&shell, 0, sizeof(t_shell));
+	get_home(&shell);
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
 	{
-		perror("Malloc failed");
-		return (1);
+		perror("Malloc failed XXX");
+		//free_and_exit();
 	}
 	shell.exit_code = read_input(&shell);
 	printing_tests(shell); // for testing purposes
@@ -40,6 +43,21 @@ static void	argc_check(int argc)
 		printf("Correct input to start the shell: \n");
 		printf("./minishell\n");
 		printf("No extra arguments needed\n");
+		exit(1);
+	}
+}
+
+static void	get_home(t_shell *shell)
+{
+	shell->home = (char *)malloc(B_SIZE * sizeof(char));
+	if (shell->home == NULL)
+	{
+		perror("malloc error");
+		exit(1);
+	}
+	if (getcwd(shell->home, 1024) == NULL)
+	{
+		perror("getcwd error");
 		exit(1);
 	}
 }

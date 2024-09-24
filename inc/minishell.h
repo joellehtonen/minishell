@@ -43,9 +43,10 @@ typedef struct	s_token
 typedef struct	s_shell
 {
 	t_envp	*envp_copy;
-	t_envp	*path; //username from envp
-	char	*uname; //username from envp
+	t_envp	*path; //PATH from envp
+	char	*uname; //USER from envp
 	char	*pwd; //current location
+	char	*home; //home location of minishell
 	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
 	char 	*user_input; //whatever readline reads is saved into this array
 	int		exit_code;
@@ -64,6 +65,8 @@ t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
 // builtin functions
 int	builtins(t_shell *shell);
+int	cd_exec(t_shell *shell);
+char *get_pwd(char *home);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
