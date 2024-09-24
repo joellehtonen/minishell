@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/23 13:19:18 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/09/23 15:33:44 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= gcc
-CFLAGS		= -ggdb3 -Wall -Wextra -Werror -I $(LIBFT_DIR) -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+CC 			= cc
+CFLAGS		= -w -Wall -Wextra -Werror -I $(LIBFT_DIR) -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
 RM			= rm -f
 
 # Libft
@@ -38,8 +38,10 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/list_tools_envps.c \
 			./src/list_tools_tokens.c \
 			./src/ft_split_list.c \
-			./src/read_input.c
-			
+			./src/str_join_four.c \
+			./src/read_input.c \
+			./src/builtins.c \
+			./src/printing_tools.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 

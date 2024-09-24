@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/24 11:18:13 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/24 11:25:46 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	}
 	shell.exit_code = read_input(&shell);
-	printing_tests(shell);
+	printing_tests(shell); // for testing purposes
 	return (0);
 }
 
