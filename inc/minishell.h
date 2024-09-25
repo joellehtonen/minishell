@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 11:18:25 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:29:41 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct	s_shell
 	char	*pwd; //current location
 	char	*home; //HOME from envp
 	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
-	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input
 	char 	*user_input; //whatever readline reads is saved into this array
 	int		exit_code;
 }				t_shell;
@@ -68,6 +67,7 @@ t_envp *ft_lstlast_envp(t_envp *lst);
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
+void	print_node(t_token *lst);
 // builtin functions
 int	builtins(t_shell *shell);
 int	cd_exec(t_shell *shell);

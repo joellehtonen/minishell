@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/24 11:26:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:30:57 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ void input_error_check(t_shell *shell)
 	index = 0;
 	single_quotes = 0;
 	double_quotes = 0;
-	if (ft_strlen(shell->user_input == 0))
-		free_and_exit(); // do we need an error message?
+	// if (ft_strlen(shell->user_input) == 0)
+	// 	free_and_exit(); // do we need an error message?
 	while (shell->user_input)
 	{
-		if (shell->user_input == '\'') // what if quote is inside a string? can these be condensed into one quote variable?
+		if (shell->user_input[index] == '\'') // what if quote is inside a string? can these be condensed into one quote variable?
 			single_quotes++;
-		if (shell->user_input == '\"')
+		if (shell->user_input[index] == '\"')
 			double_quotes++;
 		// some checks about pipes and redirects?
 		index++;
 	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		free_and_exit(); // error message?
+	// if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+	// 	free_and_exit(); // error message?
 }
 
 int isquote(char character)
@@ -72,10 +72,10 @@ void tokenize_input(t_shell *shell)
 			end++;
 		}
 		end--;
-		new = ft_lstnew_token('0');
+		new = ft_lstnew_token(NULL);
 		new->line = malloc(sizeof(char) * (end - start + 1));
-		if (new->line == NULL)
-			free_and_exit(shell); // DO THIS LATER
+		// if (new->line == NULL)
+		// 	free_and_exit(shell); // DO THIS LATER
 		while (start != end)
 			new->line[token_index++] = shell->user_input[start++];
 		new->line[token_index] = '\0';

@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/25 10:36:14 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/25 11:23:46 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/builtins.c \
 			./src/printing_tools.c \
 			./src/cd.c \
+			./src/input_parser.c \
 			./src/builtins_tools.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
