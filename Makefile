@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/23 15:33:44 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/25 10:36:14 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ NAME		= minishell
 
 # Compiler
 CC 			= cc
-CFLAGS		= -w -Wall -Wextra -Werror -I $(LIBFT_DIR) -lreadline -L ~/.brew/opt/readline/lib -I ~/.brew/opt/readline/include
+CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+
 RM			= rm -f
 
 # Libft
@@ -41,7 +42,9 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/str_join_four.c \
 			./src/read_input.c \
 			./src/builtins.c \
-			./src/printing_tools.c
+			./src/printing_tools.c \
+			./src/cd.c \
+			./src/builtins_tools.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 
@@ -55,7 +58,7 @@ $(NAME):	$(OBJ)
 	@echo "$(GREEN)Compiling libft... $(DEF_COLOR)"
 	@make -C $(LIBFT_DIR)  --no-print-directory		# make libft
 	@cp $(LIBFT_LIB) $(NAME)	# copy libft to current
-	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) $(INCLUDE) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -lreadline $(LIBFT_LIB) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)SUCCESS, MINISHELL IS READY $(DEF_COLOR)"
 
 clean:

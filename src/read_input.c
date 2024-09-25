@@ -16,9 +16,11 @@ int read_input(t_shell *shell)
 {
 	char	*prompt;
 	
-	shell->pwd = ft_strdup("~");
+	shell->pwd = get_pwd(shell->home);
 	while (true) 
 	{
+		free(shell->pwd);
+		shell->pwd = get_pwd(shell->home);
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 		shell->user_input = readline(prompt);
 		if (builtins(shell) == 1) // for testing purposes
