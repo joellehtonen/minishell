@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/25 08:37:45 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/09/25 09:40:59 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
@@ -12,8 +22,17 @@ int	cd_exec(t_shell *shell)
 	char	*new_path;
 	int		len;
 	
-	if (ft_strlen(shell->user_input) == 2 ||\
-	(ft_strlen(shell->user_input) == 3 && ft_strncmp(shell->user_input, "cd ", 3) == 0))
+	if (too_many_arg_cd(shell->user_input) == 1)
+	{
+		printing("cd", ": too many arguments\n", "", 2);
+		//free_and_exit();
+		//exit(1); // can add when in child process
+		return (1);
+	}
+
+	shell->user_input = no_white_spaces(shell->user_input);
+	
+	if (ft_strlen(shell->user_input) == 0)
 	{
 		if (chdir(shell->home) == -1)
 		{
@@ -22,17 +41,25 @@ int	cd_exec(t_shell *shell)
 		}
 		return (0);
 	}
-	if (too_many_arg_cd(shell->user_input) == 1)
+
+	if (*(shell->user_input) == '/')
 	{
-		printing("cd", ": too many arguments\n", 2);
+		printing("cd: ", shell->user_input, ": No such file or directory\n", 2);
+		//free_and_exit();
+		//exit(127); // can add when in child process
+		return (1);
+	}
+
+	if (is_directory(shell->user_input) == 1)
+	{
+		printing("cd: ", shell->user_input, ": Not a directory\n", 2);
 		//free_and_exit();
 		//exit(1); // can add when in child process
 		return (1);
 	}
-	// ------ filtering old path provided by user
-	if (ft_strncmp(shell->user_input, "cd ~", 4) == 0)
+	
+	if (ft_strncmp(shell->user_input, "~", 1) == 0)
 	{
-		shell->user_input = no_white_spaces(shell->user_input);
 		len = ft_strlen(shell->home) + ft_strlen(shell->user_input + 1) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
@@ -46,11 +73,9 @@ int	cd_exec(t_shell *shell)
 			perror("malloc error");
 			//free_and_exit();
 		}
-		printf("new path - %s\n", new_path);
 	}
 	else
 	{
-			//old path
 		old_path = (char *)malloc(B_SIZE * sizeof(char));
 		if (old_path == NULL)
 		{
@@ -62,8 +87,6 @@ int	cd_exec(t_shell *shell)
 			perror("getcwd error");
 			//free_and_exit();
 		}
-		printf("old path - %s\n", old_path);
-		shell->user_input = no_white_spaces(shell->user_input);
 		len = ft_strlen(old_path) + ft_strlen(shell->user_input) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
@@ -80,14 +103,16 @@ int	cd_exec(t_shell *shell)
 		free(old_path);
 		printf("new path - %s\n", new_path);
 	}
+	
 	if (access(new_path, F_OK) == -1 && errno == ENOENT)
 	{
-		printing(shell->user_input, ": No such file or directory\n", 2);
+		printing("cd: ", shell->user_input, ": No such file or directory\n", 2);
 		free(new_path);
 		//free_and_exit();
 		//exit(127); // can add when in child process
 		return (1);
 	}
+	
 	if (chdir(new_path) == -1)
 	{
     	perror("chdir() error");

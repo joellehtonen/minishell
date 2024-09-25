@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 15:32:42 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 09:17:31 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <signal.h> //for kill and other signals
 # include <stdlib.h> //for exit status and malloc
 # include <errno.h> // for errno (error identifiers)
+# include <fcntl.h> // for open
+
 
 # define B_SIZE 1024
 
@@ -46,7 +48,7 @@ typedef struct	s_shell
 	t_envp	*path; //PATH from envp
 	char	*uname; //USER from envp
 	char	*pwd; //current location
-	char	*home; //home location of minishell
+	char	*home; //HOME from envp
 	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
 	char 	*user_input; //whatever readline reads is saved into this array
 	int		exit_code;
@@ -69,9 +71,10 @@ int	cd_exec(t_shell *shell);
 char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
+int	is_directory(char *path);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
-void printing(char *cmd, char *result, int fd);
+void	printing(char *cmd, char *dest, char *result, int fd);
 
 #endif /* MINISHELL_H */

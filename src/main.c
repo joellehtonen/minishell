@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 15:06:56 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 09:20:14 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	argc_check(int argc);
 
-static void	get_home(t_shell *shell);
-
+/* static void	get_home(t_shell *shell);
+ */
 static void	printing_tests(t_shell shell);
 
 int	main(int argc, char *argv[], char *envp[])
@@ -25,7 +25,6 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	argc_check(argc);
 	ft_memset(&shell, 0, sizeof(t_shell));
-	get_home(&shell);
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
 	{
 		perror("Malloc failed XXX");
@@ -47,7 +46,7 @@ static void	argc_check(int argc)
 	}
 }
 
-static void	get_home(t_shell *shell)
+/* static void	get_home(t_shell *shell)
 {
 	shell->home = (char *)malloc(B_SIZE * sizeof(char));
 	if (shell->home == NULL)
@@ -60,7 +59,7 @@ static void	get_home(t_shell *shell)
 		perror("getcwd error");
 		exit(1);
 	}
-}
+} */
 
 static void	printing_tests(t_shell shell)
 {

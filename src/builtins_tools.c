@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins_tools.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/25 08:37:58 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/09/25 09:40:47 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
@@ -19,6 +29,18 @@ char	*get_pwd(char *home)
 		perror("getcwd error");
 		//free_and_exit();
 	}
+	if (ft_strncmp(pwd, "/", 1) == 0 && ft_strlen(pwd) == 1)
+	{
+		free(pwd);
+		new_pwd = ft_strdup("/");
+		return (new_pwd);
+	}
+	if (ft_strncmp(pwd, "/home", 5) == 0 && ft_strlen(pwd) == 5)
+	{
+		free(pwd);
+		new_pwd = ft_strdup("/home");
+		return (new_pwd);
+	}
 	if (ft_strncmp(pwd, home, 1024) == 0)
 	{
 		free(pwd);
@@ -37,7 +59,6 @@ char	*get_pwd(char *home)
 		pwd++;
 		pwd_move++;
 	}
-	printf("pwd: %s\n", pwd);
 	new_pwd = ft_strjoin("~/", pwd);
 	if (new_pwd == NULL)
 	{
@@ -81,4 +102,20 @@ int	only_spaces(char *str)
 		str++;
 	}
 	return (0);
+}
+
+int	is_directory(char *path)
+{
+	int		fd;
+	char	buffer;
+	ssize_t	result;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (-1);
+	result = read(fd, &buffer, 1);
+	if (result < 0 && errno == EISDIR)
+		return (0);
+	else
+		return (1);
 }

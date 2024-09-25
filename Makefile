@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/23 15:33:44 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/25 08:27:22 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= gcc
-CFLAGS		= -ggdb3 -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= cc
+CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
 
 RM			= rm -f
 
