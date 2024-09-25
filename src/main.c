@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 09:20:14 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:19:12 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static void	argc_check(int argc)
 
 /* static void	get_home(t_shell *shell)
 {
-	shell->home = (char *)malloc(B_SIZE * sizeof(char));
+	shell->home = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (shell->home == NULL)
 	{
 		perror("malloc error");
 		exit(1);
 	}
-	if (getcwd(shell->home, 1024) == NULL)
+	if (getcwd(shell->home, BUFF_SIZE) == NULL)
 	{
 		perror("getcwd error");
 		exit(1);

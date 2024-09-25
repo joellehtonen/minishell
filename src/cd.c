@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 08:37:45 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 09:40:59 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 11:03:33 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,17 @@ int	cd_exec(t_shell *shell)
 		//exit(1); // can add when in child process
 		return (1);
 	}
-
+	
+	if (ft_strlen(shell->user_input) == 2)
+	{
+		if (chdir(shell->home) == -1)
+		{
+    		perror("chdir() error");
+			//free_and_exit();
+		}
+		return (0);
+	}
+	
 	shell->user_input = no_white_spaces(shell->user_input);
 	
 	if (ft_strlen(shell->user_input) == 0)
@@ -76,13 +86,13 @@ int	cd_exec(t_shell *shell)
 	}
 	else
 	{
-		old_path = (char *)malloc(B_SIZE * sizeof(char));
+		old_path = (char *)malloc(BUFF_SIZE * sizeof(char));
 		if (old_path == NULL)
 		{
 			perror("malloc error");
 			//free_and_exit();
 		}
-		if (getcwd(old_path, 1024) == NULL)
+		if (getcwd(old_path, BUFF_SIZE) == NULL)
 		{
 			perror("getcwd error");
 			//free_and_exit();
@@ -101,7 +111,6 @@ int	cd_exec(t_shell *shell)
 			//free_and_exit();
 		}
 		free(old_path);
-		printf("new path - %s\n", new_path);
 	}
 	
 	if (access(new_path, F_OK) == -1 && errno == ENOENT)

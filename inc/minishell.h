@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 09:17:31 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:36:08 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <fcntl.h> // for open
 
 
-# define B_SIZE 1024
+# define BUFF_SIZE 1024
 
 typedef struct	s_envp
 {

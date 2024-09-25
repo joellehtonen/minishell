@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 08:37:58 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 09:40:47 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 10:19:12 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*get_pwd(char *home)
 	char	*new_pwd;
 	int		pwd_move;
 	
-	pwd = (char *)malloc(B_SIZE * sizeof(char));
+	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
 	{
 		perror("malloc error");
 		//free_and_exit();
 	}
-	if (getcwd(pwd, 1024) == NULL)
+	if (getcwd(pwd, BUFF_SIZE) == NULL)
 	{
 		perror("getcwd error");
 		//free_and_exit();
