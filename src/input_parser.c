@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/25 11:30:57 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:18:52 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void input_error_check(t_shell *shell)
-{
-	int	single_quotes;
-	int	double_quotes;
-	int	index;
-	
-	index = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	// if (ft_strlen(shell->user_input) == 0)
-	// 	free_and_exit(); // do we need an error message?
-	while (shell->user_input)
-	{
-		if (shell->user_input[index] == '\'') // what if quote is inside a string? can these be condensed into one quote variable?
-			single_quotes++;
-		if (shell->user_input[index] == '\"')
-			double_quotes++;
-		// some checks about pipes and redirects?
-		index++;
-	}
-	// if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-	// 	free_and_exit(); // error message?
-}
 
 int isquote(char character)
 {
@@ -52,33 +28,36 @@ void tokenize_input(t_shell *shell)
 	int		start;
 	int		end;
 	int		quotes_on;
+	int		token_number;
 	t_token *new;
 
 	start = 0;
+	token_number = 0;
 	quotes_on = false;
-	input_error_check(shell);
 	while (shell->user_input[start] != '\0')
 	{
 		token_index = 0;
 		while (shell->user_input[start] == ' ') // add other white spaces as well, maybe define in the header
 			start++;
 		end = start;
-		while (shell->user_input[end] != ' ' || quotes_on == true)
+		while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
 		{
-			if (isquote(shell->user_input[end] != 0) && quotes_on == false)
+			if (isquote(shell->user_input[end]) != 0 && quotes_on == false)
 				quotes_on = true;
-			if (isquote(shell->user_input[end] != 0) && quotes_on == true)
+			if (isquote(shell->user_input[end]) != 0 && quotes_on == true)
 				quotes_on = false;
 			end++;
 		}
-		end--;
+		//end--;
 		new = ft_lstnew_token(NULL);
 		new->line = malloc(sizeof(char) * (end - start + 1));
-		// if (new->line == NULL)
-		// 	free_and_exit(shell); // DO THIS LATER
+		if (new->line == NULL)
+			free_and_exit(shell); // DO THIS LATER
 		while (start != end)
 			new->line[token_index++] = shell->user_input[start++];
 		new->line[token_index] = '\0';
+		new->token_number = token_number;
+		token_number++;
 		ft_lstadd_back_token(&shell->token_pointer, new);
 		// new->level++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 11:29:41 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:29:57 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct	s_token
 	float			level;
 	int				if_command;
 	int				if_argument;
-	//int				token_number; do we need the number of tokens? maybe not
+	int				token_number; //for error checking at least
 	struct s_token	*next;
 }				t_token;
 
@@ -58,7 +58,9 @@ typedef struct	s_shell
 
 
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
+// reading input
 int read_input(t_shell *shell);
+void input_error_check(t_shell *shell);
 // list envp functions
 void ft_lstadd_back_envp(t_envp **lst, t_envp *new);
 t_envp *ft_lstnew_envp(char *content);
@@ -67,6 +69,8 @@ t_envp *ft_lstlast_envp(t_envp *lst);
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
+void	ft_lstdelone(t_token *lst, void (*del)(void *));
+void	ft_lstclear(t_token **lst, void (*del)(void *));
 void	print_node(t_token *lst);
 // builtin functions
 int	builtins(t_shell *shell);
@@ -75,9 +79,12 @@ char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
 int	is_directory(char *path);
+// parsing functions
+void tokenize_input(t_shell *shell);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void	printing(char *cmd, char *dest, char *result, int fd);
+void free_and_exit(t_shell *shell);
 
 #endif /* MINISHELL_H */

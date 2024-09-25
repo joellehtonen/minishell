@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/25 11:28:56 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:22:05 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void input_error_check(t_shell *shell)
+{
+	int	single_quotes;
+	int	double_quotes;
+	int	index;
+	
+	index = 0;
+	single_quotes = 0;
+	double_quotes = 0;
+	if (ft_strlen(shell->user_input) == 0)
+		free_and_exit(shell); // do we need an error message?
+	while (shell->user_input[index] != '\0')
+	{
+		if (shell->user_input[index] == '\'') // what if quote is inside a string? can these be condensed into one quote variable?
+			single_quotes++;
+		if (shell->user_input[index] == '\"')
+			double_quotes++;
+		// some checks about pipes and redirects?
+		index++;
+	}
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+		free_and_exit(shell); // error message?
+}
 
 int read_input(t_shell *shell)
 {
@@ -23,15 +47,17 @@ int read_input(t_shell *shell)
 		shell->pwd = get_pwd(shell->home);
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 		shell->user_input = readline(prompt);
-		print_node(shell->token_pointer);
 		if (builtins(shell) == 1) // for testing purposes
 		{
 			//free_and_exit();
 		}
-		//if (tokenize_input(shell) == true)
+		input_error_check(shell);
+		tokenize_input(shell);
+		print_node(shell->token_pointer); //for testing
 		// 	shell->exit_code = execute(shell->token_pointer); // MAKE LATER
 		add_history(shell->user_input);
 	}
+	lst_cl
 	free(shell->user_input); // replace with custom free function?
 	return (shell->exit_code);
 }

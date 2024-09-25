@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/25 11:23:46 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/25 12:41:46 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/printing_tools.c \
 			./src/cd.c \
 			./src/input_parser.c \
+			./src/exit.c \
 			./src/builtins_tools.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"

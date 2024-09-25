@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 11:28:21 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:29:36 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 void	print_node(t_token *lst)
 {
-	while (lst->next != NULL)
+	if (lst == NULL)
 	{
-		printf("Token: %s\n", lst->line);
+		printf("The list is empty\n");
+		return ;
+	}
+	while (lst != NULL)
+	{
+		printf("Token: %s, number: %d\n", lst->line, lst->token_number);
 		lst = lst->next;
 	}
 }
@@ -64,4 +69,27 @@ t_token	*ft_lstlast_token(t_token *lst)
 		temp = temp->next;
 	}
 	return (temp);
+}
+
+void	ft_lstdelone(t_token *lst, void (*del)(void *))
+{
+	if (!lst || !del)
+		return ;
+	del(lst->line);
+	free(lst);
+}
+
+void	ft_lstclear(t_token **lst, void (*del)(void *))
+{
+	t_token	*temp;
+
+	if (!lst || !del)
+		return ;
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = temp;
+	}
+	*lst = NULL;
 }
