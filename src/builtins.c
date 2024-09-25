@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:46:57 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 10:52:25 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:41:47 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int echo_exec(char *input);
 
 static int	exit_exec(t_shell *shell);
 
+static int	export_exec(t_envp *envp_copy, char *input);
+
 int	builtins(t_shell *shell)
 {
 	char	*input;
@@ -25,21 +27,22 @@ int	builtins(t_shell *shell)
 	input = shell->user_input;
 	if (ft_strncmp(input, "cd ", 3) == 0 ||\
 		(ft_strncmp(input, "cd", 2) == 0 && ft_strlen(input) == 2))
-		cd_exec(shell);	// int return?
+		return (cd_exec(shell));
 	if (ft_strncmp(input, "exit", 4) == 0 &&\
 		(*(input + 4) == ' ' || *(input + 4) == '\0'))
-		exit_exec(shell);
+		return (exit_exec(shell));
 	/*if (ft_strncmp(shell->user_input, "env ", 4) == 0)
-		env_exec(shell);
-	if (ft_strncmp(shell->user_input, "export ", 7) == 0)
-		export_exec(shell);
-	if (ft_strncmp(shell->user_input, "unset ", 6) == 0)
-		unset_exec(shell); */
+		return (env_exec(shell));*/
+	if (ft_strncmp(input, "export", 6) == 0 &&\
+		(*(input + 6) == ' ' || *(input + 6) == '\0'))
+		return (export_exec(shell->envp_copy, input));
+	/*if (ft_strncmp(shell->user_input, "unset ", 6) == 0)
+		return (unset_exec(shell)); */
 	if (ft_strncmp(input, "echo ", 5) == 0)
-		echo_exec(input);
-	if (ft_strncmp(input, "pwd", 3 &&\
-		(*(input + 3) == ' ' || *(input + 3) == '\0')))
-		pwd_exec();
+		return (echo_exec(input));
+	if (ft_strncmp(input, "pwd", 3) == 0 &&\
+		(*(input + 3) == ' ' || *(input + 3) == '\0'))
+		return (pwd_exec());
 	return (0);
 }
 
@@ -85,4 +88,30 @@ static int	exit_exec(t_shell *shell)
 	(void)shell;
 	//free_and_exit();
 	exit(0);
+}
+
+static int	export_exec(t_envp *envp_copy, char *input)
+{
+	if (*(input + 6) == '\0')
+	{
+		while (envp_copy)
+		{
+			printf("declare -x %s\n", (envp_copy)->line);
+			envp_copy = envp_copy->next;
+		}
+		return (0);
+	}
+	input = input + 7;
+	if (ft_strchr(input, '=') == NULL)
+	{
+		//do we need to handle?
+	}
+	//export to continue...
+	/* while (envp_copy)
+	{
+		if (ft_strncmp(envp_copy->line, "PATH=", 5) == 0)
+			return (ft_split_list(path, envp_copy->line + 5, ':'));
+		envp_copy = envp_copy->next;
+	} */
+	return (0);
 }

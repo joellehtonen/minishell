@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/25 11:28:56 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:18:02 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int read_input(t_shell *shell)
 		shell->pwd = get_pwd(shell->home);
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 		shell->user_input = readline(prompt);
-		print_node(shell->token_pointer);
+		//print_node(shell->token_pointer);
 		if (builtins(shell) == 1) // for testing purposes
 		{
 			//free_and_exit();

@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:43:33 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 09:23:01 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 14:45:42 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 static int	add_envp(t_envp **envp_copy);
 
-static int	copy_path(t_envp **path, t_envp *envp_copy);
-
-static int	copy_uname(char **uname, t_envp *envp_copy);
-
-static int	copy_home(char **home, t_envp *envp_copy);
-
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 {
 	int		i;
 	t_envp	*new;
 
+	(void)shell;
 	if (envp == NULL || envp[0] == NULL)
 		return (add_envp(envp_copy));
 	i = 0;
@@ -76,22 +71,23 @@ static int	add_envp(t_envp **envp_copy)
 	return (0);
 }
 
-static int	copy_path(t_envp **path, t_envp *envp_copy)
+int	copy_path(t_envp **path, t_envp *envp_copy)
 {
 	while (envp_copy)
 	{
-		if (ft_strncmp(envp_copy->line, "PATH", 4) == 0)
+		if (ft_strncmp(envp_copy->line, "PATH=", 5) == 0)
 			return (ft_split_list(path, envp_copy->line + 5, ':'));
 		envp_copy = envp_copy->next;
 	}
-	return (1);
+	*path = NULL;
+	return (0);
 }
 
-static int	copy_home(char **home, t_envp *envp_copy)
+int	copy_home(char **home, t_envp *envp_copy)
 {
 	while (envp_copy)
 	{
-		if (ft_strncmp(envp_copy->line, "HOME", 4) == 0)
+		if (ft_strncmp(envp_copy->line, "HOME=", 5) == 0)
 		{
 			*home = ft_substr(envp_copy->line, 5, ft_strlen(envp_copy->line + 5));
 			if (*home == NULL)
@@ -100,21 +96,22 @@ static int	copy_home(char **home, t_envp *envp_copy)
 		}
 		envp_copy = envp_copy->next;
 	}
-	return (1);
+	*home = NULL;
+	return (0);
 }
 
-static int	copy_uname(char **uname, t_envp *envp_copy)
+int	copy_uname(char **uname, t_envp *envp_copy)
 {
 	while (envp_copy)
 	{
-		if (ft_strncmp(envp_copy->line, "USERNAME", 8) == 0)
+		if (ft_strncmp(envp_copy->line, "USERNAME=", 9) == 0)
 		{
 			*uname = ft_substr(envp_copy->line, 9, ft_strlen(envp_copy->line + 9));
 			if (*uname == NULL)
 				return (1);
 			return (0);
 		}
-		if (ft_strncmp(envp_copy->line, "USER", 4) == 0)
+		if (ft_strncmp(envp_copy->line, "USER=", 5) == 0)
 		{
 			*uname = ft_substr(envp_copy->line, 5, ft_strlen(envp_copy->line + 5));
 			if (*uname == NULL)
@@ -123,5 +120,6 @@ static int	copy_uname(char **uname, t_envp *envp_copy)
 		}
 		envp_copy = envp_copy->next;
 	}
-	return (1);
+	*uname = NULL;
+	return (0);
 }

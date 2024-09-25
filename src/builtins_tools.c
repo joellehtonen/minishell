@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 08:37:58 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 10:19:12 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 15:07:16 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ char	*get_pwd(char *home)
 		new_pwd = ft_strdup("/home");
 		return (new_pwd);
 	}
+	if (home == NULL)
+	{
+		return (pwd);
+	}
 	if (ft_strncmp(pwd, home, 1024) == 0)
 	{
 		free(pwd);
@@ -59,6 +63,8 @@ char	*get_pwd(char *home)
 		pwd++;
 		pwd_move++;
 	}
+	if (pwd_move <= 1)
+		return (pwd - pwd_move);
 	new_pwd = ft_strjoin("~/", pwd);
 	if (new_pwd == NULL)
 	{
@@ -112,7 +118,7 @@ int	is_directory(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return (1);
 	result = read(fd, &buffer, 1);
 	if (result < 0 && errno == EISDIR)
 		return (0);

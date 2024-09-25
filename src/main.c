@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 11:19:03 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/25 13:18:37 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	argc_check(argc);
 	ft_memset(&shell, 0, sizeof(t_shell));
+	shell.user_input = NULL;
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
 	{
-		perror("Malloc failed XXX");
+		perror("Malloc failed");
 		//free_and_exit();
 	}
 	shell.exit_code = read_input(&shell);
