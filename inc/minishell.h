@@ -6,11 +6,9 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 14:29:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:51:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -25,8 +23,12 @@
 # include <errno.h> // for errno (error identifiers)
 # include <fcntl.h> // for open
 
-
-# define BUFF_SIZE 1024
+enum e_separators
+{
+	SPACES = 1,
+	REDIR,
+	PIPE
+};
 
 typedef struct	s_envp
 {
@@ -69,8 +71,8 @@ t_envp *ft_lstlast_envp(t_envp *lst);
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
-void	ft_lstdelone(t_token *lst, void (*del)(void *));
-void	ft_lstclear(t_token **lst, void (*del)(void *));
+void	delete_one_token(t_token *lst);
+void	delete_all_tokens(t_token **lst);
 void	print_node(t_token *lst);
 // builtin functions
 int	builtins(t_shell *shell);
@@ -81,6 +83,8 @@ int	only_spaces(char *str);
 int	is_directory(char *path);
 // parsing functions
 void tokenize_input(t_shell *shell);
+int isseparator(char c);
+int isquote(char c);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);

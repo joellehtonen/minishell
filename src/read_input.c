@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/25 14:22:05 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/25 16:32:05 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int read_input(t_shell *shell)
 		print_node(shell->token_pointer); //for testing
 		// 	shell->exit_code = execute(shell->token_pointer); // MAKE LATER
 		add_history(shell->user_input);
+		delete_all_tokens(&shell->token_pointer);
 	}
-	lst_cl
 	free(shell->user_input); // replace with custom free function?
 	return (shell->exit_code);
 }
