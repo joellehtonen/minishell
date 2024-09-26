@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/25 16:51:58 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:59:50 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int isquote(char c)
 	if (c == '\"')
 		return (2);
 	else
-		return (0);
+		return (false);
 }
 
 void tokenize_input(t_shell *shell)
@@ -41,30 +41,33 @@ void tokenize_input(t_shell *shell)
 	int		end;
 	int		quotes_on;
 	int		token_number;
+	int		sep_met;
 	t_token *new;
 
 	start = 0;
 	token_number = 0;
 	quotes_on = false;
+	sep_met = false;
 	while (shell->user_input[start] != '\0')
 	{
 		token_index = 0;
-		while (shell->user_input[start] == ' ') // add other white spaces as well, maybe define in the header
+		while (isseparator(shell->user_input[start]) == SPACES) //should we skip other separators as well?
 			start++;
 		end = start;
-		while (shell->user_input[end] != '\0' && (isseparator(shell->user_input[end]) == false || quotes_on == true))
-		//while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
+		//while (shell->user_input[end] != '\0' && (isseparator(shell->user_input[end]) == false || quotes_on == true))
+		while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
 		{
-			if (isquote(shell->user_input[end]) != 0)
+			if (isquote(shell->user_input[end]) != false)
+				quotes_on = !quotes_on;
+			if (isseparator(shell->user_input[end]) != false && quotes_on == false)
 			{
-				if (quotes_on == false)
-					quotes_on = true;
-				else
-					quotes_on = false;
+				if (sep_met == true)
+					end++;
+				sep_met = !sep_met;
+				break ;
 			}
 			end++;
 		}
-		//end--;
 		new = ft_lstnew_token(NULL);
 		new->line = malloc(sizeof(char) * (end - start + 1));
 		if (new->line == NULL)
@@ -76,5 +79,6 @@ void tokenize_input(t_shell *shell)
 		token_number++;
 		ft_lstadd_back_token(&shell->token_pointer, new);
 		// new->level++;
+		//print_node(shell->token_pointer); //for testing
 	}
 }

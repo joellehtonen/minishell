@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 16:51:41 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/26 10:03:32 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdlib.h> //for exit status and malloc
 # include <errno.h> // for errno (error identifiers)
 # include <fcntl.h> // for open
+
+# define BUFF_SIZE 1024
 
 enum e_separators
 {
@@ -55,7 +57,7 @@ typedef struct	s_shell
 	char	*home; //HOME from envp
 	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
 	char 	*user_input; //whatever readline reads is saved into this array
-	int		exit_code;
+	int		exit_code; 
 }				t_shell;
 
 
