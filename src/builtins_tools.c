@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins_tools.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 08:37:58 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 15:07:16 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+//42 header
 
 #include "../inc/minishell.h"
 
@@ -124,4 +114,38 @@ int	is_directory(char *path)
 		return (0);
 	else
 		return (1);
+}
+
+int	update_pwd(t_envp **envp_copy)
+{
+	t_envp	*temp;
+	char	*export_old;
+	char	*pwd;
+	char	*export_new;
+
+	temp = *envp_copy;
+	while (*envp_copy)
+	{
+		if (ft_strncmp((*envp_copy)->line, "PWD=", 4) == 0)
+		{
+			export_old = ft_strjoin("export OLD", (*envp_copy)->line);
+			export_exec(&temp, export_old);
+		}
+		*envp_copy = (*envp_copy)->next;
+	}
+	*envp_copy = temp;
+	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
+	if (pwd == NULL)
+	{
+		perror("malloc error");
+		//free_and_exit();
+	}
+	if (getcwd(pwd, BUFF_SIZE) == NULL)
+	{
+		perror("getcwd error");
+		//free_and_exit();
+	}
+	export_new = ft_strjoin("export PWD=", pwd);
+	export_exec(envp_copy, export_new);
+	return (0);
 }

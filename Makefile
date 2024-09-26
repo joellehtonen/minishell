@@ -42,10 +42,11 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/str_join_four.c \
 			./src/read_input.c \
 			./src/builtins.c \
+			./src/builtins_extra.c \
+			./src/builtins_tools.c \
 			./src/printing_tools.c \
 			./src/cd.c \
-			./src/input_parser.c \
-			./src/builtins_tools.c
+			./src/input_parser.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 

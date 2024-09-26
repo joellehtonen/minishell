@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   envp_tools.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 13:43:33 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 14:45:42 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+//42 header
 
 #include "../inc/minishell.h"
-
-static int	add_envp(t_envp **envp_copy);
 
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 {
@@ -20,8 +8,8 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 	t_envp	*new;
 
 	(void)shell;
-	if (envp == NULL || envp[0] == NULL)
-		return (add_envp(envp_copy));
+	if (envp == NULL)
+		return (1);
 	i = 0;
 	*envp_copy = NULL;
 	while (envp[i])
@@ -40,35 +28,6 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 	if (copy_home(&shell->home, *envp_copy) == 1)
 		return (1);
 	return (copy_uname(&shell->uname, *envp_copy));
-}
-
-static int	add_envp(t_envp **envp_copy)
-{
-	t_envp	*new;
-	
-	*envp_copy = NULL;
-	new = ft_lstnew_envp(getenv("HOME"));
-	if (new == NULL)
-	{
-		//free_lists(...);
-		return(1);
-	}
-	ft_lstadd_back_envp(envp_copy, new);
-	new = ft_lstnew_envp(getenv("PATH"));
-	if (new == NULL)
-	{
-		//free_lists(...);
-		return(1);
-	}
-	ft_lstadd_back_envp(envp_copy, new);
-	new = ft_lstnew_envp(getenv("USER"));
-	if (new == NULL)
-	{
-		//free_lists(...);
-		return(1);
-	}
-	ft_lstadd_back_envp(envp_copy, new);
-	return (0);
 }
 
 int	copy_path(t_envp **path, t_envp *envp_copy)

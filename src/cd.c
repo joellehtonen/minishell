@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 08:37:45 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 15:02:04 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+//42 header
 
 #include "../inc/minishell.h"
 
@@ -51,6 +41,22 @@ int	cd_exec(t_shell *shell)
 		{
 			perror("chdir() error");
 			//free_and_exit();
+		}
+		else
+		{
+			/* export_path = ft_strjoin("export PWD=", shell->home);
+			if (export_path == NULL)
+			{
+				perror("malloc error");
+				//free_and_exit();
+			}
+			if (export_exec(&shell->envp_copy, export_path) == 1)
+			{
+				//free_and_exit(); // free(export_path)?
+				return (1);
+			}
+			free(export_path); */
+			update_pwd(&shell->envp_copy);
 		}
 		return (0);
 	}
@@ -134,13 +140,30 @@ int	cd_exec(t_shell *shell)
 		//exit(1); // can add when in child process
 		return (1);
 	}
-	
+	//set pwd in env
 	if (chdir(new_path) == -1)
 	{
     	perror("chdir() error");
+		free(new_path);
 		//free_and_exit();
 	}
-	free(new_path);
+	else
+	{
+		/* export_path = ft_strjoin("export PWD=", new_path);
+		if (export_path == NULL)
+		{
+			perror("malloc error");
+			//free_and_exit();
+		}
+		if (export_exec(&shell->envp_copy, export_path) == 1)
+		{
+			//free_and_exit(); // free(export_path)?
+			return (1);
+		}
+		free(export_path); */
+		update_pwd(&shell->envp_copy);
+		free(new_path);
+	}
 	return (0);
 }
 
