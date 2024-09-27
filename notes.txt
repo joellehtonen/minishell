@@ -1,4 +1,3 @@
 PARSER
-- doesnt work correctly with multiple quotes / quotes inside quotes
-- do not ignore dollar sign with double quotes
+- do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
 - expand error checker

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 10:56:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:48:45 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int isseparator(char c)
 int isquote(char c)
 {
 	if (c == '\'')
-		return (1);
+		return (SINGLE_QUOTE);
 	if (c == '\"')
-		return (2);
+		return (DOUBLE_QUOTE);
 	else
 		return (false);
 }
@@ -55,21 +55,14 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 static int handle_argument(t_shell *shell, int end)
 {
 	int		quotes_on;
-	int		sep_met;
+	int		separator_met;
 
 	quotes_on = false;
-	sep_met = false;
+	separator_met = false;
 	while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
 	{
 		if (isquote(shell->user_input[end]) != false)
 			quotes_on = !quotes_on;
-		if (isseparator(shell->user_input[end]) != false && quotes_on == false)
-		{
-			if (sep_met == true)
-				end++;
-			sep_met = !sep_met;
-			break ;
-		}
 		end++;
 	}
 	return (end);
@@ -89,7 +82,11 @@ void tokenize_input(t_shell *shell)
 			start++;
 		end = start;
 		if (isseparator(shell->user_input[end]) != false)
+		{
 			end++;
+			if (shell->user_input[end] == shell->user_input[end - 1])
+				end++;
+		}
 		else
 			end = handle_argument(shell, end);
 		start = create_new_token(shell, end, start, token_number);

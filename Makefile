@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/26 10:02:33 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/09/27 11:55:47 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ SRC 		= ./src/main.c ./src/envp_tools.c \
 			./src/parsing/list_tools_tokens.c \
 			./src/parsing/list_tools_tokens_delete.c \
 			./src/parsing/read_input.c \
-			./src//parsing/input_parser.c \
+			./src/parsing/input_parser.c \
+			./src/parsing/check_syntax.c \
 			./src/ft_split_list.c \
 			./src/str_join_four.c \
 			./src/builtins.c \
