@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 {

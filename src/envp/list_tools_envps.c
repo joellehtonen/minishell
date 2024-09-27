@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	ft_lstadd_back_envp(t_envp **lst, t_envp *new)
 {

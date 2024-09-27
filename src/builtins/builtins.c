@@ -1,10 +1,8 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int pwd_exec();
-
-static int echo_exec(t_envp *envp_copy, char *input);
 
 static void envp_remove_if_data(t_envp **lst, char *data, int (*cmp)());
 
@@ -52,37 +50,6 @@ static int pwd_exec()
 	}
 	printf("%s\n", pwd);
 	free(pwd);
-	return (0);
-}
-
-static int echo_exec(t_envp *envp_copy, char *input)
-{
-	int		nl_flag;
-
-	input = input + 5; // white spaces handled?
-	nl_flag = 0;
-	if (ft_strncmp(input, "-n", 2) == 0 && *(input + 2) == ' ')
-	{
-		nl_flag = 1;
-		input = input + 3;
-	}
-	if (*input == '$' && ft_strlen(input) == 1)
-		printf("$");
-	else if (*input == '$')
-	{
-		while (envp_copy)
-		{
-			if (ft_strncmp(envp_copy->line, input + 1, \
-				ft_strlen(input + 1)) == 0)
-				printf("%s", envp_copy->line + ft_strlen(input));
-			envp_copy = envp_copy->next;
-		}
-	}
-	else
-		printf("%s", input);
-	if (nl_flag == 0)
-		printf("%c", '\n');
-	//"echo moi $USERNAME" - add this ability when tokens / parsing is ready
 	return (0);
 }
 

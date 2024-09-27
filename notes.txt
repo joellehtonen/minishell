@@ -2,4 +2,3 @@ PARSER
 - doesnt work correctly if space before separator
 - doesnt work correctly with multiple quotes / quotes inside quotes
 - do not ignore dollar sign with double quotes
-- 

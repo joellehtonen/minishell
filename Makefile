@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/27 09:53:40 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/09/27 12:32:02 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,22 +35,22 @@ LIBFT_DIR	= libft
 LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 
 # Source / OBJ files / Includes
-SRC 		= ./src/main.c ./src/envp_tools.c \
-			./src/list_tools_envps.c \
+SRC 		= ./src/main.c \
+			./src/envp/envp_tools.c \
+			./src/envp/list_tools_envps.c \
+			./src/envp/ft_split_list.c \
 			./src/parsing/list_tools_tokens.c \
 			./src/parsing/list_tools_tokens_delete.c \
 			./src/parsing/read_input.c \
-			./src//parsing/input_parser.c \
-			./src/ft_split_list.c \
+			./src/parsing/input_parser.c \
+			./src/builtins/builtins.c \
+			./src/builtins/builtins_extra.c \
+			./src/builtins/builtins_tools.c \
+			./src/builtins/cd.c \
+			./src/builtins/echo.c \
 			./src/str_join_four.c \
-			./src/builtins.c \
-			./src/builtins_extra.c \
-			./src/builtins_tools.c \
 			./src/printing_tools.c \
-			./src/cd.c \
-			./src/exit.c \
-			./src/builtins_tools.c
-			./src/input_parser.c
+			./src/exit.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"
 
