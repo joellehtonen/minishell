@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static void envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
 

@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static char	*no_white_spaces(char *str);
 
