@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/09/27 14:15:01 by jlehtone         ###   ########.fr        #
-=======
-#    Updated: 2024/09/27 14:09:23 by aklimchu         ###   ########.fr        #
->>>>>>> ef5f91f4cd6606906bafb852f3a6eea09caf86c5
+#    Updated: 2024/09/27 14:38:23 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +44,11 @@ SRC 		= ./src/main.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
-			./src/ft_split_list.c \
+			./src/builtins/builtins.c \
+			./src/builtins/builtins_extra.c \
+			./src/builtins/builtins_tools.c \
+			./src/builtins/cd.c \
+			./src/builtins/echo.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/exit.c

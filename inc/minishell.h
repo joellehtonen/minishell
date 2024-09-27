@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 14:24:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:09:14 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@
 
 # define BUFF_SIZE 1024
 
-# define success 0
-# define failure 1
+enum e_success
+{
+	SUCCESS,
+	FAILURE
+};
 
 enum e_separators
 {
@@ -74,7 +77,7 @@ typedef struct	s_shell
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
 // reading input
 int read_input(t_shell *shell);
-void input_error_check(t_shell *shell);
+int input_error_check(t_shell *shell);
 // list envp functions
 void ft_lstadd_back_envp(t_envp **lst, t_envp *new);
 t_envp *ft_lstnew_envp(char *content);

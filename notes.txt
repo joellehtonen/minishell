@@ -1,3 +1,12 @@
 PARSER
 - do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
 - expand error checker
+
+ERROR
+- error messages to header file
+- what kind of messages?
+- attach values to error messages
+- function that prints errors from header
+
+EXECUTE
+- do this
