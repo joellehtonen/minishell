@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins_tools.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 08:37:58 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 10:19:12 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+//42 header
 
 #include "../inc/minishell.h"
 
@@ -41,6 +31,10 @@ char	*get_pwd(char *home)
 		new_pwd = ft_strdup("/home");
 		return (new_pwd);
 	}
+	if (home == NULL)
+	{
+		return (pwd);
+	}
 	if (ft_strncmp(pwd, home, 1024) == 0)
 	{
 		free(pwd);
@@ -59,6 +53,8 @@ char	*get_pwd(char *home)
 		pwd++;
 		pwd_move++;
 	}
+	if (pwd_move <= 1)
+		return (pwd - pwd_move);
 	new_pwd = ft_strjoin("~/", pwd);
 	if (new_pwd == NULL)
 	{
@@ -112,10 +108,44 @@ int	is_directory(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return (1);
 	result = read(fd, &buffer, 1);
 	if (result < 0 && errno == EISDIR)
 		return (0);
 	else
 		return (1);
+}
+
+int	update_pwd(t_envp **envp_copy)
+{
+	t_envp	*temp;
+	char	*export_old;
+	char	*pwd;
+	char	*export_new;
+
+	temp = *envp_copy;
+	while (*envp_copy)
+	{
+		if (ft_strncmp((*envp_copy)->line, "PWD=", 4) == 0)
+		{
+			export_old = ft_strjoin("export OLD", (*envp_copy)->line);
+			export_exec(&temp, export_old);
+		}
+		*envp_copy = (*envp_copy)->next;
+	}
+	*envp_copy = temp;
+	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
+	if (pwd == NULL)
+	{
+		perror("malloc error");
+		//free_and_exit();
+	}
+	if (getcwd(pwd, BUFF_SIZE) == NULL)
+	{
+		perror("getcwd error");
+		//free_and_exit();
+	}
+	export_new = ft_strjoin("export PWD=", pwd);
+	export_exec(envp_copy, export_new);
+	return (0);
 }

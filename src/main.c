@@ -1,22 +1,9 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 13:19:31 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 11:19:03 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+//42 header
 
 #include "../inc/minishell.h"
 
 static void	argc_check(int argc);
 
-/* static void	get_home(t_shell *shell);
- */
 static void	printing_tests(t_shell shell);
 
 int	main(int argc, char *argv[], char *envp[])
@@ -26,9 +13,10 @@ int	main(int argc, char *argv[], char *envp[])
 	(void)argv;
 	argc_check(argc);
 	ft_memset(&shell, 0, sizeof(t_shell));
+	shell.user_input = NULL;
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
 	{
-		perror("Malloc failed XXX");
+		perror("Malloc failed");
 		//free_and_exit();
 	}
 	shell.exit_code = read_input(&shell);
@@ -46,21 +34,6 @@ static void	argc_check(int argc)
 		exit(1);
 	}
 }
-
-/* static void	get_home(t_shell *shell)
-{
-	shell->home = (char *)malloc(BUFF_SIZE * sizeof(char));
-	if (shell->home == NULL)
-	{
-		perror("malloc error");
-		exit(1);
-	}
-	if (getcwd(shell->home, BUFF_SIZE) == NULL)
-	{
-		perror("getcwd error");
-		exit(1);
-	}
-} */
 
 static void	printing_tests(t_shell shell)
 {

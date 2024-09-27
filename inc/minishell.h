@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/26 10:03:32 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 09:55:13 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ void input_error_check(t_shell *shell);
 void ft_lstadd_back_envp(t_envp **lst, t_envp *new);
 t_envp *ft_lstnew_envp(char *content);
 t_envp *ft_lstlast_envp(t_envp *lst);
+int copy_path(t_envp **path, t_envp *envp_copy);
+int copy_uname(char **uname, t_envp *envp_copy);
+int copy_home(char **home, t_envp *envp_copy);
+int	env_exec(t_envp *envp_copy);
+int	unset_exec(t_envp **envp_copy, char *input);
+int	exit_exec(t_shell *shell);
+int export_exec(t_envp **envp_copy, char *input);
+int	update_pwd(t_envp **envp_copy);
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);

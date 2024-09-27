@@ -1,14 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 08:37:45 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/25 11:03:33 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+//42 header
 
 #include "../inc/minishell.h"
 
@@ -30,24 +20,43 @@ int	cd_exec(t_shell *shell)
 		return (1);
 	}
 	
-	if (ft_strlen(shell->user_input) == 2)
-	{
-		if (chdir(shell->home) == -1)
-		{
-    		perror("chdir() error");
-			//free_and_exit();
-		}
-		return (0);
-	}
-	
 	shell->user_input = no_white_spaces(shell->user_input);
 	
 	if (ft_strlen(shell->user_input) == 0)
 	{
+		if (shell->home == NULL)
+		{
+			printing("cd", ": HOME not set\n", "", 2);
+			//free_and_exit();
+			//exit(1); // can add when in child process
+			return (1);
+		}
+		if (is_directory(shell->home) == 1)
+		{
+			printing("cd: ", shell->home, ": No such file or directory\n", 2);
+			//exit(1);
+			return (0);
+		}
 		if (chdir(shell->home) == -1)
 		{
-    		perror("chdir() error");
+			perror("chdir() error");
 			//free_and_exit();
+		}
+		else
+		{
+			/* export_path = ft_strjoin("export PWD=", shell->home);
+			if (export_path == NULL)
+			{
+				perror("malloc error");
+				//free_and_exit();
+			}
+			if (export_exec(&shell->envp_copy, export_path) == 1)
+			{
+				//free_and_exit(); // free(export_path)?
+				return (1);
+			}
+			free(export_path); */
+			update_pwd(&shell->envp_copy);
 		}
 		return (0);
 	}
@@ -60,7 +69,7 @@ int	cd_exec(t_shell *shell)
 		return (1);
 	}
 
-	if (is_directory(shell->user_input) == 1)
+	if (ft_strncmp(shell->user_input, "~", 1) != 0 && is_directory(shell->user_input) == 1)
 	{
 		printing("cd: ", shell->user_input, ": Not a directory\n", 2);
 		//free_and_exit();
@@ -70,6 +79,13 @@ int	cd_exec(t_shell *shell)
 	
 	if (ft_strncmp(shell->user_input, "~", 1) == 0)
 	{
+		if (shell->home == NULL)
+		{
+			printing("cd", ": HOME not set\n", "", 2);
+			//free_and_exit();
+			//exit(1); // can add when in child process
+			return (1);
+		}
 		len = ft_strlen(shell->home) + ft_strlen(shell->user_input + 1) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
@@ -77,7 +93,7 @@ int	cd_exec(t_shell *shell)
 			perror("malloc error");
 			//free_and_exit();
 		}
-		new_path = ft_strjoin(shell->home,shell->user_input + 1);
+		new_path = ft_strjoin(shell->home, shell->user_input + 1);
 		if (new_path == NULL)
 		{
 			perror("malloc error");
@@ -115,19 +131,39 @@ int	cd_exec(t_shell *shell)
 	
 	if (access(new_path, F_OK) == -1 && errno == ENOENT)
 	{
-		printing("cd: ", shell->user_input, ": No such file or directory\n", 2);
+		if (*shell->user_input == '~')
+			printing("cd: ", new_path, ": No such file or directory\n", 2);
+		else
+			printing("cd: ", shell->user_input, ": No such file or directory\n", 2);
 		free(new_path);
 		//free_and_exit();
-		//exit(127); // can add when in child process
+		//exit(1); // can add when in child process
 		return (1);
 	}
-	
+	//set pwd in env
 	if (chdir(new_path) == -1)
 	{
     	perror("chdir() error");
+		free(new_path);
 		//free_and_exit();
 	}
-	free(new_path);
+	else
+	{
+		/* export_path = ft_strjoin("export PWD=", new_path);
+		if (export_path == NULL)
+		{
+			perror("malloc error");
+			//free_and_exit();
+		}
+		if (export_exec(&shell->envp_copy, export_path) == 1)
+		{
+			//free_and_exit(); // free(export_path)?
+			return (1);
+		}
+		free(export_path); */
+		update_pwd(&shell->envp_copy);
+		free(new_path);
+	}
 	return (0);
 }
 
@@ -136,7 +172,10 @@ static char	*no_white_spaces(char *str)
 	char	*new_str;
 	int		new_len;
 
-	str = str + 3;
+	if (ft_strlen(str) == 2)
+		str = str + 2;
+	else
+		str = str + 3;
 	new_len = ft_strlen(str) - count_w_sp(str);
 	new_str = (char *)malloc((new_len + 1) * sizeof(char));
 	while (*str == ' ')
