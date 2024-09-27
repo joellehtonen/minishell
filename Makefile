@@ -48,7 +48,12 @@ SRC 		= ./src/main.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
-			./src/ft_split_list.c \
+			./src/parsing/assign_values.c \
+			./src/builtins/builtins_extra.c \
+			./src/builtins/builtins_tools.c \
+			./src/builtins/builtins.c \
+			./src/builtins/cd.c \
+			./src/builtins/echo.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/exit.c

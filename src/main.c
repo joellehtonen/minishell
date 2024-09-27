@@ -4,8 +4,6 @@
 
 static void	argc_check(int argc);
 
-static void	printing_tests(t_shell shell);
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_shell	shell;
@@ -20,7 +18,6 @@ int	main(int argc, char *argv[], char *envp[])
 		//free_and_exit();
 	}
 	shell.exit_code = read_input(&shell);
-	printing_tests(shell); // for testing purposes
 	return (0);
 }
 
@@ -33,22 +30,4 @@ static void	argc_check(int argc)
 		printf("No extra arguments needed\n");
 		exit(1);
 	}
-}
-
-static void	printing_tests(t_shell shell)
-{
-	printf("Our ENVP\n");
-	while (shell.envp_copy)
-	{
-		printf("%s\n", shell.envp_copy->line);
-		shell.envp_copy = shell.envp_copy->next;
-	}
-	printf("\n\n\n\nOur PATH divided into nodes\n");
-	while (shell.path)
-	{
-		printf("%s\n", shell.path->line);
-		shell.path = shell.path->next;
-	}
-	printf("\n\n\n\nExtracted username\n");
-	printf("%s\n", shell.uname);
 }

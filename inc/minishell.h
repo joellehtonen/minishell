@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 14:24:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:47:19 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 
 #ifndef MINISHELL_H
@@ -36,6 +37,17 @@ enum e_separators
 	PIPE
 };
 
+enum e_token_type
+{
+	COMM = 1,
+	ARG,
+	REDIR1,
+	DELIM,
+	INPUT,
+	OUTPUT,
+	PIPE1
+};
+
 enum e_quotes
 {
 	SINGLE_QUOTE = 1,
@@ -52,8 +64,7 @@ typedef struct	s_token
 {
 	char			*line;
 	float			level;
-	int				if_command;
-	int				if_argument;
+	int				type;
 	int				token_number; //for error checking at least
 	struct s_token	*next;
 }				t_token;
@@ -71,11 +82,11 @@ typedef struct	s_shell
 }				t_shell;
 
 
-int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
 // reading input
 int read_input(t_shell *shell);
 void input_error_check(t_shell *shell);
 // list envp functions
+int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
 void ft_lstadd_back_envp(t_envp **lst, t_envp *new);
 t_envp *ft_lstnew_envp(char *content);
 t_envp *ft_lstlast_envp(t_envp *lst);
@@ -106,10 +117,12 @@ int export_exec(t_envp **envp_copy, char *input);
 void tokenize_input(t_shell *shell);
 int isseparator(char c);
 int isquote(char c);
+void assign_type(t_token **token);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);
 void free_and_exit(t_shell *shell);
+void free_double_arr(char **arr);
 
 #endif /* MINISHELL_H */
