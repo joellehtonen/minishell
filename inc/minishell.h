@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 13:54:45 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:03:37 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <fcntl.h> // for open
 
 # define BUFF_SIZE 1024
+
+# define success 0
+# define failure 1
 
 enum e_separators
 {
