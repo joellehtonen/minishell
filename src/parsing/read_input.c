@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/26 15:49:44 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:15:37 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,18 @@ void input_error_check(t_shell *shell)
 			single_quotes++;
 		if (shell->user_input[index] == '\"')
 			double_quotes++;
-		// some checks about pipes and redirects?
+		// check if pipe is not at the end of sentence (no only whitespaces and null)
+		// check if pipe is not the first thing on the sentence (not just whitespaces before it)
+		// no pipe followed by only white space and then another pipe
+		// check if redir is not at the end
+		// check if redir is not at the start
+		// no redirs into folders (check for /)
+		// check if double redir >> is not at the end 
+		// (double redir needs to be valid input also)
+		// redir cannot immediately follow pipe
+		// no redirs before pipe
+		// no two redirs into same way in the same command?
+		// check permissions before redirecting
 		index++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
