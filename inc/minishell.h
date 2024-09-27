@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 09:55:13 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:54:45 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ enum e_separators
 	SPACES = 1,
 	REDIR,
 	PIPE
+};
+
+enum e_quotes
+{
+	SINGLE_QUOTE = 1,
+	DOUBLE_QUOTE
 };
 
 typedef struct	s_envp

@@ -6,35 +6,11 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 09:55:01 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 13:55:08 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-
-void input_error_check(t_shell *shell)
-{
-	int	single_quotes;
-	int	double_quotes;
-	int	index;
-	
-	index = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	if (ft_strlen(shell->user_input) == 0)
-		free_and_exit(shell); // do we need an error message?
-	while (shell->user_input[index] != '\0')
-	{
-		if (shell->user_input[index] == '\'') // what if quote is inside a string? can these be condensed into one quote variable?
-			single_quotes++;
-		if (shell->user_input[index] == '\"')
-			double_quotes++;
-		// some checks about pipes and redirects?
-		index++;
-	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		free_and_exit(shell); // error message?
-}
 
 int read_input(t_shell *shell)
 {
