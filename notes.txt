@@ -1,3 +1,4 @@
 PARSER
 - do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
 - expand error checker
+- spaces in the end still count as a token?

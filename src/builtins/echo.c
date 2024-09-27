@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 13:03:29 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:22:12 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,11 @@ int echo_exec(t_envp *envp_copy, char *input)
 		printf("\n");
 		return (0);
 	}
-	if (input == NULL)
-	{
-		perror("malloc error");
-		//free_and_exit();
-	}
 	words = ft_split(input, ' ');
 	if (words == NULL)
 	{
 		perror("malloc error");
+		free(input);
 		//free_and_exit();
 	}
 	i = 0;
@@ -57,7 +53,8 @@ int echo_exec(t_envp *envp_copy, char *input)
 	}
 	if (nl_flag == 0)
 		printf("%c", '\n');
-	//"echo moi $USERNAME" - add this ability when tokens / parsing is ready
+	free(input);
+	free_double_arr(words);
 	return (0);
 }
 
@@ -96,7 +93,7 @@ static char	*delete_quotes(char *input)
 		}
 		input++;
 	}
-	*input = '\0';
+	*new_input = '\0';
 	return(new_input - new_len);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 09:54:53 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:33:32 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_token	*ft_lstnew_token(char *content)
 		return ((void *) 0);
 	new->line = content;
 	new->next = NULL;
-	new->if_argument = 0;
-	new->if_command = 0;
+	new->type = 0;
+	new->type = 0;
 	new->level = 0;
 	return (new);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens_delete.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/25 16:52:35 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:34:19 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_node(t_token *lst)
 	}
 	while (lst != NULL)
 	{
-		printf("Token #%d: %s\n", lst->token_number, lst->line);
+		printf("Token #%d: %s, %d\n", lst->token_number, lst->line, lst->type);
 		lst = lst->next;
 	}
 }

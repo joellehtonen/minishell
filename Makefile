@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/27 14:09:23 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/09/27 14:32:24 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,12 @@ SRC 		= ./src/main.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
-			./src/ft_split_list.c \
+			./src/parsing/assign_values.c \
+			./src/builtins/builtins_extra.c \
+			./src/builtins/builtins_tools.c \
+			./src/builtins/builtins.c \
+			./src/builtins/cd.c \
+			./src/builtins/echo.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/exit.c
