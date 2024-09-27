@@ -6,13 +6,10 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/09/27 14:15:01 by jlehtone         ###   ########.fr        #
-=======
-#    Updated: 2024/09/27 14:09:23 by aklimchu         ###   ########.fr        #
->>>>>>> ef5f91f4cd6606906bafb852f3a6eea09caf86c5
+#    Updated: 2024/09/27 15:48:31 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #Colors
 DEF_COLOR = \033[0;39m
