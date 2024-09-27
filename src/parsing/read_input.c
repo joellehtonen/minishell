@@ -6,9 +6,10 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 15:10:32 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:02:11 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../inc/minishell.h"
 

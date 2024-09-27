@@ -6,9 +6,10 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 14:39:59 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:01:53 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../inc/minishell.h"
 
@@ -37,15 +38,11 @@ int echo_exec(t_envp *envp_copy, char *input)
 		printf("\n");
 		return (0);
 	}
-	if (input == NULL)
-	{
-		perror("malloc error");
-		//free_and_exit();
-	}
 	words = ft_split(input, ' ');
 	if (words == NULL)
 	{
 		perror("malloc error");
+		free(input);
 		//free_and_exit();
 	}
 	i = 0;
@@ -57,7 +54,8 @@ int echo_exec(t_envp *envp_copy, char *input)
 	}
 	if (nl_flag == 0)
 		printf("%c", '\n');
-	//"echo moi $USERNAME" - add this ability when tokens / parsing is ready
+	free(input);
+	free_double_arr(words);
 	return (0);
 }
 

@@ -6,9 +6,10 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/27 14:38:23 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/09/27 16:02:41 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
 
 #Colors
 DEF_COLOR = \033[0;39m
@@ -44,9 +45,10 @@ SRC 		= ./src/main.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
-			./src/builtins/builtins.c \
+			./src/parsing/assign_values.c \
 			./src/builtins/builtins_extra.c \
 			./src/builtins/builtins_tools.c \
+			./src/builtins/builtins.c \
 			./src/builtins/cd.c \
 			./src/builtins/echo.c \
 			./src/str_join_four.c \
