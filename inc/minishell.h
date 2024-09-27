@@ -6,9 +6,10 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 14:03:37 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:24:18 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -81,10 +82,6 @@ t_envp *ft_lstlast_envp(t_envp *lst);
 int copy_path(t_envp **path, t_envp *envp_copy);
 int copy_uname(char **uname, t_envp *envp_copy);
 int copy_home(char **home, t_envp *envp_copy);
-int	env_exec(t_envp *envp_copy);
-int	unset_exec(t_envp **envp_copy, char *input);
-int	exit_exec(t_shell *shell);
-int export_exec(t_envp **envp_copy, char *input);
 int	update_pwd(t_envp **envp_copy);
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
@@ -100,6 +97,11 @@ char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
 int	is_directory(char *path);
+int echo_exec(t_envp *envp_copy, char *input);
+int	env_exec(t_envp *envp_copy);
+int	unset_exec(t_envp **envp_copy, char *input);
+int	exit_exec(t_shell *shell);
+int export_exec(t_envp **envp_copy, char *input);
 // parsing functions
 void tokenize_input(t_shell *shell);
 int isseparator(char c);
@@ -107,7 +109,7 @@ int isquote(char c);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
-void	printing(char *cmd, char *dest, char *result, int fd);
+void printing(char *cmd, char *dest, char *result, int fd);
 void free_and_exit(t_shell *shell);
 
 #endif /* MINISHELL_H */

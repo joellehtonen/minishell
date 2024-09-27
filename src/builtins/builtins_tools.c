@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 char	*get_pwd(char *home)
 {
