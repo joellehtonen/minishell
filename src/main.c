@@ -13,10 +13,7 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.user_input = NULL;
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
-	{
-		perror("Malloc failed");
-		//free_and_exit();
-	}
+		error_printer(&shell, MALLOC_FAIL, true);
 	shell.exit_code = read_input(&shell);
 	return (0);
 }

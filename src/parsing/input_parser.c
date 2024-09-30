@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 13:54:59 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:31:33 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ int isseparator(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
 		return (SPACES);
-	if (c == '<' || c == '>')
-		return (REDIR);
-	if (c == '|')
-		return (PIPE);
+	if (c == '<' || c == '>' || c == '|')
+		return (true);
+	// if (c == '<' || c == '>')
+	// 	return (REDIR);
+	// if (c == '|')
+	// 	return (PIPE);
 	else
 		return (false);
 }
@@ -43,7 +45,7 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 	new = ft_lstnew_token(NULL);
 	new->line = malloc(sizeof(char) * (end - start + 1));
 	if (new->line == NULL)
-		free_and_exit(shell); // DO THIS LATER
+		error_printer(shell, MALLOC_FAIL, true);
 	while (start != end)
 		new->line[token_index++] = shell->user_input[start++];
 	new->line[token_index] = '\0';

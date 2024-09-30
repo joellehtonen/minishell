@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/30 08:51:19 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:31:15 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,28 @@
 
 # define BUFF_SIZE 1024
 
+# define SPACES true
+
+// error messages
+# define EMPTY_INPUT "Empty input"
+# define PIPE_ERROR "Pipe cannot be first or last, or follow another pipe"
+# define REDIR_ERROR "Redir can't come last, or before a pipe or another redir"
+# define QUOTE_ERROR "Odd number of quotes (only even amount accepted)"
+# define MALLOC_FAIL "Allocating memory failed"
+# define SIGNAL_ERROR "Failed to set up a signal"
+
 enum e_success
 {
 	SUCCESS,
 	FAILURE
 };
 
-enum e_separators
-{
-	SPACES = 1,
-	REDIR,
-	PIPE
-};
+// enum e_separators
+// {
+// 	SPACES = 1,
+// 	REDIR, // i'm not actually using these
+// 	PIPE //  i'm not actually using these
+// };
 
 enum e_token_type
 {
@@ -84,7 +94,6 @@ typedef struct	s_shell
 	int		exit_code; 
 }				t_shell;
 
-
 // reading input
 int read_input(t_shell *shell);
 int input_error_check(t_shell *shell);
@@ -126,7 +135,10 @@ void assign_level(t_token **token);
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);
-void free_and_exit(t_shell *shell);
+void	set_up_signals(t_shell *shell);
+// exit
+void free_and_exit(t_shell *shell, int error);
 void free_double_arr(char **arr);
+void	error_printer(t_shell *shell, char *message, int exit);
 
 #endif /* MINISHELL_H */

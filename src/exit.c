@@ -3,19 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 14:21:28 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:30:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void free_and_exit(t_shell *shell)
+void	error_printer(t_shell *shell, char *message, int exit)
 {
-	shell = NULL;
-	return ;
+	printf("Error. %s\n", message);
+	if (exit == true)
+		free_and_exit(shell, 1);
+}
+
+void	free_and_exit(t_shell *shell, int error)
+{
+	if (shell->user_input)
+		free(shell->user_input);
+	// what else needs to be freed?
+	// take exit value from the struct
+	if (shell->exit_code)
+		exit(shell->exit_code);
+	else
+		exit(error);
 }
 
 void	free_double_arr(char **arr)

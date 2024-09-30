@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/30 09:30:52 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/09/30 16:19:43 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/echo.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
+			./src/signals.c \
 			./src/exit.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"

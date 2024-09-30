@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/30 11:19:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:31:55 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int input_error_check(t_shell *shell)
 	double_quotes = 0;
 	if (ft_strlen(shell->user_input) == 0)
 	{
-		printf("ERROR. Empty input\n");
+		error_printer(shell, EMPTY_INPUT, false);
 		return (FAILURE);
 	}
 	while (shell->user_input[index] != '\0')
@@ -89,7 +89,7 @@ int input_error_check(t_shell *shell)
 		{
 			if (check_pipe_location(shell, index) == FAILURE)
 			{
-				printf("ERROR. Pipe cannot be first or last, or follow another pipe\n");
+				error_printer(shell, PIPE_ERROR, false);
 				return (FAILURE);
 			}
 		}
@@ -97,7 +97,7 @@ int input_error_check(t_shell *shell)
 		{
 			if (check_redir_location(shell, index) == FAILURE)
 			{
-				printf("ERROR. Redir cannot come last, or before a pipe or another redir\n");
+				error_printer(shell, REDIR_ERROR, false);
 				return (FAILURE);
 			}
 		}
@@ -105,7 +105,7 @@ int input_error_check(t_shell *shell)
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 	{
-		printf("ERROR. Odd number of quotes\n");
+		error_printer(shell, QUOTE_ERROR, false);
 		return (FAILURE);
 	}
 	return (SUCCESS);
