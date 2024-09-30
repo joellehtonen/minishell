@@ -2,6 +2,8 @@ PARSER
 - do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
 - expand error checker
 - spaces in the end still count as a token?
+- redirs are fine at the start of the argument, but not at the end
+- redirs are fine after pipe but not before 
 
 ERROR
 - error messages to header file

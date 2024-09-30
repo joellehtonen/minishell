@@ -6,38 +6,59 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 15:14:17 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:19:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int check_pipe_location(t_shell *shell, int index)
+static int	check_redir_location(t_shell *shell, int old_index)
 {
-	int	front;
-	int	back;
+	int new_index;
 
-	back = index + 1;
-	front = index - 1;
-	if (front < 0)
-		return (FAILURE);
-	while (shell->user_input[back] != '\0')
+	new_index = old_index + 1;
+	while (shell->user_input[new_index] != '\0')
 	{
-		if (isseparator(shell->user_input[back]) == SPACES)
+		if (isseparator(shell->user_input[new_index]) == SPACES)
 		{
-			back++;
-			if (shell->user_input[back] == '|')
+			new_index++;
+			if (shell->user_input[new_index] == '|'
+				|| shell->user_input[new_index] == '<'
+				|| shell->user_input[new_index] == '>')
 				return (FAILURE);
 		}
 		else
 			break ;
 	}
-	if (shell->user_input[back] == '\0')
+	if (shell->user_input[new_index] == '\0')
 		return (FAILURE);
-	while (front >= 0)
+	else
+		return (SUCCESS);
+}
+
+static int	check_pipe_location(t_shell *shell, int old_index)
+{
+	int new_index;
+
+	new_index = old_index + 1;
+	while (shell->user_input[new_index] != '\0')
 	{
-		if (isseparator(shell->user_input[front]) == SPACES)
-			front--;
+		if (isseparator(shell->user_input[new_index]) == SPACES)
+		{
+			new_index++;
+			if (shell->user_input[new_index] == '|')
+				return (FAILURE);
+		}
+		else
+			break ;
+	}
+	if (shell->user_input[new_index] == '\0')
+		return (FAILURE);
+	new_index = old_index - 1;
+	while (new_index >= 0)
+	{
+		if (isseparator(shell->user_input[new_index]) == SPACES)
+			new_index--;
 		else
 			return (SUCCESS);
 	}
@@ -72,12 +93,14 @@ int input_error_check(t_shell *shell)
 				return (FAILURE);
 			}
 		}
-		// no pipe followed by only white space and then another pipe
-		// check if redir is not at the end
-		// check if redir is not at the start
-		// check if double redir >> is not at the end or start
-		// redir cannot immediately follow pipe
-		// no redirs before pipe
+		if (shell->user_input[index] == '<' || shell->user_input[index] == '>')
+		{
+			if (check_redir_location(shell, index) == FAILURE)
+			{
+				printf("ERROR. Redir cannot come last, or before a pipe or another redir\n");
+				return (FAILURE);
+			}
+		}
 		index++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
