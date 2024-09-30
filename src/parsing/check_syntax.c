@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 15:14:17 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:21:34 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int check_pipe_location(t_shell *shell, int index)
 		return (FAILURE);
 	while (shell->user_input[back] != '\0')
 	{
-		if (isseparator(shell->user_input[back]) == SPACES)
+		if (isseparator(shell->user_input[back]) == /* SPACES */1)
 		{
 			back++;
 			if (shell->user_input[back] == '|')
@@ -36,7 +36,7 @@ static int check_pipe_location(t_shell *shell, int index)
 		return (FAILURE);
 	while (front >= 0)
 	{
-		if (isseparator(shell->user_input[front]) == SPACES)
+		if (isseparator(shell->user_input[front]) == /* SPACES */1)
 			front--;
 		else
 			return (SUCCESS);

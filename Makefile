@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/27 16:02:41 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/09/30 15:22:44 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,11 @@ SRC 		= ./src/main.c \
 			./src/builtins/echo.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
+			./src/exec/execute.c \
+			./src/exec/child_process.c \
+			./src/exec/exec_tools.c \
+			./src/exec/param_and_path.c \
+			./src/exec/pipe_and_fork.c \
 			./src/exit.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"

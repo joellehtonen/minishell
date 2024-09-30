@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/27 13:54:59 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:21:15 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int isseparator(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
-		return (SPACES);
+		return (/* SPACES */1);
 	if (c == '<' || c == '>')
-		return (REDIR);
+		return (/* REDIR */2);
 	if (c == '|')
-		return (PIPE);
+		return (/* PIPE */3);
 	else
 		return (false);
 }
@@ -78,7 +78,7 @@ void tokenize_input(t_shell *shell)
 	token_number = 0;
 	while (shell->user_input[start] != '\0')
 	{
-		while (isseparator(shell->user_input[start]) == SPACES)
+		while (isseparator(shell->user_input[start]) == /* SPACES */1)
 			start++;
 		end = start;
 		if (isseparator(shell->user_input[end]) != false)

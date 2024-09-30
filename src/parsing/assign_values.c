@@ -13,14 +13,14 @@ void	assign_type(t_token **token)
 	{
 		if (ft_strncmp(temp->line, "|\0", 2) == 0)
 		{
-			temp->type = PIPE1;
+			temp->type = PIPE;
 			comm_flag = 0;
 		}
 		else if (ft_strncmp(temp->line, "<\0", 2) == 0 || ft_strncmp(temp->line, ">\0", 2) == 0)
-			temp->type = REDIR1;
+			temp->type = REDIR;
 		else if (ft_strncmp(temp->line, "<<\0", 3) == 0 || ft_strncmp(temp->line, ">>\0", 3) == 0)
-			temp->type = REDIR1;
-		else if (temp->next && ft_strncmp(temp->next->line, "<\0", 2) == 0)
+			temp->type = REDIR;
+		else if (ft_strncmp(previous->line, "<\0", 2) == 0)
 			temp->type = INPUT;
 		else if (ft_strncmp(previous->line, ">\0", 2) == 0 || ft_strncmp(previous->line, ">>\0", 3) == 0)
 			temp->type = OUTPUT;
@@ -38,7 +38,7 @@ void	assign_type(t_token **token)
 	}
 }
 
-void	assign_level(t_token **token)
+void	assign_level(t_token **token, t_exec *exec)
 {
 	int		level;
 	t_token	*temp;
@@ -52,4 +52,5 @@ void	assign_level(t_token **token)
 		temp->level = level;
 		temp = temp->next;
 	}
+	exec->pipe_num = level;
 }

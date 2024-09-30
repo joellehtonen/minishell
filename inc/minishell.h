@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/30 08:51:19 by aklimchu         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-
+//42 header
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -24,6 +12,7 @@
 # include <stdlib.h> //for exit status and malloc
 # include <errno.h> // for errno (error identifiers)
 # include <fcntl.h> // for open
+#include <sys/wait.h> // for waitpid
 
 # define BUFF_SIZE 1024
 
@@ -33,22 +22,22 @@ enum e_success
 	FAILURE
 };
 
-enum e_separators
+/* enum e_separators
 {
 	SPACES = 1,
 	REDIR,
 	PIPE
-};
+}; */
 
 enum e_token_type
 {
 	COMM = 1,
 	ARG,
-	REDIR1,
+	REDIR,
 	DELIM,
 	INPUT,
 	OUTPUT,
-	PIPE1
+	PIPE
 };
 
 enum e_quotes
@@ -72,15 +61,29 @@ typedef struct	s_token
 	struct s_token	*next;
 }				t_token;
 
+typedef struct	s_exec
+{
+	int		pipe[2];
+	int		in;
+	int		out;
+	int		status;
+	int		pipe_num;
+	pid_t	*null;
+	pid_t	*pid;
+}				t_exec;
+
+
 typedef struct	s_shell
 {
 	t_envp	*envp_copy;
+	char	**envp_str; // envp in the form of double array
 	t_envp	*path; //PATH from envp
 	char	*uname; //USER from envp
 	char	*pwd; //current location
 	char	*home; //HOME from envp
 	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
 	char 	*user_input; //whatever readline reads is saved into this array
+	t_exec	*exec; // file descriptors for pipes and forks
 	int		exit_code; 
 }				t_shell;
 
@@ -110,7 +113,7 @@ int	cd_exec(t_shell *shell);
 char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
-int	is_directory(char *path);
+int	is_directory_new(char *path);
 int echo_exec(t_envp *envp_copy, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, char *input);
@@ -121,7 +124,16 @@ void tokenize_input(t_shell *shell);
 int isseparator(char c);
 int isquote(char c);
 void assign_type(t_token **token);
-void assign_level(t_token **token);
+void assign_level(t_token **token, t_exec *exec);
+// execute functions
+int	execute(t_shell *shell);
+char **check_param(t_shell *shell, int loop_count);
+char **param_to_arr(t_token *token, int loop_count);
+char *check_path(t_envp *paths, char **param, t_exec exec);
+void check_command_access(char **param, t_exec exec);
+int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
+int	pipe_and_fork(t_shell *shell, int i);
+char **envp_to_arr(t_envp *envp_copy);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
