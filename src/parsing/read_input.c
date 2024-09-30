@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 10:19:55 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/30 08:51:10 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/09/30 08:54:58 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int read_input(t_shell *shell)
 		if (input_error_check(shell) == SUCCESS)
 		{
 			tokenize_input(shell);
+			assign_level(&shell->token_pointer);
+			assign_type(&shell->token_pointer);
 			print_node(shell->token_pointer); //for testing
 			// 	shell->exit_code = execute(shell->token_pointer); // MAKE LATER
 			builtins(shell); // for testing purposes
