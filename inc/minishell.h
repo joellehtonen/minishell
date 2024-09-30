@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 16:00:14 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/09/30 08:51:19 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct	s_envp
 typedef struct	s_token
 {
 	char			*line;
-	float			level;
+	int				level;
 	int				type;
 	int				token_number; //for error checking at least
 	struct s_token	*next;
@@ -121,6 +121,7 @@ void tokenize_input(t_shell *shell);
 int isseparator(char c);
 int isquote(char c);
 void assign_type(t_token **token);
+void assign_level(t_token **token);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
