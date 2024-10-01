@@ -9,10 +9,11 @@ EXECUTE
 
 .o-files to their own folder
 
+exit: command not found
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
 - in input mode D exits bash and prints "exit"
 - in heredoc D outputs this: bash: warning: here-document at line 1 delimited by end-of-file (wanted `echo')
 	and exits heredoc
-- in input mode / seems to clear the written input, same in heredoc
+- in input mode \ does nothing, same in heredoc

@@ -15,6 +15,11 @@ int read_input(t_shell *shell)
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 		set_up_signals(shell);
 		shell->user_input = readline(prompt);
+		if (shell->user_input == NULL)
+		{
+			printf("exit\n");
+			free_and_exit(shell, 0);
+		}
 		if (input_error_check(shell) == SUCCESS)
 		{
 			tokenize_input(shell);

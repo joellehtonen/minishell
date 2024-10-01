@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 10:24:30 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:28:08 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@ int isseparator(char c)
 		return (SPACES);
 	if (c == '<' || c == '>' || c == '|')
 		return (true);
-	// if (c == '<' || c == '>')
-	// 	return (REDIR);
-	// if (c == '|')
-	// 	return (PIPE);
 	else
 		return (false);
 }
@@ -79,7 +75,7 @@ void tokenize_input(t_shell *shell)
 	token_number = 0;
 	while (shell->user_input[start] != '\0')
 	{
-		while (isseparator(shell->user_input[start]) == /* SPACES */1)
+		while (isseparator(shell->user_input[start]) == SPACES)
 			start++;
 		if (shell->user_input[start] == '\0')
 			break ;

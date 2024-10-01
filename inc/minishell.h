@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 10:16:05 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:13:51 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,6 @@ enum e_success
 	SUCCESS,
 	FAILURE
 };
-
-/* // enum e_separators
-// {
-// 	SPACES = 1,
-// 	REDIR, // i'm not actually using these
-// 	PIPE //  i'm not actually using these
-// }; */
 
 enum e_token_type
 {
