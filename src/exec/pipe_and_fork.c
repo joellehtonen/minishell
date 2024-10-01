@@ -30,7 +30,8 @@ int	pipe_and_fork(t_shell *shell, int i)
 	{
 		close_free(flag_pipe, exec->pipe[0], exec->pipe[1], &exec->null);
 		perror("dup() error");
-		exit(1);
+		return (1);
+		//exit(1);
 	}
 	close_free(flag_pipe, exec->pipe[0], exec->pipe[1], &exec->null);
 	return (0);
