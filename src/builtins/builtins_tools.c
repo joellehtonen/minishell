@@ -100,7 +100,7 @@ int	only_spaces(char *str)
 	return (0);
 }
 
-int	is_directory(char *path)
+int	is_directory_new(char *path)
 {
 	int		fd;
 	char	buffer;
