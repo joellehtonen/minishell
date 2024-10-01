@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 09:58:14 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 10:02:32 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,5 @@ void tokenize_input(t_shell *shell)
 			end = handle_argument(shell, end);
 		start = create_new_token(shell, end, start, token_number);
 		token_number++;
-		// new->level++;
-		//print_node(shell->token_pointer); //for testing
 	}
 }

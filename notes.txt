@@ -1,6 +1,5 @@
 PARSER
 - do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
-- spaces in the end still count as a token?
 
 ERROR
 - attach values/error codes to error messages. what numbers with which errors?
@@ -9,3 +8,11 @@ EXECUTE
 - do this
 
 .o-files to their own folder
+
+
+SIGNALS: 
+- in heredoc C quits heredoc and returns to input mode
+- in input mode D exits bash and prints "exit"
+- in heredoc D outputs this: bash: warning: here-document at line 1 delimited by end-of-file (wanted `echo')
+	and exits heredoc
+- in input mode / seems to clear the written input, same in heredoc
