@@ -10,37 +10,24 @@ int	execute(t_shell *shell)
 {
 	t_exec	*exec;
 	int		loop_count;
+	int		exit_status;
 
 	exec = shell->exec;
 	if (assign_exec_values(shell) == 1)
-		return (1);
+		return (free_exec(&shell->exec));
 	loop_count = 0;
 	while (loop_count < exec->pipe_num + 1)
 	{
 		if (pipe_and_fork(shell, loop_count) == 1)
-			return (1 /*free_exec_(&shell->exec)*/);
+			return (free_exec(&shell->exec));
 		loop_count++;
 	}
-
-	/* if (fd.hd_flag == 0)
-		fd.in = open(argv[1], O_RDONLY);
-	i = 0;
-	while (i < fd.cmd_num - 1)
-	{
-		if (pipe_and_fork(&fd, argv, envp, i) == 1)
-			return (free_pid(&fd.pid));
-		i++;
-	}
-	if (last_fork(&fd, argv, envp, i) == 1 || \
-		waiting_for_pids(&fd, i) == 1)
-		return (free_pid(&fd.pid));
-	free_pid(&fd.pid);*/
-
-	if (waiting_for_pids(exec, loop_count) == 1)
-		return (1);
-	//free_exec_(&shell->exec);
-	if (WIFEXITED(exec->status))
-		return (WEXITSTATUS(exec->status));
+	if (waiting_for_pids(exec, loop_count - 1) == 1)
+		return (free_exec(&shell->exec));
+	exit_status = exec->status;
+	free_exec(&shell->exec);
+	if (WIFEXITED(exit_status))
+		return (WEXITSTATUS(exit_status));
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/30 15:21:15 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 08:55:54 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 static int handle_argument(t_shell *shell, int end)
 {
 	int		quotes_on;
-	int		separator_met;
+	//int		separator_met;
 
 	quotes_on = false;
-	separator_met = false;
+	//separator_met = false;
 	while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
 	{
 		if (isquote(shell->user_input[end]) != false)

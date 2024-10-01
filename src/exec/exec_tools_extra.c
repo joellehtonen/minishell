@@ -7,7 +7,7 @@ static int	count_str(t_envp *envp_copy);
 char	**envp_to_arr(t_envp *envp_copy)
 {
 	char	**envp_arr;
-	t_token	*temp;
+	t_envp	*temp;
 	int		i;
 
 	envp_arr = (char **)malloc((count_str(envp_copy) + 1) * sizeof(char *));
@@ -29,7 +29,7 @@ char	**envp_to_arr(t_envp *envp_copy)
 
 static int	count_str(t_envp *envp_copy)
 {
-	t_token	*temp;
+	t_envp	*temp;
 	int		count;
 
 	count = 0;

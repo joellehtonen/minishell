@@ -17,15 +17,16 @@ int read_input(t_shell *shell)
 		if (input_error_check(shell) == SUCCESS)
 		{
 			tokenize_input(shell);
-			assign_level(&shell->token_pointer, shell->exec);
+			assign_level(&shell->token_pointer, &shell->exec);
 			assign_type(&shell->token_pointer);
 			print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
-			builtins(shell); // for testing purposes
+			//builtins(shell); // for testing purposes
 				//free_and_exit();
 		}
 		add_history(shell->user_input);
 		delete_all_tokens(&shell->token_pointer);
+		printf("exit code: %d\n", shell->exit_code);
 	}
 	free(shell->user_input); // replace with custom free function?
 	return (shell->exit_code);

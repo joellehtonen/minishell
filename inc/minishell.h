@@ -124,7 +124,7 @@ void tokenize_input(t_shell *shell);
 int isseparator(char c);
 int isquote(char c);
 void assign_type(t_token **token);
-void assign_level(t_token **token, t_exec *exec);
+void assign_level(t_token **token, t_exec **exec);
 // execute functions
 int	execute(t_shell *shell);
 char **check_param(t_shell *shell, int loop_count);
@@ -134,6 +134,9 @@ void check_command_access(char **param, t_exec exec);
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
 int	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
+void child_process(t_shell **shell, int loop_count, int flag_pipe);
+int free_exec(t_exec **exec);
+int	close_free(int fd1, int fd2, int fd3, pid_t **pid);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);

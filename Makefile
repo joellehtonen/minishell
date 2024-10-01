@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/09/30 15:22:44 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/01 09:58:20 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
 
 RM			= rm -f
 
@@ -56,8 +56,10 @@ SRC 		= ./src/main.c \
 			./src/exec/execute.c \
 			./src/exec/child_process.c \
 			./src/exec/exec_tools.c \
+			./src/exec/exec_tools_extra.c \
 			./src/exec/param_and_path.c \
 			./src/exec/pipe_and_fork.c \
+			./src/exec/free_exec.c \
 			./src/exit.c
 OBJ 		= $(SRC:.c=.o)
 INCLUDE		= -I "./inc"

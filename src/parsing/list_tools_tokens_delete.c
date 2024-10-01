@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/30 09:51:45 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 09:11:14 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_node(t_token *lst)
 {
-	const char *type_names[] = {"COMM", "ARG", "REDIR1", "DELIM", "INPUT", \
-	"OUTPUT", "PIPE1"};
+	const char *type_names[] = {"COMM", "ARG", "REDIR", "DELIM", "INPUT", \
+	"OUTPUT", "PIPE"};
 	
 	if (lst == NULL)
 	{

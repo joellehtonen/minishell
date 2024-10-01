@@ -9,7 +9,7 @@ static char	*get_exec_path(t_envp *envp_copy, char *command, char **param, t_exe
 char	**check_param(t_shell *shell, int loop_count)
 {
 	char	**param;
-	int		word_num;
+	//int		word_num;
 
 	check_empty(shell->token_pointer, loop_count);
 	
@@ -60,7 +60,7 @@ static void	check_empty(t_token *token, int loop_count)
 		return ;
 	if (temp->line[0] == '\0' || temp->line[0] == ' ')
 	{
-		printing_nop(temp->line, "", ": command not found\n", 2);
+		printing(temp->line, "", ": command not found\n", 2);
 		exit(127);
 	}
 }
@@ -69,10 +69,12 @@ static char	*get_exec_path(t_envp *paths, char *command, char **param, t_exec ex
 {
 	char	*exec_path;
 
+	(void)param;
+	(void)exec;
 	exec_path = NULL;
 	while (paths)
 	{
-		exec_path = ft_strjoin_new(paths->line, "/", command);
+		exec_path = ft_strjoin_four(paths->line, "/", "", command);
 		if (exec_path && access(exec_path, F_OK) == 0)
 			break ;
 		free(exec_path);
@@ -82,7 +84,7 @@ static char	*get_exec_path(t_envp *paths, char *command, char **param, t_exec ex
 /* 	free_all(path, NULL, NULL, &fd.null);
  */	if (exec_path == NULL)
 	{
-		printing_nop(command, ": command not found\n", 2);
+		printing(command, "", ": command not found\n", 2);
 		/* free_all(NULL, param, NULL, &fd.pid); */
 		exit(127);
 	}
