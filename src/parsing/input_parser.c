@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/09/30 16:31:33 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 09:58:14 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void tokenize_input(t_shell *shell)
 	{
 		while (isseparator(shell->user_input[start]) == SPACES)
 			start++;
-		end = start;
+		if (shell->user_input[start] == '\0')
+			break ;
+		else
+			end = start;
 		if (isseparator(shell->user_input[end]) != false)
 		{
 			end++;
