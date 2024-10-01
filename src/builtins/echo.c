@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 16:00:19 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:11:22 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static char	*delete_quotes(char *input);
 static int	calculate_quotes(char *input);
 static void	echo_print(t_envp *envp_copy, char *input);
 
-int echo_exec(t_envp *envp_copy, char *input)
+int echo_exec(t_shell *shell, char *input)
 {
-	int		nl_flag;
+	int		no_newline;
 	char	**words;
 	int		i;
 
 	input = input + 5; // white spaces handled?
-	nl_flag = false;
+	no_newline = false;
 	if (ft_strncmp(input, "-n", 2) == 0 && *(input + 2) == ' ')
 	{
-		nl_flag = true;
+		no_newline = true;
 		input = input + 3;
 	}
 	input = delete_quotes(input);
@@ -38,18 +38,17 @@ int echo_exec(t_envp *envp_copy, char *input)
 	words = ft_split(input, ' ');
 	if (words == NULL)
 	{
-		perror("malloc error");
 		free(input);
-		//free_and_exit();
+		error_printer(shell, MALLOC_FAIL, true);
 	}
 	i = 0;
 	while (words[i])
 	{
 		if (i != 0)
 			printf(" ");
-		echo_print(envp_copy, words[i++]);
+		echo_print(shell->envp_copy, words[i++]);
 	}
-	if (nl_flag == false)
+	if (no_newline == false)
 		printf("%c", '\n');
 	free(input);
 	free_double_arr(words);

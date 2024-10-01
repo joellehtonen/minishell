@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 13:13:50 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:09:40 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
 int	is_directory_new(char *path);
-int echo_exec(t_envp *envp_copy, char *input);
+int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, char *input);
 int	exit_exec(t_shell *shell);
