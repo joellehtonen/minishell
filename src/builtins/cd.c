@@ -31,7 +31,7 @@ int	cd_exec(t_shell *shell)
 			//exit(1); // can add when in child process
 			return (1);
 		}
-		if (is_directory(shell->home) == 1)
+		if (is_directory_new(shell->home) == 1)
 		{
 			printing("cd: ", shell->home, ": No such file or directory\n", 2);
 			//exit(1);
@@ -69,7 +69,7 @@ int	cd_exec(t_shell *shell)
 		return (1);
 	}
 
-	if (ft_strncmp(shell->user_input, "~", 1) != 0 && is_directory(shell->user_input) == 1)
+	if (ft_strncmp(shell->user_input, "~", 1) != 0 && is_directory_new(shell->user_input) == 1)
 	{
 		printing("cd: ", shell->user_input, ": Not a directory\n", 2);
 		//free_and_exit();

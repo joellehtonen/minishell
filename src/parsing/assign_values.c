@@ -13,14 +13,14 @@ void	assign_type(t_token **token)
 	{
 		if (ft_strncmp(temp->line, "|\0", 2) == 0)
 		{
-			temp->type = PIPE1;
+			temp->type = PIPE;
 			comm_flag = 0;
 		}
 		else if (ft_strncmp(temp->line, "<\0", 2) == 0 || ft_strncmp(temp->line, ">\0", 2) == 0)
-			temp->type = REDIR1;
+			temp->type = REDIR;
 		else if (ft_strncmp(temp->line, "<<\0", 3) == 0 || ft_strncmp(temp->line, ">>\0", 3) == 0)
-			temp->type = REDIR1;
-		else if (temp->next && ft_strncmp(temp->next->line, "<\0", 2) == 0)
+			temp->type = REDIR;
+		else if (ft_strncmp(previous->line, "<\0", 2) == 0)
 			temp->type = INPUT;
 		else if (ft_strncmp(previous->line, ">\0", 2) == 0 || ft_strncmp(previous->line, ">>\0", 3) == 0)
 			temp->type = OUTPUT;
@@ -38,18 +38,22 @@ void	assign_type(t_token **token)
 	}
 }
 
-void	assign_level(t_token **token)
+void	assign_level(t_token **token, t_exec **exec)
 {
 	int		level;
-	t_token	*temp;
+	t_token	*token_temp;
+	t_exec	*exec_temp;
 	
 	level = 0;
-	temp = *token;
-	while (temp)
+	token_temp = *token;
+	while (token_temp)
 	{
-		if (ft_strncmp(temp->line, "|\0", 2) == 0)
+		if (ft_strncmp(token_temp->line, "|\0", 2) == 0)
 			level++;
-		temp->level = level;
-		temp = temp->next;
+		token_temp->level = level;
+		token_temp = token_temp->next;
 	}
+	*exec = (t_exec *)malloc(sizeof(t_exec));
+	exec_temp = *exec;
+	exec_temp->pipe_num = level;
 }
