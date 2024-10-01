@@ -26,7 +26,7 @@ int	builtins(t_shell *shell)
 	if (ft_strncmp(shell->user_input, "unset ", 6) == 0)
 		return (unset_exec(&shell->envp_copy, input));
 	if (ft_strncmp(input, "echo ", 5) == 0)
-		return (echo_exec(shell->envp_copy, input));
+		return (echo_exec(shell, input));
 	if (ft_strncmp(input, "pwd", 3) == 0 &&\
 		(*(input + 3) == ' ' || *(input + 3) == '\0'))
 		return (pwd_exec());

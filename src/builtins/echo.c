@@ -6,17 +6,14 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 11:45:47 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 16:00:19 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../inc/minishell.h"
 
 static char	*delete_quotes(char *input);
-
 static int	calculate_quotes(char *input);
-
 static void	echo_print(t_envp *envp_copy, char *input);
 
 int echo_exec(t_envp *envp_copy, char *input)
@@ -26,10 +23,10 @@ int echo_exec(t_envp *envp_copy, char *input)
 	int		i;
 
 	input = input + 5; // white spaces handled?
-	nl_flag = 0;
+	nl_flag = false;
 	if (ft_strncmp(input, "-n", 2) == 0 && *(input + 2) == ' ')
 	{
-		nl_flag = 1;
+		nl_flag = true;
 		input = input + 3;
 	}
 	input = delete_quotes(input);
@@ -52,7 +49,7 @@ int echo_exec(t_envp *envp_copy, char *input)
 			printf(" ");
 		echo_print(envp_copy, words[i++]);
 	}
-	if (nl_flag == 0)
+	if (nl_flag == false)
 		printf("%c", '\n');
 	free(input);
 	free_double_arr(words);

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 13:13:35 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:26:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,22 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 static int handle_argument(t_shell *shell, int end)
 {
 	int		quotes_on;
+	int		separator_met;
 
 	quotes_on = false;
-	while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
+	separator_met = false;
+	while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true)) //should handle more than space
+	//while (shell->user_input[end] != '\0' && (isseparator(shell->user_input[end] != SPACES) || quotes_on == true)) //this is not working for some reason
 	{
 		if (isquote(shell->user_input[end]) != false)
 			quotes_on = !quotes_on;
+		if (isseparator(shell->user_input[end]) != false && quotes_on == false)
+			{
+				if (separator_met == true)
+					end++;
+				separator_met = !separator_met;
+				break ;
+			}
 		end++;
 	}
 	return (end);
@@ -83,7 +93,7 @@ void tokenize_input(t_shell *shell)
 			break ;
 		else
 			end = start;
-		if (isseparator(shell->user_input[end]) != false)
+		if (isseparator(shell->user_input[end]) == true)
 		{
 			end++;
 			if (shell->user_input[end] == shell->user_input[end - 1])

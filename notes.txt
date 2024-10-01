@@ -18,9 +18,10 @@ SIGNALS:
 	and exits heredoc
 - in input mode \ does nothing, same in heredoc
 
-
 if cd into directory and removing an upper directory, handle it somehow
 
 echo "'$USER'" should expand, '"$USER"' should not
 
-> is not creating a file
+handle quotes within strings
+
+echo should also handle -nn, -nnnn etc.

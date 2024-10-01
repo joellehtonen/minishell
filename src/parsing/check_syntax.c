@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 10:18:17 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 14:30:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,16 @@ int input_error_check(t_shell *shell)
 	}
 	while (shell->user_input[index] != '\0')
 	{
-		if (shell->user_input[index] == '\'') // what if quote is inside a string?
-			single_quotes++;
+		if (shell->user_input[index] == '\'')
+		{
+			if (shell->user_input[index - 1] != '\\')
+				single_quotes++;
+		}
 		if (shell->user_input[index] == '\"')
-			double_quotes++;
+		{
+			if (shell->user_input[index - 1] != '\\')
+				double_quotes++;
+		}
 		if (shell->user_input[index] == '|')
 		{
 			if (check_pipe_location(shell, index) == FAILURE)

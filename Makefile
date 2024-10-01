@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/01 13:06:16 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/01 14:57:21 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,11 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
 
 RM			= rm -f
+RMDIR		= rm -rf
 
 # Libft
 LIBFT_DIR	= libft
@@ -63,16 +64,21 @@ SRC 		= ./src/main.c \
 			./src/exec/pipe_and_fork.c \
 			./src/exec/free_exec.c \
 			./src/exit.c
-OBJ 		= $(SRC:.c=.o)
+OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
+OBJ_DIR		= obj
 INCLUDE		= -I "./inc"
 
 # Rules
 all:		$(NAME)
 
-%.o: %.c 
-	$(CC) $(CFLAGS) $(INCLUDE) $^ -c -o $@
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-$(NAME):	$(OBJ)
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
+$(NAME): $(OBJ_DIR) $(OBJ)
 	@echo "$(GREEN)Compiling libft... $(DEF_COLOR)"
 	@make -C $(LIBFT_DIR)  --no-print-directory		# make libft
 	@cp $(LIBFT_LIB) $(NAME)	# copy libft to current
@@ -81,7 +87,7 @@ $(NAME):	$(OBJ)
 
 clean:
 	@echo "$(GREEN)Deleting object files... $(DEF_COLOR)"
-	$(RM) $(OBJ)
+	$(RMDIR) $(OBJ_DIR)
 	@make clean -C $(LIBFT_DIR) --no-print-directory
 
 fclean:		clean 
