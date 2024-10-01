@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 11:13:51 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:09:24 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@
 # include <stdlib.h> //for exit status and malloc
 # include <errno.h> // for errno (error identifiers)
 # include <fcntl.h> // for open
-#include <sys/wait.h> // for waitpid
+# include <sys/wait.h> // for waitpid
 
 # define BUFF_SIZE 1024
-
-# define SPACES true
 
 // error messages
 # define EMPTY_INPUT "Empty input"
@@ -52,14 +50,16 @@ enum e_token_type
 	DELIM,
 	INPUT,
 	OUTPUT,
-	PIPE
+	PIPE, 
+	FLAG, 
+	SPACES
 };
 
-enum e_quotes
-{
-	SINGLE_QUOTE = 1,
-	DOUBLE_QUOTE
-};
+// enum e_quotes
+// {
+// 	SINGLE_QUOTE = 1,
+// 	DOUBLE_QUOTE
+// };
 
 typedef struct	s_envp
 {

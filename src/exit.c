@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 10:14:28 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 11:56:30 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	free_and_exit(t_shell *shell, int error)
 	if (shell->user_input)
 		free(shell->user_input);
 	// what else needs to be freed?
-	// take exit value from the struct
 	if (shell->exit_code)
 		exit(shell->exit_code);
 	else

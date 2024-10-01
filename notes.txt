@@ -17,3 +17,10 @@ SIGNALS:
 - in heredoc D outputs this: bash: warning: here-document at line 1 delimited by end-of-file (wanted `echo')
 	and exits heredoc
 - in input mode \ does nothing, same in heredoc
+
+
+if cd into directory and removing an upper directory, handle it somehow
+
+echo "'$USER'" should expand, '"$USER"' should not
+
+> is not creating a file

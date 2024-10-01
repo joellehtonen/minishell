@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 10:28:08 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:09:03 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@ int isseparator(char c)
 
 int isquote(char c)
 {
-	if (c == '\'')
-		return (SINGLE_QUOTE);
-	if (c == '\"')
-		return (DOUBLE_QUOTE);
+	// if (c == '\'')
+	// 	return (SINGLE_QUOTE);
+	// if (c == '\"')
+	// 	return (DOUBLE_QUOTE);
+	if (c == '\'' || c == '\"')
+		return (true);
 	else
 		return (false);
 }
