@@ -14,7 +14,7 @@ int	pipe_and_fork(t_shell *shell, int i)
 		if (pipe(exec->pipe) == -1)
 		{
 			perror("Pipe failed");
-			return (1/* close_free(exec->in, -1, -1, &exec->null) */);
+			return (close_free(1, exec->in, -1, &exec->null));
 		}
 		flag_pipe = 1;
 	}
@@ -22,17 +22,16 @@ int	pipe_and_fork(t_shell *shell, int i)
 	if (exec->pid[i] == -1)
 	{
 		perror("Fork failed");
-		return (1/* close_free(-1, exec->pipe[0], exec->pipe[1], &exec->null) */);
+		return (close_free(flag_pipe, exec->pipe[0], exec->pipe[1], &exec->null));
 	}
 	if (exec->pid[i] == 0)
 		child_process(&shell, i, flag_pipe);
 	if (flag_pipe == 1 && dup2(exec->pipe[0], 0) == -1)
 	{
-		//close_free(-1, exec->pipe[0], exec->pipe[1], &exec->null);
+		close_free(flag_pipe, exec->pipe[0], exec->pipe[1], &exec->null);
 		perror("dup() error");
 		exit(1);
 	}
-	//close_free(-1, exec->pipe[0], exec->pipe[1], &exec->null);
-
+	close_free(flag_pipe, exec->pipe[0], exec->pipe[1], &exec->null);
 	return (0);
 }

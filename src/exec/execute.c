@@ -36,6 +36,7 @@ static int	assign_exec_values(t_shell *shell)
 	t_exec *exec;
 
 	exec = shell->exec;
+	exec->null = NULL;
 	printf("pipe_num %d\n", exec->pipe_num);
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
 	if (exec->pid == NULL)

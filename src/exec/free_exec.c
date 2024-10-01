@@ -13,18 +13,19 @@ int	free_exec(t_exec **exec)
 	return(1);
 }
 
-int	close_free(int fd1, int fd2, int fd3, pid_t **pid)
+int	close_free(int pipe_flag, int fd1, int fd2, pid_t **pid)
 {
-	if (fd1 >= 0)
-		close(fd1);
-	if (fd2 >= 0)
-		close(fd2);
-	if (fd3 >= 0)
-		close(fd3);
+	
 	if (*pid)
 	{
 		free(*pid);
 		*pid = NULL;
 	}
+	if (pipe_flag  == 0)
+		return (1);
+	if (fd1 >= 0)
+		close(fd1);
+	if (fd2 >= 0)
+		close(fd2);
 	return (1);
 }
