@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 10:18:52 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:00:27 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int isseparator(char c)
 		return (SPACES);
 	if (c == '<' || c == '>' || c == '|')
 		return (true);
-	// if (c == '<' || c == '>')
-	// 	return (REDIR);
-	// if (c == '|')
-	// 	return (PIPE);
+	if (c == '<' || c == '>')
+		return (/* REDIR */2);
+	if (c == '|')
+	 	return (/* PIPE */3);
 	else
 		return (false);
 }

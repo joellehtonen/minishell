@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 10:16:05 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/01 13:05:46 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define BUFF_SIZE 1024
 
-# define SPACES true
+//# define SPACES true
 
 // error messages
 # define EMPTY_INPUT "Empty input"
@@ -59,7 +59,9 @@ enum e_token_type
 	DELIM,
 	INPUT,
 	OUTPUT,
-	PIPE
+	PIPE,
+	FLAG,
+	SPACES
 };
 
 enum e_quotes
