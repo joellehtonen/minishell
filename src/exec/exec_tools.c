@@ -22,8 +22,8 @@ int	is_directory(char *path, t_exec fd, int fd_pipe, char **param)
 	if (result < 0 && errno == EISDIR)
 	{
 		printing(path, "", ": Is a directory\n", 2);
-/* 		close_free(test_fd, fd_pipe, -1, &fd.pid);
-		free_all(param, NULL, NULL, &fd.null); */
+/* 		close_free(test_fd, fd_pipe, -1, &fd.pid); // when do we need to close pipes?
+		free_all(param, NULL, NULL, &fd.null); */ // do we need to free pids?
 		exit(126);
 	}
 	close(test_fd);

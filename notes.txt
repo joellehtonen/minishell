@@ -1,11 +1,14 @@
 PARSER
 - do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
+- recognize flags as FLAG token type
 
 ERROR
 - attach values/error codes to error messages. what numbers with which errors?
 
 EXECUTE
-- do this
+- add heredoc and output-append (>>) functionality
+- update based on FLAG token type
+- update / add freeing functions
 
 exit: command not found
 

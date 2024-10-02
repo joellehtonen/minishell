@@ -6,11 +6,9 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/02 15:02:58 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:46:08 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -79,7 +77,7 @@ typedef struct	s_token
 
 typedef struct	s_exec
 {
-	int		pipe[2];
+	int		**pipe;
 	int		in;
 	int		out;
 	int		status;
@@ -153,7 +151,9 @@ int	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
 void child_process(t_shell **shell, int loop_count, int flag_pipe);
 int free_exec(t_exec **exec);
-int	close_free(int fd1, int fd2, int fd3, pid_t **pid);
+int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
+int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
+void close_pipes_child(int loop_count, t_exec **exec);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);

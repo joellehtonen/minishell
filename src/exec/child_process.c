@@ -4,9 +4,9 @@
 
 static int	check_no_command(t_token *token, int loop_count);
 
-static int	check_for_input(t_shell *shell, int loop_count, int flag_pipe);
+static int	check_for_input(t_shell *shell, int loop_count);
 
-static int	check_for_output(t_shell *shell, int loop_count, int flag_pipe);
+static int	check_for_output(t_shell *shell, int loop_count);
 
 void	child_process(t_shell **shell, int loop_count, int flag_pipe)
 {
@@ -14,30 +14,39 @@ void	child_process(t_shell **shell, int loop_count, int flag_pipe)
 	char	**param;
 	char	*path;
 	
+
 	exec = (*shell)->exec;
-	close_free(flag_pipe, exec->pipe[0], -1, &exec->null);
+
 	if (check_no_command((*shell)->token_pointer, loop_count) == 1)
 	{
-		if (flag_pipe == 1)
-			close(exec->pipe[1]);
+		close_pipes_child(loop_count, &exec);
 		exit (0);
 	}
-	if (check_for_input(*shell, loop_count, flag_pipe) == 0)
+	
+
+	if (check_for_input(*shell, loop_count) == 0)
 	{
 		if (dup2(exec->in, 0) == -1)
 		{
-			close_free(flag_pipe, exec->pipe[1], -1, &exec->null);
+			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->in);
 			perror("dup() error");
 			exit(1);
 		}
 		close(exec->in);
 	}
-	if (check_for_output(*shell, loop_count, flag_pipe) == 0)
+	else if (loop_count > 0 && dup2(exec->pipe[loop_count - 1][0], 0) == -1)
+	{
+		close_pipes_child(loop_count, &exec); // free pids?
+		perror("dup() error 111");
+		exit(1);
+	}
+
+	if (check_for_output(*shell, loop_count) == 0)
 	{
 		if (dup2(exec->out, 1) == -1)
 		{
-			close_free(flag_pipe, exec->pipe[1], -1, &exec->null);
+			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->out);
 			perror("dup() error");
 			exit(1);
@@ -46,45 +55,45 @@ void	child_process(t_shell **shell, int loop_count, int flag_pipe)
 	}
 	else if (flag_pipe == 1)
 	{
-		if (dup2(exec->pipe[1], 1) == -1)
+		if (dup2(exec->pipe[loop_count][1], 1) == -1)
 		{
-			close_free(flag_pipe, exec->pipe[1], -1, &exec->pid);
+			close_pipes_child(loop_count, &exec); // free pids?
 			perror("dup() error");
 			exit(1);
 		}
-		close(exec->pipe[1]);
+		flag_pipe = 0;
 	}
-
-	close_free(flag_pipe, exec->pipe[1], -1, &exec->null); //do we need?
+	
+	close_pipes_child(loop_count, &exec);
 
 	//check if builtins
 
 	param = check_param(*shell, loop_count);
 	if (param == NULL)
 	{
-		/* free_pid(&exec->pid); */
+		//free_exec(&exec);
 		exit(1);
 	}
 
 	path = check_path((*shell)->path, param, *exec);
 	if (path == NULL)
 	{
-		/* free_all(param, NULL, NULL, &fd.pid); */
+		free_all(param, NULL, NULL, &exec->pid);
 		exit(1);
 	}
 	if ((*shell)->envp_str)
-		free_double_arr((*shell)->envp_str);
+		free_double_arr((*shell)->envp_str); // do we need?
 	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
 	if ((*shell)->envp_str == NULL)
 	{
 		perror("malloc() failed");
-		//free_all
+		free_all(param, (*shell)->envp_str, NULL, &exec->pid);
 		exit(1);
 	}
 	if (execve(path, param, (*shell)->envp_str) == -1)
 	{
 		printing(param[0], "", ": Permission denied\n", 2);
-		/* free_all(param, NULL, NULL, &fd.pid); */
+		free_all(param, (*shell)->envp_str, NULL, &exec->pid); // free path?
 		exit(126);
 	}
 }
@@ -105,7 +114,7 @@ static int	check_no_command(t_token *token, int loop_count)
 	return (1);
 }
 
-static int	check_for_input(t_shell *shell, int loop_count, int flag_pipe)
+static int	check_for_input(t_shell *shell, int loop_count)
 {
 	t_token	*temp;
 	
@@ -127,13 +136,13 @@ static int	check_for_input(t_shell *shell, int loop_count, int flag_pipe)
 	shell->exec->in = open(temp->next->line, O_RDONLY);
 	if (shell->exec->in == -1)
 	{
-		close_free(flag_pipe, shell->exec->pipe[1], -1, &shell->exec->pid);
+		close_pipes_child(loop_count, &shell->exec); // free pids?
 		exit(1);
 	}
 	return (0);
 }
 
-static int	check_for_output(t_shell *shell, int loop_count, int flag_pipe)
+static int	check_for_output(t_shell *shell, int loop_count)
 {
 	t_token	*temp;
 	char	*outfile;
@@ -153,7 +162,7 @@ static int	check_for_output(t_shell *shell, int loop_count, int flag_pipe)
 	if (outfile && outfile[0] == '\0')
 	{
 		printing(outfile, "", ": No such file or directory\n", 2);
-		close_free(flag_pipe, shell->exec->pipe[0], -1, &shell->exec->pid);
+		close_pipes_child(loop_count, &shell->exec); // free pids?
 		exit(1);
 	}
 	else
@@ -161,10 +170,10 @@ static int	check_for_output(t_shell *shell, int loop_count, int flag_pipe)
 		shell->exec->out = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 		if (shell->exec->out == -1)
 		{
-			is_directory(outfile, *shell->exec, shell->exec->pipe[0], NULL);
+			is_directory(outfile, *shell->exec, shell->exec->pipe[loop_count][0], NULL);
 			if (access(outfile, W_OK) == -1 && errno == EACCES)
 				printing(outfile, "", ": Permission denied\n", 2);
-			close_free(flag_pipe, shell->exec->pipe[0], -1, &shell->exec->pid);
+			close_pipes_child(loop_count, &shell->exec); // free pids?
 			exit(1);
 		}
 	}

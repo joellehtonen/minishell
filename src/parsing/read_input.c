@@ -5,7 +5,7 @@
 int read_input(t_shell *shell)
 {
 	char	*prompt;
-	
+
 	shell->pwd = get_pwd(shell->home);
 	while (true) 
 	{
@@ -27,11 +27,12 @@ int read_input(t_shell *shell)
 			assign_type(&shell->token_pointer);
 			print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
-			builtins(shell); // for testing purposes
+			//builtins(shell); // for testing purposes
 				//free_and_exit();
 		}
 		add_history(shell->user_input);
 		delete_all_tokens(&shell->token_pointer);
+		free(prompt);
 		printf("exit code: %d\n", shell->exit_code);
 	}
 	free(shell->user_input); // replace with custom free function?
