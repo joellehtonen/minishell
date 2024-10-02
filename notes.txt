@@ -23,6 +23,7 @@ echo "'$USER'" should expand, '"$USER"' should not
 echo should also handle -nn, -nnnn etc.
 
 what if input has many separators like |||| or >>>>, HANDLE only 1-2
-BASH accepts ||>, ||<, ||>>, ||<<, 
+BASH accepts ||>, ||<, ||>>, ||<<, ||<>
+but not ||><
 
 SIGINT (ctrl c) exit code is 130

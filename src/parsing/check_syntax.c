@@ -6,37 +6,51 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/02 11:23:17 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:51:24 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	check_consecutive_separators(t_shell *shell, int index1)
+static int	is_valid_redir(t_shell *shell, int index1, int index2)
+{
+	char c1;
+	char c2;
+	
+	c1 = shell->user_input[index1];
+	c2 = shell->user_input[index2];
+	if ((c1 == '<' && c2 == '<')
+		|| (c1 == '<' && c2 == '>')
+		|| (c1 == '>' && c2 == '>'))
+		return (true);
+	else
+		return (false);
+}
+
+static int	check_consecutive_IO(t_shell *shell, int index1)
 {
 	int	index2;
 	int	index3;
 	
 	index2 = index1 + 1;
 	index3 = index1 + 2;
-	if (isseparator(shell, index1) != false && isseparator(shell, index2) == false
-		&& isseparator(shell, index3) == false)
+	if (isIO(shell, index1) != false && isIO(shell, index2) == false
+		&& isIO(shell, index3) == false)
 		return (SUCCESS);
-	if (isseparator(shell, index1) == PIPE && isseparator(shell, index2) == PIPE
-		&& isseparator(shell, index3) == false)
-		return (SUCCESS);
-	if (isseparator(shell, index1) == REDIR && isseparator(shell, index2) == REDIR
-		&& isseparator(shell, index3) == false)
-		return (SUCCESS);
-	if (isseparator(shell, index1) == PIPE && isseparator(shell, index2) == REDIR
-		&& isseparator(shell, index3) == false)
-		return (SUCCESS);
-	if (isseparator(shell, index1) == PIPE && isseparator(shell, index2) == PIPE
-		&& isseparator(shell, index3) == REDIR)
-		return (SUCCESS);
-	if (isseparator(shell, index1) == PIPE && isseparator(shell, index2) == REDIR
-		&& isseparator(shell, index3) == false)
-		return (SUCCESS);
+	if (isIO(shell, index1) == PIPE)
+	{
+		if ((isIO(shell, index2) == PIPE && isIO(shell, index3) == false)
+			|| (isIO(shell, index2) == REDIR && isIO(shell, index3) == false)
+			|| (isIO(shell, index2) == PIPE && isIO(shell, index3) == REDIR)
+			|| is_valid_redir(shell, index2, index3) == true)
+			return (SUCCESS);
+	}
+	if (isIO(shell, index1) == REDIR)
+	{
+		if (is_valid_redir(shell, index1, index2) == true
+			&& isIO(shell, index3) == false)
+			return (SUCCESS);
+	}
 	return (FAILURE);
 }
 
@@ -45,7 +59,7 @@ static int	check_redir_location(t_shell *shell, int index)
 	index++;
 	while (shell->user_input[index] != '\0')
 	{
-		if (isseparator(shell, index) == SPACES)
+		if (isspaces(shell, index) == true)
 		{ 
 			index++;
 			if (shell->user_input[index] == '|'
@@ -69,7 +83,7 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	new_index = old_index + 1;
 	while (shell->user_input[new_index] != '\0')
 	{
-		if (isseparator(shell, new_index) == SPACES)
+		if (isspaces(shell, new_index) == true)
 		{
 			new_index++;
 			if (shell->user_input[new_index] == '|')
@@ -83,7 +97,7 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	new_index = old_index - 1;
 	while (new_index >= 0)
 	{
-		if (isseparator(shell, new_index) == SPACES)
+		if (isspaces(shell, new_index) == true)
 			new_index--;
 		else
 			return (SUCCESS);
@@ -125,7 +139,7 @@ int input_error_check(t_shell *shell)
 				error_printer(shell, PIPE_ERROR, false);
 				return (FAILURE);
 			}
-			if (check_consecutive_separators(shell, index) == FAILURE)
+			if (check_consecutive_IO(shell, index) == FAILURE)
 			{
 				error_printer(shell, SYNTAX_ERROR, false);
 				return (FAILURE);
@@ -138,7 +152,7 @@ int input_error_check(t_shell *shell)
 				error_printer(shell, REDIR_ERROR, false);
 				return (FAILURE);
 			}
-			if (check_consecutive_separators(shell, index) == FAILURE)
+			if (check_consecutive_IO(shell, index) == FAILURE)
 			{
 				error_printer(shell, SYNTAX_ERROR, false);
 				return (FAILURE);
