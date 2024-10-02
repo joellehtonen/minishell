@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/01 14:57:21 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/10/02 15:01:48 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRC 		= ./src/main.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
 			./src/parsing/assign_values.c \
+			./src/parsing/parser_utils.c \
 			./src/builtins/builtins_extra.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins.c \

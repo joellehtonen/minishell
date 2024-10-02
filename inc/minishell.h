@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/02 14:20:17 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 15:02:58 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ void tokenize_input(t_shell *shell);
 int isIO(t_shell *shell, int index);
 int isquote(t_shell *shell, int index);
 int isspaces(t_shell *shell, int index);
+int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
 // execute functions

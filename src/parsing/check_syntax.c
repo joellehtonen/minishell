@@ -6,34 +6,23 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/02 14:51:24 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:42:56 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	is_valid_redir(t_shell *shell, int index1, int index2)
-{
-	char c1;
-	char c2;
-	
-	c1 = shell->user_input[index1];
-	c2 = shell->user_input[index2];
-	if ((c1 == '<' && c2 == '<')
-		|| (c1 == '<' && c2 == '>')
-		|| (c1 == '>' && c2 == '>'))
-		return (true);
-	else
-		return (false);
-}
-
 static int	check_consecutive_IO(t_shell *shell, int index1)
 {
-	int	index2;
-	int	index3;
+	int		index2;
+	int		index3;
+	char	c2;
+	char	c3;
 	
 	index2 = index1 + 1;
 	index3 = index1 + 2;
+	c2 = shell->user_input[index2];
+	c3 = shell->user_input[index3];
 	if (isIO(shell, index1) != false && isIO(shell, index2) == false
 		&& isIO(shell, index3) == false)
 		return (SUCCESS);
@@ -45,12 +34,33 @@ static int	check_consecutive_IO(t_shell *shell, int index1)
 			|| is_valid_redir(shell, index2, index3) == true)
 			return (SUCCESS);
 	}
-	if (isIO(shell, index1) == REDIR)
+	if (shell->user_input[index1] == '<')
 	{
-		if (is_valid_redir(shell, index1, index2) == true
-			&& isIO(shell, index3) == false)
+		if (c2 == '<' && c3 == '<')
 			return (SUCCESS);
+		if (is_valid_redir(shell, index1, index2))
+			return SUCCESS;
 	}
+	if (shell->user_input[index1] == '>')
+	{
+		if (c2 == '<')
+			return (SUCCESS);
+		if (c2 == '>')
+		{
+			if (c3 == '<')
+				return (FAILURE);
+			return (SUCCESS);
+		}
+	}
+	// if (shell->user_input[index1] == '<' && shell->user_input[index2] == '<' 
+	// 	&& shell->user_input[index3] == '<' && isIO(shell, index3 + 1) == false)
+	// 	return (SUCCESS);
+	// if (isIO(shell, index1) == REDIR)
+	// {
+	// 	if (is_valid_redir(shell, index1, index2) == true
+	// 		&& (is_valid_redir(shell, index2, index3) || isIO(shell, index3) == false))
+	// 		return (SUCCESS);
+	// }
 	return (FAILURE);
 }
 
@@ -115,11 +125,7 @@ int input_error_check(t_shell *shell)
 	single_quotes = 0;
 	double_quotes = 0;
 	if (ft_strlen(shell->user_input) == 0)
-	{
-		// error_printer(shell, EMPTY_INPUT, false);
-		//printf("\n");
 		return (FAILURE);
-	}
 	while (shell->user_input[index] != '\0')
 	{
 		if (shell->user_input[index] == '\'')
