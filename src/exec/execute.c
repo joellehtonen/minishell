@@ -6,6 +6,8 @@ static int	assign_exec_values(t_shell *shell);
 
 static int	waiting_for_pids(t_exec *exec, int count);
 
+static void	close_pipes_parent(t_exec **exec);
+
 int	execute(t_shell *shell)
 {
 	t_exec	*exec;
@@ -19,9 +21,13 @@ int	execute(t_shell *shell)
 	while (loop_count < exec->pipe_num + 1)
 	{
 		if (pipe_and_fork(shell, loop_count) == 1)
+		{
+			close_pipes_parent(&shell->exec);
 			return (free_exec(&shell->exec));
+		}
 		loop_count++;
 	}
+	close_pipes_parent(&shell->exec);
 	if (waiting_for_pids(exec, loop_count - 1) == 1)
 		return (free_exec(&shell->exec));
 	exit_status = exec->status;
@@ -34,8 +40,30 @@ int	execute(t_shell *shell)
 static int	assign_exec_values(t_shell *shell)
 {
 	t_exec *exec;
-
+	int		i;
+	
 	exec = shell->exec;
+	if (exec->pipe_num > 0)
+	{
+		exec->pipe = malloc(sizeof(int *) * exec->pipe_num);  // Allocate an array of pointers to pipes
+   		if (!exec->pipe)
+    	{
+       		perror("malloc() failed");
+        	exit(EXIT_FAILURE);
+   		}
+    	// Allocate each pipe (each pipe is an array of 2 integers)
+		i = 0;
+    	while (i < exec->pipe_num)
+    	{
+       		exec->pipe[i] = malloc(sizeof(int) * 2);
+        	if (!exec->pipe[i])
+        	{
+            	perror("malloc() failed");
+            	exit(EXIT_FAILURE);
+        	}
+			i++;
+    	}
+	}
 	exec->null = NULL;
 	printf("pipe_num %d\n", exec->pipe_num);
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
@@ -65,4 +93,18 @@ static int	waiting_for_pids(t_exec *exec, int count)
 		count++;
 	}
 	return (0);
+}
+
+static void	close_pipes_parent(t_exec **exec)
+{
+	int		i;
+
+	i = 0;
+
+	while (i < (*exec)->pipe_num)
+	{
+		close((*exec)->pipe[i][0]);
+		close((*exec)->pipe[i][1]);
+		i++;
+	}
 }

@@ -17,7 +17,6 @@ char	**check_param(t_shell *shell, int loop_count)
 	param = param_to_arr(shell->token_pointer, loop_count);
 	if (param == NULL)
 		perror("malloc() failed");
-	//free(str_new); 
 	return (param);
 }
 
