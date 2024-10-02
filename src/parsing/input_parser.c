@@ -6,25 +6,32 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 14:26:41 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:13:05 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../inc/minishell.h"
 
-#include "../inc/minishell.h"
-
-int isseparator(char c)
+int isseparator(t_shell *shell, int index)
 {
+	char	c;
+
+	c = shell->user_input[index];
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
 		return (SPACES);
-	if (c == '<' || c == '>' || c == '|')
-		return (true);
+	if (c == '<' || c == '>')
+		return (REDIR);
+	if	(c == '|')
+		return (PIPE);
 	else
 		return (false);
 }
 
-int isquote(char c)
+int isquote(t_shell *shell, int index)
 {
+	char	c;
+
+	c = shell->user_input[index];
 	// if (c == '\'')
 	// 	return (SINGLE_QUOTE);
 	// if (c == '\"')
@@ -60,12 +67,12 @@ static int handle_argument(t_shell *shell, int end)
 
 	quotes_on = false;
 	separator_met = false;
-	while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true)) //should handle more than space
+	while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
 	//while (shell->user_input[end] != '\0' && (isseparator(shell->user_input[end] != SPACES) || quotes_on == true)) //this is not working for some reason
 	{
-		if (isquote(shell->user_input[end]) != false)
+		if (isquote(shell, end) != false)
 			quotes_on = !quotes_on;
-		if (isseparator(shell->user_input[end]) != false && quotes_on == false)
+		if (isseparator(shell, end) != false && quotes_on == false)
 			{
 				if (separator_met == true)
 					end++;
@@ -87,13 +94,13 @@ void tokenize_input(t_shell *shell)
 	token_number = 0;
 	while (shell->user_input[start] != '\0')
 	{
-		while (isseparator(shell->user_input[start]) == SPACES)
+		while (isseparator(shell, start) == SPACES)
 			start++;
 		if (shell->user_input[start] == '\0')
 			break ;
 		else
 			end = start;
-		if (isseparator(shell->user_input[end]) == true)
+		if (isseparator(shell, end) != false)
 		{
 			end++;
 			if (shell->user_input[end] == shell->user_input[end - 1])

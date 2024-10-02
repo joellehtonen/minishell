@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	count_str(t_envp *envp_copy);
 

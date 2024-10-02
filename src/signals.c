@@ -6,13 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/01 11:25:46 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:17:39 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static void	clear_input(int signal)
+void	clear_input(int signal)
 {
 	(void)signal;
 	write(1, "\n", 1);

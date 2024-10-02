@@ -1,6 +1,6 @@
 //42 header
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	check_no_command(t_token *token, int loop_count);
 
@@ -56,6 +56,8 @@ void	child_process(t_shell **shell, int loop_count, int flag_pipe)
 	}
 
 	close_free(flag_pipe, exec->pipe[1], -1, &exec->null); //do we need?
+
+	//check if builtins
 
 	param = check_param(*shell, loop_count);
 	if (param == NULL)

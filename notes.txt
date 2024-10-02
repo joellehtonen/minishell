@@ -7,8 +7,6 @@ ERROR
 EXECUTE
 - do this
 
-.o-files to their own folder
-
 exit: command not found
 
 SIGNALS: 
@@ -22,6 +20,9 @@ if cd into directory and removing an upper directory, handle it somehow
 
 echo "'$USER'" should expand, '"$USER"' should not
 
-handle quotes within strings
-
 echo should also handle -nn, -nnnn etc.
+
+what if input has many separators like |||| or >>>>, HANDLE only 1-2
+BASH accepts ||>, ||<, ||>>, ||<<, 
+
+SIGINT (ctrl c) exit code is 130

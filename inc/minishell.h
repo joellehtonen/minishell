@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/01 16:09:40 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/02 11:17:51 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define QUOTE_ERROR "Odd number of quotes (only even amount accepted)"
 # define MALLOC_FAIL "Allocating memory failed"
 # define SIGNAL_ERROR "Failed to set up a signal"
+# define SYNTAX_ERROR "Syntax error near unexpected token"
 
 enum e_success
 {
@@ -135,8 +136,8 @@ int	exit_exec(t_shell *shell);
 int export_exec(t_envp **envp_copy, char *input);
 // parsing functions
 void tokenize_input(t_shell *shell);
-int isseparator(char c);
-int isquote(char c);
+int isseparator(t_shell *shell, int index);
+int isquote(t_shell *shell, int index);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
 // execute functions
@@ -156,6 +157,7 @@ int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);
 void	set_up_signals(t_shell *shell);
+void	clear_input(int signal);
 // exit
 void free_and_exit(t_shell *shell, int error);
 void free_double_arr(char **arr);

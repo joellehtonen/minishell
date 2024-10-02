@@ -1,3 +1,5 @@
+//42 HEADER
+
 #include "../../inc/minishell.h"
 
 void	assign_type(t_token **token)
