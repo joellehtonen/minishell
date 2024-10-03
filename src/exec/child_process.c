@@ -118,16 +118,12 @@ static int	check_for_input(t_shell *shell, int loop_count)
 {
 	t_token	*temp;
 	
-	temp = shell->token_pointer;
-	while (temp && temp->level != loop_count)
-		temp = temp->next;
-	while (temp && temp->level == loop_count)
-	{
-		if (temp->type == REDIR && ft_strncmp(temp->line, "<\0", 2) == 0)
-			break ;
-		temp = temp->next;
-	}
-	if (!temp || temp->level != loop_count)
+	temp = find_token_line(shell->token_pointer, loop_count, REDIR, "<<\0");
+	if (temp && temp->next)
+		return (here_doc(shell->exec, temp));
+	else
+		temp = find_token_line(shell->token_pointer, loop_count, REDIR, "<\0");
+	if (!temp || !temp->next)
 		return (1);
 	if (access(temp->next->line, R_OK) == -1 && errno == EACCES)
 		printing(temp->next->line, "", ": Permission denied\n", 2);
@@ -147,16 +143,10 @@ static int	check_for_output(t_shell *shell, int loop_count)
 	t_token	*temp;
 	char	*outfile;
 	
-	temp = shell->token_pointer;
-	while (temp && temp->level != loop_count)
-		temp = temp->next;
-	while (temp && temp->level == loop_count)
-	{
-		if (temp->type == REDIR && ft_strncmp(temp->line, ">\0", 2) == 0)
-			break ;
-		temp = temp->next;
-	}
-	if (!temp || temp->level != loop_count)
+	temp = find_token_line(shell->token_pointer, loop_count, REDIR, ">\0");
+	if (!temp || !temp->next)
+		temp = find_token_line(shell->token_pointer, loop_count, REDIR, ">>\0");;
+	if (!temp || !temp->next)
 		return (1);
 	outfile = temp->next->line;
 	if (outfile && outfile[0] == '\0')
@@ -167,7 +157,10 @@ static int	check_for_output(t_shell *shell, int loop_count)
 	}
 	else
 	{
-		shell->exec->out = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+		if (ft_strncmp(temp->line, ">\0", 2) == 0)
+			shell->exec->out = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+		else
+			shell->exec->out = open(outfile, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (shell->exec->out == -1)
 		{
 			is_directory(outfile, *shell->exec, shell->exec->pipe[loop_count][0], NULL);
