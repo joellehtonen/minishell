@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/02 16:46:08 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/03 14:55:53 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ enum e_token_type
 
 // enum e_quotes
 // {
-// 	SINGLE_QUOTE = 1,
-// 	DOUBLE_QUOTE
+// 	S_QUOTE = 1,
+// 	D_QUOTE
 // };
 
 typedef struct	s_envp
@@ -71,7 +71,7 @@ typedef struct	s_token
 	char			*line;
 	int				level;
 	int				type;
-	int				token_number; //for error checking at least
+	int				token_number;
 	struct s_token	*next;
 }				t_token;
 
@@ -86,7 +86,6 @@ typedef struct	s_exec
 	pid_t	*pid;
 }				t_exec;
 
-
 typedef struct	s_shell
 {
 	t_envp	*envp_copy;
@@ -95,9 +94,9 @@ typedef struct	s_shell
 	char	*uname; //USER from envp
 	char	*pwd; //current location
 	char	*home; //HOME from envp
-	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
-	char 	*user_input; //whatever readline reads is saved into this array
 	t_exec	*exec; // file descriptors for pipes and forks
+	char 	*user_input; //whatever readline reads is saved into this array
+	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
 	int		exit_code; 
 }				t_shell;
 

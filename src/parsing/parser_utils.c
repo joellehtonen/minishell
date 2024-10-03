@@ -9,6 +9,8 @@ int	is_valid_redir(t_shell *shell, int index1, int index2)
 	
 	c1 = shell->user_input[index1];
 	c2 = shell->user_input[index2];
+	if (isIO(shell, index2) == false)
+		return (true);
 	if ((c1 == '<' && c2 == '<')
 		|| (c1 == '<' && c2 == '>')
 		|| (c1 == '>' && c2 == '>'))
@@ -47,11 +49,10 @@ int isquote(t_shell *shell, int index)
 
 	c = shell->user_input[index];
 	// if (c == '\'')
-	// 	return (SINGLE_QUOTE);
+	// 	return (S_QUOTE);
 	// if (c == '\"')
-	// 	return (DOUBLE_QUOTE);
+	// 	return (D_QUOTE);
 	if (c == '\'' || c == '\"')
 		return (true);
-	else
-		return (false);
+	return (false);
 }

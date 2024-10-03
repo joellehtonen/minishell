@@ -6,61 +6,46 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/02 16:42:56 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/03 10:42:18 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	check_consecutive_IO(t_shell *shell, int index1)
+static int	count_IO(t_shell *shell, int index)
 {
-	int		index2;
-	int		index3;
-	char	c2;
-	char	c3;
-	
-	index2 = index1 + 1;
-	index3 = index1 + 2;
-	c2 = shell->user_input[index2];
-	c3 = shell->user_input[index3];
-	if (isIO(shell, index1) != false && isIO(shell, index2) == false
-		&& isIO(shell, index3) == false)
+	int	count;
+	count = 0;
+	while (isIO(shell, index) != false)
+	{
+		count++;
+		index++;
+	}
+	return (count);
+}
+
+static int	check_consecutive_IO(t_shell *shell, int index)
+{
+	if (isIO(shell, index) != false && isIO(shell, index + 1) == false)
 		return (SUCCESS);
-	if (isIO(shell, index1) == PIPE)
+	if (isIO(shell, index) == PIPE)
 	{
-		if ((isIO(shell, index2) == PIPE && isIO(shell, index3) == false)
-			|| (isIO(shell, index2) == REDIR && isIO(shell, index3) == false)
-			|| (isIO(shell, index2) == PIPE && isIO(shell, index3) == REDIR)
-			|| is_valid_redir(shell, index2, index3) == true)
-			return (SUCCESS);
-	}
-	if (shell->user_input[index1] == '<')
-	{
-		if (c2 == '<' && c3 == '<')
-			return (SUCCESS);
-		if (is_valid_redir(shell, index1, index2))
-			return SUCCESS;
-	}
-	if (shell->user_input[index1] == '>')
-	{
-		if (c2 == '<')
-			return (SUCCESS);
-		if (c2 == '>')
+		index++;
+		if (isIO(shell, index) == PIPE)
 		{
-			if (c3 == '<')
+			index++;
+			if (isIO(shell, index) == PIPE)
 				return (FAILURE);
-			return (SUCCESS);
 		}
+		if (isIO(shell, index) == false)
+			return (SUCCESS);
 	}
-	// if (shell->user_input[index1] == '<' && shell->user_input[index2] == '<' 
-	// 	&& shell->user_input[index3] == '<' && isIO(shell, index3 + 1) == false)
-	// 	return (SUCCESS);
-	// if (isIO(shell, index1) == REDIR)
-	// {
-	// 	if (is_valid_redir(shell, index1, index2) == true
-	// 		&& (is_valid_redir(shell, index2, index3) || isIO(shell, index3) == false))
-	// 		return (SUCCESS);
-	// }
+	if (isIO(shell, index) == REDIR)
+	{
+		if (is_valid_redir(shell, index, index + 1) == true
+			&& (isIO(shell, index + 2) == false))
+			return (SUCCESS);
+	}
 	return (FAILURE);
 }
 
@@ -115,11 +100,38 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	return (FAILURE);
 }
 
+static int	validate_IO(t_shell *shell, int index)
+{
+	if (shell->user_input[index] == '|')
+	{
+		if (check_pipe_location(shell, index) == FAILURE)
+		{
+			error_printer(shell, PIPE_ERROR, false);
+			return (FAILURE);
+		}
+	}
+	if (shell->user_input[index] == '<' || shell->user_input[index] == '>')
+	{
+		if (check_redir_location(shell, index) == FAILURE)
+		{
+			error_printer(shell, REDIR_ERROR, false);
+			return (FAILURE);
+		}
+	}
+	if (check_consecutive_IO(shell, index) == FAILURE)
+		{
+			error_printer(shell, SYNTAX_ERROR, false);
+			return (FAILURE);
+		}
+	return (SUCCESS);
+}
+
 int input_error_check(t_shell *shell)
 {
 	int	single_quotes;
 	int	double_quotes;
 	int	index;
+	int	count;
 	
 	index = 0;
 	single_quotes = 0;
@@ -138,33 +150,18 @@ int input_error_check(t_shell *shell)
 			if (shell->user_input[index - 1] != '\\')
 				double_quotes++;
 		}
-		if (shell->user_input[index] == '|')
+		if (isIO(shell, index) != false)
 		{
-			if (check_pipe_location(shell, index) == FAILURE)
+			if (validate_IO(shell, index) == SUCCESS)
 			{
-				error_printer(shell, PIPE_ERROR, false);
-				return (FAILURE);
+				count = count_IO(shell, index);
+				index = index + count;
 			}
-			if (check_consecutive_IO(shell, index) == FAILURE)
-			{
-				error_printer(shell, SYNTAX_ERROR, false);
+			else
 				return (FAILURE);
-			}
 		}
-		if (shell->user_input[index] == '<' || shell->user_input[index] == '>')
-		{
-			if (check_redir_location(shell, index) == FAILURE)
-			{
-				error_printer(shell, REDIR_ERROR, false);
-				return (FAILURE);
-			}
-			if (check_consecutive_IO(shell, index) == FAILURE)
-			{
-				error_printer(shell, SYNTAX_ERROR, false);
-				return (FAILURE);
-			}
-		}
-		index++;
+		else
+			index++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 	{
