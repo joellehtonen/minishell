@@ -82,6 +82,8 @@ typedef struct	s_exec
 	int		out;
 	int		status;
 	int		pipe_num;
+	int		hd_flag;
+	int		hd_pipe[2];
 	pid_t	*null;
 	pid_t	*pid;
 }				t_exec;
@@ -154,15 +156,20 @@ int free_exec(t_exec **exec);
 int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
+t_token	*find_token_line(t_token *token, int loop_count, \
+	int token_type, char *line);
+int	here_doc(t_exec *exec, t_token *redir);
+int	free_two_str(char *str1, char *str2);
+size_t	ft_strchr_fix(const char *s, int c);
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);
-void	set_up_signals(t_shell *shell);
-void	clear_input(int signal);
+void set_up_signals(t_shell *shell);
+void clear_input(int signal);
 // exit
 void free_and_exit(t_shell *shell, int error);
 void free_double_arr(char **arr);
-void	error_printer(t_shell *shell, char *message, int exit);
+void error_printer(t_shell *shell, char *message, int exit);
 
 #endif /* MINISHELL_H */

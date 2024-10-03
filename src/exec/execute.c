@@ -26,6 +26,11 @@ int	execute(t_shell *shell)
 			return (free_exec(&shell->exec));
 		}
 		loop_count++;
+		/* if (exec->hd_flag == 1) // do we need?
+		{
+			close(exec->hd_pipe[0]);
+			exec->hd_flag = 0;
+		} */
 	}
 	close_pipes_parent(&shell->exec);
 	if (waiting_for_pids(exec, loop_count - 1) == 1)
@@ -65,6 +70,7 @@ static int	assign_exec_values(t_shell *shell)
     	}
 	}
 	exec->null = NULL;
+	exec->hd_flag = 0;
 	printf("pipe_num %d\n", exec->pipe_num);
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
 	if (exec->pid == NULL)
