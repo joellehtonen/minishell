@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/02 15:01:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:40:00 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void tokenize_input(t_shell *shell)
 	token_number = 0;
 	while (shell->user_input[start] != '\0')
 	{
-		while (isspaces(shell, start) == true)
+		while (isspaces(shell->user_input[start]) == true)
 			start++;
 		if (shell->user_input[start] == '\0')
 			break ;

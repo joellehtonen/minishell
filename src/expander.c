@@ -2,58 +2,66 @@
 
 #include "../inc/minishell.h"
 
-void	replace_dollar(t_shell *shell, t_token *token)
+static void	handle_dollar(t_shell *shell, t_token *token, int index)
+{
+	int	len;
+	char *ref;
+
+	len = 0;
+	if (token->single_quote != false)
+	{
+		//look for where the $WORD ends, consider that it can be separated either by space, | or <>. 
+		//look for that word in the env, counting len after =
+		//malloc for that amount and copy those letters into a new string
+		//copy the new string, with $ expanded, into token->line
+		//so "this is my $HOME" becomes "this is my /home/jlehtone"
+	}
+}
+
+
+static void	handle_quotes(t_shell *shell, t_token *token)
 {	
 	int	index;
 	int	copy_index;
 	char *replacement;
-	int	single_quote;
-	int	double_quote;
 
 	index = 0;
 	copy_index = 0;
-	single_quote = false;
-	double_quote = false;
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
 	if (!replacement)
 		error_printer(shell, MALLOC_FAIL, true);
 	while (token->line[index] != '\0')
 	{
-		if (token->line[index] == '\'' && double_quote == false)
+		if (token->line[index] == '\'' && token->double_quote == false)
 		{
-			single_quote = !single_quote;
+			token->single_quote = !token->single_quote;
 			index++;
 		}
-		if (token->line[index] == '\"' && single_quote == false)
+		if (token->line[index] == '\"' && token->single_quote == false)
 		{
-			double_quote = !double_quote;
+			token->double_quote = !token->double_quote;
 			index++;
 		}
-		if ((double_quote == true || single_quote == false && double_quote == false)
-			&& token->line[index] == '$')
-		{
-			while (shell->envp_copy)
-			{
-				shell->envp_copy = shell->envp_copy->next;
-			}
-		}
-		if (single_quote == true)
-			replacement[copy_index++] = token->line[index];
-
-		index++;
+		if (token->line[index] == '$')
+			handle_dollar(shell, token, index);
+		replacement[copy_index++] = token->line[index++];
+		// if ((double_quote == true || single_quote == false && double_quote == false)
+		// 	&& token->line[index] == '$')
 	}
 	replacement[copy_index] = '\0';
 }
 
-void	find_dollar(t_shell *shell)
+
+void	expander(t_shell *shell)
 {   
 	t_token *temp;
 
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
-		if (ft_strchr(temp->line, '$') != NULL)
-			replace_dollar(shell, temp);
+		handle_quotes(shell, temp);
+		// if (ft_strchr(temp->line, '$') != NULL)
+		// 	replace_dollar(shell, temp);
 		temp = temp->next;
 	}
 }

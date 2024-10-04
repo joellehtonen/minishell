@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/03 10:42:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:39:48 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	check_redir_location(t_shell *shell, int index)
 	index++;
 	while (shell->user_input[index] != '\0')
 	{
-		if (isspaces(shell, index) == true)
+		if (isspaces(shell->user_input[index]) == true)
 		{ 
 			index++;
 			if (shell->user_input[index] == '|'
@@ -78,7 +78,7 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	new_index = old_index + 1;
 	while (shell->user_input[new_index] != '\0')
 	{
-		if (isspaces(shell, new_index) == true)
+		if (isspaces(shell->user_input[new_index]) == true)
 		{
 			new_index++;
 			if (shell->user_input[new_index] == '|')
@@ -92,7 +92,7 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	new_index = old_index - 1;
 	while (new_index >= 0)
 	{
-		if (isspaces(shell, new_index) == true)
+		if (isspaces(shell->user_input[new_index]) == true)
 			new_index--;
 		else
 			return (SUCCESS);

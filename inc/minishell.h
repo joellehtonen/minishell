@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/03 14:55:53 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/04 15:39:02 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct	s_token
 	int				level;
 	int				type;
 	int				token_number;
+	int				single_quote;
+	int				double_quote;
 	struct s_token	*next;
 }				t_token;
 
@@ -135,7 +137,7 @@ int export_exec(t_envp **envp_copy, char *input);
 void tokenize_input(t_shell *shell);
 int isIO(t_shell *shell, int index);
 int isquote(t_shell *shell, int index);
-int isspaces(t_shell *shell, int index);
+int isspaces(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);

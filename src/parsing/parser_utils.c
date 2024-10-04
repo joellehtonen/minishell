@@ -19,11 +19,11 @@ int	is_valid_redir(t_shell *shell, int index1, int index2)
 		return (false);
 }
 
-int isspaces(t_shell *shell, int index)
+int isspaces(char c)
 {
-	char	c;
+	// char	c;
 
-	c = shell->user_input[index];
+	// c = shell->user_input[index];
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
 		return (true);
 	else
