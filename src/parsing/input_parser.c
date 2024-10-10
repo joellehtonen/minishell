@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/04 15:40:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/10 10:46:51 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int handle_argument(t_shell *shell, int end)
 	quotes_on = false;
 	IO_met = false;
 	//while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
-	while (shell->user_input[end] != '\0' && (isspaces(shell, end) == false || quotes_on == true))
+	while (shell->user_input[end] != '\0' && (isspaces(shell->user_input[end]) == false || quotes_on == true))
 	{
 		if (isquote(shell, end) != false)
 			quotes_on = !quotes_on;
