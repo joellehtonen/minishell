@@ -52,7 +52,6 @@ static int	only_one_builtin(t_shell *shell)
 	int		orig_in;
 	int		orig_out;
 
-	printf("only one built-in\n");
 	orig_in = dup(STDIN_FILENO);
 	orig_out = dup(STDOUT_FILENO);
 	get_input_and_output(&shell, 0);

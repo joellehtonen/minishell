@@ -82,7 +82,6 @@ int	export_exec(t_envp **envp_copy, t_token *export, int loop_count)
 		}
 		return (0);
 	}
-	printf("arg->line: %s\n", arg->line);
 	if (ft_strchr(arg->line, '=') == NULL)
 	{
 		//do we need to handle?
@@ -97,7 +96,6 @@ int	export_exec(t_envp **envp_copy, t_token *export, int loop_count)
 		//free_and_exit(...);
 		return(1);
 	}
-	printf("new envp: %s\n ", new->line);
 	ft_lstadd_back_envp(&temp, new);
 	return (0);
 }
