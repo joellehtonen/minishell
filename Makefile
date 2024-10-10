@@ -64,6 +64,8 @@ SRC 		= ./src/main.c \
 			./src/exec/param_and_path.c \
 			./src/exec/pipe_and_fork.c \
 			./src/exec/free_exec.c \
+			./src/exec/here_doc.c \
+			./src/exec/here_doc_tools.c \
 			./src/exit.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
