@@ -58,6 +58,7 @@ void	assign_level(t_token **token, t_exec **exec)
 	*exec = (t_exec *)malloc(sizeof(t_exec));
 	exec_temp = *exec;
 	exec_temp->pipe_num = level;
+	exec_temp->pipe_flag = 0;
 	exec_temp->pipe = NULL;
 	exec_temp->pipe_num = level;
 }

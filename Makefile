@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/10 10:47:38 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/10 15:43:25 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRC 		= ./src/main.c \
 			./src/exec/free_exec.c \
 			./src/exec/here_doc.c \
 			./src/exec/here_doc_tools.c \
+			./src/exec/redir.c \
 			./src/exit.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj

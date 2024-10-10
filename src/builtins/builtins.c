@@ -4,9 +4,9 @@
 
 static int pwd_exec();
 
-static void envp_remove_if_data(t_envp **lst, char *data, int (*cmp)());
+void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 
-int	check_if_builtins(t_shell *shell, int loop_count)
+int	exec_builtins(t_shell *shell, int loop_count)
 {
 	t_token	*builtins;
 
@@ -17,18 +17,16 @@ int	check_if_builtins(t_shell *shell, int loop_count)
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "exit"))
 	{
-		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "exit");
 		return(exit_exec(shell));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "env"))
 	{
-		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "env");
 		return(env_exec(shell->envp_copy));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "export"))
 	{
 		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "export");
-		//return(export_exec(builtins, loop_count));
+		return(export_exec(&shell->envp_copy, builtins, loop_count));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "unset"))
 	{
@@ -42,10 +40,9 @@ int	check_if_builtins(t_shell *shell, int loop_count)
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "pwd"))
 	{
-		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "pwd");
 		return(pwd_exec());
 	}
-	return (1);
+	return(0);
 }
 
 static int pwd_exec()
@@ -65,16 +62,18 @@ static int pwd_exec()
 	}
 	printf("%s\n", pwd);
 	free(pwd);
-	return (0);
+	return(0);
 }
 
-int	export_exec(t_envp **envp_copy, char *input)
+int	export_exec(t_envp **envp_copy, t_token *export, int loop_count)
 {
 	t_envp	*new;
 	t_envp	*temp;
+	t_token	*arg;
 	
 	temp = *envp_copy;
-	if (*(input + 6) == '\0')
+	arg = find_token(export, loop_count, ARG);
+	if (!arg)
 	{
 		while (temp)
 		{
@@ -83,25 +82,27 @@ int	export_exec(t_envp **envp_copy, char *input)
 		}
 		return (0);
 	}
-	input = input + 7;
-	if (ft_strchr(input, '=') == NULL)
+	printf("arg->line: %s\n", arg->line);
+	if (ft_strchr(arg->line, '=') == NULL)
 	{
 		//do we need to handle?
 		//e.g. if in previous child process variable is assigned
+		//free_and_exit(...);
 		return (0);
 	}
-	envp_remove_if_data(envp_copy, input, ft_strncmp);
-	new = ft_lstnew_envp(input);
+	envp_remove_if_export(&temp, arg->line, ft_strncmp);
+	new = ft_lstnew_envp(arg->line);
 	if (new == NULL)
 	{
 		//free_and_exit(...);
 		return(1);
 	}
-	ft_lstadd_back_envp(envp_copy, new);
+	printf("new envp: %s\n ", new->line);
+	ft_lstadd_back_envp(&temp, new);
 	return (0);
 }
 
-static void envp_remove_if_data(t_envp **lst, char *data, int (*cmp)())
+void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
 {
 	t_envp *temp;
 	
@@ -111,13 +112,14 @@ static void envp_remove_if_data(t_envp **lst, char *data, int (*cmp)())
 	if (cmp(temp->line, data, ft_strlen(data) \
 			- ft_strlen(ft_strchr(data, '=')) + 1) == 0)
 	{
+		printf("matching node found\n");
 		*lst = temp->next;
 		free(temp);
-		envp_remove_if_data(lst, data, cmp);
+		envp_remove_if_export(lst, data, cmp);
 	}
 	else
 	{
 		temp = *lst;
-		envp_remove_if_data(&temp->next, data, cmp);
+		envp_remove_if_export(&temp->next, data, cmp);
 	}
 }

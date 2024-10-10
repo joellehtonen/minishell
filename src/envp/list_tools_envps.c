@@ -25,7 +25,9 @@ t_envp	*ft_lstnew_envp(char *content)
 	new = (t_envp *)malloc(sizeof(*new));
 	if (new == NULL)
 		return ((void *) 0);
-	new->line = content;
+	new->line = ft_strdup(content);
+	if (new->line == NULL)
+		return (NULL);
 	new->next = NULL;
 	return (new);
 }

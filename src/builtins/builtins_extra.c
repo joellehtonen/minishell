@@ -13,6 +13,7 @@ int	env_exec(t_envp *envp_copy)
 		printf("%s\n", envp_copy->line);
 		envp_copy = envp_copy->next;
 	}
+	//free_and_exit();
 	return (0);
 }
 
@@ -27,7 +28,7 @@ int	exit_exec(t_shell *shell)
 {
 	(void)shell;
 	//free_and_exit();
-	exit(0);
+	return (0);
 }
 
 static void envp_remove_if_line(t_envp **lst, char *data, int (*cmp)())

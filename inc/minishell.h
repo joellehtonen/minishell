@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/10 11:05:35 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/10 15:16:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct	s_exec
 	int		out;
 	int		status;
 	int		pipe_num;
+	int		pipe_flag;
 	int		hd_flag;
 	int		hd_pipe[2];
 	pid_t	*null;
@@ -124,7 +125,7 @@ void	delete_one_token(t_token *lst);
 void	delete_all_tokens(t_token **lst);
 void	print_node(t_token *lst);
 // builtin functions
-int	check_if_builtins(t_shell *shell, int loop_count);
+int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell);
 char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
@@ -134,7 +135,8 @@ int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, char *input);
 int	exit_exec(t_shell *shell);
-int export_exec(t_envp **envp_copy, char *input);
+int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
+int	if_builtin(t_shell *shell, int loop_count);
 // parsing functions
 void tokenize_input(t_shell *shell);
 int isIO(t_shell *shell, int index);
@@ -145,6 +147,7 @@ void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
 // execute functions
 int	execute(t_shell *shell);
+void get_input_and_output(t_shell **shell, int loop_count);
 char **check_param(t_shell *shell, int loop_count);
 char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_exec exec);
@@ -152,16 +155,18 @@ void check_command_access(char **param, t_exec exec);
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
 int	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
-void child_process(t_shell **shell, int loop_count, int flag_pipe);
+void child_process(t_shell **shell, int loop_count);
 int free_exec(t_exec **exec);
 int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
 t_token	*find_token_line(t_token *token, int loop_count, \
 	int token_type, char *line);
+t_token	*find_token(t_token *token, int loop_count, int token_type);
 int	here_doc(t_exec *exec, t_token *redir);
 int	free_two_str(char *str1, char *str2);
 size_t	ft_strchr_fix(const char *s, int c);
+void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 // miscellaneous
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);

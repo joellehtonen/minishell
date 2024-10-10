@@ -41,3 +41,16 @@ static int	count_str(t_envp *envp_copy)
 	}
 	return (count);
 }
+
+int	if_builtin(t_shell *shell, int loop_count)
+{
+	if ((find_token_line(shell->token_pointer, loop_count, COMM, "cd")) ||\
+		(find_token_line(shell->token_pointer, loop_count, COMM, "exit")) ||\
+		(find_token_line(shell->token_pointer, loop_count, COMM, "env")) ||\
+		(find_token_line(shell->token_pointer, loop_count, COMM, "export")) ||\
+		(find_token_line(shell->token_pointer, loop_count, COMM, "unset")) ||\
+		(find_token_line(shell->token_pointer, loop_count, COMM, "echo")) ||\
+		(find_token_line(shell->token_pointer, loop_count, COMM, "pwd")))
+		return(0);
+	return(1);
+}

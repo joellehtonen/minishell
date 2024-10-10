@@ -119,7 +119,8 @@ int	is_directory_new(char *path)
 int	update_pwd(t_envp **envp_copy)
 {
 	t_envp	*temp;
-	char	*export_old;
+	t_envp	*new;
+	t_envp	*new2;
 	char	*pwd;
 	char	*export_new;
 
@@ -128,8 +129,14 @@ int	update_pwd(t_envp **envp_copy)
 	{
 		if (ft_strncmp((*envp_copy)->line, "PWD=", 4) == 0)
 		{
-			export_old = ft_strjoin("export OLD", (*envp_copy)->line);
-			export_exec(&temp, export_old);
+			envp_remove_if_export(envp_copy, (*envp_copy)->line, ft_strncmp);
+			new = ft_lstnew_envp((*envp_copy)->line);
+			if (new == NULL)
+			{
+				//free_and_exit(...);
+				return(0);
+			}
+			ft_lstadd_back_envp(envp_copy, new);
 		}
 		*envp_copy = (*envp_copy)->next;
 	}
@@ -145,7 +152,19 @@ int	update_pwd(t_envp **envp_copy)
 		perror("getcwd error");
 		//free_and_exit();
 	}
-	export_new = ft_strjoin("export PWD=", pwd);
-	export_exec(envp_copy, export_new);
+	export_new = ft_strjoin("PWD=", pwd);
+	if (export_new == NULL)
+	{
+		perror("malloc error");
+		//free_and_exit();
+	}
+	envp_remove_if_export(envp_copy, export_new, ft_strncmp);
+	new2 = ft_lstnew_envp(export_new);
+	if (new2 == NULL)
+		{
+			//free_and_exit(...);
+			return(0);
+		}
+		ft_lstadd_back_envp(envp_copy, new2);
 	return (0);
 }
