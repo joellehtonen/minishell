@@ -19,11 +19,13 @@ int	is_valid_redir(t_shell *shell, int index1, int index2)
 		return (false);
 }
 
-int isspaces(char c)
+char *find_separator(char *string)
 {
-	// char	c;
+	
+}
 
-	// c = shell->user_input[index];
+int ft_isspace(char c)
+{
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
 		return (true);
 	else
@@ -32,9 +34,6 @@ int isspaces(char c)
 
 int isIO(char c)
 {
-	// char	c;
-
-	// c = shell->user_input[index];
 	if	(c == '|')
 		return (PIPE);
 	if (c == '<' || c == '>')
@@ -45,9 +44,6 @@ int isIO(char c)
 
 int isquote(char c)
 {
-	// char	c;
-
-	// c = shell->user_input[index];
 	// if (c == '\'')
 	// 	return (S_QUOTE);
 	// if (c == '\"')

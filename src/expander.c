@@ -2,30 +2,70 @@
 
 #include "../inc/minishell.h"
 
-static void	handle_dollar(t_shell *shell, t_token *token, int index)
+static char *expand_variable(t_shell *shell, char *pointer)
 {
-	int	len;
-	char *ref;
+	char	*expansion;
+	int		len;
+
+	len = ft_strlen(pointer);
+	expansion = malloc(sizeof(char) * (len + 1));
+	if (!expansion)
+		error_printer(shell, MALLOC_FAIL, true);
+	ft_strlcpy(expansion, pointer, len + 1);
+	return (expansion);
+}
+
+static char *find_variable(t_shell *shell, char *key, int len)
+{
+	t_envp	*temp;
+	char	*value;
+
+	temp = shell->envp_copy;
+	value = NULL;
+		while (temp)
+	{
+		if (ft_strncmp(temp->line, key, len) == 0 \
+			&& temp->line[len] == '=')
+		{
+			value = ft_strdup(temp->line + len + 1);
+			break ;
+		}
+		temp = temp->next;
+	}
+	return (value);
+}
+
+static char	*handle_dollar(t_shell *shell, t_token *token, int index)
+{
+	int		len;
+	char	*key;
+	char	*value_pointer;
+	char	*expansion;
 
 	len = 0;
-	if (token->single_quote != false)
+	while (token->line + index + len \
+		&& (ft_isalnum(token->line[index + len]) == true \
+		|| token->line[index + len] == '_'))
 	{
-		//look for where the $WORD ends, consider that it can be separated either by space, | or <>. 
-		//look for that word in the env, counting len after =
-		//malloc for that amount and copy those letters into a new string
-		//copy the new string, with $ expanded, into *replacement
-		//so "this is my $HOME" becomes "this is my /home/jlehtone"
-		//if envp not found, just return
+		len++;
 	}
-
+	key = ft_substr(token->line, index + 1, len);
+	value_pointer = find_variable(shell, key, len);
+	free(key);
+	if (!value_pointer)
+		return (ft_strdup(""));
+	expansion = expand_variable(shell, value_pointer);
+	free(value_pointer);
+	return (expansion);
 }
 
 
 static void	handle_quotes(t_shell *shell, t_token *token)
 {	
-	int	index;
-	int	copy_index;
-	char *replacement;
+	int		index;
+	int		copy_index;
+	char	*replacement;
+	char	*expansion;
 
 	index = 0;
 	copy_index = 0;
@@ -44,19 +84,24 @@ static void	handle_quotes(t_shell *shell, t_token *token)
 			token->double_quote = !token->double_quote;
 			index++;
 		}
-		// if (token->line[index] == '$' && token->line[index + 1] != '\'')
-		if (token->line[index] == '$' && ft_isspace)
-			handle_dollar(shell, token, index);
-		else if (token->line[index] == '$' && token->line[index + 1] == '\'')
+		if (token->line[index] == '$' \
+			&& isquote(token->line[index + 1]) == false \
+			&& token->line[index + 1] != '\0' \
+			&& token->single_quote == false)
+		{
+			expansion = handle_dollar(shell, token, index);
+			ft_strlcat(replacement, expansion, ft_strlen(replacement) + ft_strlen(expansion) + 1);
+			index += ft_strlen(expansion);
+			free(expansion);
+		}
+		else if (token->line[index] == '$' && isquote(token->line[index + 1]) == true)
 			index++;
 		else
 			replacement[copy_index++] = token->line[index++];
-		// if ((double_quote == true || single_quote == false && double_quote == false)
-		// 	&& token->line[index] == '$')
 	}
 	replacement[copy_index] = '\0';
-	//free token->line
-	//replace with replacement
+	free (token->line);
+	token->line = replacement;
 }
 
 
