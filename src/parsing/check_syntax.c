@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/04 15:39:48 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:10:25 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	count_IO(t_shell *shell, int index)
 {
 	int	count;
 	count = 0;
-	while (isIO(shell, index) != false)
+	while (isIO(shell->user_input[index]) != false)
 	{
 		count++;
 		index++;
@@ -26,24 +26,24 @@ static int	count_IO(t_shell *shell, int index)
 
 static int	check_consecutive_IO(t_shell *shell, int index)
 {
-	if (isIO(shell, index) != false && isIO(shell, index + 1) == false)
+	if (isIO(shell->user_input[index]) != false && isIO(shell->user_input[index + 1]) == false)
 		return (SUCCESS);
-	if (isIO(shell, index) == PIPE)
+	if (isIO(shell->user_input[index]) == PIPE)
 	{
 		index++;
-		if (isIO(shell, index) == PIPE)
+		if (isIO(shell->user_input[index]) == PIPE)
 		{
 			index++;
-			if (isIO(shell, index) == PIPE)
+			if (isIO(shell->user_input[index]) == PIPE)
 				return (FAILURE);
 		}
-		if (isIO(shell, index) == false)
+		if (isIO(shell->user_input[index]) == false)
 			return (SUCCESS);
 	}
-	if (isIO(shell, index) == REDIR)
+	if (isIO(shell->user_input[index]) == REDIR)
 	{
 		if (is_valid_redir(shell, index, index + 1) == true
-			&& (isIO(shell, index + 2) == false))
+			&& (isIO(shell->user_input[index + 1]) == false))
 			return (SUCCESS);
 	}
 	return (FAILURE);
@@ -54,7 +54,7 @@ static int	check_redir_location(t_shell *shell, int index)
 	index++;
 	while (shell->user_input[index] != '\0')
 	{
-		if (isspaces(shell->user_input[index]) == true)
+		if (ft_isspace(shell->user_input[index]) == true)
 		{ 
 			index++;
 			if (shell->user_input[index] == '|'
@@ -78,7 +78,7 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	new_index = old_index + 1;
 	while (shell->user_input[new_index] != '\0')
 	{
-		if (isspaces(shell->user_input[new_index]) == true)
+		if (ft_isspace(shell->user_input[new_index]) == true)
 		{
 			new_index++;
 			if (shell->user_input[new_index] == '|')
@@ -92,7 +92,7 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 	new_index = old_index - 1;
 	while (new_index >= 0)
 	{
-		if (isspaces(shell->user_input[new_index]) == true)
+		if (ft_isspace(shell->user_input[new_index]) == true)
 			new_index--;
 		else
 			return (SUCCESS);
@@ -150,7 +150,7 @@ int input_error_check(t_shell *shell)
 			if (shell->user_input[index - 1] != '\\')
 				double_quotes++;
 		}
-		if (isIO(shell, index) != false)
+		if (isIO(shell->user_input[index]) != false)
 		{
 			if (validate_IO(shell, index) == SUCCESS)
 			{

@@ -67,6 +67,8 @@ void	child_process(t_shell **shell, int loop_count, int flag_pipe)
 	close_pipes_child(loop_count, &exec);
 
 	//check if builtins
+	//e.g. 	temp = find_token(token, loop_count, COMM);
+
 
 	param = check_param(*shell, loop_count);
 	if (param == NULL)

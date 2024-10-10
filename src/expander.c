@@ -13,9 +13,11 @@ static void	handle_dollar(t_shell *shell, t_token *token, int index)
 		//look for where the $WORD ends, consider that it can be separated either by space, | or <>. 
 		//look for that word in the env, counting len after =
 		//malloc for that amount and copy those letters into a new string
-		//copy the new string, with $ expanded, into token->line
+		//copy the new string, with $ expanded, into *replacement
 		//so "this is my $HOME" becomes "this is my /home/jlehtone"
+		//if envp not found, just return
 	}
+
 }
 
 
@@ -42,13 +44,19 @@ static void	handle_quotes(t_shell *shell, t_token *token)
 			token->double_quote = !token->double_quote;
 			index++;
 		}
-		if (token->line[index] == '$')
+		// if (token->line[index] == '$' && token->line[index + 1] != '\'')
+		if (token->line[index] == '$' && ft_isspace)
 			handle_dollar(shell, token, index);
-		replacement[copy_index++] = token->line[index++];
+		else if (token->line[index] == '$' && token->line[index + 1] == '\'')
+			index++;
+		else
+			replacement[copy_index++] = token->line[index++];
 		// if ((double_quote == true || single_quote == false && double_quote == false)
 		// 	&& token->line[index] == '$')
 	}
 	replacement[copy_index] = '\0';
+	//free token->line
+	//replace with replacement
 }
 
 

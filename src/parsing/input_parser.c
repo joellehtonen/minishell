@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/04 15:40:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:08:16 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static int handle_argument(t_shell *shell, int end)
 	quotes_on = false;
 	IO_met = false;
 	//while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
-	while (shell->user_input[end] != '\0' && (isspaces(shell, end) == false || quotes_on == true))
+	while (shell->user_input[end] != '\0' && (ft_isspace(shell->user_input[end]) == false || quotes_on == true))
 	{
-		if (isquote(shell, end) != false)
+		if (isquote(shell->user_input[end]) != false)
 			quotes_on = !quotes_on;
-		if (isIO(shell, end) != false && quotes_on == false)
+		if (isIO(shell->user_input[end]) != false && quotes_on == false)
 			{
 				if (IO_met == true)
 					end++;
@@ -64,13 +64,13 @@ void tokenize_input(t_shell *shell)
 	token_number = 0;
 	while (shell->user_input[start] != '\0')
 	{
-		while (isspaces(shell->user_input[start]) == true)
+		while (ft_isspace(shell->user_input[start]) == true)
 			start++;
 		if (shell->user_input[start] == '\0')
 			break ;
 		else
 			end = start;
-		if (isIO(shell, end) != false)
+		if (isIO(shell->user_input[end]) != false)
 		{
 			end++;
 			if (shell->user_input[end] == shell->user_input[end - 1])

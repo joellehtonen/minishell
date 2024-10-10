@@ -23,6 +23,7 @@ int read_input(t_shell *shell)
 		if (input_error_check(shell) == SUCCESS)
 		{
 			tokenize_input(shell);
+			//expand
 			assign_level(&shell->token_pointer, &shell->exec);
 			assign_type(&shell->token_pointer);
 			print_node(shell->token_pointer); //for testing

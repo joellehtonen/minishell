@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/04 15:39:02 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:08:28 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,9 @@ int	exit_exec(t_shell *shell);
 int export_exec(t_envp **envp_copy, char *input);
 // parsing functions
 void tokenize_input(t_shell *shell);
-int isIO(t_shell *shell, int index);
-int isquote(t_shell *shell, int index);
-int isspaces(char c);
+int isIO(char c);
+int isquote(char c);
+int ft_isspace(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);

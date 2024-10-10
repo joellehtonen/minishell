@@ -1,13 +1,12 @@
 PARSER
 - do not ignore dollar sign with double quotes (HANDLE WHEN EXPANDING)
-- recognize flags as FLAG token type
 
 ERROR
 - attach values/error codes to error messages. what numbers with which errors?
 
 EXECUTE
-- update based on FLAG token type
 - update / add freeing functions
+- builtins
 - what if we have multiple input / output files?
 
 exit: command not found
@@ -24,6 +23,7 @@ if cd into directory and removing an upper directory, handle it somehow
 echo "'$USER'" should expand, '"$USER"' should not
 
 echo should also handle -nn, -nnnn etc.
+if there is something else, like -nnnni, print it as well
 
 update error message to include latest token/char
 
