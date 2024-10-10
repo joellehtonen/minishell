@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/04 15:39:02 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:05:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	delete_one_token(t_token *lst);
 void	delete_all_tokens(t_token **lst);
 void	print_node(t_token *lst);
 // builtin functions
-int	builtins(t_shell *shell);
+int	check_if_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell);
 char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);

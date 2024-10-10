@@ -6,6 +6,7 @@ ERROR
 
 EXECUTE
 - builtins
+- modify exit command to exit the shell? could we use the Ctrl+D signal stuff? what if the input is e.g. "echo moi | exit"?
 - update / add freeing functions
 - what if we have multiple input / output files?
 

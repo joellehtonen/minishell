@@ -66,7 +66,11 @@ void	child_process(t_shell **shell, int loop_count, int flag_pipe)
 	
 	close_pipes_child(loop_count, &exec);
 
-	//check if builtins
+	if (check_if_builtins(*shell, loop_count) == 0)
+	{
+		//free_exec(&exec);
+		exit(0);
+	}
 
 	param = check_param(*shell, loop_count);
 	if (param == NULL)

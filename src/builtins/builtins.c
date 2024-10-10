@@ -6,31 +6,46 @@ static int pwd_exec();
 
 static void envp_remove_if_data(t_envp **lst, char *data, int (*cmp)());
 
-int	builtins(t_shell *shell)
+int	check_if_builtins(t_shell *shell, int loop_count)
 {
-	char	*input;
-	
-	input = shell->user_input;
-	if (ft_strncmp(input, "cd ", 3) == 0 ||\
-		(ft_strncmp(input, "cd", 2) == 0 && ft_strlen(input) == 2))
-		return (cd_exec(shell));
-	if (ft_strncmp(input, "exit", 4) == 0 &&\
-		(*(input + 4) == ' ' || *(input + 4) == '\0'))
-		return (exit_exec(shell));
-	if (ft_strncmp(shell->user_input, "env", 3) == 0 &&\
-		(*(input + 3) == ' ' || *(input + 3) == '\0'))
-		return (env_exec(shell->envp_copy));
-	if (ft_strncmp(input, "export", 6) == 0 &&\
-		(*(input + 6) == ' ' || *(input + 6) == '\0'))
-		return (export_exec(&shell->envp_copy, input));
-	if (ft_strncmp(shell->user_input, "unset ", 6) == 0)
-		return (unset_exec(&shell->envp_copy, input));
-	if (ft_strncmp(input, "echo ", 5) == 0)
-		return (echo_exec(shell, input));
-	if (ft_strncmp(input, "pwd", 3) == 0 &&\
-		(*(input + 3) == ' ' || *(input + 3) == '\0'))
-		return (pwd_exec());
-	return (0);
+	t_token	*builtins;
+
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "cd"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "cd");
+		//return(cd_exec(builtins, loop_count));
+	}
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "exit"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "exit");
+		return(exit_exec(shell));
+	}
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "env"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "env");
+		return(env_exec(shell->envp_copy));
+	}
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "export"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "export");
+		//return(export_exec(builtins, loop_count));
+	}
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "unset"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "unset");
+		//return(unset_exec(builtins, loop_count));
+	}
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "echo"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "echo");
+		//return(echo_new(builtins, loop_count));
+	}
+	if (find_token_line(shell->token_pointer, loop_count, COMM, "pwd"))
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "pwd");
+		return(pwd_exec());
+	}
+	return (1);
 }
 
 static int pwd_exec()
