@@ -59,8 +59,22 @@ static char	*handle_dollar(t_shell *shell, t_token *token, int index)
 	return (expansion);
 }
 
+static int handle_quotes(t_shell *shell, t_token *token, int index)
+{
+	if (token->line[index] == '\'' && token->double_quote == false)
+	{
+		token->single_quote = !token->single_quote;
+		index++;
+	}
+	if (token->line[index] == '\"' && token->single_quote == false)
+	{
+		token->double_quote = !token->double_quote;
+		index++;
+	}
+	return (index);
+}
 
-static void	handle_quotes(t_shell *shell, t_token *token)
+static void	check_content(t_shell *shell, t_token *token)
 {	
 	int		index;
 	int		copy_index;
@@ -74,16 +88,8 @@ static void	handle_quotes(t_shell *shell, t_token *token)
 		error_printer(shell, MALLOC_FAIL, true);
 	while (token->line[index] != '\0')
 	{
-		if (token->line[index] == '\'' && token->double_quote == false)
-		{
-			token->single_quote = !token->single_quote;
-			index++;
-		}
-		if (token->line[index] == '\"' && token->single_quote == false)
-		{
-			token->double_quote = !token->double_quote;
-			index++;
-		}
+		if (isquote(token->line[index] == true))
+			index = handle_quote(shell, token, index);
 		if (token->line[index] == '$' \
 			&& isquote(token->line[index + 1]) == false \
 			&& token->line[index + 1] != '\0' \
@@ -104,7 +110,6 @@ static void	handle_quotes(t_shell *shell, t_token *token)
 	token->line = replacement;
 }
 
-
 void	expander(t_shell *shell)
 {   
 	t_token *temp;
@@ -112,9 +117,7 @@ void	expander(t_shell *shell)
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
-		handle_quotes(shell, temp);
-		// if (ft_strchr(temp->line, '$') != NULL)
-		// 	replace_dollar(shell, temp);
+		check_content(shell, temp);
 		temp = temp->next;
 	}
 }
