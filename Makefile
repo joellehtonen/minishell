@@ -83,23 +83,23 @@ $(OBJ_DIR):
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@echo "$(GREEN)Compiling libft... $(DEF_COLOR)"
+	@echo "$(YELLOW)Compiling libft... $(DEF_COLOR)"
 	@make -C $(LIBFT_DIR)  --no-print-directory		# make libft
 	@cp $(LIBFT_LIB) $(NAME)	# copy libft to current
 	@$(CC) $(CFLAGS) $(OBJ) -lreadline $(LIBFT_LIB) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)SUCCESS, MINISHELL IS READY $(DEF_COLOR)"
 
 clean:
-	@echo "$(GREEN)Deleting object files... $(DEF_COLOR)"
-	$(RMDIR) $(OBJ_DIR)
+	@echo "$(RED)Deleting object files... $(DEF_COLOR)"
+	@$(RMDIR) $(OBJ_DIR)
 	@make clean -C $(LIBFT_DIR) --no-print-directory
 
 fclean:		clean 
-	@echo "$(GREEN)Deleting minishell... $(DEF_COLOR)"
-	$(RM) $(NAME) $(LIBFT_LIB)
+	@echo "$(RED)Deleting minishell... $(DEF_COLOR)"
+	@$(RM) $(NAME) $(LIBFT_LIB)
 	@make fclean -C $(LIBFT_DIR) --no-print-directory
 	@echo "$(GREEN)CLEAR $(DEF_COLOR)"
 
