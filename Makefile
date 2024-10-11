@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/10 15:43:25 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/11 10:23:25 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC 		= ./src/main.c \
 			./src/parsing/check_syntax.c \
 			./src/parsing/assign_values.c \
 			./src/parsing/parser_utils.c \
+			./src/parsing/expander.c \
 			./src/builtins/builtins_extra.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins.c \

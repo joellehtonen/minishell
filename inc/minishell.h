@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/11 10:05:40 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/11 10:22:56 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char *get_pwd(char *home);
 int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
 int	is_directory_new(char *path);
+int echo(t_shell *shell, t_token *echo_pointer);
 int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, char *input);
@@ -145,6 +146,7 @@ int ft_isspace(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
+void	expander(t_shell *shell);
 // execute functions
 int	execute(t_shell *shell);
 void get_input_and_output(t_shell **shell, int loop_count);
