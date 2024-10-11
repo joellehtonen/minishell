@@ -166,6 +166,9 @@ int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
 int	here_doc(t_exec *exec, t_token *redir);
 // miscellaneous
+t_token	*find_token(t_token *token, int loop_count, int token_type);
+t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
+int	count_nodes_type(t_token *start, int token_type, int loop_count);
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);
