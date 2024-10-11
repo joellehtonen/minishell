@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/10 15:43:25 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/11 13:31:09 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
 
 RM			= rm -f
 RMDIR		= rm -rf
@@ -40,10 +40,12 @@ LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 # Source / OBJ files / Includes
 SRC 		= ./src/main.c \
 			./src/envp/envp_tools.c \
+			./src/envp/envp_tools_extra.c \
 			./src/envp/list_tools_envps.c \
 			./src/envp/ft_split_list.c \
 			./src/parsing/list_tools_tokens.c \
 			./src/parsing/list_tools_tokens_delete.c \
+			./src/parsing/list_tools_tokens_extra.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \

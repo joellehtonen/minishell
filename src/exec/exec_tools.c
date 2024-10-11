@@ -70,44 +70,6 @@ static int	count_str(t_token *token, int loop_count)
 	return (count);
 }
 
-t_token	*find_token(t_token *token, int loop_count, int token_type)
-{
-	t_token	*temp;
-	
-	temp = token;
-	while (temp && temp->level != loop_count)
-		temp = temp->next;
-	while (temp && temp->level == loop_count)
-	{
-		if (temp->type == token_type)
-			return (temp);
-		temp = temp->next;
-	}
-	if (!temp || temp->level != loop_count)
-		return ((void *) 0);
-	return((void *) 0);
-}
-
-t_token	*find_token_line(t_token *token, int loop_count, \
-	int token_type, char *line)
-{
-	t_token	*temp;
-	
-	temp = token;
-	while (temp && temp->level != loop_count)
-		temp = temp->next;
-	while (temp && temp->level == loop_count)
-	{
-		if (temp->type == token_type && \
-			ft_strncmp(temp->line, line, ft_strlen(line)) == 0)
-			return (temp);
-		temp = temp->next;
-	}
-	if (!temp || temp->level != loop_count)
-		return ((void *) 0);
-	return((void *) 0);
-}
-
 void	check_command_access(char **param, t_exec exec)
 {
 	char	*command;
