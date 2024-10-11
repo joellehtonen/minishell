@@ -28,7 +28,6 @@ int read_input(t_shell *shell)
 			assign_type(&shell->token_pointer);
 			print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
-			builtins(shell); // for testing purposes
 				//free_and_exit();
 		}
 		add_history(shell->user_input);

@@ -4,8 +4,6 @@
 
 static int	count_str(t_token *token, int loop_count);
 
-t_token	*find_token(t_token *token, int loop_count, int token_type);
-
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param)
 {
 	int		test_fd;

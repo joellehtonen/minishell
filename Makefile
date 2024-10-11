@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/02 16:46:25 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/10/10 15:43:25 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= gcc
-CFLAGS		= -ggdb3 -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= cc
+CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
 
 RM			= rm -f
 RMDIR		= rm -rf
@@ -66,6 +66,7 @@ SRC 		= ./src/main.c \
 			./src/exec/free_exec.c \
 			./src/exec/here_doc.c \
 			./src/exec/here_doc_tools.c \
+			./src/exec/redir.c \
 			./src/exit.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
