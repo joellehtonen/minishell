@@ -65,30 +65,6 @@ char	*get_pwd(char *home)
 	return(new_pwd);
 }
 
-int	too_many_arg_cd(char *input)
-{
-	int		s_quote_flag;
-	int		d_quote_flag;
-
-	s_quote_flag = 0;
-	d_quote_flag = 0;
-	input = input + 3;
-	while (*input == ' ')
-		input++;
-	while(*input)
-	{
-		if (*input == '\'')
-			s_quote_flag++;
-		if (*input == '\"')
-			d_quote_flag++;
-		if (*input == ' ' && s_quote_flag % 2 == 0 &&\
-			d_quote_flag % 2 == 0 && only_spaces(input) == 1)
-			return (1);
-		input++;
-	}
-	return (0);
-}
-
 int	only_spaces(char *str)
 {
 	while (*str)
@@ -111,36 +87,40 @@ int	is_directory_new(char *path)
 		return (1);
 	result = read(fd, &buffer, 1);
 	if (result < 0 && errno == EISDIR)
+	{
+		close(fd);
 		return (0);
+	}
 	else
+	{
+		close(fd);
 		return (1);
+	}
+}
+
+int is_file(char *path)
+{
+	int		fd;
+	char	buffer;
+	ssize_t	result;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	result = read(fd, &buffer, 1);
+	if (result < 0 && errno == EISDIR)
+		return (1);
+	else
+		return (0);
 }
 
 int	update_pwd(t_envp **envp_copy)
 {
-	t_envp	*temp;
 	t_envp	*new;
-	t_envp	*new2;
 	char	*pwd;
 	char	*export_new;
 
-	temp = *envp_copy;
-	while (*envp_copy)
-	{
-		if (ft_strncmp((*envp_copy)->line, "PWD=", 4) == 0)
-		{
-			envp_remove_if_export(envp_copy, (*envp_copy)->line, ft_strncmp);
-			new = ft_lstnew_envp((*envp_copy)->line);
-			if (new == NULL)
-			{
-				//free_and_exit(...);
-				return(0);
-			}
-			ft_lstadd_back_envp(envp_copy, new);
-		}
-		*envp_copy = (*envp_copy)->next;
-	}
-	*envp_copy = temp;
+	envp_remove_if_line(envp_copy, "PWD=", ft_strncmp);
 	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
 	{
@@ -158,13 +138,12 @@ int	update_pwd(t_envp **envp_copy)
 		perror("malloc error");
 		//free_and_exit();
 	}
-	envp_remove_if_export(envp_copy, export_new, ft_strncmp);
-	new2 = ft_lstnew_envp(export_new);
-	if (new2 == NULL)
-		{
-			//free_and_exit(...);
-			return(0);
-		}
-		ft_lstadd_back_envp(envp_copy, new2);
+	new = ft_lstnew_envp_no_strdup(export_new);
+	if (new == NULL)
+	{
+		//free_and_exit(...);
+		return(0);
+	}
+	ft_lstadd_back_envp(envp_copy, new);
 	return (0);
 }

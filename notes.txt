@@ -5,15 +5,10 @@ ERROR
 - attach values/error codes to error messages. what numbers with which errors?
 
 EXECUTE
-- if only one built-in command -> no child process
-- builtins
-- modify exit command to exit the shell? could we use the Ctrl+D signal stuff? what if the input is e.g. "echo moi | exit"?
 - update / add freeing functions
 - builtins
 - what if we have multiple input / output files?
-- echo a > test b >> test2
-
-exit: command not found
+- test prompt: "echo a > test b >> test2"
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode

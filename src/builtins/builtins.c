@@ -4,8 +4,6 @@
 
 static int pwd_exec();
 
-void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
-
 int	exec_builtins(t_shell *shell, int loop_count)
 {
 	t_token	*builtins;
@@ -13,16 +11,12 @@ int	exec_builtins(t_shell *shell, int loop_count)
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "cd"))
 	{
 		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "cd");
-		//return(cd_exec(builtins, loop_count));
+		return(cd_exec(shell, builtins, loop_count));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "exit"))
-	{
 		return(exit_exec(shell));
-	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "env"))
-	{
 		return(env_exec(shell->envp_copy));
-	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "export"))
 	{
 		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "export");
@@ -31,7 +25,7 @@ int	exec_builtins(t_shell *shell, int loop_count)
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "unset"))
 	{
 		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "unset");
-		//return(unset_exec(builtins, loop_count));
+		return(unset_exec(&shell->envp_copy, builtins, loop_count));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "echo"))
 	{
@@ -39,9 +33,7 @@ int	exec_builtins(t_shell *shell, int loop_count)
 		return(echo(shell, builtins));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "pwd"))
-	{
 		return(pwd_exec());
-	}
 	return(0);
 }
 
@@ -98,26 +90,4 @@ int	export_exec(t_envp **envp_copy, t_token *export, int loop_count)
 	}
 	ft_lstadd_back_envp(&temp, new);
 	return (0);
-}
-
-void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
-{
-	t_envp *temp;
-	
-	if (lst == NULL || *lst == NULL)
-		return;
-	temp = *lst;
-	if (cmp(temp->line, data, ft_strlen(data) \
-			- ft_strlen(ft_strchr(data, '=')) + 1) == 0)
-	{
-		printf("matching node found\n");
-		*lst = temp->next;
-		free(temp);
-		envp_remove_if_export(lst, data, cmp);
-	}
-	else
-	{
-		temp = *lst;
-		envp_remove_if_export(&temp->next, data, cmp);
-	}
 }
