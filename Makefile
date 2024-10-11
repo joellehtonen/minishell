@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/11 13:31:09 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/11 15:33:47 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins.c \
 			./src/builtins/cd.c \
-			./src/builtins/echo.c \
+			./src/builtins/echo_new.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/signals.c \

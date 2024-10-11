@@ -30,7 +30,7 @@ int	exec_builtins(t_shell *shell, int loop_count)
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "echo"))
 	{
 		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "echo");
-		//return(echo_new(builtins, loop_count));
+		return(echo(shell, builtins));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "pwd"))
 		return(pwd_exec());

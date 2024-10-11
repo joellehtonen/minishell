@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_new.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/10 11:00:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:34:50 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int echo(t_shell *shell, t_token *echo_pointer)
 	int		newline;
 	t_token	*temp;
 	
+	(void)shell;
 	newline = true;
 	temp = echo_pointer->next;
 	if (temp)

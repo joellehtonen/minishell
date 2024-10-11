@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/11 15:30:02 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:32:41 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char *get_pwd(char *home);
 int	only_spaces(char *str);
-int echo_exec(t_shell *shell, char *input);
+int echo(t_shell *shell, t_token *echo_pointer);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);

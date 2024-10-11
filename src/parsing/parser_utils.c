@@ -19,10 +19,10 @@ int	is_valid_redir(t_shell *shell, int index1, int index2)
 		return (false);
 }
 
-char *find_separator(char *string)
+/* char *find_separator(char *string)
 {
 	
-}
+} */
 
 int ft_isspace(char c)
 {
