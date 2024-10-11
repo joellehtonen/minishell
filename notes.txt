@@ -6,6 +6,7 @@ ERROR
 
 EXECUTE
 - update / add freeing functions
+- builtins
 - what if we have multiple input / output files?
 - test prompt: "echo a > test b >> test2"
 
@@ -21,6 +22,7 @@ if cd into directory and removing an upper directory, handle it somehow
 echo "'$USER'" should expand, '"$USER"' should not
 
 echo should also handle -nn, -nnnn etc.
+if there is something else, like -nnnni, print it as well
 
 update error message to include latest token/char
 

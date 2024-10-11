@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/03 17:15:48 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/10 11:00:57 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ static int	check_newline(char *content)
 	if (content[index] == '-')
 		index++;
 	else
-		return (false);
+		return (true);
 	while (content[index] == 'n')
 		index++;
 	if (content[index] == '\0')
-		return (true);
-	else
 		return (false);
+	else
+		return (true);
 }
 
 // I'm assuming that the exec function is already pointing to the node containing COMM "echo"
@@ -37,10 +37,11 @@ int echo(t_shell *shell, t_token *echo_pointer)
 	
 	newline = true;
 	temp = echo_pointer->next;
-	if (temp && temp->type == FLAG)
+	if (temp)
 	{
 		newline = check_newline(temp->line);
-		temp = temp->next;
+		if (newline == false)
+			temp = temp->next;
 	}
 	while (temp && temp->type == ARG)
 	{
