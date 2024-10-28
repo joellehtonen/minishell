@@ -12,6 +12,7 @@ static char *expand_variable(t_shell *shell, char *pointer)
 	if (!expansion)
 		error_printer(shell, MALLOC_FAIL, true);
 	ft_strlcpy(expansion, pointer, len + 1);
+	//printf("value len is %d\n", len);
 	return (expansion);
 }
 
@@ -65,13 +66,18 @@ static int	calculate_key_len(t_token *token, int index)
 	return (key_len);
 }
 
-static int handle_quotes(t_token *token, int index)
+static int handle_single_quote(t_token *token, int index)
 {
 	if (token->line[index] == '\'' && token->double_quote == false)
 	{
 		token->single_quote = !token->single_quote;
 		index++;
 	}
+	return (index);
+}
+
+static int handle_double_quote(t_token *token, int index)
+{
 	if (token->line[index] == '\"' && token->single_quote == false)
 	{
 		token->double_quote = !token->double_quote;
@@ -93,18 +99,17 @@ static void	check_content(t_shell *shell, t_token *token)
 	key_len = 0;
 	token->double_quote = false;
 	token->single_quote = false;
-	replacement = NULL;
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
-	expansion = NULL;
 	if (!replacement)
 		error_printer(shell, MALLOC_FAIL, true);
+	ft_memset(replacement, 0, ft_strlen(replacement));
 	while (token->line[index] != '\0')
 	{
-		if (isquote(token->line[index]) == true)
-			index = handle_quotes(token, index);
-		else if (token->line[index] == '$' \
+		index = handle_single_quote(token, index);
+		index =	handle_double_quote(token, index);
+		if (token->line[index] == '$' \
 			&& isquote(token->line[index + 1]) == false \
-			&& token->line[index + 1] != '\0'
+			&& token->line[index + 1] != '\0' \
 			&& token->single_quote == false)
 		{
 			key_len = calculate_key_len(token, index + 1);
@@ -129,12 +134,17 @@ static void	check_content(t_shell *shell, t_token *token)
 
 void	expander(t_shell *shell)
 {   
-	t_token *temp;
+	t_token	*temp;
 
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
-		check_content(shell, temp);
+		if (ft_strchr(temp->line, '\'') != NULL
+			|| ft_strchr(temp->line, '\"') != NULL
+			|| ft_strchr(temp->line, '$') != NULL)
+		{
+			check_content(shell, temp);
+		}
 		temp = temp->next;
 	}
 }
