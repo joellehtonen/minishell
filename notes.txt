@@ -6,9 +6,9 @@ ERROR
 
 EXECUTE
 - update / add freeing functions
-- builtins
-- what if we have multiple input / output files?
+- what if we have multiple input / output files? what if we have several heredoc?
 - test prompt: "echo a > test b >> test2"
+- cd $HOME
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode

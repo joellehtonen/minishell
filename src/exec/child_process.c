@@ -16,7 +16,7 @@ void	child_process(t_shell **shell, int loop_count)
 	if (check_no_command((*shell)->token_pointer, loop_count) == 1)
 	{
 		close_pipes_child(loop_count, &exec);
-		exit (0);
+		exit(0);
 	}
 	
 	get_input_and_output(shell, loop_count);

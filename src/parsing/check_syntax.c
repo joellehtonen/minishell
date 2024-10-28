@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/10 11:10:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:26:10 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static int	check_consecutive_IO(t_shell *shell, int index)
 		if (isIO(shell->user_input[index]) == false)
 			return (SUCCESS);
 	}
-	if (isIO(shell->user_input[index]) == REDIR)
+	if (isIO(shell->user_input[index]) == REDIR_INPUT || \
+		isIO(shell->user_input[index]) == REDIR_OUTPUT)
 	{
 		if (is_valid_redir(shell, index, index + 1) == true
 			&& (isIO(shell->user_input[index + 1]) == false))

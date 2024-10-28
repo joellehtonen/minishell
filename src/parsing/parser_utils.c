@@ -36,8 +36,10 @@ int isIO(char c)
 {
 	if	(c == '|')
 		return (PIPE);
-	if (c == '<' || c == '>')
-		return (REDIR);
+	if (c == '<')
+		return (REDIR_INPUT);
+	if (c == '>')
+		return (REDIR_OUTPUT);
 	else
 		return (false);
 }

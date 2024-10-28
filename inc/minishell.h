@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/11 15:32:41 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:11:18 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ enum e_token_type
 {
 	COMM = 1,
 	ARG,
-	REDIR,
+	REDIR_INPUT,
+	REDIR_OUTPUT,
 	DELIM,
 	INPUT,
 	OUTPUT,

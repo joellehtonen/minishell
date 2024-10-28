@@ -18,10 +18,10 @@ void	assign_type(t_token **token)
 			temp->type = PIPE;
 			comm_flag = 0;
 		}
-		else if (ft_strncmp(temp->line, "<\0", 2) == 0 || ft_strncmp(temp->line, ">\0", 2) == 0)
-			temp->type = REDIR;
-		else if (ft_strncmp(temp->line, "<<\0", 3) == 0 || ft_strncmp(temp->line, ">>\0", 3) == 0)
-			temp->type = REDIR;
+		else if (ft_strncmp(temp->line, "<\0", 2) == 0 || ft_strncmp(temp->line, "<<\0", 3) == 0)
+			temp->type = REDIR_INPUT;
+		else if (ft_strncmp(temp->line, ">\0", 2) == 0 || ft_strncmp(temp->line, ">>\0", 3) == 0)
+			temp->type = REDIR_OUTPUT;
 		else if (ft_strncmp(previous->line, "<\0", 2) == 0)
 			temp->type = INPUT;
 		else if (ft_strncmp(previous->line, ">\0", 2) == 0 || ft_strncmp(previous->line, ">>\0", 3) == 0)
