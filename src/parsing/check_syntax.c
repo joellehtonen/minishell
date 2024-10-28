@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/10 11:10:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:13:25 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ static int	count_IO(t_shell *shell, int index)
 
 static int	check_consecutive_IO(t_shell *shell, int index)
 {
+	int	count;
+
+	count = 0;
 	if (isIO(shell->user_input[index]) != false && isIO(shell->user_input[index + 1]) == false)
 		return (SUCCESS);
 	if (isIO(shell->user_input[index]) == PIPE)
@@ -42,8 +45,9 @@ static int	check_consecutive_IO(t_shell *shell, int index)
 	}
 	if (isIO(shell->user_input[index]) == REDIR)
 	{
+		count = count_IO(shell, index);
 		if (is_valid_redir(shell, index, index + 1) == true
-			&& (isIO(shell->user_input[index + 1]) == false))
+			&& count <= 2)
 			return (SUCCESS);
 	}
 	return (FAILURE);
