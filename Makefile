@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/11 10:23:25 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/10/11 15:33:47 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
 
 RM			= rm -f
 RMDIR		= rm -rf
@@ -40,10 +40,12 @@ LIBFT_LIB	= $(LIBFT_DIR)/libft.a
 # Source / OBJ files / Includes
 SRC 		= ./src/main.c \
 			./src/envp/envp_tools.c \
+			./src/envp/envp_tools_extra.c \
 			./src/envp/list_tools_envps.c \
 			./src/envp/ft_split_list.c \
 			./src/parsing/list_tools_tokens.c \
 			./src/parsing/list_tools_tokens_delete.c \
+			./src/parsing/list_tools_tokens_extra.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
@@ -54,7 +56,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins.c \
 			./src/builtins/cd.c \
-			./src/builtins/echo.c \
+			./src/builtins/echo_new.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/signals.c \
@@ -81,23 +83,23 @@ $(OBJ_DIR):
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@echo "$(GREEN)Compiling libft... $(DEF_COLOR)"
+	@echo "$(YELLOW)Compiling libft... $(DEF_COLOR)"
 	@make -C $(LIBFT_DIR)  --no-print-directory		# make libft
 	@cp $(LIBFT_LIB) $(NAME)	# copy libft to current
 	@$(CC) $(CFLAGS) $(OBJ) -lreadline $(LIBFT_LIB) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)SUCCESS, MINISHELL IS READY $(DEF_COLOR)"
 
 clean:
-	@echo "$(GREEN)Deleting object files... $(DEF_COLOR)"
-	$(RMDIR) $(OBJ_DIR)
+	@echo "$(RED)Deleting object files... $(DEF_COLOR)"
+	@$(RMDIR) $(OBJ_DIR)
 	@make clean -C $(LIBFT_DIR) --no-print-directory
 
 fclean:		clean 
-	@echo "$(GREEN)Deleting minishell... $(DEF_COLOR)"
-	$(RM) $(NAME) $(LIBFT_LIB)
+	@echo "$(RED)Deleting minishell... $(DEF_COLOR)"
+	@$(RM) $(NAME) $(LIBFT_LIB)
 	@make fclean -C $(LIBFT_DIR) --no-print-directory
 	@echo "$(GREEN)CLEAR $(DEF_COLOR)"
 

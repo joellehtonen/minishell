@@ -2,98 +2,109 @@
 
 #include "../../inc/minishell.h"
 
-static char	*no_white_spaces(char *str);
+static int	check_arg(t_shell *shell, t_token *arg);
 
-static int	count_w_sp(char *str);
+static int cd_no_arg(t_shell *shell);
 
-int	cd_exec(t_shell *shell)
+static char	*get_new_path(t_shell *shell, t_token *arg);
+
+static int	access_new_path(t_shell *shell, t_token *arg, char *new_path);
+
+int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
+{
+	char	*new_path;
+	t_token	*arg;
+	int		arg_error;
+	
+	if (count_nodes_type(cd, ARG, loop_count) > 1)
+	{
+		printing("cd", ": too many arguments\n", "", 2);
+		//free_and_exit();
+		return (1);
+	}
+	arg = find_token(cd, loop_count, ARG);
+	arg_error = check_arg(shell, arg);
+	if (arg_error != 2)
+		return(arg_error);
+	new_path = get_new_path(shell, arg);
+	if (new_path == NULL)
+		return (1);
+	if (access_new_path(shell, arg, new_path) == 1)
+		return (1);
+	return (0);
+}
+
+static int	check_arg(t_shell *shell, t_token *arg)
+{
+	if (!arg)
+		return (cd_no_arg(shell));
+	if (ft_strlen(arg->line) == 0)
+		return (0);
+	if (arg->line[0] == '/' && ft_strlen(arg->line) > 1 && arg->line[1] != '/')
+	{
+		printing("cd: ", arg->line, ": No such file or directory\n", 2);
+		//free_and_exit();
+		return (1);
+	}
+	if (ft_strncmp(arg->line, "~", 1) != 0 && is_file(arg->line) == 0)
+	{
+		printing("cd: ", arg->line, ": Not a directory\n", 2);
+		//free_and_exit();
+		return (1);
+	}
+	return (2);
+}
+
+static int cd_no_arg(t_shell *shell)
+{
+	if (shell->home == NULL)
+	{
+		printing("cd", ": HOME not set\n", "", 2);
+		//free_and_exit();
+		return (1);
+	}
+	if (is_directory_new(shell->home) == 1)
+	{
+		printing("cd: ", shell->home, ": No such file or directory\n", 2);
+		//free_and_exit();
+		return (1);
+	}
+	if (chdir(shell->home) == -1)
+	{
+		perror("chdir() error");
+		//free_and_exit();
+	}
+	else
+		update_pwd(&shell->envp_copy);
+	return (0);
+}
+
+static char	*get_new_path(t_shell *shell, t_token *arg)
 {
 	char	*old_path;
 	char	*new_path;
 	int		len;
 	
-	if (too_many_arg_cd(shell->user_input) == 1)
-	{
-		printing("cd", ": too many arguments\n", "", 2);
-		//free_and_exit();
-		//exit(1); // can add when in child process
-		return (1);
-	}
-	
-	shell->user_input = no_white_spaces(shell->user_input);
-	
-	if (ft_strlen(shell->user_input) == 0)
+	if (ft_strncmp(arg->line, "//\0", 3) == 0)
+		return(ft_strdup("//"));
+	if (ft_strncmp(arg->line, "/", 1) == 0)
+		return(ft_strdup("/"));
+	if (ft_strncmp(arg->line, "~", 1) == 0)
 	{
 		if (shell->home == NULL)
 		{
 			printing("cd", ": HOME not set\n", "", 2);
 			//free_and_exit();
-			//exit(1); // can add when in child process
-			return (1);
+			return (NULL);
 		}
-		if (is_directory_new(shell->home) == 1)
-		{
-			printing("cd: ", shell->home, ": No such file or directory\n", 2);
-			//exit(1);
-			return (0);
-		}
-		if (chdir(shell->home) == -1)
-		{
-			perror("chdir() error");
-			//free_and_exit();
-		}
-		else
-		{
-			/* export_path = ft_strjoin("export PWD=", shell->home);
-			if (export_path == NULL)
-			{
-				perror("malloc error");
-				//free_and_exit();
-			}
-			if (export_exec(&shell->envp_copy, export_path) == 1)
-			{
-				//free_and_exit(); // free(export_path)?
-				return (1);
-			}
-			free(export_path); */
-			update_pwd(&shell->envp_copy);
-		}
-		return (0);
-	}
-
-	if (*(shell->user_input) == '/')
-	{
-		printing("cd: ", shell->user_input, ": No such file or directory\n", 2);
-		//free_and_exit();
-		//exit(127); // can add when in child process
-		return (1);
-	}
-
-	if (ft_strncmp(shell->user_input, "~", 1) != 0 && is_directory_new(shell->user_input) == 1)
-	{
-		printing("cd: ", shell->user_input, ": Not a directory\n", 2);
-		//free_and_exit();
-		//exit(1); // can add when in child process
-		return (1);
-	}
-	
-	if (ft_strncmp(shell->user_input, "~", 1) == 0)
-	{
-		if (shell->home == NULL)
-		{
-			printing("cd", ": HOME not set\n", "", 2);
-			//free_and_exit();
-			//exit(1); // can add when in child process
-			return (1);
-		}
-		len = ft_strlen(shell->home) + ft_strlen(shell->user_input + 1) + 2;
+		len = ft_strlen(shell->home) + ft_strlen(arg->line + 1) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
 		{
 			perror("malloc error");
 			//free_and_exit();
 		}
-		new_path = ft_strjoin(shell->home, shell->user_input + 1);
+		new_path = ft_strjoin(shell->home, arg->line + 1);
 		if (new_path == NULL)
 		{
 			perror("malloc error");
@@ -113,14 +124,14 @@ int	cd_exec(t_shell *shell)
 			perror("getcwd error");
 			//free_and_exit();
 		}
-		len = ft_strlen(old_path) + ft_strlen(shell->user_input) + 2;
+		len = ft_strlen(old_path) + ft_strlen(arg->line) + 2;
 		new_path = (char *)malloc(len * sizeof(char));
 		if (new_path == NULL)
 		{
 			perror("malloc error");
 			//free_and_exit();
 		}
-		new_path = ft_strjoin_four(old_path, "/",shell->user_input, "");
+		new_path = ft_strjoin_four(old_path, "/", arg->line, "");
 		if (new_path == NULL)
 		{
 			perror("malloc error");
@@ -128,16 +139,19 @@ int	cd_exec(t_shell *shell)
 		}
 		free(old_path);
 	}
-	
+	return(new_path);
+}
+
+static int	access_new_path(t_shell *shell, t_token *arg, char *new_path)
+{
 	if (access(new_path, F_OK) == -1 && errno == ENOENT)
 	{
-		if (*shell->user_input == '~')
+		if (arg->line[0] == '~')
 			printing("cd: ", new_path, ": No such file or directory\n", 2);
 		else
-			printing("cd: ", shell->user_input, ": No such file or directory\n", 2);
+			printing("cd: ", arg->line, ": No such file or directory\n", 2);
 		free(new_path);
 		//free_and_exit();
-		//exit(1); // can add when in child process
 		return (1);
 	}
 	//set pwd in env
@@ -149,71 +163,9 @@ int	cd_exec(t_shell *shell)
 	}
 	else
 	{
-		/* export_path = ft_strjoin("export PWD=", new_path);
-		if (export_path == NULL)
-		{
-			perror("malloc error");
-			//free_and_exit();
-		}
-		if (export_exec(&shell->envp_copy, export_path) == 1)
-		{
-			//free_and_exit(); // free(export_path)?
-			return (1);
-		}
-		free(export_path); */
 		update_pwd(&shell->envp_copy);
 		free(new_path);
+		//free_and_exit();
 	}
 	return (0);
-}
-
-static char	*no_white_spaces(char *str)
-{
-	char	*new_str;
-	int		new_len;
-
-	if (ft_strlen(str) == 2)
-		str = str + 2;
-	else
-		str = str + 3;
-	new_len = ft_strlen(str) - count_w_sp(str);
-	new_str = (char *)malloc((new_len + 1) * sizeof(char));
-	while (*str == ' ')
-		str++;
-	while(*str)
-	{
-		if ((*str == ' ' && only_spaces(str) == 0) ||\
-		*str == '\\' || *str == '\"' || *str == '\'')
-			str++;
-		else
-		{
-			*new_str = *str;
-			str++;
-			new_str++;
-		}
-	}
-	*new_str = '\0';
-	new_str = new_str - new_len;
-	return (new_str);
-}
-
-static int	count_w_sp(char *str)
-{
-	int	count;
-
-	count = 0;
-	while (*str == ' ')
-	{
-		count++;
-		str++;
-	}
-	while(*str)
-	{
-		if (*str == ' ' && only_spaces(str) == 0)
-			count++;
-		if (*str == '\\' || *str == '\"' || *str == '\'')
-			count++;
-		str++;
-	}
-	return (count);
 }

@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../../inc/minishell.h"
 
 static int	create_new_token(t_shell *shell, int end, int start, int token_number)

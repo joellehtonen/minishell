@@ -6,14 +6,14 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/10 15:43:38 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/11 13:10:42 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CC = gcc
+CFLAGS = -ggdb3 -Wall -Wextra -Werror
 
 SRC = ft_isascii.c ft_memmove.c \
 	ft_strdup.c	ft_strnstr.c \
@@ -53,22 +53,22 @@ INCLUDE = ./
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $^ -c -o $@ -I $(INCLUDE)
+	@$(CC) $(CFLAGS) $^ -c -o $@ -I $(INCLUDE)
 
 $(NAME): $(OBJ)
-	ar -rcs $(NAME) $(OBJ)
+	@ar -rcs $(NAME) $(OBJ)
 
 bonus: .bonus
 	
 .bonus:	$(BONUS_OBJ) $(OBJ)
-	ar -rcs $(NAME) $?
-	touch .bonus
+	@ar -rcs $(NAME) $?
+	@touch .bonus
 	
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean: clean 
-	rm -f $(NAME) .bonus
+	@rm -f $(NAME) .bonus
 
 re: fclean all
 

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
 /*   Updated: 2024/10/11 10:22:56 by jlehtone         ###   ########.fr       */
@@ -112,11 +112,14 @@ int input_error_check(t_shell *shell);
 int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
 void ft_lstadd_back_envp(t_envp **lst, t_envp *new);
 t_envp *ft_lstnew_envp(char *content);
+t_envp	*ft_lstnew_envp_no_strdup(char *content);
 t_envp *ft_lstlast_envp(t_envp *lst);
 int copy_path(t_envp **path, t_envp *envp_copy);
 int copy_uname(char **uname, t_envp *envp_copy);
 int copy_home(char **home, t_envp *envp_copy);
 int	update_pwd(t_envp **envp_copy);
+void envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
+void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
@@ -126,15 +129,14 @@ void	delete_all_tokens(t_token **lst);
 void	print_node(t_token *lst);
 // builtin functions
 int	exec_builtins(t_shell *shell, int loop_count);
-int	cd_exec(t_shell *shell);
+int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char *get_pwd(char *home);
-int	too_many_arg_cd(char *input);
 int	only_spaces(char *str);
 int	is_directory_new(char *path);
 int echo(t_shell *shell, t_token *echo_pointer);
 int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
-int	unset_exec(t_envp **envp_copy, char *input);
+int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
 int	if_builtin(t_shell *shell, int loop_count);
@@ -155,29 +157,30 @@ char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_exec exec);
 void check_command_access(char **param, t_exec exec);
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
+int	is_directory_new(char *path);
+int is_file(char *path);
 int	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
 void child_process(t_shell **shell, int loop_count);
-int free_exec(t_exec **exec);
 int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
-int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
-t_token	*find_token_line(t_token *token, int loop_count, \
-	int token_type, char *line);
-t_token	*find_token(t_token *token, int loop_count, int token_type);
 int	here_doc(t_exec *exec, t_token *redir);
-int	free_two_str(char *str1, char *str2);
-size_t	ft_strchr_fix(const char *s, int c);
-void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 // miscellaneous
+t_token	*find_token(t_token *token, int loop_count, int token_type);
+t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
+int	count_nodes_type(t_token *start, int token_type, int loop_count);
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);
 void set_up_signals(t_shell *shell);
 void clear_input(int signal);
+size_t	ft_strchr_fix(const char *s, int c);
 // exit
 void free_and_exit(t_shell *shell, int error);
 void free_double_arr(char **arr);
 void error_printer(t_shell *shell, char *message, int exit);
+int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
+int	free_two_str(char *str1, char *str2);
+int free_exec(t_exec **exec);
 
 #endif /* MINISHELL_H */
