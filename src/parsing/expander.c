@@ -1,6 +1,6 @@
 // 42 HEADER
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static char *expand_variable(t_shell *shell, char *pointer)
 {
@@ -12,6 +12,7 @@ static char *expand_variable(t_shell *shell, char *pointer)
 	if (!expansion)
 		error_printer(shell, MALLOC_FAIL, true);
 	ft_strlcpy(expansion, pointer, len + 1);
+	//printf("value len is %d\n", len);
 	return (expansion);
 }
 
@@ -22,7 +23,7 @@ static char *find_variable(t_shell *shell, char *key, int len)
 
 	temp = shell->envp_copy;
 	value = NULL;
-		while (temp)
+	while (temp)
 	{
 		if (ft_strncmp(temp->line, key, len) == 0 \
 			&& temp->line[len] == '=')
@@ -35,20 +36,12 @@ static char *find_variable(t_shell *shell, char *key, int len)
 	return (value);
 }
 
-static char	*handle_dollar(t_shell *shell, t_token *token, int index)
+static char	*handle_dollar(t_shell *shell, t_token *token, int index, int len)
 {
-	int		len;
 	char	*key;
 	char	*value_pointer;
 	char	*expansion;
 
-	len = 0;
-	while (token->line + index + len \
-		&& (ft_isalnum(token->line[index + len]) == true \
-		|| token->line[index + len] == '_'))
-	{
-		len++;
-	}
 	key = ft_substr(token->line, index + 1, len);
 	value_pointer = find_variable(shell, key, len);
 	free(key);
@@ -59,13 +52,32 @@ static char	*handle_dollar(t_shell *shell, t_token *token, int index)
 	return (expansion);
 }
 
-static int handle_quotes(t_shell *shell, t_token *token, int index)
+static int	calculate_key_len(t_token *token, int index)
+{
+	int	key_len;
+
+	key_len = 0;
+	while (token->line + index + key_len \
+			&& (ft_isalnum(token->line[index + key_len]) == true \
+			|| token->line[index + key_len] == '_'))
+	{
+		key_len++;
+	}
+	return (key_len);
+}
+
+static int handle_single_quote(t_token *token, int index)
 {
 	if (token->line[index] == '\'' && token->double_quote == false)
 	{
 		token->single_quote = !token->single_quote;
 		index++;
 	}
+	return (index);
+}
+
+static int handle_double_quote(t_token *token, int index)
+{
 	if (token->line[index] == '\"' && token->single_quote == false)
 	{
 		token->double_quote = !token->double_quote;
@@ -78,26 +90,33 @@ static void	check_content(t_shell *shell, t_token *token)
 {	
 	int		index;
 	int		copy_index;
+	int		key_len;
 	char	*replacement;
 	char	*expansion;
 
 	index = 0;
 	copy_index = 0;
+	key_len = 0;
+	token->double_quote = false;
+	token->single_quote = false;
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
 	if (!replacement)
 		error_printer(shell, MALLOC_FAIL, true);
+	ft_memset(replacement, 0, ft_strlen(replacement));
 	while (token->line[index] != '\0')
 	{
-		if (isquote(token->line[index] == true))
-			index = handle_quote(shell, token, index);
+		index = handle_single_quote(token, index);
+		index =	handle_double_quote(token, index);
 		if (token->line[index] == '$' \
 			&& isquote(token->line[index + 1]) == false \
 			&& token->line[index + 1] != '\0' \
 			&& token->single_quote == false)
 		{
-			expansion = handle_dollar(shell, token, index);
+			key_len = calculate_key_len(token, index + 1);
+			expansion = handle_dollar(shell, token, index, key_len);
 			ft_strlcat(replacement, expansion, ft_strlen(replacement) + ft_strlen(expansion) + 1);
-			index += ft_strlen(expansion);
+			index += key_len + 1;
+			copy_index += ft_strlen(expansion);
 			free(expansion);
 		}
 		else if (token->line[index] == '$' && isquote(token->line[index + 1]) == true)
@@ -106,64 +125,23 @@ static void	check_content(t_shell *shell, t_token *token)
 			replacement[copy_index++] = token->line[index++];
 	}
 	replacement[copy_index] = '\0';
-	free (token->line);
+	free(token->line);
 	token->line = replacement;
 }
 
 void	expander(t_shell *shell)
 {   
-	t_token *temp;
+	t_token	*temp;
 
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
-		check_content(shell, temp);
+		if (ft_strchr(temp->line, '\'') != NULL
+			|| ft_strchr(temp->line, '\"') != NULL
+			|| ft_strchr(temp->line, '$') != NULL)
+		{
+			check_content(shell, temp);
+		}
 		temp = temp->next;
 	}
 }
-
-	// int	index;
-	// int	copy_index;
-	// char *words_to_copy;
-	// int	single_quote;
-	// int	double_quote;
-
-	// single_quote = false;
-	// double_quote = false;
-	// index = 0;
-	// copy_index = 0;
-	// words_to_copy = ft_strdup("");
-	// if (!words_to_copy)
-	// 	error_printer(shell, MALLOC_FAIL, true);
-	// while (content[index] != '\0')
-	// {
-	// 	if (content[index] == '\'' && double_quote == false)
-	// 	{
-	// 		single_quote = !single_quote;
-	// 		index++;
-	// 	}
-	// 	if (content[index] == '\"' && single_quote == false)
-	// 	{
-	// 		double_quote = !double_quote;
-	// 		index++;
-	// 	}
-	// 	if (single_quote == true)
-	// 	{
-	// 		words_to_copy[copy_index++] = content[index];
-	// 	}
-	// 	else if (double_quote == true & content[index] == '$')
-	// 	{
-	// 		while (shell->envp_copy)
-	// 		{
-	// 			//if (ft_strncmp(shell->envp_copy->line)
-	// 		}
-	// 		words_to_copy[copy_index++] = content[index];
-	// 	}
-	// 	else
-	// 		words_to_copy[copy_index++] = content[index];
-	// 	index++;
-	// }
-	// words_to_copy[copy_index] = '\0';
-	// ft_strlcat(combination, words_to_copy, ft_strlen(words_to_copy));
-	// free(words_to_copy);
-	// return (combination);

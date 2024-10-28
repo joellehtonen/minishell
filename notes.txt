@@ -26,7 +26,8 @@ if there is something else, like -nnnni, print it as well
 
 update error message to include latest token/char
 
+if infinite loop before, then history not working and signals not working
 
 SIGINT (ctrl c) exit code is 130
 
-quote logic: 
+echo "HI 'MARK' $HOME" CRASHES!!!

@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
 #    Updated: 2024/10/11 15:39:55 by aklimchu         ###   ########.fr        #
@@ -51,6 +51,7 @@ SRC 		= ./src/main.c \
 			./src/parsing/check_syntax.c \
 			./src/parsing/assign_values.c \
 			./src/parsing/parser_utils.c \
+			./src/parsing/expander.c \
 			./src/builtins/builtins_extra.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins.c \
@@ -82,23 +83,23 @@ $(OBJ_DIR):
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@echo "$(GREEN)Compiling libft... $(DEF_COLOR)"
+	@echo "$(YELLOW)Compiling libft... $(DEF_COLOR)"
 	@make -C $(LIBFT_DIR)  --no-print-directory		# make libft
 	@cp $(LIBFT_LIB) $(NAME)	# copy libft to current
 	@$(CC) $(CFLAGS) $(OBJ) -lreadline $(LIBFT_LIB) $(INCLUDE) -o $(NAME)
 	@echo "$(GREEN)SUCCESS, MINISHELL IS READY $(DEF_COLOR)"
 
 clean:
-	@echo "$(GREEN)Deleting object files... $(DEF_COLOR)"
-	$(RMDIR) $(OBJ_DIR)
+	@echo "$(RED)Deleting object files... $(DEF_COLOR)"
+	@$(RMDIR) $(OBJ_DIR)
 	@make clean -C $(LIBFT_DIR) --no-print-directory
 
 fclean:		clean 
-	@echo "$(GREEN)Deleting minishell... $(DEF_COLOR)"
-	$(RM) $(NAME) $(LIBFT_LIB)
+	@echo "$(RED)Deleting minishell... $(DEF_COLOR)"
+	@$(RM) $(NAME) $(LIBFT_LIB)
 	@make fclean -C $(LIBFT_DIR) --no-print-directory
 	@echo "$(GREEN)CLEAR $(DEF_COLOR)"
 

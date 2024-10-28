@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/28 14:11:18 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:39:38 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,9 @@ int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char *get_pwd(char *home);
 int	only_spaces(char *str);
+int	is_directory_new(char *path);
 int echo(t_shell *shell, t_token *echo_pointer);
+int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);
@@ -147,10 +149,7 @@ int ft_isspace(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
-int	count_nodes_type(t_token *start, int token_type, int loop_count);
-t_token	*find_token_line(t_token *token, int loop_count, \
-	int token_type, char *line);
-t_token	*find_token(t_token *token, int loop_count, int token_type);
+void	expander(t_shell *shell);
 // execute functions
 int	execute(t_shell *shell);
 void get_input_and_output(t_shell **shell, int loop_count);
@@ -168,6 +167,9 @@ int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
 int	here_doc(t_exec *exec, t_token *redir);
 // miscellaneous
+t_token	*find_token(t_token *token, int loop_count, int token_type);
+t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
+int	count_nodes_type(t_token *start, int token_type, int loop_count);
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
 void printing(char *cmd, char *dest, char *result, int fd);

@@ -55,3 +55,4 @@ int echo(t_shell *shell, t_token *echo_pointer)
 		printf("\n");
 	return (SUCCESS);
 }
+

@@ -53,22 +53,22 @@ INCLUDE = ./
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $^ -c -o $@ -I $(INCLUDE)
+	@$(CC) $(CFLAGS) $^ -c -o $@ -I $(INCLUDE)
 
 $(NAME): $(OBJ)
-	ar -rcs $(NAME) $(OBJ)
+	@ar -rcs $(NAME) $(OBJ)
 
 bonus: .bonus
 	
 .bonus:	$(BONUS_OBJ) $(OBJ)
-	ar -rcs $(NAME) $?
-	touch .bonus
+	@ar -rcs $(NAME) $?
+	@touch .bonus
 	
 clean:
-	rm -f $(OBJ) $(BONUS_OBJ)
+	@rm -f $(OBJ) $(BONUS_OBJ)
 
 fclean: clean 
-	rm -f $(NAME) .bonus
+	@rm -f $(NAME) .bonus
 
 re: fclean all
 
