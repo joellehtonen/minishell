@@ -56,17 +56,6 @@ static int	check_for_input(t_shell *shell, t_token *token, int loop_count, int i
 	t_token	*temp;
 
 	temp = find_token(token, loop_count, REDIR_INPUT);
-	/* temp = find_token_line(token, loop_count, REDIR, "<<\0");
-	if (temp && temp->next)
-	{
-		if (input_flag == 1)
-			close(shell->exec->in);
-		input_flag = 1;
-		here_doc(shell->exec, temp);
-		return (check_for_input(shell, temp->next, loop_count, input_flag));
-	}
-	else
-		temp = find_token_line(token, loop_count, REDIR, "<\0"); */
 	if (input_flag == 0 && (!temp || !temp->next || (temp->next->type != INPUT &&\
 		temp->next->type != DELIM)))
 		return (1);
@@ -100,15 +89,6 @@ static int	check_for_output(t_shell *shell, t_token *token, int loop_count, int 
 	t_token	*temp;
 	char	*outfile;
 	
-/* 	temp = find_token_line(token, loop_count, REDIR, ">\0");
-	if (!temp || !temp->next)
-		temp = find_token_line(token, loop_count, REDIR, ">>\0");
-	if (output_flag == 0 && (!temp || !temp->next))
-		return (1);
-	if (output_flag == 1 && (!temp || !temp->next))
-		return (0);
-	if (output_flag == 1)
-		close(shell->exec->out); */
 	temp = find_token(token, loop_count, REDIR_OUTPUT);
 	if (output_flag == 0 && (!temp || !temp->next || temp->next->type != OUTPUT))
 		return (1);

@@ -6,8 +6,8 @@ ERROR
 
 EXECUTE
 - update / add freeing functions
-- what if we have multiple input / output files? what if we have several heredoc?
 - test prompt: "echo a > test b >> test2"
+- << HEY cat | << MOI wc -l > outfile
 - cd $HOME
 
 SIGNALS: 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens_delete.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/02 09:32:05 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:54:18 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	print_node(t_token *lst)
 {
-	const char *type_names[] = {"COMM", "ARG", "REDIR", "DELIM", "INPUT", \
-	"OUTPUT", "PIPE"};
+	const char *type_names[] = {"COMM", "ARG", "REDIR_INPUT", "REDIR_OUTPUT","DELIM", "INPUT", \
+	"OUTPUT", "PIPE", "FLAG", "SPACES"};
 	
 	if (lst == NULL)
 	{
