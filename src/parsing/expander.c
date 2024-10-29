@@ -6,7 +6,7 @@ static void add_expansion(char **replacement, char *expansion, int *copy_index, 
 {
 	if (expansion == NULL)
 		return ;
-	ft_strlcat(replacement, expansion, ft_strlen(replacement) + ft_strlen(expansion) + 1);
+	ft_strlcat(*replacement, expansion, ft_strlen(*replacement) + ft_strlen(expansion) + 1);
 	*copy_index += ft_strlen(expansion);
 	if (ft_strncmp(expansion, "$", ft_strlen(expansion)) == 0)
 		(*index)++;
@@ -141,7 +141,7 @@ static void	check_content(t_shell *shell, t_token *token)
 		else if (token->line[index] == '$')
 		{
 			expansion = create_expansion(shell, token, &index);
-			add_expansion(replacement, expansion, &copy_index, &index);
+			add_expansion(&replacement, expansion, &copy_index, &index);
 			free(expansion);
 		}
 		else

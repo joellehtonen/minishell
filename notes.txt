@@ -31,9 +31,11 @@ SIGINT (ctrl c) exit code is 130
 
 
 
+jlehtone:~/Desktop/git_home/minishell$ echo '>>>'
+Error. Syntax error near unexpected token
 
-jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
+jlehtone:~/Desktop/git_home/minishell$ echo '>>'
 Token #0: echo, type COMM, level 0
-Token #1: honey i'm, type ARG, level 0
-Token #2: home, type ARG, level 0
-honey i'm home
+Token #1: , type ARG, level 0
+Token #2: >>, type DELIM, level 0
+Token #3: , type PIPE, level 0
