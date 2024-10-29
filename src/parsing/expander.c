@@ -2,7 +2,7 @@
 
 #include "../../inc/minishell.h"
 
-static void add_expansion(char *replacement, char *expansion, int *copy_index, int *index)
+static void add_expansion(char **replacement, char *expansion, int *copy_index, int *index)
 {
 	if (expansion == NULL)
 		return ;
