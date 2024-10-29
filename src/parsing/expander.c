@@ -2,6 +2,17 @@
 
 #include "../../inc/minishell.h"
 
+static void add_expansion(char *replacement, char *expansion, int *copy_index, int *index)
+{
+	if (expansion == NULL)
+		return ;
+	ft_strlcat(replacement, expansion, ft_strlen(replacement) + ft_strlen(expansion) + 1);
+	*copy_index += ft_strlen(expansion);
+	if (ft_strncmp(expansion, "$", ft_strlen(expansion)) == 0)
+		(*index)++;
+	return ;
+}
+
 static char *expand_variable(t_shell *shell, char *pointer)
 {
 	char	*expansion;
@@ -49,50 +60,31 @@ static int	calculate_key_len(t_token *token, int index)
 	return (key_len);
 }
 
-static char	*handle_dollar(t_shell *shell, t_token *token, int index, int key_len)
+static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 {
 	char	*key;
 	char	*value_pointer;
 	char	*expansion;
+	int		key_len;
 
-	key = ft_substr(token->line, index + 1, key_len);
+	if (token->single_quote == true || token->line[*index + 1] == '\0')
+		return (ft_strdup("$"));
+	if (isquote(token->line[*index + 1]) == true)
+	{
+		(*index)++;
+		return (NULL);
+	}
+	key_len = calculate_key_len(token, *index + 1);
+	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);
 	free(key);
 	if (!value_pointer)
 		return (ft_strdup(""));
 	expansion = expand_variable(shell, value_pointer);
 	free(value_pointer);
+	*index += key_len + 1;
 	return (expansion);
 }
-
-static int expand_dollar(t_shell *shell, t_token *token, char *replacement, int index, int copy_index)
-{
-	int		key_len;
-	char	*expansion;
-
-	if (isquote(token->line[index + 1]) == true 
-		|| token->single_quote == true
-		|| token->line[index + 1] != '\0')
-		return (index);
-	key_len = calculate_key_len(token, index + 1);
-	expansion = handle_dollar(shell, token, index, key_len);
-	ft_strlcat(replacement, expansion, ft_strlen(replacement) + ft_strlen(expansion) + 1);
-	copy_index += ft_strlen(expansion);
-	index += key_len + 1;
-	free(expansion);
-	return (index);
-}
-
-// static int calc_key_value(t_shell *shell, t_token *token, int index)
-// {
-// 	int		key_len;
-
-// 	if (isquote(token->line[index + 1]) == true 
-// 		|| token->single_quote == true
-// 		|| token->line[index + 1] != '\0')
-// 		return (index);
-// 	key_len = calculate_key_len(token, index + 1);
-// }
 
 static int handle_quotes(t_token *token, int index)
 {
@@ -118,7 +110,7 @@ static char* init_replacement(t_shell *shell, t_token *token)
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
 	if (!replacement)
 		error_printer(shell, MALLOC_FAIL, true);
-	ft_memset(replacement, 0, ft_strlen(replacement));
+	ft_memset(replacement, 0, ft_strlen(token->line) + 1);
 	return (replacement);
 }
 
@@ -127,6 +119,7 @@ static void	check_content(t_shell *shell, t_token *token)
 	int		index;
 	int		copy_index;
 	char	*replacement;
+	char 	*expansion;
 
 	index = 0;
 	copy_index = 0;
@@ -136,11 +129,11 @@ static void	check_content(t_shell *shell, t_token *token)
 		index = handle_quotes(token, index);
 		if (token->line[index] == '$')
 		{
-			copy_index = calc_key_value();
-			index = expand_dollar(shell, token, replacement, &index, &copy_index);
+			expansion = create_expansion(shell, token, &index);
+			add_expansion(replacement, expansion, &copy_index, &index);
+			if (expansion)
+				free(expansion);
 		}
-		else if (token->line[index] == '$' && isquote(token->line[index + 1]) == true)
-			index++;
 		else
 			replacement[copy_index++] = token->line[index++];
 	}
