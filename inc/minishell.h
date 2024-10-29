@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/28 14:39:38 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/29 13:44:09 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ typedef struct	s_exec
 	int		status;
 	int		pipe_num;
 	int		pipe_flag;
-	int		hd_flag;
-	int		hd_pipe[2];
+	int		**here_doc_pipe;
+	int		here_doc_num;
 	pid_t	*null;
 	pid_t	*pid;
 }				t_exec;
@@ -165,7 +165,12 @@ char **envp_to_arr(t_envp *envp_copy);
 void child_process(t_shell **shell, int loop_count);
 int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
-int	here_doc(t_exec *exec, t_token *redir);
+int	assign_exec_values(t_shell *shell);
+int here_doc(t_shell *shell);
+t_token	*find_here_doc_token(t_token *token);
+int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag);
+int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
+void	allocate_here_doc(t_exec *exec);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);

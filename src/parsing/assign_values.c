@@ -2,6 +2,24 @@
 
 #include "../../inc/minishell.h"
 
+static int	parse_here_doc(t_token *token)
+{
+	t_token	*temp;
+	int		count;
+
+	count = 0;
+	//temp = find_token(token, loop_count, REDIR_INPUT);
+	temp = token;
+	while (temp)
+	{
+		if (temp->type == REDIR_INPUT && ft_strncmp(temp->line, "<<\0", 3) == 0 && \
+			temp->next && temp->next->type == DELIM)
+			count++;
+		temp = temp->next;
+	}
+	return (count);
+}
+
 void	assign_type(t_token **token)
 {
 	t_token	*temp;
@@ -60,5 +78,6 @@ void	assign_level(t_token **token, t_exec **exec)
 	exec_temp->pipe_num = level;
 	exec_temp->pipe_flag = 0;
 	exec_temp->pipe = NULL;
-	exec_temp->pipe_num = level;
+	exec_temp->here_doc_num = parse_here_doc(*token);
+	ft_printf("Number of here_doc: %d\n", exec_temp->here_doc_num);
 }

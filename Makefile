@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/11 15:39:55 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/10/29 13:21:58 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -g -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Werror -Wextra -I $(LIBFT_DIR)
 
 RM			= rm -f
 RMDIR		= rm -rf
@@ -62,6 +62,7 @@ SRC 		= ./src/main.c \
 			./src/signals.c \
 			./src/exec/execute.c \
 			./src/exec/child_process.c \
+			./src/exec/assign_exec_values.c \
 			./src/exec/exec_tools.c \
 			./src/exec/exec_tools_extra.c \
 			./src/exec/param_and_path.c \
@@ -70,6 +71,7 @@ SRC 		= ./src/main.c \
 			./src/exec/here_doc.c \
 			./src/exec/here_doc_tools.c \
 			./src/exec/redir.c \
+			./src/exec/redir_tools.c \
 			./src/exit.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
