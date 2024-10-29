@@ -67,7 +67,7 @@ static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	char	*expansion;
 	int		key_len;
 
-	if (token->single_quote == true || token->line[*index + 1] == '\0')
+	if (shell->single_quote == true || token->line[*index + 1] == '\0')
 		return (ft_strdup("$"));
 	if (isquote(token->line[*index + 1]) == true)
 	{
@@ -86,16 +86,16 @@ static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	return (expansion);
 }
 
-static int handle_quotes(t_token *token, int index)
+static int handle_quotes(t_shell *shell, t_token *token, int index)
 {
-	if (token->line[index] == '\'' && token->double_quote == false)
+	if (token->line[index] == '\'' && shell->double_quote == false)
 	{
-		token->single_quote = !token->single_quote;
+		shell->single_quote = !shell->single_quote;
 		index++;
 	}
-	if (token->line[index] == '\"' && token->single_quote == false)
+	if (token->line[index] == '\"' && shell->single_quote == false)
 	{
-		token->double_quote = !token->double_quote;
+		shell->double_quote = !shell->double_quote;
 		index++;
 	}
 	return (index);
@@ -105,8 +105,7 @@ static char* init_replacement(t_shell *shell, t_token *token)
 {
 	char *replacement;
 
-	token->double_quote = false;
-	token->single_quote = false;
+	reset_quotes(shell);
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
 	if (!replacement)
 		error_printer(shell, MALLOC_FAIL, true);
@@ -126,7 +125,7 @@ static void	check_content(t_shell *shell, t_token *token)
 	replacement = init_replacement(shell, token);
 	while (token->line[index] != '\0')
 	{
-		index = handle_quotes(token, index);
+		index = handle_quotes(shell, token, index);
 		if (token->line[index] == '$')
 		{
 			expansion = create_expansion(shell, token, &index);

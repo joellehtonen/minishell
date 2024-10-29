@@ -21,13 +21,19 @@ if cd into directory and removing an upper directory, handle it somehow
 
 echo "'$USER'" should expand, '"$USER"' should not
 
-echo should also handle -nn, -nnnn etc.
-if there is something else, like -nnnni, print it as well
-
 update error message to include latest token/char
 
 if infinite loop before, then history not working and signals not working
 
 SIGINT (ctrl c) exit code is 130
 
-echo "HI 'MARK' $HOME" CRASHES!!!
+
+
+
+
+
+jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
+Token #0: echo, type COMM, level 0
+Token #1: honey i'm, type ARG, level 0
+Token #2: home, type ARG, level 0
+honey i'm home

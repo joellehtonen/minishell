@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/11 10:08:22 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:19:30 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,20 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 
 static int handle_argument(t_shell *shell, int end)
 {
-	int		quotes_on;
 	int		IO_met;
 
-	quotes_on = false;
+	reset_quotes(shell);
 	IO_met = false;
-	//while (shell->user_input[end] != '\0' && (shell->user_input[end] != ' ' || quotes_on == true))
-	while (shell->user_input[end] != '\0' && (ft_isspace(shell->user_input[end]) == false || quotes_on == true))
+	while (shell->user_input[end] != '\0' 
+			&& (ft_isspace(shell->user_input[end]) == false 
+			|| shell->single_quote == true || shell->double_quote == true))
 	{
-		if (isquote(shell->user_input[end]) != false)
-			quotes_on = !quotes_on;
-		if (isIO(shell->user_input[end]) != false && quotes_on == false)
+		if (isquote(shell->user_input[end]) == S_QUOTE)
+			shell->single_quote = !shell->single_quote;
+		if (isquote(shell->user_input[end]) == D_QUOTE)
+			shell->double_quote = !shell->double_quote;
+		if (isIO(shell->user_input[end]) != false 
+			&& (shell->single_quote == false || shell->double_quote == false))
 			{
 				if (IO_met == true)
 					end++;

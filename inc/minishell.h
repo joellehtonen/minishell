@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/11 10:22:56 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:34:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ enum e_token_type
 	SPACES
 };
 
-// enum e_quotes
-// {
-// 	S_QUOTE = 1,
-// 	D_QUOTE
-// };
+enum e_quotes
+{
+	S_QUOTE = 1,
+	D_QUOTE
+};
 
 typedef struct	s_envp
 {
@@ -72,8 +72,6 @@ typedef struct	s_token
 	int				level;
 	int				type;
 	int				token_number;
-	int				single_quote;
-	int				double_quote;
 	struct s_token	*next;
 }				t_token;
 
@@ -101,7 +99,9 @@ typedef struct	s_shell
 	char	*home; //HOME from envp
 	t_exec	*exec; // file descriptors for pipes and forks
 	char 	*user_input; //whatever readline reads is saved into this array
-	t_token	*token_pointer; //pointer to the head of the linked list that contains the arguments parsed from user input?
+	t_token	*token_pointer; //pointer to the head of the linked list containing the arguments parsed from user input
+	int		single_quote; //whether single quotes are "active"
+	int		double_quote; //whether double quotes are "active"
 	int		exit_code; 
 }				t_shell;
 
@@ -149,6 +149,7 @@ int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
 void	expander(t_shell *shell);
+void reset_quotes(t_shell *shell);
 // execute functions
 int	execute(t_shell *shell);
 void get_input_and_output(t_shell **shell, int loop_count);

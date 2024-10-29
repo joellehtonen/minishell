@@ -39,11 +39,17 @@ int isIO(char c)
 
 int isquote(char c)
 {
-	// if (c == '\'')
-	// 	return (S_QUOTE);
-	// if (c == '\"')
-	// 	return (D_QUOTE);
-	if (c == '\'' || c == '\"')
-		return (true);
+	if (c == '\'')
+		return (S_QUOTE);
+	if (c == '\"')
+		return (D_QUOTE);
+	// if (c == '\'' || c == '\"')
+	// 	return (true);
 	return (false);
+}
+
+void reset_quotes(t_shell *shell)
+{
+	shell->single_quote = false;
+	shell->double_quote = false;
 }

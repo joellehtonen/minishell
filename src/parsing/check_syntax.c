@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/28 14:13:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/29 11:34:20 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,42 +130,67 @@ static int	validate_IO(t_shell *shell, int index)
 	return (SUCCESS);
 }
 
+static int handle_IO(t_shell *shell, int *index)
+{
+	int count; 
+	
+	if (isIO(shell->user_input[*index]) != false)
+	{
+		if (validate_IO(shell, *index) == SUCCESS)
+		{
+			count = count_IO(shell, *index);
+			*index = *index + count;
+		}
+		else
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+static void count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
+{
+	if (shell->user_input[index] == '\'')
+	{
+		if (index == 0 || shell->user_input[index - 1] != '\\')
+		{
+			if (shell->double_quote == false)
+			{
+				*s_quote = *s_quote + 1;
+				shell->single_quote = !shell->single_quote;
+			}
+		}
+	}
+	if (shell->user_input[index] == '\"')
+	{
+		if (index == 0 ||shell->user_input[index - 1] != '\\')
+		{
+			if (shell->single_quote == false)
+			{
+				*d_quote = *d_quote + 1;
+				shell->double_quote = !shell->double_quote;
+			}
+		}
+	}
+}
+
 int input_error_check(t_shell *shell)
 {
 	int	single_quotes;
 	int	double_quotes;
 	int	index;
-	int	count;
 	
 	index = 0;
 	single_quotes = 0;
 	double_quotes = 0;
+	reset_quotes(shell);
 	if (ft_strlen(shell->user_input) == 0)
 		return (FAILURE);
 	while (shell->user_input[index] != '\0')
 	{
-		if (shell->user_input[index] == '\'')
-		{
-			if (shell->user_input[index - 1] != '\\')
-				single_quotes++;
-		}
-		if (shell->user_input[index] == '\"')
-		{
-			if (shell->user_input[index - 1] != '\\')
-				double_quotes++;
-		}
-		if (isIO(shell->user_input[index]) != false)
-		{
-			if (validate_IO(shell, index) == SUCCESS)
-			{
-				count = count_IO(shell, index);
-				index = index + count;
-			}
-			else
-				return (FAILURE);
-		}
-		else
-			index++;
+		count_quotes(shell, index, &single_quotes, &double_quotes);
+		if (handle_IO(shell, &index) == FAILURE)
+			return (FAILURE);
+		index++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 	{
