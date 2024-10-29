@@ -26,6 +26,15 @@ static char *expand_variable(t_shell *shell, char *pointer)
 	return (expansion);
 }
 
+static char	*find_exit_value(t_shell *shell, int *index)
+{
+	char *result;
+
+	result = ft_itoa(shell->exit_code);
+	(*index)++;
+	return (result);
+}
+
 static char *find_variable(t_shell *shell, char *key, int len)
 {
 	t_envp	*temp;
@@ -78,6 +87,8 @@ static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);
 	free(key);
+	if (token->line[*index + 1] == '?')
+		value_pointer = find_exit_value(shell, index);
 	*index += key_len + 1;
 	if (!value_pointer)
 		return (ft_strdup(""));
@@ -91,14 +102,14 @@ static int handle_quotes(t_shell *shell, t_token *token, int index)
 	if (token->line[index] == '\'' && shell->double_quote == false)
 	{
 		shell->single_quote = !shell->single_quote;
-		return (SUCCESS);
+		return (true);
 	}
 	if (token->line[index] == '\"' && shell->single_quote == false)
 	{
 		shell->double_quote = !shell->double_quote;
-		return (SUCCESS);
+		return (true);
 	}
-	return (FAILURE);
+	return (false);
 }
 
 static char* init_replacement(t_shell *shell, t_token *token)
@@ -125,7 +136,7 @@ static void	check_content(t_shell *shell, t_token *token)
 	replacement = init_replacement(shell, token);
 	while (token->line[index] != '\0')
 	{
-		if (handle_quotes(shell, token, index) == SUCCESS)
+		if (handle_quotes(shell, token, index) == true)
 			index++;
 		else if (token->line[index] == '$')
 		{

@@ -92,7 +92,7 @@ static int	assign_exec_values(t_shell *shell)
 	}
 	exec->null = NULL;
 	exec->hd_flag = 0;
-	printf("pipe_num %d\n", exec->pipe_num);
+	//printf("pipe_num %d\n", exec->pipe_num);
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
 	if (exec->pid == NULL)
 	{

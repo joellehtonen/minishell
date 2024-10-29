@@ -13,6 +13,7 @@ int read_input(t_shell *shell)
 		shell->pwd = get_pwd(shell->home);
 		shell->envp_str = NULL;
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
+		shell->exit_code = 0;
 		set_up_signals(shell);
 		shell->user_input = readline(prompt);
 		if (shell->user_input == NULL)
@@ -26,15 +27,16 @@ int read_input(t_shell *shell)
 			expander(shell);
 			assign_level(&shell->token_pointer, &shell->exec);
 			assign_type(&shell->token_pointer);
-			print_node(shell->token_pointer); //for testing
+			//print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
 				//free_and_exit();
 		}
 		add_history(shell->user_input);
 		delete_all_tokens(&shell->token_pointer);
 		free(prompt);
-		printf("exit code: %d\n", shell->exit_code);
+		//printf("exit code: %d\n", shell->exit_code);
 	}
 	free(shell->user_input); // replace with custom free function?
+	//printf("exit code: %d\n", shell->exit_code);
 	return (shell->exit_code);
 }
