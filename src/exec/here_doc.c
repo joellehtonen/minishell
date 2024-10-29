@@ -1,42 +1,66 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/10/29 14:11:00 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*get_hd_input(char *delim);
+static int get_here_doc(t_exec **exec, t_token *redir, int i);
 
-static char		*new_hd_input(char **hd_input, char **new_line);
+static char	*get_here_doc_input(char *delim);
 
-static char		*add_hd_memory(char *str, size_t add_len);
+static char	*new_here_doc_input(char **hd_input, char **new_line);
 
-//The function implements the scenario of here_doc
-int	here_doc(t_exec *exec, t_token *redir)
+static char	*add_here_doc_memory(char *str, size_t add_len);
+
+int here_doc(t_shell *shell)
 {
-	char	*hd_input;
+	int		i;
+	t_token	*redir;
+
+	redir = shell->token_pointer;
+	i = 0;	
+	while (i < shell->exec->here_doc_num)
+	{
+		redir = find_here_doc_token(redir);
+		if (redir == NULL)
+			return (1);
+		get_here_doc(&shell->exec, redir, i);
+		redir = redir->next;
+		i++;
+	}
+	return (0);
+}
+
+static int get_here_doc(t_exec **exec, t_token *redir, int i)
+{
 	char	*delim;
-	
-	/* if (get_delimiter(argv, fd) == 1)
-		return (1);
-	fd->cmd_num = argc - 4;
-	fd->hd_flag = 1; */
+	char	*here_doc_input;
+
 	delim = redir->next->line;
-	hd_input = get_hd_input(delim);
-	if (!hd_input)
+	here_doc_input = get_here_doc_input(delim);
+	if (!here_doc_input)
 		return (1);
-	if (pipe(exec->hd_pipe) == -1)
+	if (pipe((*exec)->here_doc_pipe[i]) == -1)
 	{
 		perror("Pipe failed");
-		return (free_two_str(hd_input, NULL));
+		return (free_two_str(here_doc_input, NULL));
 	}
-	ft_putstr_fd(hd_input, exec->hd_pipe[1]);
-	free_two_str(hd_input, NULL);
-	close(exec->hd_pipe[1]);
-	exec->in = exec->hd_pipe[0];
-	exec->hd_flag = 1;
+	ft_putstr_fd(here_doc_input, (*exec)->here_doc_pipe[i][1]);
+	free_two_str(here_doc_input, NULL);
+	close((*exec)->here_doc_pipe[i][1]);
 	return (0);
 }
 
 //The function reads the user input with the help of get_next_line tool
-static char	*get_hd_input(char *delim)
+static char	*get_here_doc_input(char *delim)
 {
 	char	*new_line;
 	char	*hd_input;
@@ -55,7 +79,7 @@ static char	*get_hd_input(char *delim)
 		if (!ft_strncmp(new_line, delim, ft_strlen(delim)) && \
 			ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
 			break ;
-		if (new_hd_input(&hd_input, &new_line) == NULL)
+		if (new_here_doc_input(&hd_input, &new_line) == NULL)
 		{
 			free_two_str(new_line, NULL); // free hd_input?
 			return (NULL);
@@ -67,9 +91,9 @@ static char	*get_hd_input(char *delim)
 
 //The function concatenates the string read from the new line
 //to the input from previous lines
-static char	*new_hd_input(char **hd_input, char **new_line)
+static char	*new_here_doc_input(char **hd_input, char **new_line)
 {
-	*hd_input = add_hd_memory(*hd_input, ft_strlen(*new_line));
+	*hd_input = add_here_doc_memory(*hd_input, ft_strlen(*new_line));
 	if (*hd_input == NULL)
 	{
 		perror("malloc() failed");
@@ -84,7 +108,7 @@ static char	*new_hd_input(char **hd_input, char **new_line)
 }
 
 //The function allocates new memory to store user input from command line
-static char	*add_hd_memory(char *str, size_t add_len)
+static char	*add_here_doc_memory(char *str, size_t add_len)
 {
 	char	*temp;
 	size_t	old_len;
