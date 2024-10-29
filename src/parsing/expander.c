@@ -78,11 +78,11 @@ static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);
 	free(key);
+	*index += key_len + 1;
 	if (!value_pointer)
 		return (ft_strdup(""));
 	expansion = expand_variable(shell, value_pointer);
 	free(value_pointer);
-	*index += key_len + 1;
 	return (expansion);
 }
 
@@ -91,14 +91,14 @@ static int handle_quotes(t_shell *shell, t_token *token, int index)
 	if (token->line[index] == '\'' && shell->double_quote == false)
 	{
 		shell->single_quote = !shell->single_quote;
-		index++;
+		return (SUCCESS);
 	}
 	if (token->line[index] == '\"' && shell->single_quote == false)
 	{
 		shell->double_quote = !shell->double_quote;
-		index++;
+		return (SUCCESS);
 	}
-	return (index);
+	return (FAILURE);
 }
 
 static char* init_replacement(t_shell *shell, t_token *token)
@@ -125,13 +125,13 @@ static void	check_content(t_shell *shell, t_token *token)
 	replacement = init_replacement(shell, token);
 	while (token->line[index] != '\0')
 	{
-		index = handle_quotes(shell, token, index);
-		if (token->line[index] == '$')
+		if (handle_quotes(shell, token, index) == SUCCESS)
+			index++;
+		else if (token->line[index] == '$')
 		{
 			expansion = create_expansion(shell, token, &index);
 			add_expansion(replacement, expansion, &copy_index, &index);
-			if (expansion)
-				free(expansion);
+			free(expansion);
 		}
 		else
 			replacement[copy_index++] = token->line[index++];
