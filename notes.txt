@@ -7,9 +7,6 @@ ERROR
 EXECUTE
 - update / add freeing functions
 - test prompt: "echo a > test b >> test2"
-- << HEY cat | << MOI wc -l > outfile
-- cd $HOME
-- cd -
 - "<< HEY" should print to STDOUT
 
 SIGNALS: 

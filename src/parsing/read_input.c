@@ -27,7 +27,7 @@ int read_input(t_shell *shell)
 			expander(shell);
 			assign_type(&shell->token_pointer);
 			assign_level(&shell->token_pointer, &shell->exec);
-			print_node(shell->token_pointer); //for testing
+			//print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
 				//free_and_exit();
 		}

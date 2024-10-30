@@ -6,8 +6,6 @@ static int	check_arg(t_shell *shell, t_token *arg);
 
 static int cd_no_arg(t_shell *shell);
 
-static char	*get_new_path(t_shell *shell, t_token *arg);
-
 static int	access_new_path(t_shell *shell, t_token *arg, char *new_path);
 
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
@@ -25,7 +23,7 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 	arg = find_token(cd, loop_count, ARG);
 	arg_error = check_arg(shell, arg);
 	if (arg_error != 2)
-		return(arg_error);
+		return (arg_error);
 	new_path = get_new_path(shell, arg);
 	if (new_path == NULL)
 		return (1);
@@ -40,12 +38,12 @@ static int	check_arg(t_shell *shell, t_token *arg)
 		return (cd_no_arg(shell));
 	if (ft_strlen(arg->line) == 0)
 		return (0);
-	if (arg->line[0] == '/' && ft_strlen(arg->line) > 1 && arg->line[1] != '/')
+	/* if (arg->line[0] == '/' && ft_strlen(arg->line) > 1 && arg->line[1] != '/')
 	{
 		printing("cd: ", arg->line, ": No such file or directory\n", 2);
 		//free_and_exit();
 		return (1);
-	}
+	} */
 	if (ft_strncmp(arg->line, "~", 1) != 0 && is_file(arg->line) == 0)
 	{
 		printing("cd: ", arg->line, ": Not a directory\n", 2);
@@ -77,69 +75,6 @@ static int cd_no_arg(t_shell *shell)
 	else
 		update_pwd(&shell->envp_copy);
 	return (0);
-}
-
-static char	*get_new_path(t_shell *shell, t_token *arg)
-{
-	char	*old_path;
-	char	*new_path;
-	int		len;
-	
-	if (ft_strncmp(arg->line, "//\0", 3) == 0)
-		return(ft_strdup("//"));
-	if (ft_strncmp(arg->line, "/", 1) == 0)
-		return(ft_strdup("/"));
-	if (ft_strncmp(arg->line, "~", 1) == 0)
-	{
-		if (shell->home == NULL)
-		{
-			printing("cd", ": HOME not set\n", "", 2);
-			//free_and_exit();
-			return (NULL);
-		}
-		len = ft_strlen(shell->home) + ft_strlen(arg->line + 1) + 2;
-		new_path = (char *)malloc(len * sizeof(char));
-		if (new_path == NULL)
-		{
-			perror("malloc error");
-			//free_and_exit();
-		}
-		new_path = ft_strjoin(shell->home, arg->line + 1);
-		if (new_path == NULL)
-		{
-			perror("malloc error");
-			//free_and_exit();
-		}
-	}
-	else
-	{
-		old_path = (char *)malloc(BUFF_SIZE * sizeof(char));
-		if (old_path == NULL)
-		{
-			perror("malloc error");
-			//free_and_exit();
-		}
-		if (getcwd(old_path, BUFF_SIZE) == NULL)
-		{
-			perror("getcwd error");
-			//free_and_exit();
-		}
-		len = ft_strlen(old_path) + ft_strlen(arg->line) + 2;
-		new_path = (char *)malloc(len * sizeof(char));
-		if (new_path == NULL)
-		{
-			perror("malloc error");
-			//free_and_exit();
-		}
-		new_path = ft_strjoin_four(old_path, "/", arg->line, "");
-		if (new_path == NULL)
-		{
-			perror("malloc error");
-			//free_and_exit();
-		}
-		free(old_path);
-	}
-	return(new_path);
 }
 
 static int	access_new_path(t_shell *shell, t_token *arg, char *new_path)

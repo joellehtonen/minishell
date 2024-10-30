@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/29 14:49:29 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:50:16 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char *get_pwd(char *home);
 int	only_spaces(char *str);
-int	is_directory_new(char *path);
 int echo(t_shell *shell, t_token *echo_pointer);
 int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
@@ -141,6 +140,10 @@ int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
 int	if_builtin(t_shell *shell, int loop_count);
+char *get_new_path(t_shell *shell, t_token *arg);
+int	update_pwd(t_envp **envp_copy);
+int	update_old_pwd(t_envp **envp_copy);
+int	is_directory_new(char *path);
 // parsing functions
 void tokenize_input(t_shell *shell);
 int isIO(char c);
@@ -159,7 +162,6 @@ char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_exec exec);
 void check_command_access(char **param, t_exec exec);
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
-int	is_directory_new(char *path);
 int is_file(char *path);
 int	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
@@ -172,6 +174,8 @@ t_token	*find_here_doc_token(t_token *token);
 int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag);
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
 void	allocate_here_doc(t_exec *exec);
+void check_file_access(t_shell *shell, char	*path, int loop_count);
+void	check_all_files(t_token *token, int loop_count);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);

@@ -22,7 +22,7 @@ int	is_directory(char *path, t_exec fd, int fd_pipe, char **param)
 		printing(path, "", ": Is a directory\n", 2);
 /* 		close_free(test_fd, fd_pipe, -1, &fd.pid); // when do we need to close pipes?
 		free_all(param, NULL, NULL, &fd.null); */ // do we need to free pids?
-		exit(126);
+		exit(1);
 	}
 	close(test_fd);
 	return (0);
