@@ -77,6 +77,7 @@ static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	int		key_len;
 
 	if (shell->single_quote == true || token->line[*index + 1] == '\0')
+		// || (shell->double_quote == true && ft_isalnum))
 		return (ft_strdup("$"));
 	if (isquote(token->line[*index + 1]) == true)
 	{

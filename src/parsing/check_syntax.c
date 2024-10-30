@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: kattimaijanen <kattimaijanen@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/29 17:00:40 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:51:04 by kattimaijan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ static int	check_pipe_location(t_shell *shell, int old_index)
 
 static int	validate_IO(t_shell *shell, int index)
 {
+	if (shell->single_quote == true || shell->double_quote == true)
+		return (SUCCESS);
 	if (isIO(shell->user_input[index]) == false)
 		return (SUCCESS);
 	if (shell->user_input[index] == '|')

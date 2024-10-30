@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_parser.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: kattimaijanen <kattimaijanen@student.42    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/29 11:19:30 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:41:54 by kattimaijan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,28 @@ static int handle_argument(t_shell *shell, int end)
 	return (end);
 }
 
+static int increment_IO(t_shell *shell, int end)
+{
+	end++;
+	if (shell->user_input[end] == shell->user_input[end - 1])
+		end++;
+	return (end);
+}
+
+static int increment_quotes(t_shell *shell, int end)
+{
+	char	quote_type;
+	
+	quote_type = shell->user_input[end];
+	end++;
+	while (shell->user_input[end] != '\0' 
+		&& quote_type != shell->user_input[end])
+		end++;
+	if (quote_type == shell->user_input[end])
+		end++;
+	return (end);
+}
+
 void tokenize_input(t_shell *shell)
 {
 	int		start;
@@ -72,14 +94,11 @@ void tokenize_input(t_shell *shell)
 			start++;
 		if (shell->user_input[start] == '\0')
 			break ;
-		else
-			end = start;
-		if (isIO(shell->user_input[end]) != false)
-		{
-			end++;
-			if (shell->user_input[end] == shell->user_input[end - 1])
-				end++;
-		}
+		end = start;
+		if (isquote(shell->user_input[end]) != false)
+			end = increment_quotes(shell, end);
+		else if (isIO(shell->user_input[end]) != false)
+			end = increment_IO(shell, end);
 		else
 			end = handle_argument(shell, end);
 		start = create_new_token(shell, end, start, token_number);
