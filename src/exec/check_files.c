@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/30 15:31:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 09:57:44 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	check_file_access(t_shell *shell, char	*path, int loop_count)
 	{
 		//printing(path, "", ": Permission denied\n", 2);
 		close_pipes_child(loop_count, &shell->exec); // free pids?
-		exit(1);
+		free_and_exit(shell, 1);
 	}
 	if (access(path, F_OK) == -1 && errno == ENOENT)
 	{
 		//printing(path, "", ": No such file or directory\n", 2);
 		close_pipes_child(loop_count, &shell->exec); // free pids?
-		exit(1);
+		free_and_exit(shell, 1);
 	}
 }
 

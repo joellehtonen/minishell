@@ -2,21 +2,6 @@
 
 #include "../../inc/minishell.h"
 
-int	free_two_str(char *str1, char *str2)
-{
-	if (str1)
-	{
-		free(str1);
-		str1 = NULL;
-	}
-	if (str2)
-	{
-		free(str2);
-		str2 = NULL;
-	}
-	return (1);
-}
-
 //The function searches for a character c in the string s
 size_t	ft_strchr_fix(const char *s, int c)
 {

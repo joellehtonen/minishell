@@ -15,7 +15,7 @@ int	execute(t_shell *shell)
 	int		exit_status;
 
 	exec = shell->exec;
-	allocate_here_doc(exec);
+	allocate_here_doc(exec, shell);
 	if (exec->here_doc_num > 0 && here_doc(shell) == 1)
 		return (free_exec(&exec));
 	if (exec->pipe_num == 0 && if_builtin(shell, 0) == 0)

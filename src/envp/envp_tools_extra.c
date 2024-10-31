@@ -37,7 +37,7 @@ void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
 	if (cmp(temp->line, data, ft_strlen(data) \
 			- ft_strlen(ft_strchr(data, '=')) + 1) == 0)
 	{
-		printf("matching node found\n");
+		//printf("matching node found\n");
 		*lst = temp->next;
 		free(temp);
 		envp_remove_if_export(lst, data, cmp);
