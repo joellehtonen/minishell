@@ -9,7 +9,7 @@ int	is_valid_redir(t_shell *shell, int index1, int index2)
 	
 	c1 = shell->user_input[index1];
 	c2 = shell->user_input[index2];
-	if (isIO(c2) == false)
+	if (is_IO(c2) == false)
 		return (true);
 	if ((c1 == '<' && c2 == '<')
 		|| (c1 == '<' && c2 == '>')
@@ -19,7 +19,7 @@ int	is_valid_redir(t_shell *shell, int index1, int index2)
 		return (false);
 }
 
-int ft_isspace(char c)
+int is_space(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
 		return (true);
@@ -27,7 +27,7 @@ int ft_isspace(char c)
 		return (false);
 }
 
-int isIO(char c)
+int is_IO(char c)
 {
 	if	(c == '|')
 		return (PIPE);
@@ -39,7 +39,17 @@ int isIO(char c)
 		return (false);
 }
 
-int isquote(char c)
+int is_delim(char c)
+{
+	if (is_IO(c) != false)
+		return (true);
+	if (c == '&' || c == ';')
+		return (true);
+	else
+		return (false);
+}
+
+int is_quote(char c)
 {
 	if (c == '\'')
 		return (S_QUOTE);

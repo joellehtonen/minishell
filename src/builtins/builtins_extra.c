@@ -27,5 +27,6 @@ int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count)
 int	exit_exec(t_shell *shell)
 {
 	free_and_exit(shell, 0);
+	//shell->exit_code = 
 	return (0);
 }

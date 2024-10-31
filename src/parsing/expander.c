@@ -69,6 +69,17 @@ static int	calculate_key_len(t_token *token, int index)
 	return (key_len);
 }
 
+static int	is_exception(t_token *token, int index)
+{
+	if (token->line[index + 1] == '\0')
+		return (true);
+	else if (ft_isalnum(token->line[index + 1]) == false
+		&& token->line[index + 1] != '?')
+		return (true);
+	else
+		return (false);
+}
+
 static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 {
 	char	*key;
@@ -76,10 +87,9 @@ static char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	char	*expansion;
 	int		key_len;
 
-	if (shell->single_quote == true || token->line[*index + 1] == '\0'
-		|| (shell->double_quote == true && ft_isalnum(token->line[*index + 1]) == 0))
+	if (is_exception(token, *index) == true)
 		return (ft_strdup("$"));
-	if (isquote(token->line[*index + 1]) == true)
+	if (is_quote(token->line[*index + 1]) == true)
 	{
 		(*index)++;
 		return (NULL);
@@ -139,12 +149,11 @@ static void	check_content(t_shell *shell, t_token *token)
 	{
 		if (handle_quotes(shell, token, index) == true)
 			index++;
-		else if (token->line[index] == '$')
+		else if (token->line[index] == '$' && shell->single_quote == false)
 		{
 			expansion = create_expansion(shell, token, &index);
 			add_expansion(&replacement, expansion, &copy_index, &index);
 			free(expansion);
-			break ;
 		}
 		else
 			replacement[copy_index++] = token->line[index++];
@@ -161,6 +170,7 @@ void	expander(t_shell *shell)
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
+		//reset_quotes(shell);
 		if (ft_strchr(temp->line, '\'') != NULL
 			|| ft_strchr(temp->line, '\"') != NULL
 			|| ft_strchr(temp->line, '$') != NULL)

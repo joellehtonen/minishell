@@ -26,10 +26,15 @@ if infinite loop before, then history not working and signals not working
 
 SIGINT (ctrl c) exit code is 130
 
+should we handle ; as a delimiter?
 
 
 
-
-
-jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
-Token #0: echo, type COMM, level 0
+jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo ""HI"""HI"
+HIHI
+jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo ""HI"""$HOME"
+HI/home/jlehtone
+jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo '""HI"""$HOME"'
+""HI"""$HOME"
+jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo "''HI'''$HOME'"
+''HI'''/home/jlehtone'

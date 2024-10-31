@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/30 14:50:16 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 15:37:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,10 @@ int	update_old_pwd(t_envp **envp_copy);
 int	is_directory_new(char *path);
 // parsing functions
 void tokenize_input(t_shell *shell);
-int isIO(char c);
-int isquote(char c);
-int ft_isspace(char c);
+int is_IO(char c);
+int is_quote(char c);
+int is_space(char c);
+int is_delim(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec);
