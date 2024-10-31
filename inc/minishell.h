@@ -109,6 +109,7 @@ typedef struct	s_shell
 	t_token	*token_pointer; //pointer to the head of the linked list containing the arguments parsed from user input
 	int		single_quote; //whether single quotes are "active"
 	int		double_quote; //whether double quotes are "active"
+	int		only_one_builtin; //whether we have one command to run and it's a builtin
 	int		exit_code; 
 }				t_shell;
 

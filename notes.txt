@@ -9,6 +9,7 @@ EXECUTE
 - test prompt: "echo a > test b >> test2"
 - "<< HEY" should print to STDOUT
 - cd $HEY
+- if we press Ctrl+C during here_doc, it doesn't close properly
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
@@ -29,6 +30,8 @@ SIGINT (ctrl c) exit code is 130
 
 should we handle ; as a delimiter?
 
-
+aklimchu:~/minishell$ cd $PWD hi
+Error. cd: too many arguments
+free(): invalid pointer
 
 use perror and errno and strerror to display error codes / messages
