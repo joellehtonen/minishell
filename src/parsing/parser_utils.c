@@ -55,3 +55,4 @@ void reset_quotes(t_shell *shell)
 	shell->single_quote = false;
 	shell->double_quote = false;
 }
+
