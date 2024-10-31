@@ -7,9 +7,7 @@ ERROR
 EXECUTE
 - update / add freeing functions
 - test prompt: "echo a > test b >> test2"
-- "<< HEY" should print to STDOUT
 - cd $HEY
-- if we press Ctrl+C during here_doc, it doesn't close properly
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
@@ -17,6 +15,8 @@ SIGNALS:
 - in heredoc D outputs this: bash: warning: here-document at line 1 delimited by end-of-file (wanted `echo')
 	and exits heredoc
 - in input mode \ does nothing, same in heredoc
+- if we press Ctrl+C during here_doc, it doesn't close properly
+- grep );$ and then Ctrl+C
 
 if cd into directory and removing an upper directory, handle it somehow
 
@@ -33,5 +33,6 @@ should we handle ; as a delimiter?
 aklimchu:~/minishell$ cd $PWD hi
 Error. cd: too many arguments
 free(): invalid pointer
+
 
 use perror and errno and strerror to display error codes / messages
