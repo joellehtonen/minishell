@@ -6,9 +6,8 @@ ERROR
 
 EXECUTE
 - update / add freeing functions
-- what if we have multiple input / output files? what if we have several heredoc?
 - test prompt: "echo a > test b >> test2"
-- cd $HOME
+- "<< HEY" should print to STDOUT
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
@@ -31,11 +30,6 @@ SIGINT (ctrl c) exit code is 130
 
 
 
-jlehtone:~/Desktop/git_home/minishell$ echo '>>>'
-Error. Syntax error near unexpected token
 
-jlehtone:~/Desktop/git_home/minishell$ echo '>>'
+jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
 Token #0: echo, type COMM, level 0
-Token #1: , type ARG, level 0
-Token #2: >>, type DELIM, level 0
-Token #3: , type PIPE, level 0

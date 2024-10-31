@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/29 12:10:38 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:50:16 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ typedef struct	s_exec
 	int		status;
 	int		pipe_num;
 	int		pipe_flag;
-	int		hd_flag;
-	int		hd_pipe[2];
+	int		**here_doc_pipe;
+	int		here_doc_num;
 	pid_t	*null;
 	pid_t	*pid;
 }				t_exec;
@@ -133,7 +133,6 @@ int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char *get_pwd(char *home);
 int	only_spaces(char *str);
-int	is_directory_new(char *path);
 int echo(t_shell *shell, t_token *echo_pointer);
 int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
@@ -141,6 +140,10 @@ int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
 int	if_builtin(t_shell *shell, int loop_count);
+char *get_new_path(t_shell *shell, t_token *arg);
+int	update_pwd(t_envp **envp_copy);
+int	update_old_pwd(t_envp **envp_copy);
+int	is_directory_new(char *path);
 // parsing functions
 void tokenize_input(t_shell *shell);
 int isIO(char c);
@@ -159,14 +162,20 @@ char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_exec exec);
 void check_command_access(char **param, t_exec exec);
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
-int	is_directory_new(char *path);
 int is_file(char *path);
 int	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
 void child_process(t_shell **shell, int loop_count);
 int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
-int	here_doc(t_exec *exec, t_token *redir);
+int	assign_exec_values(t_shell *shell);
+int here_doc(t_shell *shell);
+t_token	*find_here_doc_token(t_token *token);
+int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag);
+int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
+void	allocate_here_doc(t_exec *exec);
+void check_file_access(t_shell *shell, char	*path, int loop_count);
+void	check_all_files(t_token *token, int loop_count);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);

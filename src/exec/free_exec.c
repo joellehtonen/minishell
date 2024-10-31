@@ -89,6 +89,11 @@ void	close_pipes_child(int loop_count, t_exec **exec)
 		close((*exec)->pipe[i][1]);
 		i++;
 	}
-	/* if ((*exec)->hd_flag == 1)
-		close((*exec)->hd_pipe[0]); */ // do we need?
+	i = 0;
+	while (i < (*exec)->here_doc_num)
+	{
+		close((*exec)->here_doc_pipe[i][0]);
+		//close((*exec)->here_doc[i][1]);
+		i++;
+	}
 }

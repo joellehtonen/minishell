@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/11 12:53:24 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/29 13:59:45 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_token	*find_token_line(t_token *token, int loop_count, \
 	while (temp && temp->level == loop_count)
 	{
 		if (temp->type == token_type && \
-			ft_strncmp(temp->line, line, ft_strlen(line)) == 0)
+			ft_strncmp(temp->line, line, ft_strlen(line) + 1) == 0) // changed
 			return (temp);
 		temp = temp->next;
 	}
