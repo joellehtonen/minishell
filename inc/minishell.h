@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 09:25:03 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:21:54 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct	s_shell
 	t_token	*token_pointer; //pointer to the head of the linked list containing the arguments parsed from user input
 	int		single_quote; //whether single quotes are "active"
 	int		double_quote; //whether double quotes are "active"
+	int		only_one_builtin; //whether we have one command to run and it's a builtin
 	int		exit_code; 
 }				t_shell;
 
@@ -141,7 +142,7 @@ int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy, t_shell *shell);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);
-int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
+int	export_exec(t_envp **envp_copy, t_token *export, int loop_count, t_shell *shell);
 int	if_builtin(t_shell *shell, int loop_count);
 char *get_new_path(t_shell *shell, t_token *arg);
 int	is_directory_new(char *path);

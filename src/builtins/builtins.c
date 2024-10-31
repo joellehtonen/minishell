@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/31 11:01:51 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/10/31 11:02:17 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -20,7 +30,7 @@ int	exec_builtins(t_shell *shell, int loop_count)
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "export"))
 	{
 		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "export");
-		return(export_exec(&shell->envp_copy, builtins, loop_count));
+		return(export_exec(&shell->envp_copy, builtins, loop_count, shell));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "unset"))
 	{
@@ -55,39 +65,4 @@ static int pwd_exec()
 	printf("%s\n", pwd);
 	free(pwd);
 	return(0);
-}
-
-int	export_exec(t_envp **envp_copy, t_token *export, int loop_count)
-{
-	t_envp	*new;
-	t_envp	*temp;
-	t_token	*arg;
-	
-	temp = *envp_copy;
-	arg = find_token(export, loop_count, ARG);
-	if (!arg)
-	{
-		while (temp)
-		{
-			printf("declare -x %s\n", temp->line);
-			temp = temp->next;
-		}
-		return (0);
-	}
-	if (ft_strchr(arg->line, '=') == NULL)
-	{
-		//do we need to handle?
-		//e.g. if in previous child process variable is assigned
-		//free_and_exit(...);
-		return (0);
-	}
-	envp_remove_if_export(&temp, arg->line, ft_strncmp);
-	new = ft_lstnew_envp(arg->line);
-	if (new == NULL)
-	{
-		//free_and_exit(...);
-		return(1);
-	}
-	ft_lstadd_back_envp(&temp, new);
-	return (0);
 }

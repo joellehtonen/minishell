@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/31 08:36:15 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:40:24 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	free_and_exit(t_shell *shell, int error)
 	if (shell->user_input)
 		free(shell->user_input);
 	// what else needs to be freed?
+	if (shell->only_one_builtin == 1 && shell->token_pointer && \
+		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
+		return ;
 	if (shell->exit_code)
 		exit(shell->exit_code);
 	else

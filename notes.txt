@@ -9,6 +9,7 @@ EXECUTE
 - test prompt: "echo a > test b >> test2"
 - "<< HEY" should print to STDOUT
 - cd $HEY
+- if we press Ctrl+C during here_doc, it doesn't close properly
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
@@ -28,7 +29,9 @@ if infinite loop before, then history not working and signals not working
 SIGINT (ctrl c) exit code is 130
 
 
-
+aklimchu:~/minishell$ cd $PWD hi
+Error. cd: too many arguments
+free(): invalid pointer
 
 
 
