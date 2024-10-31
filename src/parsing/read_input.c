@@ -6,13 +6,15 @@ int read_input(t_shell *shell)
 {
 	char	*prompt;
 
-	shell->pwd = get_pwd(shell->home);
+	shell->pwd = get_pwd(shell->home, shell);
 	while (true) 
 	{
 		free(shell->pwd);
-		shell->pwd = get_pwd(shell->home);
+		shell->pwd = get_pwd(shell->home, shell);
 		shell->envp_str = NULL;
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
+		if (prompt == NULL)
+			error_printer(shell, MALLOC_FAIL, true);
 		set_up_signals(shell);
 		shell->user_input = readline(prompt);
 		if (shell->user_input == NULL)
@@ -26,7 +28,7 @@ int read_input(t_shell *shell)
 			tokenize_input(shell);
 			expander(shell);
 			assign_type(&shell->token_pointer);
-			assign_level(&shell->token_pointer, &shell->exec);
+			assign_level(&shell->token_pointer, &shell->exec, shell);
 			//print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
 				//free_and_exit();

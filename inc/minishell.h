@@ -32,6 +32,9 @@
 # define REDIR_ERROR "Redir can't come last, or before a pipe or another redir"
 # define QUOTE_ERROR "Odd number of quotes (only even amount accepted)"
 # define MALLOC_FAIL "Allocating memory failed"
+# define GETCWD_FAIL "Getting current working directory failed"
+# define CHDIR_ERROR "Changing working directory failed"
+# define DUP2_ERROR "Failed to duplicate a file descriptor"
 # define SIGNAL_ERROR "Failed to set up a signal"
 # define SYNTAX_ERROR "Syntax error near unexpected token"
 # define NUMERIC_ERROR "Numeric argument required"
@@ -121,7 +124,8 @@ t_envp *ft_lstlast_envp(t_envp *lst);
 int copy_path(t_envp **path, t_envp *envp_copy);
 int copy_uname(char **uname, t_envp *envp_copy);
 int copy_home(char **home, t_envp *envp_copy);
-int	update_pwd(t_envp **envp_copy);
+int	update_pwd(t_envp **envp_copy, t_shell *shell);
+int	update_old_pwd(t_envp **envp_copy, t_shell *shell);
 void envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
 void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 // list token functions
@@ -134,8 +138,7 @@ void	print_node(t_token *lst);
 // builtin functions
 int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
-char *get_pwd(char *home);
-int	only_spaces(char *str);
+char *get_pwd(char *home, t_shell *shell);
 int echo(t_shell *shell, t_token *echo_pointer);
 // int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
@@ -144,8 +147,6 @@ int	exit_exec(t_shell *shell, t_token *token);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
 int	if_builtin(t_shell *shell, int loop_count);
 char *get_new_path(t_shell *shell, t_token *arg);
-int	update_pwd(t_envp **envp_copy);
-int	update_old_pwd(t_envp **envp_copy);
 int	is_directory_new(char *path);
 // parsing functions
 void tokenize_input(t_shell *shell);
@@ -155,7 +156,7 @@ int is_space(char c);
 int is_delim(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
-void assign_level(t_token **token, t_exec **exec);
+void assign_level(t_token **token, t_exec **exec, t_shell *shell);
 void	expander(t_shell *shell);
 void reset_quotes(t_shell *shell);
 // execute functions
@@ -177,7 +178,7 @@ int here_doc(t_shell *shell);
 t_token	*find_here_doc_token(t_token *token);
 int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag);
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
-void	allocate_here_doc(t_exec *exec);
+void	allocate_here_doc(t_exec *exec, t_shell *shell);
 void check_file_access(t_shell *shell, char	*path, int loop_count);
 void	check_all_files(t_token *token, int loop_count);
 // miscellaneous
@@ -196,6 +197,7 @@ void free_double_arr(char **arr);
 void error_printer(t_shell *shell, char *message, int exit);
 int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
 int	free_two_str(char *str1, char *str2);
+int	free_str(char *str1);
 int free_exec(t_exec **exec);
 
 #endif /* MINISHELL_H */

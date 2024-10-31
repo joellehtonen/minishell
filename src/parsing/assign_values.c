@@ -58,7 +58,7 @@ void	assign_type(t_token **token)
 	}
 }
 
-void	assign_level(t_token **token, t_exec **exec)
+void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 {
 	int		level;
 	t_token	*token_temp;
@@ -74,6 +74,8 @@ void	assign_level(t_token **token, t_exec **exec)
 		token_temp = token_temp->next;
 	}
 	*exec = (t_exec *)malloc(sizeof(t_exec));
+	if (*exec == NULL)
+		error_printer(shell, MALLOC_FAIL, true);
 	exec_temp = *exec;
 	exec_temp->pipe_num = level;
 	exec_temp->pipe_flag = 0;

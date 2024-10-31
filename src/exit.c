@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
 /*   Updated: 2024/11/01 14:48:39 by jlehtone         ###   ########.fr       */
@@ -42,4 +42,29 @@ void	free_double_arr(char **arr)
 		free(arr);
 		arr = NULL;
 	}
+}
+
+int	free_two_str(char *str1, char *str2)
+{
+	if (str1)
+	{
+		free(str1);
+		str1 = NULL;
+	}
+	if (str2)
+	{
+		free(str2);
+		str2 = NULL;
+	}
+	return (1);
+}
+
+int	free_str(char *str1)
+{
+	if (str1)
+	{
+		free(str1);
+		str1 = NULL;
+	}
+	return (1);
 }
