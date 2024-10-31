@@ -13,7 +13,6 @@ int read_input(t_shell *shell)
 		shell->pwd = get_pwd(shell->home);
 		shell->envp_str = NULL;
 		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
-		shell->exit_code = 0;
 		set_up_signals(shell);
 		shell->user_input = readline(prompt);
 		if (shell->user_input == NULL)
@@ -23,6 +22,7 @@ int read_input(t_shell *shell)
 		}
 		if (input_error_check(shell) == SUCCESS)
 		{
+			//printf("exit code before tokenizer: %d\n", shell->exit_code);
 			tokenize_input(shell);
 			expander(shell);
 			assign_type(&shell->token_pointer);
@@ -34,7 +34,7 @@ int read_input(t_shell *shell)
 		add_history(shell->user_input);
 		delete_all_tokens(&shell->token_pointer);
 		free(prompt);
-		//printf("exit code: %d\n", shell->exit_code);
+		//printf("exit code after all: %d\n", shell->exit_code);
 	}
 	free(shell->user_input); // replace with custom free function?
 	//printf("exit code: %d\n", shell->exit_code);

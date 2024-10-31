@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens_delete.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/28 14:54:18 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 09:44:32 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_node(t_token *lst)
 
 void	delete_one_token(t_token *lst)
 {
-	if (!lst)
+	if (!lst || !lst->line)
 		return ;
 	free(lst->line);
 	free(lst);

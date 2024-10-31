@@ -144,6 +144,7 @@ static void	check_content(t_shell *shell, t_token *token)
 			expansion = create_expansion(shell, token, &index);
 			add_expansion(&replacement, expansion, &copy_index, &index);
 			free(expansion);
+			break ;
 		}
 		else
 			replacement[copy_index++] = token->line[index++];
