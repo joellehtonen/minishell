@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/01 12:51:56 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/01 13:54:22 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	check_newline(char *content)
 		return (true);
 }
 
+// prints each ARG-type node, until it hits an IO. 
+// prints spaces between ARGS, unless it hasnt printed yet
 static void	echo_printing_loop(t_token *temp)
 {
 	int	printed;
@@ -36,21 +38,12 @@ static void	echo_printing_loop(t_token *temp)
 	printed = false;
 	while (temp)
 	{
-		if (temp->type == PIPE \
-			|| temp->type == REDIR_OUTPUT) //probably not extensive enough?
+		if (temp->type == PIPE) //maybe not extensive enough
 			break ;
 		if (temp->type == ARG)
 		{
-			if (temp->next && temp->next->type == REDIR_OUTPUT)
-			{
-				temp = temp->next;
-				continue ;
-			}
-			else
-			{
-				printf("%s", temp->line);
-				printed = true;
-			}
+			printf("%s", temp->line);
+			printed = true;
 		}
 		if (temp->next && temp->next->type == ARG && printed == true)
 			printf(" ");

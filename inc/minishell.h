@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/01 10:32:03 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:21:44 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 # define MALLOC_FAIL "Allocating memory failed"
 # define SIGNAL_ERROR "Failed to set up a signal"
 # define SYNTAX_ERROR "Syntax error near unexpected token"
+# define NUMERIC_ERROR "Numeric argument required"
+# define TOO_MANY_ERROR "Too many arguments"
 
 enum e_success
 {
@@ -138,7 +140,7 @@ int echo(t_shell *shell, t_token *echo_pointer);
 // int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
-int	exit_exec(t_shell *shell);
+int	exit_exec(t_shell *shell, t_token *token);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count);
 int	if_builtin(t_shell *shell, int loop_count);
 char *get_new_path(t_shell *shell, t_token *arg);

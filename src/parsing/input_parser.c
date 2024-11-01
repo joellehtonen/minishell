@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/01 09:51:27 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/01 14:40:03 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ void tokenize_input(t_shell *shell)
 			end = increment_IO(shell, end);
 		else
 			end = handle_argument(shell, end);
-		// printf("start is %d\n", start);
-		// printf("end is %d\n", end);
 		start = create_new_token(shell, end, start, token_number);
 		token_number++;
 	}

@@ -14,7 +14,10 @@ int	exec_builtins(t_shell *shell, int loop_count)
 		return(cd_exec(shell, builtins, loop_count));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "exit"))
-		return(exit_exec(shell));
+	{
+		builtins = find_token_line(shell->token_pointer, loop_count, COMM, "exit");
+		return(exit_exec(shell, builtins));
+	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "env"))
 		return(env_exec(shell->envp_copy));
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "export"))

@@ -30,11 +30,4 @@ should we handle ; as a delimiter?
 
 
 
-jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo ""HI"""HI"
-HIHI
-jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo ""HI"""$HOME"
-HI/home/jlehtone
-jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo '""HI"""$HOME"'
-""HI"""$HOME"
-jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo "''HI'''$HOME'"
-''HI'''/home/jlehtone'
+use perror and errno and strerror to display error codes / messages
