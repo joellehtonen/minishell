@@ -30,10 +30,10 @@ int	exit_exec(t_shell *shell, t_token *token)
 	int index;
 
 	index = 0;
-	if (token->next->next)
-		error_printer(shell, TOO_MANY_ERROR, true);
 	if (token->next)
 	{
+		if (token->next->next)
+			error_printer(shell, TOO_MANY_ERROR, true);
 		while (token->next->line[index] != '\0')
 		{
 			if (ft_isdigit(token->next->line[index]) == false

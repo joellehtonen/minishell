@@ -29,5 +29,5 @@ SIGINT (ctrl c) exit code is 130
 should we handle ; as a delimiter?
 
 
-
+what if exit gets too long number as argument
 use perror and errno and strerror to display error codes / messages
