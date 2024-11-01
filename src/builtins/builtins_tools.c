@@ -6,23 +6,21 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:50:01 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/30 12:46:19 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 08:15:47 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char	*get_pwd_extra(char *home);
+static char	*get_pwd_extra(char *home, t_shell *shell);
 
-char	*get_pwd(char *home)
+char	*get_pwd(char *home, t_shell *shell)
 {
 	char	*pwd;
 	char	*new_pwd;
 	int		pwd_move;
 	
-	pwd = get_pwd_extra(home);
-	if (pwd == NULL)
-		return (NULL);
+	pwd = get_pwd_extra(home, shell);
 	pwd_move = 0;
 	while ((*home) && (*pwd) && *pwd == *home)
 	{
@@ -39,32 +37,21 @@ char	*get_pwd(char *home)
 		return (pwd - pwd_move);
 	new_pwd = ft_strjoin("~/", pwd);
 	if (new_pwd == NULL)
-	{
-		perror("malloc error");
-		//free_and_exit();
-	}
+		error_printer(shell, MALLOC_FAIL, true);
 	free(pwd - pwd_move);
 	return(new_pwd);
 }
 
-static char	*get_pwd_extra(char *home)
+static char	*get_pwd_extra(char *home, t_shell *shell)
 {
 	char	*pwd;
 	char	*new_pwd;
 	
 	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
-	{
-		perror("malloc error");
-		//free_and_exit();
-		return (NULL);
-	}
+		error_printer(shell, MALLOC_FAIL, true);
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
-	{
-		perror("getcwd error");
-		//free_and_exit();
-		return (NULL);
-	}
+		error_printer(shell, GETCWD_FAIL, true);
 	if (ft_strncmp(pwd, "/", 1) == 0 && ft_strlen(pwd) == 1)
 	{
 		free(pwd);
@@ -75,6 +62,8 @@ static char	*get_pwd_extra(char *home)
 	{
 		free(pwd);
 		new_pwd = ft_strdup("/home");
+		if (new_pwd == NULL)
+			error_printer(shell, MALLOC_FAIL, true);
 		return (new_pwd);
 	}
 	if (home == NULL)
@@ -83,18 +72,9 @@ static char	*get_pwd_extra(char *home)
 	{
 		free(pwd);
 		new_pwd = ft_strdup("~");
+		if (new_pwd == NULL)
+			error_printer(shell, MALLOC_FAIL, true);
 		return (new_pwd);
 	}
 	return (pwd);
-}
-
-int	only_spaces(char *str)
-{
-	while (*str)
-	{
-		if (*str != ' ')
-			return (1);
-		str++;
-	}
-	return (0);
 }

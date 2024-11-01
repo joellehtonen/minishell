@@ -60,8 +60,8 @@ static int	calculate_key_len(t_token *token, int index)
 	int	key_len;
 
 	key_len = 0;
-	while (token->line + index + key_len \
-			&& (ft_isalnum(token->line[index + key_len]) == true \
+	while (token->line[index + key_len] \
+			&&  (ft_isalnum(token->line[index + key_len]) == true \
 			|| token->line[index + key_len] == '_'))
 	{
 		key_len++;

@@ -33,11 +33,7 @@ int	free_exec(t_exec **exec)
 		free(*exec);
 		*exec = NULL;
 	}
-	/* if (exec->hd_flag == 1) // do we need?
-	{
-		close(exec->hd_pipe[0]);
-		exec->hd_flag = 0;
-	} */
+	// free array with here_doc pipes?
 	return(1);
 }
 

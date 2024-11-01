@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/10/31 11:23:09 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -15,7 +25,7 @@ int	execute(t_shell *shell)
 	int		exit_status;
 
 	exec = shell->exec;
-	allocate_here_doc(exec);
+	allocate_here_doc(exec, shell);
 	if (exec->here_doc_num > 0 && here_doc(shell) == 1)
 		return (free_exec(&exec));
 	if (exec->pipe_num == 0 && if_builtin(shell, 0) == 0)
@@ -48,6 +58,7 @@ static int	only_one_builtin(t_shell *shell)
 	int		orig_in;
 	int		orig_out;
 
+	shell->only_one_builtin = 1;
 	orig_in = dup(STDIN_FILENO);
 	orig_out = dup(STDOUT_FILENO);
 	get_input_and_output(&shell, 0);

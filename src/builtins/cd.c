@@ -15,9 +15,8 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 	int		arg_error;
 	
 	if (count_nodes_type(cd, ARG, loop_count) > 1)
-	{
-		printing("cd", ": too many arguments\n", "", 2);
-		//free_and_exit();
+   	{
+		error_printer(shell, "cd: too many arguments\n", true);
 		return (1);
 	}
 	arg = find_token(cd, loop_count, ARG);
@@ -27,9 +26,7 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 	new_path = get_new_path(shell, arg);
 	if (new_path == NULL)
 		return (1);
-	if (access_new_path(shell, arg, new_path) == 1)
-		return (1);
-	return (0);
+	return (access_new_path(shell, arg, new_path));
 }
 
 static int	check_arg(t_shell *shell, t_token *arg)
@@ -47,7 +44,7 @@ static int	check_arg(t_shell *shell, t_token *arg)
 	if (ft_strncmp(arg->line, "~", 1) != 0 && is_file(arg->line) == 0)
 	{
 		printing("cd: ", arg->line, ": Not a directory\n", 2);
-		//free_and_exit();
+		free_and_exit(shell, true);
 		return (1);
 	}
 	return (2);
@@ -57,23 +54,22 @@ static int cd_no_arg(t_shell *shell)
 {
 	if (shell->home == NULL)
 	{
-		printing("cd", ": HOME not set\n", "", 2);
-		//free_and_exit();
+		error_printer(shell, "cd: HOME not set\n", true);
 		return (1);
 	}
 	if (is_directory_new(shell->home) == 1)
 	{
 		printing("cd: ", shell->home, ": No such file or directory\n", 2);
-		//free_and_exit();
+		free_and_exit(shell, true);
 		return (1);
 	}
 	if (chdir(shell->home) == -1)
 	{
-		perror("chdir() error");
-		//free_and_exit();
+		error_printer(shell, CHDIR_ERROR, true);
+		return (1);
 	}
 	else
-		update_pwd(&shell->envp_copy);
+		update_pwd(&shell->envp_copy, shell);
 	return (0);
 }
 
@@ -86,21 +82,20 @@ static int	access_new_path(t_shell *shell, t_token *arg, char *new_path)
 		else
 			printing("cd: ", arg->line, ": No such file or directory\n", 2);
 		free(new_path);
-		//free_and_exit();
+		free_and_exit(shell, true);
 		return (1);
 	}
 	//set pwd in env
 	if (chdir(new_path) == -1)
 	{
-    	perror("chdir() error");
 		free(new_path);
-		//free_and_exit();
+	   	error_printer(shell, CHDIR_ERROR, true);
+		return (1);
 	}
 	else
 	{
-		update_pwd(&shell->envp_copy);
+		update_pwd(&shell->envp_copy, shell);
 		free(new_path);
-		//free_and_exit();
 	}
 	return (0);
 }

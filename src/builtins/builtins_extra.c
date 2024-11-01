@@ -2,14 +2,14 @@
 
 #include "../../inc/minishell.h"
 
-int	env_exec(t_envp *envp_copy)
+int	env_exec(t_envp *envp_copy, t_shell *shell)
 {
 	while (envp_copy)
 	{
 		printf("%s\n", envp_copy->line);
 		envp_copy = envp_copy->next;
 	}
-	//free_and_exit();
+	free_and_exit(shell, 0);
 	return (0);
 }
 

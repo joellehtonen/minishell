@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:42 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/30 15:26:02 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/10/31 10:09:53 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ static void	get_input_fd(t_shell **shell, int loop_count, int here_doc_index)
 		if (dup2(exec->here_doc_pipe[here_doc_index][0], 0) == -1)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
-			perror("dup() error");
-			exit(1);
+			error_printer(*shell, DUP2_ERROR, true);
 		}
 	}
 	else if (check_for_input(*shell, (*shell)->token_pointer, loop_count, 0) == 0)
@@ -82,16 +81,14 @@ static void	get_input_fd(t_shell **shell, int loop_count, int here_doc_index)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->in);
-			perror("dup() error");
-			exit(1);
+			error_printer(*shell, DUP2_ERROR, true);
 		}
 		close(exec->in);
 	}
 	else if (loop_count > 0 && dup2(exec->pipe[loop_count - 1][0], 0) == -1)
 	{
 		close_pipes_child(loop_count, &exec); // free pids?
-		perror("dup() error");
-		exit(1);
+		error_printer(*shell, DUP2_ERROR, true);
 	}
 }
 
@@ -106,8 +103,7 @@ static void	get_output_fd(t_shell **shell, int loop_count)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->out);
-			perror("dup() error");
-			exit(1);
+			error_printer(*shell, DUP2_ERROR, true);
 		}
 		close(exec->out);
 	}
@@ -116,8 +112,7 @@ static void	get_output_fd(t_shell **shell, int loop_count)
 		if (dup2(exec->pipe[loop_count][1], 1) == -1)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
-			perror("dup() error");
-			exit(1);
+			error_printer(*shell, DUP2_ERROR, true);
 		}
 		exec->pipe_flag = 0;
 	}
