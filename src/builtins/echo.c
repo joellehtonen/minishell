@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/11 10:14:13 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/01 12:51:56 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,35 @@ static int	check_newline(char *content)
 		return (true);
 }
 
+static void	echo_printing_loop(t_token *temp)
+{
+	int	printed;
+
+	printed = false;
+	while (temp)
+	{
+		if (temp->type == PIPE \
+			|| temp->type == REDIR_OUTPUT) //probably not extensive enough?
+			break ;
+		if (temp->type == ARG)
+		{
+			if (temp->next && temp->next->type == REDIR_OUTPUT)
+			{
+				temp = temp->next;
+				continue ;
+			}
+			else
+			{
+				printf("%s", temp->line);
+				printed = true;
+			}
+		}
+		if (temp->next && temp->next->type == ARG && printed == true)
+			printf(" ");
+		temp = temp->next;
+	}
+}
+
 // I'm assuming that the exec function is already pointing to the node containing COMM "echo"
 int echo(t_shell *shell, t_token *echo_pointer)
 {
@@ -44,13 +73,7 @@ int echo(t_shell *shell, t_token *echo_pointer)
 		if (newline == false)
 			temp = temp->next;
 	}
-	while (temp && temp->type == ARG)
-	{
-		printf("%s", temp->line);
-		if (temp->next && temp->next->type == ARG)
-			printf(" ");
-		temp = temp->next;
-	}
+	echo_printing_loop(temp);
 	if (newline == true)
 		printf("\n");
 	return (SUCCESS);

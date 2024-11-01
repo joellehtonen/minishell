@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 16:25:15 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/01 10:32:03 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ enum e_success
 	FAILURE
 };
 
-enum e_token_type
+enum e_token_type //do we need all of these? we need to cull what we dont need, sooner or later
 {
 	COMM = 1,
 	ARG,
 	REDIR_INPUT,
 	REDIR_OUTPUT,
-	DELIM,
+	DELIM, //needed?
 	INPUT,
 	OUTPUT,
 	PIPE, 
-	FLAG, 
+	FLAG, //needed?
 	SPACES
 };
 
@@ -135,7 +135,7 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char *get_pwd(char *home);
 int	only_spaces(char *str);
 int echo(t_shell *shell, t_token *echo_pointer);
-int echo_exec(t_shell *shell, char *input);
+// int echo_exec(t_shell *shell, char *input);
 int	env_exec(t_envp *envp_copy);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell);

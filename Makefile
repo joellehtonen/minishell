@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/30 14:45:10 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/01 10:26:53 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtins.c \
 			./src/builtins/cd.c \
 			./src/builtins/cd_tools.c \
-			./src/builtins/echo_new.c \
+			./src/builtins/echo.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/signals.c \
