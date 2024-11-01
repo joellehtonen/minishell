@@ -46,6 +46,8 @@ mini outfiles:
 cat: './mini_outfiles/*': No such file or directory
 bash outfiles:
 
+src/parsing/expander.c:63:16: error: the comparison will always evaluate as ‘true’ for the pointer operand in ‘token->line + ((sizetype)index + (sizetype)key_len)’ must not be NULL [-Werror=address]
+   63 |         while (token->line + index + key_len \
 
 
 jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
