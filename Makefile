@@ -59,7 +59,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/cd.c \
 			./src/builtins/export.c \
 			./src/builtins/cd_tools.c \
-			./src/builtins/echo_new.c \
+			./src/builtins/echo_joel.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/signals.c \
@@ -75,6 +75,7 @@ SRC 		= ./src/main.c \
 			./src/exec/here_doc_tools.c \
 			./src/exec/redir.c \
 			./src/exec/redir_tools.c \
+			./src/exec/redir_tools_2.c \
 			./src/exec/check_files.c \
 			./src/exit.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)

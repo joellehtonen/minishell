@@ -94,3 +94,25 @@ t_token	*find_token_line(t_token *token, int loop_count, \
 		return ((void *) 0);
 	return((void *) 0);
 }
+
+t_token	*find_token_index(t_token *token, int loop_count, \
+	int token_type, int error_node)
+{
+	t_token	*temp;
+	t_token	*res;
+	int		i;
+	
+	i = 0;
+	res = NULL;
+	temp = token;
+	while (temp && temp->level != loop_count)
+		temp = temp->next;
+	while (temp && temp->next && temp->level == loop_count && i < error_node)
+	{
+		if (temp->type == token_type)
+			res = temp;
+		temp = temp->next;
+		i++;
+	}
+	return(res);
+}

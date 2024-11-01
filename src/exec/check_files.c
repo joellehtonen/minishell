@@ -30,10 +30,13 @@ void	check_file_access(t_shell *shell, char	*path, int loop_count)
 	}
 }
 
-void	check_all_files(t_token *token, int loop_count)
+void	check_all_files(t_token *token, t_exec *exec, int loop_count)
 {
 	t_token	*temp;
+	int		i;
 	
+	i = 0;
+	exec->error_node_index = -1;
 	temp = token;
 	while (temp && temp->level != loop_count)
 		temp = temp->next;
@@ -41,8 +44,13 @@ void	check_all_files(t_token *token, int loop_count)
 	{
 		if (((temp->type == REDIR_INPUT && ft_strlen(temp->line) == 1) || \
 			temp->type == REDIR_OUTPUT) && check_access_print(temp) == 1)
+		{
+			if (temp->type == REDIR_INPUT && ft_strlen(temp->line) == 1)
+				exec->error_node_index = i;
 			break ;
+		}
 		temp = temp->next;
+		i++;
 	}
 }
 
@@ -76,5 +84,21 @@ static int	check_access_print(t_token *token)
 		printing(token->next->line, "", ": Is a directory\n", 2);
 		return (1);
 	}
+	if (token->type == REDIR_OUTPUT && non_existing_folder(token->next->line) == 0)
+	{
+		printing(token->next->line, "", ": No such file or directory\n", 2);
+		return (1);
+	}
 	return (0);
+}
+
+int	non_existing_folder(char *path)
+{
+	while (*path)
+	{
+		if (*path == '/')
+			return (0);
+		path++;
+	}
+	return (1);
 }

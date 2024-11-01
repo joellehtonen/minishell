@@ -91,6 +91,7 @@ typedef struct	s_exec
 	int		pipe_flag;
 	int		**here_doc_pipe;
 	int		here_doc_num;
+	int		error_node_index;
 	pid_t	*null;
 	pid_t	*pid;
 }				t_exec;
@@ -161,7 +162,7 @@ void	expander(t_shell *shell);
 void reset_quotes(t_shell *shell);
 // execute functions
 int	execute(t_shell *shell);
-void get_input_and_output(t_shell **shell, int loop_count);
+int get_input_and_output(t_shell **shell, int loop_count);
 char **check_param(t_shell *shell, int loop_count);
 char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_exec exec);
@@ -180,7 +181,12 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
 void	allocate_here_doc(t_exec *exec, t_shell *shell);
 void check_file_access(t_shell *shell, char	*path, int loop_count);
-void	check_all_files(t_token *token, int loop_count);
+void	check_all_files(t_token *token, t_exec *exec, int loop_count);
+void	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
+	int error_node);
+t_token	*find_token_index(t_token *token, int loop_count, \
+	int token_type, int error_node);
+int	non_existing_folder(char *path);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
