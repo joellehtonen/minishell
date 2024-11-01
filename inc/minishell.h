@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 15:37:41 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:25:15 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct	s_token
 	int				level;
 	int				type;
 	int				token_number;
+	int				combine;
 	struct s_token	*next;
 }				t_token;
 

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/31 16:13:03 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/01 09:51:27 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 {
 	t_token *new;
 	int		token_index;
-
+	
 	token_index = 0;
 	new = ft_lstnew_token(NULL);
 	new->line = malloc(sizeof(char) * (end - start + 1));
@@ -35,7 +35,7 @@ static int handle_argument(t_shell *shell, int end)
 {
 	int		IO_met;
 
-	//reset_quotes(shell);
+	reset_quotes(shell);
 	IO_met = false;
 	while (shell->user_input[end] != '\0' 
 			&& (is_space(shell->user_input[end]) == false 
@@ -46,7 +46,7 @@ static int handle_argument(t_shell *shell, int end)
 		else if (is_quote(shell->user_input[end]) == D_QUOTE)
 			shell->double_quote = !shell->double_quote;
 		if (is_IO(shell->user_input[end]) != false 
-			&& (shell->single_quote == false || shell->double_quote == false))
+			&& (shell->single_quote == false && shell->double_quote == false))
 			{
 				if (IO_met == true)
 					end++;
@@ -66,31 +66,19 @@ static int increment_IO(t_shell *shell, int end)
 	return (end);
 }
 
-static int increment_quotes(t_shell *shell, int end)
-{
-	char	quote_type;
+// static int increment_quotes(t_shell *shell, int end)
+// {
+// 	char	quote_type;
 	
-	quote_type = shell->user_input[end];
-	end++;
-	// while (shell->user_input[end] != '\0')
-	// {
-	// 	if (quote_type == shell->user_input[end] 
-	// 		&& is_delim(shell->user_input[end + 1]))
-	// 	{
-	// 		end++;
-	// 		break ;
-	// 	}
-	// 	end++;
-	// }
-	// return (end);
-	
-	while (shell->user_input[end] != '\0' 
-			&& quote_type != shell->user_input[end])
-			end++;
-	if (quote_type == shell->user_input[end])
-		end++;
-	return (end);
-}
+// 	quote_type = shell->user_input[end];
+// 	end++;
+// 	while (shell->user_input[end] != '\0' 
+// 			&& quote_type != shell->user_input[end])
+// 			end++;
+// 	if (quote_type == shell->user_input[end])
+// 		end++;
+// 	return (end);
+// }
 
 void tokenize_input(t_shell *shell)
 {
@@ -107,13 +95,44 @@ void tokenize_input(t_shell *shell)
 		if (shell->user_input[start] == '\0')
 			break ;
 		end = start;
-		if (is_quote(shell->user_input[end]) != false)
-			end = increment_quotes(shell, end);
-		else if (is_IO(shell->user_input[end]) != false)
+		// if (is_quote(shell->user_input[end]) != false)
+		// 	end = increment_quotes(shell, end);
+		if (is_IO(shell->user_input[end]) != false)
 			end = increment_IO(shell, end);
 		else
 			end = handle_argument(shell, end);
+		// printf("start is %d\n", start);
+		// printf("end is %d\n", end);
 		start = create_new_token(shell, end, start, token_number);
 		token_number++;
 	}
 }
+
+
+// void tokenize_input(t_shell *shell)
+// {
+// 	int		start;
+// 	int		end;
+// 	int		token_number;
+
+// 	start = 0;
+// 	token_number = 0;
+// 	while (shell->user_input[start] != '\0')
+// 	{
+// 		while (is_space(shell->user_input[start]) == true)
+// 			start++;
+// 		if (shell->user_input[start] == '\0')
+// 			break ;
+// 		end = start;
+// 		if (is_quote(shell->user_input[end]) != false)
+// 			end = increment_quotes(shell, end);
+// 		else if (is_IO(shell->user_input[end]) != false)
+// 			end = increment_IO(shell, end);
+// 		else
+// 			end = handle_argument(shell, end);
+// 		printf("start is %d\n", start);
+// 		printf("end is %d\n", end);
+// 		start = create_new_token(shell, end, start, token_number);
+// 		token_number++;
+// 	}
+// }
