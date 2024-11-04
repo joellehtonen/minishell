@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/04 12:45:47 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:54:35 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ char *get_new_path(t_shell *shell, t_token *arg);
 int	is_directory_new(char *path);
 // parsing functions
 void tokenize_input(t_shell *shell);
-int is_IO(char c);
+int is_io(char c);
 int is_quote(char c);
 int is_space(char c);
 int is_delim(char c);
@@ -168,6 +168,11 @@ void assign_level(t_token **token, t_exec **exec, t_shell *shell);
 void assign_level(t_token **token, t_exec **exec, t_shell *shell);
 void	expander(t_shell *shell);
 void reset_quotes(t_shell *shell);
+// syntax check
+int	count_io(t_shell *shell, int index);
+int	check_consecutive_io(t_shell *shell, int index);
+int	check_redir_location(t_shell *shell, int index);
+int	check_pipe_location(t_shell *shell, int old_index);
 // execute functions
 int	execute(t_shell *shell);
 int get_input_and_output(t_shell **shell, int loop_count);

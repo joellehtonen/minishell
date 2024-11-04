@@ -26,11 +26,11 @@ update error message to include latest token/char
 
 if infinite loop before, then history not working and signals not working
 
-SIGINT (ctrl c) exit code is 130
-
 should we handle ; as a delimiter?
 
 what if exit gets too long number as input
+
+need to be able export or unset many at the same time
 
 aklimchu:~/minishell$ cd $PWD hi
 Error. cd: too many arguments
