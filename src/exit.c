@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/04 12:38:28 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:40:27 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,6 @@ void	error_printer(t_shell *shell, char *message, int exit)
 	write_error_code(shell, message);
 	if (exit == true)
 		free_and_exit(shell, 1);
-}
-
-void	syntax_error_printer(t_shell *shell, char *message)
-{
-	write(2, message, ft_strlen(message));
-	shell->exit_code = 2;
-
 }
 
 void	free_and_exit(t_shell *shell, int error)

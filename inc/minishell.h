@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/04 12:38:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:45:47 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@
 # define NUMERIC_ERROR "Numeric argument required\n"
 # define TOO_MANY_ARGS "Too many arguments\n"
 # define CMD_NOT_FOUND "Command does not exist\n"
+# define GETCWD_FAIL "Getting current working directory failed\n"
+# define CHDIR_ERROR "Changing working directory failed\n"
+# define DUP2_ERROR "Failed to duplicate a file descriptor\n"
+# define GETCWD_FAIL "Getting current working directory failed\n"
+# define CHDIR_ERROR "Changing working directory failed\n"
+# define DUP2_ERROR "Failed to duplicate a file descriptor\n"
 
 enum e_success
 {
