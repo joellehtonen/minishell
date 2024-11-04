@@ -33,7 +33,7 @@ int	exit_exec(t_shell *shell, t_token *token)
 	if (token->next)
 	{
 		if (token->next->next)
-			error_printer(shell, TOO_MANY_ERROR, true);
+			error_printer(shell, TOO_MANY_ARGS, true);
 		while (token->next->line[index] != '\0')
 		{
 			if (ft_isdigit(token->next->line[index]) == false

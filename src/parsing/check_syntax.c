@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/31 12:37:32 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 09:47:18 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static int	validate_IO(t_shell *shell, int index)
 	{
 		if (check_pipe_location(shell, index) == FAILURE)
 		{
-			error_printer(shell, PIPE_ERROR, false);
+			error_printer(shell, SYNTAX_ERROR, false);
 			return (FAILURE);
 		}
 	}
@@ -122,7 +122,7 @@ static int	validate_IO(t_shell *shell, int index)
 	{
 		if (check_redir_location(shell, index) == FAILURE)
 		{
-			error_printer(shell, REDIR_ERROR, false);
+			error_printer(shell, SYNTAX_ERROR, false);
 			return (FAILURE);
 		}
 	}

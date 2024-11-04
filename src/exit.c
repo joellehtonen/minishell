@@ -6,18 +6,42 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/01 14:48:39 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:35:51 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void	 error_printer(t_shell *shell, char *message, int exit)
+static void	write_error_code(t_shell *shell, char *message)
 {
-	// printf("Error. %s\n", message);
+	if ((ft_strncmp(EMPTY_INPUT, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(QUOTE_ERROR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(MALLOC_FAIL, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(SIGNAL_ERROR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(TOO_MANY_ARGS, message, ft_strlen(message)) == 0))
+		shell->exit_code = 1;
+	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
+		shell->exit_code = 2;
+	else if (ft_strncmp(CMD_NOT_FOUND, message, ft_strlen(message)) == 0)
+		shell->exit_code = 127;
+	else
+		shell->exit_code = -1; //not necessary?
+}
+
+void	error_printer(t_shell *shell, char *message, int exit)
+{
 	write(2, message, ft_strlen(message));
+	write_error_code(shell, message);
 	if (exit == true)
 		free_and_exit(shell, 1);
+}
+
+void	syntax_error_printer(t_shell *shell, char *message)
+{
+	write(2, message, ft_strlen(message));
+	shell->exit_code = 2;
+
 }
 
 void	free_and_exit(t_shell *shell, int error)

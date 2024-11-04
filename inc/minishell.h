@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/01 14:21:44 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 10:58:59 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@
 # define BUFF_SIZE 1024
 
 // error messages
-# define EMPTY_INPUT "Empty input"
-# define PIPE_ERROR "Pipe cannot be first or last, or follow another pipe"
-# define REDIR_ERROR "Redir can't come last, or before a pipe or another redir"
-# define QUOTE_ERROR "Odd number of quotes (only even amount accepted)"
-# define MALLOC_FAIL "Allocating memory failed"
-# define SIGNAL_ERROR "Failed to set up a signal"
-# define SYNTAX_ERROR "Syntax error near unexpected token"
-# define NUMERIC_ERROR "Numeric argument required"
-# define TOO_MANY_ERROR "Too many arguments"
+# define EMPTY_INPUT "Empty input\n"
+// # define PIPE_ERROR "Pipe cannot be first or last, or follow another pipe"
+// # define REDIR_ERROR "Redir can't come last, or before a pipe or another redir"
+# define QUOTE_ERROR "Odd number of quotes (only even amount accepted)\n"
+# define MALLOC_FAIL "Allocating memory failed\n"
+# define SIGNAL_ERROR "Failed to set up a signal\n"
+# define SYNTAX_ERROR "Syntax error near unexpected token\n"
+# define NUMERIC_ERROR "Numeric argument required\n"
+# define TOO_MANY_ARGS "Too many arguments\n"
+# define CMD_NOT_FOUND "Command does not exist\n"
 
 enum e_success
 {
