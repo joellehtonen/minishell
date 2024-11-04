@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/04 11:35:51 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:38:28 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ void	syntax_error_printer(t_shell *shell, char *message)
 
 void	free_and_exit(t_shell *shell, int error)
 {
-	if (shell->user_input)
+	if (shell->only_one_builtin == 0 && shell->user_input)
 		free(shell->user_input);
 	// what else needs to be freed?
+	if (shell->only_one_builtin == 1 && shell->token_pointer && \
+		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
+		return ;
 	if (shell->exit_code)
 		exit(shell->exit_code);
 	else
@@ -66,4 +69,29 @@ void	free_double_arr(char **arr)
 		free(arr);
 		arr = NULL;
 	}
+}
+
+int	free_two_str(char *str1, char *str2)
+{
+	if (str1)
+	{
+		free(str1);
+		str1 = NULL;
+	}
+	if (str2)
+	{
+		free(str2);
+		str2 = NULL;
+	}
+	return (1);
+}
+
+int	free_str(char *str1)
+{
+	if (str1)
+	{
+		free(str1);
+		str1 = NULL;
+	}
+	return (1);
 }

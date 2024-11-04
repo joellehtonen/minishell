@@ -16,7 +16,8 @@ void	child_process(t_shell **shell, int loop_count)
 	if (check_no_command((*shell)->token_pointer, loop_count) == 1)
 	{
 		close_pipes_child(loop_count, &exec);
-		exit(0);
+		//exit(0);
+		free_and_exit(*shell, false);
 	}
 	
 	get_input_and_output(shell, loop_count);
@@ -26,36 +27,41 @@ void	child_process(t_shell **shell, int loop_count)
 	if (if_builtin(*shell, loop_count) == 0)
 	{
 		exit_code = exec_builtins(*shell, loop_count);
-		exit(exit_code);
+		free_and_exit(*shell, exit_code);
+		//exit(exit_code);
 	}
 
 	param = check_param(*shell, loop_count);
 	if (param == NULL)
 	{
-		//free_exec(&exec);
-		exit(1);
+		error_printer(*shell, MALLOC_FAIL, true);
+		//free_exec(&exec); // do we need? or freeing pid?
+		//exit(1);
+		free_and_exit(*shell, true);
 	}
 
 	path = check_path((*shell)->path, param, *exec);
 	if (path == NULL)
 	{
 		free_all(param, NULL, NULL, &exec->pid);
-		exit(1);
+		error_printer(*shell, MALLOC_FAIL, true);
 	}
 	if ((*shell)->envp_str)
 		free_double_arr((*shell)->envp_str); // do we need?
 	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
 	if ((*shell)->envp_str == NULL)
 	{
-		perror("malloc() failed");
 		free_all(param, (*shell)->envp_str, NULL, &exec->pid);
-		exit(1);
+		//perror("malloc() failed");
+		//exit(1);
+		error_printer(*shell, MALLOC_FAIL, true);
 	}
 	if (execve(path, param, (*shell)->envp_str) == -1)
 	{
 		printing(param[0], "", ": Permission denied\n", 2);
 		free_all(param, (*shell)->envp_str, NULL, &exec->pid); // free path?
-		exit(126);
+		free_and_exit(*shell, 126);
+		//exit(126);
 	}
 }
 

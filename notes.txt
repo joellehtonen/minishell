@@ -7,7 +7,7 @@ ERROR
 EXECUTE
 - update / add freeing functions
 - test prompt: "echo a > test b >> test2"
-- "<< HEY" should print to STDOUT
+- cd $HEY
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
@@ -15,6 +15,8 @@ SIGNALS:
 - in heredoc D outputs this: bash: warning: here-document at line 1 delimited by end-of-file (wanted `echo')
 	and exits heredoc
 - in input mode \ does nothing, same in heredoc
+- if we press Ctrl+C during here_doc, it doesn't close properly
+- grep );$ and then Ctrl+C
 
 if cd into directory and removing an upper directory, handle it somehow
 
@@ -28,8 +30,28 @@ SIGINT (ctrl c) exit code is 130
 
 should we handle ; as a delimiter?
 
+what if exit gets too long number as input
 
-what if exit gets too long number as argument
+aklimchu:~/minishell$ cd $PWD hi
+Error. cd: too many arguments
+free(): invalid pointer
 
 
-with syntax errors the error code is 2
+Test 108: ❌ cat >./outfiles/outfile01 <missing >./test_files/invalid_permission 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+cat: './mini_outfiles/*': No such file or directory
+bash outfiles:
+
+Test 105: ❌ cat >./outfiles/outfile01 <missing 
+Only in ./bash_outfiles: outfile01
+mini outfiles:
+cat: './mini_outfiles/*': No such file or directory
+bash outfiles:
+
+src/parsing/expander.c:63:16: error: the comparison will always evaluate as ‘true’ for the pointer operand in ‘token->line + ((sizetype)index + (sizetype)key_len)’ must not be NULL [-Werror=address]
+   63 |         while (token->line + index + key_len \
+
+
+jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
+Token #0: echo, type COMM, level 0

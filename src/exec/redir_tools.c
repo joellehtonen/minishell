@@ -18,7 +18,7 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 
 	temp = find_token_line(token, loop_count, REDIR_INPUT, "<\0");
 	if (input_flag == 0 && (!temp || !temp->next || temp->next->type != INPUT))
-		return (1);
+		return (2);
 	if (input_flag == 1 && (!temp || !temp->next || temp->next->type != INPUT))
 		return (0);
 	if (input_flag == 1)
@@ -31,10 +31,10 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 	if (shell->exec->in == -1)
 	{
 		close_pipes_child(loop_count, &shell->exec); // free pids?
-		exit(1);
+		free_and_exit(shell, 1);
+		return (1);
 	}
-	check_for_input(shell, temp->next, loop_count, 1);
-	return (0);
+	return (check_for_input(shell, temp->next, loop_count, 1));
 }
 
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag)
@@ -44,17 +44,18 @@ int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_
 	
 	temp = find_token(token, loop_count, REDIR_OUTPUT);
 	if (output_flag == 0 && (!temp || !temp->next || temp->next->type != OUTPUT))
-		return (1);
+		return (2);
 	if (output_flag == 1 && (!temp || !temp->next || temp->next->type != OUTPUT))
 		return (0);
 	if (output_flag == 1)
 		close(shell->exec->out);
 	outfile = temp->next->line;
-	if (outfile && outfile[0] == '\0')
+	if ((outfile && check_output_folder(outfile)) ||  (outfile && outfile[0] == '\0'))
 	{
 		//printing(outfile, "", ": No such file or directory\n", 2); // what if $HOME?
 		close_pipes_child(loop_count, &shell->exec); // free pids?
-		exit(1);
+		free_and_exit(shell, 1);
+		return (1);
 	}
 	else
 	{
@@ -68,9 +69,9 @@ int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_
 			/* if (access(outfile, W_OK) == -1 && errno == EACCES)
 				printing(outfile, "", ": Permission denied\n", 2); */
 			close_pipes_child(loop_count, &shell->exec); // free pids?
-			exit(1);
+			free_and_exit(shell, 1);
+			return (1);
 		}
 	}
-	check_for_output(shell, temp->next, loop_count, 1);
-	return (0);
+	return (check_for_output(shell, temp->next, loop_count, 1) == 1);
 }
