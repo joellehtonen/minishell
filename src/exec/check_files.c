@@ -16,21 +16,7 @@ static int	check_access_print(t_token *token);
 
 static int slash_count(char *path);
 
-void	check_file_access(t_shell *shell, char	*path, int loop_count)
-{
-	if (access(path, R_OK) == -1 && errno == EACCES)
-	{
-		//printing(path, "", ": Permission denied\n", 2);
-		close_pipes_child(loop_count, &shell->exec); // free pids?
-		free_and_exit(shell, 1);
-	}
-	if (access(path, F_OK) == -1 && errno == ENOENT)
-	{
-		//printing(path, "", ": No such file or directory\n", 2);
-		close_pipes_child(loop_count, &shell->exec); // free pids?
-		free_and_exit(shell, 1);
-	}
-}
+static int	check_access_print_extra(t_token *token);
 
 void	check_all_files(t_token *token, t_exec *exec, int loop_count)
 {
@@ -81,6 +67,11 @@ static int	check_access_print(t_token *token)
 		printing(token->next->line, "", ": Permission denied\n", 2);
 		return (1);
 	}
+	return (check_access_print_extra(token));
+}
+
+static int	check_access_print_extra(t_token *token)
+{
 	if (token->type == REDIR_OUTPUT && is_directory_new(token->next->line) == 0)
 	{
 		printing(token->next->line, "", ": Is a directory\n", 2);

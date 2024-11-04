@@ -30,7 +30,7 @@ int	exit_exec(t_shell *shell, t_token *token)
 	int index;
 
 	index = 0;
-	if (token->next->next)
+	if (token && token->next && token->next->next)
 		error_printer(shell, TOO_MANY_ERROR, true);
 	if (token->next)
 	{

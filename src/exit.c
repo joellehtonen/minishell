@@ -16,6 +16,7 @@ void	 error_printer(t_shell *shell, char *message, int exit)
 {
 	// printf("Error. %s\n", message);
 	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
 	if (exit == true)
 		free_and_exit(shell, 1);
 }

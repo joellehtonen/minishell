@@ -12,7 +12,7 @@
 
 #include "../../inc/minishell.h"
 
-static int pwd_exec();
+static int pwd_exec(t_shell *shell);
 
 int	exec_builtins(t_shell *shell, int loop_count)
 {
@@ -46,24 +46,24 @@ int	exec_builtins(t_shell *shell, int loop_count)
 		return(echo(shell, builtins));
 	}
 	if (find_token_line(shell->token_pointer, loop_count, COMM, "pwd"))
-		return(pwd_exec());
+		return(pwd_exec(shell));
 	return(0);
 }
 
-static int pwd_exec()
+static int pwd_exec(t_shell *shell)
 {
 	char	*pwd;
 	
 	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
 	{
-		perror("malloc error");
-		//free_and_exit();
+		error_printer(shell, MALLOC_FAIL, true);
+		return(1);
 	}
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
 	{
-		perror("getcwd error");
-		//free_and_exit();
+		error_printer(shell, GETCWD_FAIL, true);
+		return(1);
 	}
 	printf("%s\n", pwd);
 	free(pwd);
