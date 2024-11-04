@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 10:24:49 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/04 12:49:13 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 	if (pipe((*exec)->here_doc_pipe[i]) == -1)
 	{
 		free_str(here_doc_input);
-   		error_printer(shell, PIPE_ERROR, true);
+   		error_printer(shell, SYNTAX_ERROR, true);
 	}
 	ft_putstr_fd(here_doc_input, (*exec)->here_doc_pipe[i][1]);
 	free_str(here_doc_input);
