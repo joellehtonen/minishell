@@ -58,7 +58,6 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtins.c \
 			./src/builtins/cd.c \
 			./src/builtins/export.c \
-			./src/builtins/export.c \
 			./src/builtins/cd_tools.c \
 			./src/builtins/echo.c \
 			./src/str_join_four.c \

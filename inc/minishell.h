@@ -115,7 +115,6 @@ typedef struct	s_shell
 	int		single_quote; //whether single quotes are "active"
 	int		double_quote; //whether double quotes are "active"
 	int		only_one_builtin; //whether we have one command to run and it's a builtin
-	int		only_one_builtin; //whether we have one command to run and it's a builtin
 	int		exit_code; 
 }				t_shell;
 
@@ -147,11 +146,10 @@ void	print_node(t_token *lst);
 // builtin functions
 int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
-char *get_pwd(char *home);
-int	only_spaces(char *str);
+char *get_pwd(char *home, t_shell *shell);
 int echo(t_shell *shell, t_token *echo_pointer);
 // int echo_exec(t_shell *shell, char *input);
-int	env_exec(t_envp *envp_copy, t_shell *shell, t_shell *shell);
+int	env_exec(t_envp *envp_copy, t_shell *shell);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell, t_token *token);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count, t_shell *shell);
