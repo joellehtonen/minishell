@@ -30,12 +30,12 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 	shell->exec->in = open(temp->next->line, O_RDONLY);
 	if (shell->exec->in == -1)
 	{
+		printf("exec-> %d\n", shell->exec->in);
 		close_pipes_child(loop_count, &shell->exec); // free pids?
 		free_and_exit(shell, 1);
 		return (1);
 	}
-	check_for_input(shell, temp->next, loop_count, 1);
-	return (0);
+	return (check_for_input(shell, temp->next, loop_count, 1));
 }
 
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag)
@@ -51,7 +51,7 @@ int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_
 	if (output_flag == 1)
 		close(shell->exec->out);
 	outfile = temp->next->line;
-	if ((outfile && non_existing_folder(outfile) == 0) || (outfile && outfile[0] == '\0'))
+	if ((outfile && check_output_folder(outfile)) ||  (outfile && outfile[0] == '\0'))
 	{
 		//printing(outfile, "", ": No such file or directory\n", 2); // what if $HOME?
 		close_pipes_child(loop_count, &shell->exec); // free pids?
@@ -74,6 +74,5 @@ int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_
 			return (1);
 		}
 	}
-	check_for_output(shell, temp->next, loop_count, 1);
-	return (0);
+	return (check_for_output(shell, temp->next, loop_count, 1) == 1);
 }

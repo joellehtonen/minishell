@@ -182,11 +182,11 @@ int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_
 void	allocate_here_doc(t_exec *exec, t_shell *shell);
 void check_file_access(t_shell *shell, char	*path, int loop_count);
 void	check_all_files(t_token *token, t_exec *exec, int loop_count);
-void	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
+int	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
 	int error_node);
 t_token	*find_token_index(t_token *token, int loop_count, \
 	int token_type, int error_node);
-int	non_existing_folder(char *path);
+int	check_output_folder(char *path);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);

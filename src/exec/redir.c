@@ -26,6 +26,8 @@ int get_input_and_output(t_shell **shell, int loop_count)
 
 	check_all_files((*shell)->token_pointer, (*shell)->exec, loop_count);
 	here_doc_index = check_for_here_doc(*shell, (*shell)->token_pointer, loop_count);
+	if (here_doc_index == -3)
+		return (1);
 	if (get_input_fd(shell, loop_count, here_doc_index) == 1)
 		return (1);
 	if (get_output_fd(shell, loop_count) == 1)
@@ -43,7 +45,8 @@ static int	check_for_here_doc(t_shell *shell, t_token *token, int loop_count)
 	res = NULL;
 	while (temp && temp->level != loop_count)
 		temp = temp->next;
-	check_for_output_no_recur(shell, temp, loop_count, shell->exec->error_node_index);
+	if (check_for_output_no_recur(shell, temp, loop_count, shell->exec->error_node_index) == 1)
+		return (-3);
 	temp = token;
 	while (temp && temp->level != loop_count)
 		temp = temp->next;
@@ -112,17 +115,14 @@ static int	get_input_fd(t_shell **shell, int loop_count, int here_doc_index)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->in);
-			error_printer(*shell, DUP2_ERROR, true);
+			error_printer(*shell, DUP2_ERROR, true); // DUP2_ERROR
 			return (1);
 		}
 		close(exec->in);
 	}
 	else if (check_for_input(*shell, (*shell)->token_pointer, loop_count, 0) == 1 &&\
 		(*shell)->only_one_builtin == 1)
-	{
-		//free_and_exit(*shell, 1);
 		return (1);
-	}
 	else if (loop_count > 0 && dup2(exec->pipe[loop_count - 1][0], 0) == -1)
 	{
 		close_pipes_child(loop_count, &exec); // free pids?
@@ -149,10 +149,7 @@ static int	get_output_fd(t_shell **shell, int loop_count)
 	}
 	else if (check_for_output(*shell, (*shell)->token_pointer, loop_count, 0) == 1 &&\
 		(*shell)->only_one_builtin == 1)
-	{
-		//free_and_exit(*shell, 1);
 		return (1);
-	}
 	else if (exec->pipe_flag == 1)
 	{
 		if (dup2(exec->pipe[loop_count][1], 1) == -1)

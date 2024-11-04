@@ -34,10 +34,17 @@ aklimchu:~/minishell$ cd $PWD hi
 Error. cd: too many arguments
 free(): invalid pointer
 
-andrei:~/minishell$ echo hi >         /outfile03 bye
-/outfile03: No such file or directory
-free(): double free detected in tcache 2
-Aborted (core dumped)
+Test  65: ❌ echo <"./test_files/infile" <missing <"./test_files/infile" 
+mini output = (Error. Failed to duplicate a file descriptor)
+bash output = ()
+
+Test  83: ❌ echo hi >         ./outfiles/outfile01 bye 
+Files ./mini_outfiles/outfile01 and ./bash_outfiles/outfile01 differ
+mini outfiles:
+bash outfiles:
+hi bye
+mini output = (hi bye)
+bash output = ()
 
 
 jlehtone@c2r5p3:~/Desktop/git_home/minishell/minishell_tester$ echo ""HI"""HI"

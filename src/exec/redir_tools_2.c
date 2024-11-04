@@ -2,22 +2,23 @@
 
 #include "../../inc/minishell.h"
 
-void	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, int error_node)
+int	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, int error_node)
 {
 	t_token	*temp;
 	char	*outfile;
 	
 	if (error_node == -1)
-		return ;
+		return (0);
 	temp = find_token_index(token, loop_count, REDIR_OUTPUT, error_node);
 	if (!temp || !temp->next || temp->next->type != OUTPUT)
-		return ;
+		return (0);
 	outfile = temp->next->line;
 	if (outfile && outfile[0] == '\0')
 	{
 		//printing(outfile, "", ": No such file or directory\n", 2); // what if $HOME?
 		close_pipes_child(loop_count, &shell->exec); // free pids?
-		exit(1);
+		free_and_exit(shell, 1);
+		return (1);
 	}
 	else
 	{
@@ -31,7 +32,9 @@ void	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, i
 			/* if (access(outfile, W_OK) == -1 && errno == EACCES)
 				printing(outfile, "", ": Permission denied\n", 2); */
 			close_pipes_child(loop_count, &shell->exec); // free pids?
-			exit(1);
+			free_and_exit(shell, 1);
+			return (1);
 		}
 	}
+	return (0);
 }

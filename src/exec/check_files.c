@@ -14,6 +14,8 @@
 
 static int	check_access_print(t_token *token);
 
+static int slash_count(char *path);
+
 void	check_file_access(t_shell *shell, char	*path, int loop_count)
 {
 	if (access(path, R_OK) == -1 && errno == EACCES)
@@ -84,21 +86,64 @@ static int	check_access_print(t_token *token)
 		printing(token->next->line, "", ": Is a directory\n", 2);
 		return (1);
 	}
-	if (token->type == REDIR_OUTPUT && non_existing_folder(token->next->line) == 0)
+	if (token->type == REDIR_OUTPUT && check_output_folder(token->next->line) == 1)
 	{
 		printing(token->next->line, "", ": No such file or directory\n", 2);
+		return (1);
+	}
+	if (token->type == REDIR_OUTPUT && check_output_folder(token->next->line) == 2)
+	{
+		printing(token->next->line, "", ": Is a directory\n", 2);
+		return (1);
+	}
+	if (token->type == REDIR_OUTPUT && check_output_folder(token->next->line) == 3)
+	{
+		printing(token->next->line, "", ": Permission denied\n", 2);
 		return (1);
 	}
 	return (0);
 }
 
-int	non_existing_folder(char *path)
+int	check_output_folder(char *path)
 {
+	int		last_slash;
+	int		i;
+	char	*folder_path;
+
+	if (slash_count(path) == 0)
+		return (0);
+	i = 0;
+	last_slash = 0;
+	while (path[i])
+	{
+		if (path[i] == '/')
+			last_slash = i;
+		i++;
+	}
+	if (last_slash == i - 1)
+		return (2);
+	if (last_slash == 0)
+		return (3);
+	folder_path = ft_substr(path, 0, last_slash);
+	if (is_directory_new(folder_path) == 1)
+	{
+		free(folder_path);
+		return (1);
+	}
+	free(folder_path);
+	return (0);
+}
+
+static int slash_count(char *path)
+{
+	int count;
+
+	count = 0;
 	while (*path)
 	{
 		if (*path == '/')
-			return (0);
+			count++;
 		path++;
 	}
-	return (1);
+	return (count);
 }
