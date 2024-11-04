@@ -34,6 +34,7 @@ int read_input(t_shell *shell)
 				//free_and_exit();
 		}
 		add_history(shell->user_input);
+		free(shell->user_input); // is it correct place?
 		delete_all_tokens(&shell->token_pointer);
 		free(prompt);
 		//printf("exit code after all: %d\n", shell->exit_code);

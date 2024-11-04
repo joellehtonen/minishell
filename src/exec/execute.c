@@ -61,7 +61,14 @@ static int	only_one_builtin(t_shell *shell)
 	shell->only_one_builtin = 1;
 	orig_in = dup(STDIN_FILENO);
 	orig_out = dup(STDOUT_FILENO);
-	get_input_and_output(&shell, 0);
+	if (get_input_and_output(&shell, 0) == 1)
+	{
+		dup2(orig_in, STDIN_FILENO);
+		dup2(orig_out, STDOUT_FILENO);
+    	close(orig_in);
+    	close(orig_out);
+		return (1);
+	}
 	exit_status = exec_builtins(shell, 0);
 	dup2(orig_in, STDIN_FILENO);
 	dup2(orig_out, STDOUT_FILENO);

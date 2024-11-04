@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/01 14:48:39 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:40:24 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	 error_printer(t_shell *shell, char *message, int exit)
 
 void	free_and_exit(t_shell *shell, int error)
 {
-	if (shell->user_input)
+	if (shell->only_one_builtin == 0 && shell->user_input)
 		free(shell->user_input);
 	// what else needs to be freed?
 	if (shell->only_one_builtin == 1 && shell->token_pointer && \

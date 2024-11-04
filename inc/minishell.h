@@ -6,7 +6,8 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/01 14:21:44 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:25:15 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/10/31 11:21:54 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +33,9 @@
 # define REDIR_ERROR "Redir can't come last, or before a pipe or another redir"
 # define QUOTE_ERROR "Odd number of quotes (only even amount accepted)"
 # define MALLOC_FAIL "Allocating memory failed"
+# define GETCWD_FAIL "Getting current working directory failed"
+# define CHDIR_ERROR "Changing working directory failed"
+# define DUP2_ERROR "Failed to duplicate a file descriptor"
 # define GETCWD_FAIL "Getting current working directory failed"
 # define CHDIR_ERROR "Changing working directory failed"
 # define DUP2_ERROR "Failed to duplicate a file descriptor"
@@ -92,6 +96,7 @@ typedef struct	s_exec
 	int		pipe_flag;
 	int		**here_doc_pipe;
 	int		here_doc_num;
+	int		error_node_index;
 	pid_t	*null;
 	pid_t	*pid;
 }				t_exec;
@@ -110,6 +115,7 @@ typedef struct	s_shell
 	int		single_quote; //whether single quotes are "active"
 	int		double_quote; //whether double quotes are "active"
 	int		only_one_builtin; //whether we have one command to run and it's a builtin
+	int		only_one_builtin; //whether we have one command to run and it's a builtin
 	int		exit_code; 
 }				t_shell;
 
@@ -127,6 +133,8 @@ int copy_uname(char **uname, t_envp *envp_copy);
 int copy_home(char **home, t_envp *envp_copy);
 int	update_pwd(t_envp **envp_copy, t_shell *shell);
 int	update_old_pwd(t_envp **envp_copy, t_shell *shell);
+int	update_pwd(t_envp **envp_copy, t_shell *shell);
+int	update_old_pwd(t_envp **envp_copy, t_shell *shell);
 void envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
 void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 // list token functions
@@ -139,10 +147,11 @@ void	print_node(t_token *lst);
 // builtin functions
 int	exec_builtins(t_shell *shell, int loop_count);
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count);
-char *get_pwd(char *home, t_shell *shell);
+char *get_pwd(char *home);
+int	only_spaces(char *str);
 int echo(t_shell *shell, t_token *echo_pointer);
 // int echo_exec(t_shell *shell, char *input);
-int	env_exec(t_envp *envp_copy, t_shell *shell);
+int	env_exec(t_envp *envp_copy, t_shell *shell, t_shell *shell);
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int	exit_exec(t_shell *shell, t_token *token);
 int	export_exec(t_envp **envp_copy, t_token *export, int loop_count, t_shell *shell);
@@ -158,11 +167,12 @@ int is_delim(char c);
 int	is_valid_redir(t_shell *shell, int index1, int index2);
 void assign_type(t_token **token);
 void assign_level(t_token **token, t_exec **exec, t_shell *shell);
+void assign_level(t_token **token, t_exec **exec, t_shell *shell);
 void	expander(t_shell *shell);
 void reset_quotes(t_shell *shell);
 // execute functions
 int	execute(t_shell *shell);
-void get_input_and_output(t_shell **shell, int loop_count);
+int get_input_and_output(t_shell **shell, int loop_count);
 char **check_param(t_shell *shell, int loop_count);
 char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_exec exec);
@@ -181,7 +191,12 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
 void	allocate_here_doc(t_exec *exec, t_shell *shell);
 void check_file_access(t_shell *shell, char	*path, int loop_count);
-void	check_all_files(t_token *token, int loop_count);
+void	check_all_files(t_token *token, t_exec *exec, int loop_count);
+int	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
+	int error_node);
+t_token	*find_token_index(t_token *token, int loop_count, \
+	int token_type, int error_node);
+int	check_output_folder(char *path);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
