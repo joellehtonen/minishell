@@ -30,7 +30,6 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 	shell->exec->in = open(temp->next->line, O_RDONLY);
 	if (shell->exec->in == -1)
 	{
-		printf("exec-> %d\n", shell->exec->in);
 		close_pipes_child(loop_count, &shell->exec); // free pids?
 		free_and_exit(shell, 1);
 		return (1);
