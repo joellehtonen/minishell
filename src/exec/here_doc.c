@@ -50,11 +50,11 @@ static int get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 		return (1);
 	if (pipe((*exec)->here_doc_pipe[i]) == -1)
 	{
-		free_str(here_doc_input);
+		free_str(&here_doc_input);
    		error_printer(shell, SYNTAX_ERROR, true);
 	}
 	ft_putstr_fd(here_doc_input, (*exec)->here_doc_pipe[i][1]);
-	free_str(here_doc_input);
+	free_str(&here_doc_input);
 	close((*exec)->here_doc_pipe[i][1]);
 	return (0);
 }
@@ -78,7 +78,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 			break ;
 		new_here_doc_input(&hd_input, &new_line, shell);
 	}
-	free_str(new_line);
+	free_str(&new_line);
 	return (hd_input);
 }
 
@@ -89,12 +89,12 @@ static void	new_here_doc_input(char **hd_input, char **new_line, t_shell *shell)
 	*hd_input = add_here_doc_memory(*hd_input, ft_strlen(*new_line));
 	if (*hd_input == NULL)
 	{
-		free_str(*new_line); // free here_doc_input?
+		free_str(new_line); // free here_doc_input?
 		error_printer(shell, MALLOC_FAIL, true);
 	}
 	*hd_input = ft_strncat(*hd_input, *new_line, \
 			ft_strlen(*hd_input) + ft_strlen(*new_line) + 1);
-	free_str(*new_line);
+	free_str(new_line);
 	ft_printf("> ");
 	*new_line = get_next_line(0);
 }

@@ -13,8 +13,12 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.user_input = NULL;
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
+	{
 		error_printer(&shell, MALLOC_FAIL, true);
+		return (1);
+	}
 	shell.exit_code = read_input(&shell);
+	//free_envp((*shell)->envp_copy);
 	return (0);
 }
 

@@ -81,5 +81,4 @@ void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 	exec_temp->pipe_flag = 0;
 	exec_temp->pipe = NULL;
 	exec_temp->here_doc_num = parse_here_doc(*token);
-	//ft_printf("Number of here_doc: %d\n", exec_temp->here_doc_num);
 }

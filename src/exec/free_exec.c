@@ -6,6 +6,8 @@ int	free_exec(t_exec **exec)
 {
 	int		i;
 	
+	if (!*exec)
+		return (1);
 	if ((*exec)->pid)
 	{
 		free((*exec)->pid);
@@ -33,6 +35,7 @@ int	free_exec(t_exec **exec)
 		free(*exec);
 		*exec = NULL;
 	}
+	//if (exec->here_doc_num <= 0)
 	// free array with here_doc pipes?
 	return(1);
 }

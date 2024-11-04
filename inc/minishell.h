@@ -40,6 +40,8 @@
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
+# define WAITPID_ERROR "Failed to wait for child process to end\n"
+# define FORK_FAIL "Failed to dublicate a process\n"
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
@@ -109,6 +111,7 @@ typedef struct	s_shell
 	char	*uname; //USER from envp
 	char	*pwd; //current location
 	char	*home; //HOME from envp
+	char	*prompt; //the string to be printed as a prompt
 	t_exec	*exec; // file descriptors for pipes and forks
 	char 	*user_input; //whatever readline reads is saved into this array
 	t_token	*token_pointer; //pointer to the head of the linked list containing the arguments parsed from user input
@@ -177,12 +180,12 @@ char *check_path(t_envp *paths, char **param, t_exec exec);
 void check_command_access(char **param, t_exec exec);
 int	is_directory(char *path, t_exec fd, int fd_pipe, char **param);
 int is_file(char *path);
-int	pipe_and_fork(t_shell *shell, int i);
+void	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);
 void child_process(t_shell **shell, int loop_count);
 int	close_free(int pipe_flag, int fd2, int fd3, pid_t **pid);
 void close_pipes_child(int loop_count, t_exec **exec);
-int	assign_exec_values(t_shell *shell);
+void	assign_exec_values(t_shell *shell);
 int here_doc(t_shell *shell);
 t_token	*find_here_doc_token(t_token *token);
 int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag);
@@ -195,6 +198,7 @@ int	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
 t_token	*find_token_index(t_token *token, int loop_count, \
 	int token_type, int error_node);
 int	check_output_folder(char *path);
+void	close_pipes_parent(t_exec **exec);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
@@ -210,8 +214,9 @@ void free_and_exit(t_shell *shell, int error);
 void free_double_arr(char **arr);
 void error_printer(t_shell *shell, char *message, int exit);
 int free_all(char **arr_1, char **arr_2, char *str, pid_t **pid);
-int	free_two_str(char *str1, char *str2);
-int	free_str(char *str1);
+int	free_two_str(char **str1, char **str2);
+int	free_str(char **str1);
 int free_exec(t_exec **exec);
+void	free_shell(t_shell **shell, int free_envp);
 
 #endif /* MINISHELL_H */

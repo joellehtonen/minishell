@@ -4,42 +4,36 @@
 
 int read_input(t_shell *shell)
 {
-	char	*prompt;
-
 	shell->pwd = get_pwd(shell->home, shell);
 	while (true) 
 	{
-		free(shell->pwd);
+		free_str(&shell->pwd);
 		shell->pwd = get_pwd(shell->home, shell);
 		shell->envp_str = NULL;
-		prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
-		if (prompt == NULL)
+		shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
+		if (shell->prompt == NULL)
+		{
 			error_printer(shell, MALLOC_FAIL, true);
+			return (shell->exit_code);
+		}
 		set_up_signals(shell);
-		shell->user_input = readline(prompt);
+		shell->user_input = readline(shell->prompt);
 		if (shell->user_input == NULL)
 		{
 			printf("exit\n");
-			free_and_exit(shell, 0);
+			return (shell->exit_code);
 		}
 		if (input_error_check(shell) == SUCCESS)
 		{
-			//printf("exit code before tokenizer: %d\n", shell->exit_code);
 			tokenize_input(shell);
 			expander(shell);
 			assign_type(&shell->token_pointer);
 			assign_level(&shell->token_pointer, &shell->exec, shell);
 			//print_node(shell->token_pointer); //for testing
 			shell->exit_code = execute(shell);
-				//free_and_exit();
 		}
 		add_history(shell->user_input);
-		free(shell->user_input); // is it correct place?
-		delete_all_tokens(&shell->token_pointer);
-		free(prompt);
-		//printf("exit code after all: %d\n", shell->exit_code);
+		free_shell(&shell, false);
 	}
-	free(shell->user_input); // replace with custom free function?
-	//printf("exit code: %d\n", shell->exit_code);
 	return (shell->exit_code);
 }

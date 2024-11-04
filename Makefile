@@ -77,7 +77,8 @@ SRC 		= ./src/main.c \
 			./src/exec/redir_tools.c \
 			./src/exec/redir_tools_2.c \
 			./src/exec/check_files.c \
-			./src/exit.c
+			./src/exit.c \
+			./src/free_memory.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
 INCLUDE		= -I "./inc"
