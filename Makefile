@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/10/31 11:07:07 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/04 13:50:10 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC 		= ./src/main.c \
 			./src/parsing/read_input.c \
 			./src/parsing/input_parser.c \
 			./src/parsing/check_syntax.c \
+			./src/parsing/check_syntax_utils.c \
 			./src/parsing/assign_values.c \
 			./src/parsing/parser_utils.c \
 			./src/parsing/expander.c \
@@ -77,6 +78,7 @@ SRC 		= ./src/main.c \
 			./src/exec/redir_tools.c \
 			./src/exec/redir_tools_2.c \
 			./src/exec/check_files.c \
+			./src/free.c \
 			./src/exit.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj

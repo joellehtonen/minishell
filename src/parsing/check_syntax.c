@@ -6,153 +6,42 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/04 09:47:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:52:58 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	count_IO(t_shell *shell, int index)
+static int	validate_io(t_shell *shell, int index)
 {
-	int	count;
-	count = 0;
-	while (is_IO(shell->user_input[index]) != false)
-	{
-		count++;
-		index++;
-	}
-	return (count);
-}
+	int	fail;
 
-static int	check_consecutive_IO(t_shell *shell, int index)
-{
-	int	count;
-	
-	if (is_IO(shell->user_input[index]) != false && is_IO(shell->user_input[index + 1]) == false)
-		return (SUCCESS);
-	if (is_IO(shell->user_input[index]) == PIPE)
-	{
-		index++;
-		if (is_IO(shell->user_input[index]) == PIPE)
-		{
-			index++;
-			if (is_IO(shell->user_input[index]) == PIPE)
-				return (FAILURE);
-		}
-		if (is_IO(shell->user_input[index]) == false)
-			return (SUCCESS);
-	}
-	if (is_IO(shell->user_input[index]) == REDIR_INPUT \
-		|| is_IO(shell->user_input[index]) == REDIR_OUTPUT)
-	{
-		count = count_IO(shell, index);
-		if (is_valid_redir(shell, index, index + 1) == true
-			&& count <= 2)
-			return (SUCCESS);
-	}
-	return (FAILURE);
-}
-
-static int	check_redir_location(t_shell *shell, int index)
-{
-	index++;
-	while (shell->user_input[index] != '\0')
-	{
-		if (is_space(shell->user_input[index]) == true)
-		{ 
-			index++;
-			if (shell->user_input[index] == '|'
-				|| shell->user_input[index] == '<'
-				|| shell->user_input[index] == '>')
-				return (FAILURE);
-		}
-		else
-			break ;
-	}
-	if (shell->user_input[index] == '\0')
-		return (FAILURE);
-	else
-		return (SUCCESS);
-}
-
-static int	check_pipe_location(t_shell *shell, int old_index)
-{
-	int new_index;
-
-	new_index = old_index + 1;
-	while (shell->user_input[new_index] != '\0')
-	{
-		if (is_space(shell->user_input[new_index]) == true)
-		{
-			new_index++;
-			if (shell->user_input[new_index] == '|')
-				return (FAILURE);
-		}
-		else
-			break ;
-	}
-	if (shell->user_input[new_index] == '\0')
-		return (FAILURE);
-	new_index = old_index - 1;
-	while (new_index >= 0)
-	{
-		if (is_space(shell->user_input[new_index]) == true)
-			new_index--;
-		else
-			return (SUCCESS);
-	}
-	return (FAILURE);
-}
-
-static int	validate_IO(t_shell *shell, int index)
-{
+	fail = false;
 	if (shell->single_quote == true || shell->double_quote == true)
 		return (SUCCESS);
-	if (is_IO(shell->user_input[index]) == false)
+	if (is_io(shell->user_input[index]) == false)
 		return (SUCCESS);
 	if (shell->user_input[index] == '|')
 	{
 		if (check_pipe_location(shell, index) == FAILURE)
-		{
-			error_printer(shell, SYNTAX_ERROR, false);
-			return (FAILURE);
-		}
+			fail = true;
 	}
 	if (shell->user_input[index] == '<' || shell->user_input[index] == '>')
 	{
 		if (check_redir_location(shell, index) == FAILURE)
-		{
-			error_printer(shell, SYNTAX_ERROR, false);
-			return (FAILURE);
-		}
+			fail = true;
 	}
-	if (check_consecutive_IO(shell, index) == FAILURE)
-		{
-			error_printer(shell, SYNTAX_ERROR, false);
-			return (FAILURE);
-		}
+	if (check_consecutive_io(shell, index) == FAILURE)
+		fail = true;
+	if (fail == true)
+	{
+		error_printer(shell, SYNTAX_ERROR, false);
+		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
-// static int handle_IO(t_shell *shell, int *index)
-// {
-// 	// int count; 
-	
-// 	if (isIO(shell->user_input[*index]) != false)
-// 	{
-// 		if (validate_IO(shell, *index) == SUCCESS)
-// 		{
-// 			// count = count_IO(shell, *index);
-// 			// *index = *index + count;
-// 			return (SUCCESS);
-// 		}
-// 		else
-// 			return (FAILURE);
-// 	}
-// 	return (SUCCESS);
-// }
-
-static void count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
+static void	count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
 {
 	if (shell->user_input[index] == '\'')
 	{
@@ -167,7 +56,7 @@ static void count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
 	}
 	if (shell->user_input[index] == '\"')
 	{
-		if (index == 0 ||shell->user_input[index - 1] != '\\')
+		if (index == 0 || shell->user_input[index - 1] != '\\')
 		{
 			if (shell->single_quote == false)
 			{
@@ -178,12 +67,12 @@ static void count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
 	}
 }
 
-int input_error_check(t_shell *shell)
+int	input_error_check(t_shell *shell)
 {
 	int	single_quotes;
 	int	double_quotes;
 	int	index;
-	
+
 	index = 0;
 	single_quotes = 0;
 	double_quotes = 0;
@@ -193,7 +82,7 @@ int input_error_check(t_shell *shell)
 	while (shell->user_input[index] != '\0')
 	{
 		count_quotes(shell, index, &single_quotes, &double_quotes);
-		if (validate_IO(shell, index) == FAILURE)
+		if (validate_io(shell, index) == FAILURE)
 			return (FAILURE);
 		index++;
 	}
@@ -204,4 +93,3 @@ int input_error_check(t_shell *shell)
 	}
 	return (SUCCESS);
 }
-
