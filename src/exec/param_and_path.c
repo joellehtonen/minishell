@@ -2,23 +2,20 @@
 
 #include "../../inc/minishell.h"
 
-static void	check_empty(t_token *token, int loop_count);
+static void	check_empty(t_token *token, int loop_count, t_shell *shell);
 
-static char	*get_exec_path(t_envp *envp_copy, char *command, char **param, t_exec exec);
+static char	*get_exec_path(t_envp *envp_copy, char *command, char **param, t_shell *shell);
 
 char	**check_param(t_shell *shell, int loop_count)
 {
 	char	**param;
-	//int		word_num;
 
-	check_empty(shell->token_pointer, loop_count);
-	
-	//word_num = count_param(str);
+	check_empty(shell->token_pointer, loop_count, shell);
 	param = param_to_arr(shell->token_pointer, loop_count);
 	return (param);
 }
 
-char	*check_path(t_envp *paths, char **param, t_exec exec)
+char	*check_path(t_envp *paths, char **param, t_shell *shell)
 {
 	char	*exec_path;
 	char	*command;
@@ -26,21 +23,21 @@ char	*check_path(t_envp *paths, char **param, t_exec exec)
 	command = param[0];
 	if (ft_strrchr(command, '/'))
 	{
-		is_directory(command, exec, -1, param);
-		check_command_access(param, exec);
+		is_directory(command, param, shell);
+		check_command_access(param, shell);
 		return (command);
 	}
 	if (paths == NULL)
 	{
 		printing(command, "", ": No such file or directory\n", 2);
-/* 		free_all(param, NULL, NULL, &fd.pid);
- */		exit(127);
+		free_double_arr(&param);
+		free_and_exit(shell, 127);
 	}
-	exec_path = get_exec_path(paths, command, param, exec);
+	exec_path = get_exec_path(paths, command, param, shell);
 	return (exec_path);
 }
 
-static void	check_empty(t_token *token, int loop_count)
+static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 {
 	t_token	*temp;
 	
@@ -58,16 +55,14 @@ static void	check_empty(t_token *token, int loop_count)
 	if (temp->line[0] == '\0' || temp->line[0] == ' ')
 	{
 		printing(temp->line, "", ": command not found\n", 2);
-		exit(127);
+		free_and_exit(shell, 127);
 	}
 }
 
-static char	*get_exec_path(t_envp *paths, char *command, char **param, t_exec exec)
+static char	*get_exec_path(t_envp *paths, char *command, char **param, t_shell *shell)
 {
 	char	*exec_path;
 
-	(void)param;
-	(void)exec;
 	exec_path = NULL;
 	while (paths)
 	{
@@ -78,12 +73,11 @@ static char	*get_exec_path(t_envp *paths, char *command, char **param, t_exec ex
 		exec_path = NULL;
 		paths = paths->next;
 	}
-/* 	free_all(path, NULL, NULL, &fd.null);
- */	if (exec_path == NULL)
+	if (exec_path == NULL)
 	{
 		printing(command, "", ": command not found\n", 2);
-		/* free_all(NULL, param, NULL, &fd.pid); */
-		exit(127);
+		free_double_arr(&param);
+		free_and_exit(shell, 127);
 	}
 	return (exec_path);
 }

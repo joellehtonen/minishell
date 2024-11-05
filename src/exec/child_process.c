@@ -33,24 +33,24 @@ void	child_process(t_shell **shell, int loop_count)
 	if (param == NULL)
 		error_printer(*shell, MALLOC_FAIL, true);
 
-	path = check_path((*shell)->path, param, *exec);
+	path = check_path((*shell)->path, param, *shell);
 	if (path == NULL)
 	{
-		free_all(param, NULL, NULL, &exec->pid);
+		free_double_arr(&param);
 		error_printer(*shell, MALLOC_FAIL, true);
 	}
-	if ((*shell)->envp_str)
-		free_double_arr((*shell)->envp_str); // do we need?
+	/* if ((*shell)->envp_str)
+		free_double_arr((*shell)->envp_str); */
 	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
 	if ((*shell)->envp_str == NULL)
 	{
-		free_all(param, (*shell)->envp_str, NULL, NULL);
+		free_all(param, (*shell)->envp_str, NULL);
 		error_printer(*shell, MALLOC_FAIL, true);
 	}
 	if (execve(path, param, (*shell)->envp_str) == -1)
 	{
 		printing(param[0], "", ": Permission denied\n", 2);
-		free_all(param, (*shell)->envp_str, NULL, NULL); // free path?
+		free_all(param, (*shell)->envp_str, NULL); // free path?
 		free_and_exit(*shell, 126);
 	}
 }

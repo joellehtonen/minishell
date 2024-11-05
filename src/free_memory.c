@@ -14,16 +14,17 @@ void	free_shell(t_shell **shell, int free_envp)
 		//free_envp((*shell)->envp_copy);
 }
 
-void	free_double_arr(char **arr)
+void	free_double_arr(char ***arr)
 {
 	int		i;
 
 	i = 0;
+	if (*arr)
 	{
-		while (arr[i])
-			free_str(&arr[i++]);
-		free(arr);
-		arr = NULL;
+		while ((*arr)[i])
+			free_str(&(*arr)[i++]);
+		free(*arr);
+		*arr = NULL;
 	}
 }
 
