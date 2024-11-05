@@ -3,9 +3,7 @@
 #include "../../inc/minishell.h"
 
 static int	check_arg(t_shell *shell, t_token *arg);
-
-static int cd_no_arg(t_shell *shell);
-
+static int	cd_no_arg(t_shell *shell);
 static int	access_new_path(t_shell *shell, t_token *arg, char *new_path);
 
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
@@ -31,7 +29,7 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 
 static int	check_arg(t_shell *shell, t_token *arg)
 {
-	if (!arg)
+	if (!arg || ft_strlen(arg->line) == 0)
 		return (cd_no_arg(shell));
 	if (ft_strlen(arg->line) == 0)
 		return (0);
