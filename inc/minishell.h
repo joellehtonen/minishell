@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/04 13:54:35 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 09:57:09 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,22 +157,31 @@ int	if_builtin(t_shell *shell, int loop_count);
 char *get_new_path(t_shell *shell, t_token *arg);
 int	is_directory_new(char *path);
 // parsing functions
-void tokenize_input(t_shell *shell);
-int is_io(char c);
-int is_quote(char c);
-int is_space(char c);
-int is_delim(char c);
-int	is_valid_redir(t_shell *shell, int index1, int index2);
-void assign_type(t_token **token);
-void assign_level(t_token **token, t_exec **exec, t_shell *shell);
-void assign_level(t_token **token, t_exec **exec, t_shell *shell);
+void	tokenize_input(t_shell *shell);
+int		is_io(char c);
+int		is_quote(char c);
+int		is_space(char c);
+int		is_valid_redir(t_shell *shell, int index1, int index2);
+void	reset_quotes(t_shell *shell);
+void	assign_type(t_token **token);
+void	assign_level(t_token **token, t_exec **exec, t_shell *shell);
+// expander functions
 void	expander(t_shell *shell);
-void reset_quotes(t_shell *shell);
+void	check_content(t_shell *shell, t_token *token);
+char	*create_expansion(t_shell *shell, t_token *token, int *index);
+int		calculate_key_len(t_token *token, int index);
+char	*find_variable(t_shell *shell, char *key, int len);
+char 	*expand_variable(t_shell *shell, char *pointer);
+void	add_expansion(char **replace, char *exp, int *copy_index, int *index);
+char	*init_replacement(t_shell *shell, t_token *token);
+int 	handle_quotes(t_shell *shell, t_token *token, int index);
+int		is_exception(t_token *token, int index);
+char	*find_exit_value(t_shell *shell, int *index);
 // syntax check
-int	count_io(t_shell *shell, int index);
-int	check_consecutive_io(t_shell *shell, int index);
-int	check_redir_location(t_shell *shell, int index);
-int	check_pipe_location(t_shell *shell, int old_index);
+int		count_io(t_shell *shell, int index);
+int		check_consecutive_io(t_shell *shell, int index);
+int		check_redir_location(t_shell *shell, int index);
+int		check_pipe_location(t_shell *shell, int old_index);
 // execute functions
 int	execute(t_shell *shell);
 int get_input_and_output(t_shell **shell, int loop_count);
