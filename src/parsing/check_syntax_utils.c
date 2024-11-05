@@ -19,7 +19,7 @@ int	check_consecutive_io(t_shell *shell, int index)
 {
 	int	count;
 
-	if (is_io(shell->user_input[index]) != false 
+	if (is_io(shell->user_input[index]) != false
 		&& is_io(shell->user_input[index + 1]) == false)
 		return (SUCCESS);
 	if (is_io(shell->user_input[index]) == PIPE)
@@ -38,8 +38,7 @@ int	check_consecutive_io(t_shell *shell, int index)
 		|| is_io(shell->user_input[index]) == REDIR_OUTPUT)
 	{
 		count = count_io(shell, index);
-		if (is_valid_redir(shell, index, index + 1) == true
-			&& count <= 2)
+		if (is_valid_redir(shell, index, index + 1) == true && count <= 2)
 			return (SUCCESS);
 	}
 	return (FAILURE);

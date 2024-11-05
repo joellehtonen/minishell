@@ -7,7 +7,7 @@ void	check_content(t_shell *shell, t_token *token)
 	int		index;
 	int		copy_index;
 	char	*replacement;
-	char 	*expansion;
+	char	*expansion;
 
 	index = 0;
 	copy_index = 0;
@@ -31,7 +31,7 @@ void	check_content(t_shell *shell, t_token *token)
 }
 
 void	expander(t_shell *shell)
-{   
+{
 	t_token	*temp;
 
 	temp = shell->token_pointer;

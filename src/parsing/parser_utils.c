@@ -39,24 +39,12 @@ int is_io(char c)
 		return (false);
 }
 
-// int is_delim(char c)
-// {
-// 	if (is_IO(c) != false)
-// 		return (true);
-// 	if (c == '&' || c == ';')
-// 		return (true);
-// 	else
-// 		return (false);
-// }
-
 int is_quote(char c)
 {
 	if (c == '\'')
 		return (S_QUOTE);
 	if (c == '\"')
 		return (D_QUOTE);
-	// if (c == '\'' || c == '\"')
-	// 	return (true);
 	return (false);
 }
 

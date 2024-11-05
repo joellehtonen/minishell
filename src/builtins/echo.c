@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/01 13:54:22 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:36:14 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,11 @@ static void	echo_printing_loop(t_token *temp)
 	}
 }
 
-// I'm assuming that the exec function is already pointing to the node containing COMM "echo"
-int echo(t_shell *shell, t_token *echo_pointer)
+int	echo(t_shell *shell, t_token *echo_pointer)
 {
 	int		newline;
 	t_token	*temp;
-	
+
 	(void)shell;
 	newline = true;
 	temp = echo_pointer->next;

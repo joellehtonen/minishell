@@ -4,7 +4,7 @@
 
 char	*find_exit_value(t_shell *shell, int *index)
 {
-	char *result;
+	char	*result;
 
 	result = ft_itoa(shell->exit_code);
 	(*index)++;
@@ -22,7 +22,7 @@ int	is_exception(t_token *token, int index)
 		return (false);
 }
 
-int handle_quotes(t_shell *shell, t_token *token, int index)
+int	handle_quotes(t_shell *shell, t_token *token, int index)
 {
 	if (token->line[index] == '\'' && shell->double_quote == false)
 	{
@@ -39,7 +39,7 @@ int handle_quotes(t_shell *shell, t_token *token, int index)
 
 char	*init_replacement(t_shell *shell, t_token *token)
 {
-	char *replacement;
+	char	*replacement;
 
 	reset_quotes(shell);
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));

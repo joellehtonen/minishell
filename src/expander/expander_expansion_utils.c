@@ -2,18 +2,18 @@
 
 #include "minishell.h"
 
-void add_expansion(char **replace, char *exp, int *copy_index, int *index)
+void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
 {
 	if (exp == NULL)
 		return ;
 	ft_strlcat(*replace, exp, ft_strlen(*replace) + ft_strlen(exp) + 1);
 	*copy_index += ft_strlen(exp);
-	if (ft_strncmp(exp, "$", ft_strlen(exp)) == 0)
+	if (ft_strncmp(exp, "$", ft_strlen(exp)) == 0 && ft_strlen(exp) != 0)
 		(*index)++;
 	return ;
 }
 
-char *expand_variable(t_shell *shell, char *pointer)
+char	*expand_variable(t_shell *shell, char *pointer)
 {
 	char	*expansion;
 	int		len;
@@ -26,7 +26,7 @@ char *expand_variable(t_shell *shell, char *pointer)
 	return (expansion);
 }
 
-char *find_variable(t_shell *shell, char *key, int len)
+char	*find_variable(t_shell *shell, char *key, int len)
 {
 	t_envp	*temp;
 	char	*value;
@@ -52,7 +52,7 @@ int	calculate_key_len(t_token *token, int index)
 
 	key_len = 0;
 	while (token->line[index + key_len] != '\0' \
-			&&  (ft_isalnum(token->line[index + key_len]) == true \
+		&& (ft_isalnum(token->line[index + key_len]) == true \
 			|| token->line[index + key_len] == '_'))
 	{
 		key_len++;
@@ -80,7 +80,7 @@ char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	free(key);
 	if (token->line[*index + 1] == '?')
 		value_pointer = find_exit_value(shell, index);
-	*index += key_len;
+	*index += key_len + 1;
 	if (!value_pointer)
 		return (ft_strdup(""));
 	expansion = expand_variable(shell, value_pointer);
