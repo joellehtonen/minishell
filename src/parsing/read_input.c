@@ -38,7 +38,7 @@ static void	handle_input(t_shell *shell)
 	// {
 	// 	error_printer(shell, CMD_NOT_FOUND, false);
 	// }
-	print_node(shell->token_pointer); //for testing
+	//print_node(shell->token_pointer); //for testing
 	shell->exit_code = execute(shell);
 }
 
