@@ -16,8 +16,21 @@ if cd into directory and removing an upper directory, handle it somehow
 
 if infinite loop before, then history not working and signals not working
 
-what if exit gets too long number as input
+what if exit gets too long number as input (if longer than 256, modulo 256)
 
 need to be able export or unset many at the same time
 
 $PWD - double free
+
+export | grep 'HOME 
+this doesnt work
+
+put env in alphabetical order?
+
+< Makefile ""
+this should be command not found
+
+ambiguous redirect
+should be error, error code 1
+
+sometimes takes many exits / ctrl Ds to exit minishell

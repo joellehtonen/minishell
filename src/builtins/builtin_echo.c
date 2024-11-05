@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 11:36:14 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:30:44 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,17 @@ static void	echo_printing_loop(t_token *temp)
 	{
 		if (temp->type == PIPE) //maybe not extensive enough
 			break ;
-		if (temp->type == ARG)
+		if (temp->type == ARG && ft_strlen(temp->line) != 0)
 		{
 			printf("%s", temp->line);
 			printed = true;
 		}
 		if (temp->next && temp->next->type == ARG && printed == true)
+		{
+			if (ft_strlen(temp->line) != 0
+				|| (ft_strlen(temp->line) == 0 && temp->expanded == false))
 			printf(" ");
+		}
 		temp = temp->next;
 	}
 }

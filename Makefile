@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/05 11:46:39 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/05 12:46:28 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ SRC 		= ./src/main.c \
 			./src/parsing/list_tools_tokens_delete.c \
 			./src/parsing/list_tools_tokens_extra.c \
 			./src/parsing/read_input.c \
-			./src/parsing/input_parser.c \
+			./src/parsing/tokenizer.c \
 			./src/parsing/check_syntax.c \
 			./src/parsing/check_syntax_utils.c \
 			./src/parsing/assign_values.c \
@@ -59,11 +59,11 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins_tools_extra.c \
 			./src/builtins/builtins.c \
-			./src/builtins/cd.c \
-			./src/builtins/export.c \
-			./src/builtins/cd_tools.c \
-			./src/builtins/echo.c \
-			./src/builtins/builtins_exit.c \
+			./src/builtins/builtin_cd.c \
+			./src/builtins/builtin_export.c \
+			./src/builtins/builtin_cd_tools.c \
+			./src/builtins/builtin_echo.c \
+			./src/builtins/builtin_exit.c \
 			./src/str_join_four.c \
 			./src/printing_tools.c \
 			./src/signals.c \
