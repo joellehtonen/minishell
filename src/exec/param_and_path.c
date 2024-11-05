@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   param_and_path.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/05 10:35:09 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/11/05 11:35:03 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -29,9 +39,10 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell)
 	}
 	if (paths == NULL)
 	{
-		printing(command, "", ": No such file or directory\n", 2);
 		free_double_arr(&param);
-		free_and_exit(shell, 127);
+		//printing(command, "", ": No such file or directory\n", 2);
+		//free_and_exit(shell, 127);
+		error_printer(shell, NO_FILE_DIR_COMM, true);
 	}
 	exec_path = get_exec_path(paths, command, param, shell);
 	return (exec_path);
@@ -54,8 +65,9 @@ static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 		return ;
 	if (temp->line[0] == '\0' || temp->line[0] == ' ')
 	{
-		printing(temp->line, "", ": command not found\n", 2);
-		free_and_exit(shell, 127);
+		//printing(temp->line, "", ": command not found\n", 2);
+		//free_and_exit(shell, 127);
+		error_printer(shell, CMD_NOT_FOUND, true);
 	}
 }
 
@@ -75,9 +87,10 @@ static char	*get_exec_path(t_envp *paths, char *command, char **param, t_shell *
 	}
 	if (exec_path == NULL)
 	{
-		printing(command, "", ": command not found\n", 2);
 		free_double_arr(&param);
-		free_and_exit(shell, 127);
+		error_printer(shell, CMD_NOT_FOUND, true);
+		//printing(command, "", ": command not found\n", 2);
+		//free_and_exit(shell, 127);
 	}
 	return (exec_path);
 }

@@ -19,3 +19,5 @@ if infinite loop before, then history not working and signals not working
 what if exit gets too long number as input
 
 need to be able export or unset many at the same time
+
+$PWD - double free

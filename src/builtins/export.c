@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 12:32:31 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:43:02 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int	export_exec(t_envp **envp_copy, t_token *export, int loop_count, t_shell *sh
 	}
 	if (error_check_export(arg->line) == 1)
 	{
-		printing("export: `", arg->line, "': not a valid identifier\n", 2);
-		free_and_exit(shell, true);
+		error_printer(shell, NOT_VALID_IDENT, true);
+		//printing("export: `", arg->line, "': not a valid identifier\n", 2);
+		//free_and_exit(shell, true);
 		return (1);
 	}
 	if (ft_strchr(arg->line, '=') == NULL)

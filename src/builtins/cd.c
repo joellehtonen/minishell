@@ -29,6 +29,8 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 
 static int	check_arg(t_shell *shell, t_token *arg)
 {
+	char	*error_message;
+	
 	if (!arg || ft_strlen(arg->line) == 0)
 		return (cd_no_arg(shell));
 	if (ft_strlen(arg->line) == 0)
@@ -41,8 +43,10 @@ static int	check_arg(t_shell *shell, t_token *arg)
 	} */
 	if (ft_strncmp(arg->line, "~", 1) != 0 && is_file(arg->line) == 0)
 	{
-		printing("cd: ", arg->line, ": Not a directory\n", 2);
-		free_and_exit(shell, true);
+		//printing("cd: ", arg->line, ": Not a directory\n", 2);
+		//free_and_exit(shell, true);
+		error_message = ft_strjoin(arg->line, ": Not a directory\n");
+		error_printer(shell, error_message, true);
 		return (1);
 	}
 	return (2);
@@ -57,8 +61,9 @@ static int cd_no_arg(t_shell *shell)
 	}
 	if (is_directory_new(shell->home) == 1)
 	{
-		printing("cd: ", shell->home, ": No such file or directory\n", 2);
-		free_and_exit(shell, true);
+		//printing("cd: ", shell->home, ": No such file or directory\n", 2);
+		//free_and_exit(shell, true);
+		error_printer(shell, NO_FILE_DIR, true);
 		return (1);
 	}
 	if (chdir(shell->home) == -1)
@@ -76,11 +81,18 @@ static int	access_new_path(t_shell *shell, t_token *arg, char *new_path)
 	if (access(new_path, F_OK) == -1 && errno == ENOENT)
 	{
 		if (arg->line[0] == '~')
-			printing("cd: ", new_path, ": No such file or directory\n", 2);
+		{
+			//printing("cd: ", new_path, ": No such file or directory\n", 2);
+			free(new_path);
+			error_printer(shell, NO_FILE_DIR, true);
+		}
 		else
-			printing("cd: ", arg->line, ": No such file or directory\n", 2);
-		free(new_path);
-		free_and_exit(shell, true);
+		{
+			//printing("cd: ", arg->line, ": No such file or directory\n", 2);
+			free(new_path);
+			error_printer(shell, NO_FILE_DIR, true);
+		}
+		//free_and_exit(shell, true);
 		return (1);
 	}
 	//set pwd in env
