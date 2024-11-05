@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_parser.c                                     :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/05 11:32:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:08:48 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 		new->line[token_index++] = shell->user_input[start++];
 	new->line[token_index] = '\0';
 	new->token_number = token_number;
+	new->expanded = false;
 	ft_lstadd_back_token(&shell->token_pointer, new);
 	return (start);
 }

@@ -67,6 +67,7 @@ char	*create_expansion(t_shell *shell, t_token *token, int *index)
 	char	*expansion;
 	int		key_len;
 
+	token->expanded = true;
 	if (is_exception(token, *index) == true)
 		return (ft_strdup("$"));
 	if (is_quote(token->line[*index + 1]) == true)

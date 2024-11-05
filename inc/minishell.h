@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 10:34:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:42:39 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct	s_token
 	int				level;
 	int				type;
 	int				token_number;
-	int				combine;
+	int				expanded;
 	struct s_token	*next;
 }				t_token;
 
@@ -174,7 +174,6 @@ void	check_content(t_shell *shell, t_token *token);
 char	*create_expansion(t_shell *shell, t_token *token, int *index);
 int		calculate_key_len(t_token *token, int index);
 char	*find_variable(t_shell *shell, char *key, int len);
-char 	*expand_variable(t_shell *shell, char *pointer);
 void	add_expansion(char **replace, char *exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
 int 	handle_quotes(t_shell *shell, t_token *token, int index);

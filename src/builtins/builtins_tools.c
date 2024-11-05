@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:50:01 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 08:15:47 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 12:53:55 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_pwd(char *home, t_shell *shell)
 	new_pwd = ft_strjoin("~/", pwd);
 	if (new_pwd == NULL)
 		error_printer(shell, MALLOC_FAIL, true);
-	free(pwd - pwd_move);
+	free(pwd - pwd_move); //this is maybe causing crashes
 	return(new_pwd);
 }
 

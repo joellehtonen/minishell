@@ -21,6 +21,8 @@ int	exit_exec(t_shell *shell, t_token *token)
 			index++;
 		}
 		exit_code = ft_atoi(token->next->line);
+		if (exit_code > 255)
+			exit_code = exit_code % 256;
 		shell->exit_code = exit_code;
 	}
 	free_and_exit(shell, exit_code);

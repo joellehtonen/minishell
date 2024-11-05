@@ -46,7 +46,7 @@ void	assign_type(t_token **token)
 			temp->type = OUTPUT;
 		else if (ft_strncmp(previous->line, "<<\0", 3) == 0)
 			temp->type = DELIM;
-		else if (comm_flag == 0)
+		else if (comm_flag == 0 && temp->expanded == false)
 		{
 			temp->type = COMM;
 			comm_flag = 1;
