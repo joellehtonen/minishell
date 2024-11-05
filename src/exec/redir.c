@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:42 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 10:09:53 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:35:45 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int get_input_and_output(t_shell **shell, int loop_count)
 {
 	int		here_doc_index;
 
-	check_all_files((*shell)->token_pointer, (*shell)->exec, loop_count);
+	check_all_files((*shell)->token_pointer, (*shell)->exec, loop_count, *shell);
 	here_doc_index = check_for_here_doc(*shell, (*shell)->token_pointer, loop_count);
 	if (here_doc_index == -3)
 		return (1);

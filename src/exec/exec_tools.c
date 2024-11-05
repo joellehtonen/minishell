@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:39:08 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 09:45:51 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:31:57 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ int	is_directory(char *path, char **param, t_shell *shell)
 	result = read(test_fd, &buffer, 1);
 	if (result < 0 && errno == EISDIR)
 	{
-		printing(path, "", ": Is a directory\n", 2);
+		//printing(path, "", ": Is a directory\n", 2);
 		close(test_fd);
 		free_double_arr(&param);
-		free_and_exit(shell, 1);
+		error_printer(shell, IS_DIR, true);
+		//free_and_exit(shell, 1);
 	}
 	close(test_fd);
 	return (0);
@@ -94,8 +95,9 @@ void	check_command_access(char **param, t_shell *shell)
 	command = param[0];
 	if (access(command, F_OK) == -1 && errno == ENOENT)
 	{
-		printing(command, "", ": No such file or directory\n", 2);
+		//printing(command, "", ": No such file or directory\n", 2);
 		free_double_arr(&param);
-		free_and_exit(shell, 127);
+		error_printer(shell, NO_FILE_DIR_COMM, true);
+		//free_and_exit(shell, 127);
 	}
 }

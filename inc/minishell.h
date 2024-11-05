@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 10:10:23 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:42:48 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,14 @@
 # define MALLOC_FAIL "Allocating memory failed\n"
 # define SIGNAL_ERROR "Failed to set up a signal\n"
 # define SYNTAX_ERROR "Syntax error near unexpected token\n"
-# define NUMERIC_ERROR "Numeric argument required\n"
-# define TOO_MANY_ARGS "Too many arguments\n"
-# define CMD_NOT_FOUND "Command does not exist\n"
+# define NUMERIC_ERROR " numeric argument required\n"
+# define NOT_VALID_IDENT " not a valid identifier\n"
+# define TOO_MANY_ARGS " too many arguments\n"
+# define CMD_NOT_FOUND " command not found\n"
+# define NO_FILE_DIR " No such file or directory\n"
+# define NO_FILE_DIR_COMM " No such file or directory\n"
+# define IS_DIR " Is a directory\n"
+# define PERM_DENIED " Permission denied\n"
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
@@ -196,7 +201,7 @@ int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_fl
 int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
 void	allocate_here_doc(t_exec *exec, t_shell *shell);
 void check_file_access(t_shell *shell, char	*path, int loop_count);
-void	check_all_files(t_token *token, t_exec *exec, int loop_count);
+void	check_all_files(t_token *token, t_exec *exec, int loop_count, t_shell *shell);
 int	check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
 	int error_node);
 t_token	*find_token_index(t_token *token, int loop_count, \
@@ -209,7 +214,7 @@ t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *l
 int	count_nodes_type(t_token *start, int token_type, int loop_count);
 int ft_split_list(t_envp **path, char const *s, char c);
 char *ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
-void printing(char *cmd, char *dest, char *result, int fd);
+//void printing(char *cmd, char *dest, char *result, int fd);
 void set_up_signals(t_shell *shell);
 void clear_input(int signal);
 size_t	ft_strchr_fix(const char *s, int c);

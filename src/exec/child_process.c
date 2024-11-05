@@ -49,9 +49,10 @@ void	child_process(t_shell **shell, int loop_count)
 	}
 	if (execve(path, param, (*shell)->envp_str) == -1)
 	{
-		printing(param[0], "", ": Permission denied\n", 2);
 		free_all(param, (*shell)->envp_str, NULL); // free path?
-		free_and_exit(*shell, 126);
+		error_printer(*shell, PERM_DENIED, true);
+		//printing(param[0], "", ": Permission denied\n", 2);
+		//free_and_exit(*shell, 126);
 	}
 }
 

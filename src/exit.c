@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/05 10:12:05 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:44:15 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@ static void	write_error_code(t_shell *shell, char *message)
 		|| (ft_strncmp(QUOTE_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(MALLOC_FAIL, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(SIGNAL_ERROR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(TOO_MANY_ARGS, message, ft_strlen(message)) == 0))
+		|| (ft_strncmp(TOO_MANY_ARGS, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(NO_FILE_DIR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(NOT_VALID_IDENT, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(PERM_DENIED, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(IS_DIR, message, ft_strlen(message)) == 0))
 		shell->exit_code = 1;
 	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
 		shell->exit_code = 2;
-	else if (ft_strncmp(CMD_NOT_FOUND, message, ft_strlen(message)) == 0)
+	else if (ft_strncmp(CMD_NOT_FOUND, message, ft_strlen(message)) == 0
+		|| ft_strncmp(NO_FILE_DIR_COMM, message, ft_strlen(message)) == 0)
 		shell->exit_code = 127;
 	else
 		shell->exit_code = -1; //not necessary?

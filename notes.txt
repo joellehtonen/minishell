@@ -34,3 +34,5 @@ need to be able export or unset many at the same time
 
 jlehtone:~/Desktop/git_home/minishell$ echo "honey i'm home"
 Token #0: echo, type COMM, level 0
+
+$PWD - double free
