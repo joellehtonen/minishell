@@ -2,6 +2,27 @@
 
 #include "../../inc/minishell.h"
 
+// if node is empty after expanding, delete it
+static void	clean_empty_node(t_shell *shell, t_token **temp, t_token **prev)
+{
+	t_token *next;
+
+	next = (*temp)->next;
+	if (ft_strlen((*temp)->line) == 0)
+	{
+		delete_one_token(*temp);
+		if ((*prev) == NULL)
+			shell->token_pointer = next;
+		else
+			(*prev)->next = next;
+	}
+	else
+	{
+		*prev = *temp;
+		*temp = next;
+	}
+}
+
 void	check_content(t_shell *shell, t_token *token)
 {	
 	int		index;
@@ -33,8 +54,10 @@ void	check_content(t_shell *shell, t_token *token)
 void	expander(t_shell *shell)
 {
 	t_token	*temp;
+	t_token *prev_node;
 
 	temp = shell->token_pointer;
+	prev_node = NULL;
 	while (temp != NULL)
 	{
 		if (ft_strchr(temp->line, '\'') != NULL
@@ -42,7 +65,12 @@ void	expander(t_shell *shell)
 			|| ft_strchr(temp->line, '$') != NULL)
 		{
 			check_content(shell, temp);
+			clean_empty_node(shell, &temp, &prev_node);
 		}
-		temp = temp->next;
+		if (temp != NULL)
+		{
+			prev_node = temp;
+			temp = temp->next;
+		}
 	}
 }

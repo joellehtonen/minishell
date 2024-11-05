@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 15:38:45 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 16:38:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ typedef struct	s_token
 	int				level;
 	int				type;
 	int				token_number;
-	int				expanded;
 	struct s_token	*next;
 }				t_token;
 

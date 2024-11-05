@@ -34,11 +34,7 @@ static void	handle_input(t_shell *shell)
 	//clean_empty_nodes(shell);
 	assign_type(&shell->token_pointer);
 	assign_level(&shell->token_pointer, &shell->exec, shell);
-	// if (shell->token_pointer->line )
-	// {
-	// 	error_printer(shell, CMD_NOT_FOUND, false);
-	// }
-	print_node(shell->token_pointer); //for testing
+	//print_node(shell->token_pointer); //for testing
 	shell->exit_code = execute(shell);
 }
 
