@@ -29,8 +29,6 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 
 static int	check_arg(t_shell *shell, t_token *arg)
 {
-	char	*error_message;
-	
 	if (!arg || ft_strlen(arg->line) == 0)
 		return (cd_no_arg(shell));
 	if (ft_strlen(arg->line) == 0)
@@ -45,8 +43,7 @@ static int	check_arg(t_shell *shell, t_token *arg)
 	{
 		//printing("cd: ", arg->line, ": Not a directory\n", 2);
 		//free_and_exit(shell, true);
-		error_message = ft_strjoin(arg->line, ": Not a directory\n");
-		error_printer(shell, error_message, true);
+		error_printer(shell, NOT_DIR, true);
 		return (1);
 	}
 	return (2);

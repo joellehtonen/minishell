@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 11:49:39 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 11:51:31 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define NO_FILE_DIR " No such file or directory\n"
 # define NO_FILE_DIR_COMM " No such file or directory\n"
 # define IS_DIR " Is a directory\n"
+# define NOT_DIR " Is a directory\n"
 # define PERM_DENIED " Permission denied\n"
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
