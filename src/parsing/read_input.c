@@ -24,6 +24,7 @@ static void	create_prompt(t_shell *shell)
 	free_str(&shell->pwd);
 	shell->pwd = get_pwd(shell->home, shell);
 	shell->envp_str = NULL;
+	shell->only_one_builtin = 0;
 	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 	if (shell->prompt == NULL)
 		error_printer(shell, MALLOC_FAIL, true);

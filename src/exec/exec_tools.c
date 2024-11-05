@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:39:08 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 11:31:57 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:53:22 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_directory(char *path, char **param, t_shell *shell)
 		//printing(path, "", ": Is a directory\n", 2);
 		close(test_fd);
 		free_double_arr(&param);
-		error_printer(shell, IS_DIR, true);
+		error_printer(shell, IS_DIR_COMM, true);
 		//free_and_exit(shell, 1);
 	}
 	close(test_fd);

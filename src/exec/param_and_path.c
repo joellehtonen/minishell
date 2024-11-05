@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 11:35:03 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 14:30:25 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell)
 		check_command_access(param, shell);
 		return (command);
 	}
+	
 	if (paths == NULL)
 	{
 		free_double_arr(&param);
