@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/04 13:27:53 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 10:12:05 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,10 @@ void	error_printer(t_shell *shell, char *message, int exit)
 
 void	free_and_exit(t_shell *shell, int error)
 {
-	// what else needs to be freed?
-	if (shell->only_one_builtin == 0 && shell->user_input)
-		free(shell->user_input);
-	if (shell->only_one_builtin == 1 \
-		&& shell->token_pointer && shell->token_pointer->line \
-		&& ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
+	if (shell->only_one_builtin == 1 && shell->token_pointer && \
+		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
 		return ;
+	free_shell(&shell, true);
 	if (shell->exit_code)
 		exit(shell->exit_code);
 	else

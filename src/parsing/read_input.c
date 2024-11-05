@@ -34,14 +34,12 @@ static char	*create_prompt(t_shell *shell)
 
 int read_input(t_shell *shell)
 {
-	char	*prompt;
-
 	shell->pwd = get_pwd(shell->home, shell);
 	while (true) 
 	{
 		prompt = create_prompt(shell);
 		set_up_signals(shell);
-		shell->user_input = readline(prompt);
+		shell->user_input = readline(shell->prompt);
 		if (shell->user_input == NULL)
 			null_signal(shell);
 		if (input_error_check(shell) == SUCCESS)

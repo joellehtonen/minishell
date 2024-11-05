@@ -54,3 +54,19 @@ int	if_builtin(t_shell *shell, int loop_count)
 		return(0);
 	return(1);
 }
+
+void	check_file_access(t_shell *shell, char	*path, int loop_count)
+{
+	if (access(path, R_OK) == -1 && errno == EACCES)
+	{
+		//printing(path, "", ": Permission denied\n", 2);
+		close_pipes_child(loop_count, &shell->exec); // free pids?
+		free_and_exit(shell, 1);
+	}
+	if (access(path, F_OK) == -1 && errno == ENOENT)
+	{
+		//printing(path, "", ": No such file or directory\n", 2);
+		close_pipes_child(loop_count, &shell->exec); // free pids?
+		free_and_exit(shell, 1);
+	}
+}

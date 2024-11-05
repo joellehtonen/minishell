@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/04 13:50:10 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/05 10:10:49 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,8 +78,8 @@ SRC 		= ./src/main.c \
 			./src/exec/redir_tools.c \
 			./src/exec/redir_tools_2.c \
 			./src/exec/check_files.c \
-			./src/free.c \
-			./src/exit.c
+			./src/exit.c \
+			./src/free_memory.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
 INCLUDE		= -I "./inc"

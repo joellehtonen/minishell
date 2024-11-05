@@ -14,7 +14,7 @@
 
 static void	allocate_pipes(t_exec *exec, t_shell *shell);
 
-int	assign_exec_values(t_shell *shell)
+void	assign_exec_values(t_shell *shell)
 {
 	t_exec *exec;
 	
@@ -22,11 +22,9 @@ int	assign_exec_values(t_shell *shell)
 	if (exec->pipe_num > 0)
 		allocate_pipes(exec, shell);
 	exec->null = NULL;
-	//printf("pipe_num %d\n", exec->pipe_num);
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
 	if (exec->pid == NULL)
 	    error_printer(shell, MALLOC_FAIL, true);
-	return (0);
 }
 
 static void	allocate_pipes(t_exec *exec, t_shell *shell)

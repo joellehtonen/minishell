@@ -6,6 +6,8 @@ int	free_exec(t_exec **exec)
 {
 	int		i;
 	
+	if (!*exec)
+		return (1);
 	if ((*exec)->pid)
 	{
 		free((*exec)->pid);
@@ -33,44 +35,19 @@ int	free_exec(t_exec **exec)
 		free(*exec);
 		*exec = NULL;
 	}
+	//if (exec->here_doc_num <= 0)
 	// free array with here_doc pipes?
 	return(1);
 }
 
-int	close_free(int pipe_flag, int fd1, int fd2, pid_t **pid)
-{
-	
-	/* if (*pid)
-	{
-		free(*pid);
-		*pid = NULL;
-	} */
-	if (pipe_flag  == 0)
-		return (1);
-	if (fd1 >= 0)
-		close(fd1);
-	if (fd2 >= 0)
-		close(fd2);
-	(void)pid;
-	return (1);
-}
-
-int	free_all(char **arr_1, char **arr_2, char *str, pid_t **pid)
+int	free_all(char **arr_1, char **arr_2, char *str)
 {
 	if (arr_1)
-		free_double_arr(arr_1);
+		free_double_arr(&arr_1);
 	if (arr_2)
-		free_double_arr(arr_2);
+		free_double_arr(&arr_2);
 	if (str)
-	{
-		free(str);
-		str = NULL;
-	}
-	if (*pid)
-	{
-		free(*pid);
-		*pid = NULL;
-	}
+		free_str(&str);
 	return (1);
 }
 

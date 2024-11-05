@@ -2,7 +2,7 @@
 
 #include "../../inc/minishell.h"
 
-int	pipe_and_fork(t_shell *shell, int loop_count)
+void	pipe_and_fork(t_shell *shell, int loop_count)
 {
 	t_exec	*exec;
 	
@@ -12,18 +12,17 @@ int	pipe_and_fork(t_shell *shell, int loop_count)
 	{	
 		if (pipe(exec->pipe[loop_count]) == -1)
 		{
-			perror("Pipe failed");
-			return (1);
+			close_pipes_parent(&exec);
+			error_printer(shell, MALLOC_FAIL, true);
 		}
 		exec->pipe_flag = 1;
 	}
 	exec->pid[loop_count] = fork();
 	if (exec->pid[loop_count] == -1)
 	{
-		perror("Fork failed");
-		return (1);
+		close_pipes_parent(&exec);
+		error_printer(shell, FORK_FAIL, true);
 	}
 	if (exec->pid[loop_count] == 0)
 		child_process(&shell, loop_count);
-	return (0);
 }

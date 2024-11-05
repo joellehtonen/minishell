@@ -44,7 +44,6 @@ int ft_split_list(t_envp **path, char const *s, char c)
 				return(1);
 			}
 			new = ft_lstnew_envp(temp);
-			//printf("%s\n", new->line);
 			if (new == NULL)
 			{
 				//free_lists(...);
