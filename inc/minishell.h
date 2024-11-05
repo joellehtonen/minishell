@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 15:32:51 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:38:45 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@
 # define TOO_MANY_ARGS " too many arguments\n"
 # define CMD_NOT_FOUND " command not found\n"
 # define NO_FILE_DIR " No such file or directory\n"
-# define NO_FILE_DIR_COMM " No such file or directory\n"
+# define NO_FILE_DIR_COMM " No such file or directory \n"
 # define IS_DIR " Is a directory\n"
+# define IS_DIR_COMM " Is a directory \n"
 # define NOT_DIR " Is a directory\n"
 # define PERM_DENIED " Permission denied\n"
+# define PERM_DENIED_COMM " Permission denied \n"
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"

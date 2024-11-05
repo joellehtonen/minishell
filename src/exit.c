@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/05 11:51:43 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 15:10:18 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 static void	write_error_code(t_shell *shell, char *message)
 {
-	if ((ft_strncmp(EMPTY_INPUT, message, ft_strlen(message)) == 0)
+	if (ft_strncmp(CMD_NOT_FOUND, message, ft_strlen(message)) == 0
+		|| ft_strncmp(NO_FILE_DIR_COMM, message, ft_strlen(message)) == 0)
+		shell->exit_code = 127;
+	else if (ft_strncmp(IS_DIR_COMM, message, ft_strlen(message)) == 0
+		|| ft_strncmp(PERM_DENIED_COMM, message, ft_strlen(message)) == 0)
+		shell->exit_code = 126;
+	else if ((ft_strncmp(EMPTY_INPUT, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(QUOTE_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(MALLOC_FAIL, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(SIGNAL_ERROR, message, ft_strlen(message)) == 0)
@@ -28,9 +34,6 @@ static void	write_error_code(t_shell *shell, char *message)
 	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
 		shell->exit_code = 2;
-	else if (ft_strncmp(CMD_NOT_FOUND, message, ft_strlen(message)) == 0
-		|| ft_strncmp(NO_FILE_DIR_COMM, message, ft_strlen(message)) == 0)
-		shell->exit_code = 127;
 	else
 		shell->exit_code = -1; //not necessary?
 }

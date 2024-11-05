@@ -20,7 +20,19 @@ what if exit gets too long number as input (if longer than 256, modulo 256)
 
 need to be able export or unset many at the same time
 
-$PWD - double free
+aklimchu:~/minishell$ $PWD
+ Is a directory 
+aklimchu:~/minishell$ $PWD hi
+free(): invalid pointer
+Aborted (core dumped)
+
+aklimchu:~/minishell$ ^C
+aklimchu:~/minishell$ aklimchu:~/minishell$ $PWD hi
+ No such file or directory 
+free(): invalid pointer
+corrupted size vs. prev_size
+Aborted (core dumped)
+
 
 export | grep 'HOME 
 this doesnt work

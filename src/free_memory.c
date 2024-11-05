@@ -23,7 +23,7 @@ void	free_double_arr(char ***arr)
 	{
 		while ((*arr)[i])
 			free_str(&(*arr)[i++]);
-		free(*arr);
+		//free(*arr);
 		*arr = NULL;
 	}
 }

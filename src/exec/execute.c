@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/31 11:23:09 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/05 13:46:42 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	execute(t_shell *shell)
 	close_pipes_parent(&exec);
 	waiting_for_pids(exec, loop_count - 1, shell); // do we need to free exec here?
 	exit_status = exec->status;
-	free_exec(&exec); // do we need to free exec here?
+	//free_exec(&exec); // do we need to free exec here?
 	if (WIFEXITED(exit_status))
 		return (WEXITSTATUS(exit_status));
 	return (0);
