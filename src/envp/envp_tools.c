@@ -16,7 +16,7 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 		new = ft_lstnew_envp(envp[i]);
 		if (new == NULL)
 		{
-			//free_lists(...);
+			delete_envp_part(envp_copy, i - 1);
 			return(1);
 		}
 		ft_lstadd_back_envp(envp_copy, new);

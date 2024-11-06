@@ -1,7 +1,3 @@
-EXECUTE
-- update / add freeing functions
-- copy_envp -> free_lists
-
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
 - in input mode D exits bash and prints "exit"

@@ -149,6 +149,8 @@ int	update_pwd(t_envp **envp_copy, t_shell *shell);
 int	update_old_pwd(t_envp **envp_copy, t_shell *shell);
 void envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
 void envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
+void	delete_envp(t_envp **copy_envp);
+void	delete_envp_part(t_envp **copy_envp, int i);
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
@@ -239,7 +241,6 @@ int free_all(char **arr_1, char **arr_2, char *str);
 int	free_two_str(char **str1, char **str2);
 int	free_str(char **str1);
 int free_exec(t_exec **exec);
-void	delete_envp(t_envp **copy_envp);
 void	free_shell(t_shell **shell, int free_envp);
 
 #endif /* MINISHELL_H */
