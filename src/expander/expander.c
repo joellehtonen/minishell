@@ -2,28 +2,34 @@
 
 #include "../../inc/minishell.h"
 
-// if node is empty after expanding, delete it
-// static void	clean_empty_node(t_shell *shell, t_token **temp, t_token **prev)
-// {
-// 	t_token *next;
+char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i)
+{
+	char	*key;
+	char	*value_pointer;
+	char	*expansion;
+	int		key_len;
 
-// 	next = (*temp)->next;
-// 	shell = shell;
-// 	if (ft_strlen((*temp)->line) == 0 && (*temp)->expanded == true)
-// 	{
-// 		delete_one_token(*temp);
-// 		if ((*prev) == NULL)
-// 			shell->token_pointer = next;
-// 		else
-// 			(*prev)->next = next;
-// 	}
-// 	else
-// 	{
-// 		*prev = *temp;
-// 		*temp = next;
-		
-// 	}
-// }
+	if (is_exception(tok, *i) == true)
+		return (ft_strdup("$"));
+	if (is_quote(tok->line[*i + 1]) == true)
+	{
+		(*i)++;
+		return (NULL);
+	}
+	tok->expanded = true;
+	key_len = calculate_key_len(tok, *i + 1);
+	key = ft_substr(tok->line, (*i + 1), key_len);
+	value_pointer = find_variable(she, key, key_len);
+	free(key);
+	if (tok->line[*i + 1] == '?')
+		value_pointer = find_exit_value(she, i);
+	*i += key_len + 1;
+	if (!value_pointer)
+		return (ft_strdup(""));
+	expansion = expand_variable(she, replace, value_pointer);
+	free(value_pointer);
+	return (expansion);
+}
 
 void	check_content(t_shell *shell, t_token *token)
 {	
@@ -41,13 +47,12 @@ void	check_content(t_shell *shell, t_token *token)
 			index++;
 		else if (token->line[index] == '$' && shell->single_quote == false)
 		{
-			expansion = create_expansion(shell, token, &index);
+			expansion = create_expansion(shell, token, &replacement, &index);
 			add_expansion(&replacement, expansion, &copy_index, &index);
 			free(expansion);
-			token->expanded = true;
 		}
 		else
-			replacement[copy_index++] = token->line[index++];
+			replacement[copy_index++] = token->line[index++]; //LEAKS?
 	}
 	replacement[copy_index] = '\0';
 	free(token->line);

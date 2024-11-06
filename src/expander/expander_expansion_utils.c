@@ -4,6 +4,7 @@
 
 void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
 {
+
 	if (exp == NULL)
 		return ;
 	ft_strlcat(*replace, exp, ft_strlen(*replace) + ft_strlen(exp) + 1);
@@ -13,7 +14,19 @@ void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
 	return ;
 }
 
-char	*expand_variable(t_shell *shell, char *pointer)
+void	reallocate_replacement(t_shell *shell, char **replace, char *expansion)
+{
+	char *new_replacement; 
+
+	new_replacement = malloc(sizeof(char) * (ft_strlen(*replace) + ft_strlen(expansion) + 10)); //LEAKS?
+	if (!new_replacement)
+		error_printer(shell, "", MALLOC_FAIL, true);
+	ft_strlcpy(new_replacement, *replace, ft_strlen(*replace) + 1); //LEAKS?
+	free(*replace);
+	*replace = new_replacement;
+}
+
+char	*expand_variable(t_shell *shell, char **replacement, char *pointer)
 {
 	char	*expansion;
 	int		len;
@@ -23,6 +36,7 @@ char	*expand_variable(t_shell *shell, char *pointer)
 	if (!expansion)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, pointer, len + 1);
+	reallocate_replacement(shell, replacement, expansion);
 	return (expansion);
 }
 
@@ -58,33 +72,4 @@ int	calculate_key_len(t_token *token, int index)
 		key_len++;
 	}
 	return (key_len);
-}
-
-char	*create_expansion(t_shell *shell, t_token *token, int *index)
-{
-	char	*key;
-	char	*value_pointer;
-	char	*expansion;
-	int		key_len;
-
-	if (is_exception(token, *index) == true)
-		return (ft_strdup("$"));
-	if (is_quote(token->line[*index + 1]) == true)
-	{
-		(*index)++;
-		return (NULL);
-	}
-	token->expanded = true;
-	key_len = calculate_key_len(token, *index + 1);
-	key = ft_substr(token->line, (*index + 1), key_len);
-	value_pointer = find_variable(shell, key, key_len);
-	free(key);
-	if (token->line[*index + 1] == '?')
-		value_pointer = find_exit_value(shell, index);
-	*index += key_len + 1;
-	if (!value_pointer)
-		return (ft_strdup(""));
-	expansion = expand_variable(shell, value_pointer);
-	free(value_pointer);
-	return (expansion);
 }
