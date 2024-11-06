@@ -92,6 +92,7 @@ typedef struct	s_token
 	int				level;
 	int				type;
 	int				token_number;
+	int				expanded;
 	struct s_token	*next;
 }				t_token;
 
