@@ -7,7 +7,6 @@ static int	check_no_command(t_token *token, int loop_count);
 void	child_process(t_shell **shell, int loop_count)
 {
 	t_exec	*exec;
-	char	**param;
 	char	*path;
 	int		exit_code;
 
@@ -29,28 +28,23 @@ void	child_process(t_shell **shell, int loop_count)
 		free_and_exit(*shell, exit_code);
 	}
 
-	param = check_param(*shell, loop_count);
-	if (param == NULL)
-		error_printer(*shell, "", MALLOC_FAIL, true);
-
-	path = check_path((*shell)->path, param, *shell);
+	check_param(*shell, loop_count);
+		
+	path = check_path((*shell)->path, (*shell)->exec->param, *shell);
 	if (path == NULL)
-	{
-		free_double_arr(&param);
 		error_printer(*shell, "", MALLOC_FAIL, true);
-	}
 	/* if ((*shell)->envp_str)
 		free_double_arr((*shell)->envp_str); */
 	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
 	if ((*shell)->envp_str == NULL)
 	{
-		free_all(param, (*shell)->envp_str, NULL);
+		free_double_arr(&(*shell)->envp_str);
 		error_printer(*shell, "", MALLOC_FAIL, true);
 	}
-	if (execve(path, param, (*shell)->envp_str) == -1)
+	if (execve(path, (*shell)->exec->param, (*shell)->envp_str) == -1)
 	{
-		free_all(param, (*shell)->envp_str, NULL); // free path?
-		error_printer(*shell, param[0], PERM_DENIED_COMM, true);
+		free_double_arr(&(*shell)->envp_str); // free path?
+		error_printer(*shell, (*shell)->exec->param[0], PERM_DENIED_COMM, true);
 		//printing(param[0], "", ": Permission denied\n", 2);
 		//free_and_exit(*shell, 126);
 	}

@@ -20,8 +20,8 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 	arg_error = check_arg(shell, arg);
 	if (arg_error != 2)
 		return (arg_error);
-	shell->new_path = get_new_path(shell, arg);
-	if (shell->new_path == NULL)
+	shell->exec->new_path = get_new_path(shell, arg);
+	if (shell->exec->new_path == NULL)
 		return (1);
 	return (access_new_path(shell, arg));
 }
@@ -74,12 +74,12 @@ static int cd_no_arg(t_shell *shell)
 
 static int	access_new_path(t_shell *shell, t_token *arg)
 {
-	if (access(shell->new_path, F_OK) == -1 && errno == ENOENT)
+	if (access(shell->exec->new_path, F_OK) == -1 && errno == ENOENT)
 	{
 		if (arg->line[0] == '~')
 		{
 			//printing("cd: ", new_path, ": No such file or directory\n", 2);
-			error_printer(shell, shell->new_path, NO_FILE_DIR, true);
+			error_printer(shell, shell->exec->new_path, NO_FILE_DIR, true);
 		}
 		else
 		{
@@ -90,7 +90,7 @@ static int	access_new_path(t_shell *shell, t_token *arg)
 		return (1);
 	}
 	//set pwd in env
-	if (chdir(shell->new_path) == -1)
+	if (chdir(shell->exec->new_path) == -1)
 	{
 	   	error_printer(shell, "", CHDIR_ERROR, true);
 		return (1);

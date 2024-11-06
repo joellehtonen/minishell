@@ -39,7 +39,7 @@
 # define TOO_MANY_ARGS "Too many arguments\n"
 # define CMD_NOT_FOUND ": command not found\n"
 # define NO_FILE_DIR ": No such file or directory\n"
-# define NO_FILE_DIR_COMM " No such file or directory \n"
+# define NO_FILE_DIR_COMM ": No such file or directory \n"
 # define IS_DIR ": Is a directory\n"
 # define IS_DIR_COMM ": Is a directory \n"
 # define NOT_DIR " Not a directory\n"
@@ -108,6 +108,8 @@ typedef struct	s_exec
 	int		**here_doc_pipe;
 	int		here_doc_num;
 	int		error_node_index;
+	char	*new_path; //helper string used in cd_exec
+	char	**param; //helper double array used in child_process
 	pid_t	*null;
 	pid_t	*pid;
 }				t_exec;
@@ -119,7 +121,6 @@ typedef struct	s_shell
 	t_envp	*path; //PATH from envp
 	char	*uname; //USER from envp
 	char	*pwd; //current location
-	char	*new_path; //helper string used in cd_exec
 	char	*home; //HOME from envp
 	char	*prompt; //the string to be printed as a prompt
 	t_exec	*exec; // file descriptors for pipes and forks
@@ -197,11 +198,11 @@ int		check_pipe_location(t_shell *shell, int old_index);
 // execute functions
 int	execute(t_shell *shell);
 int get_input_and_output(t_shell **shell, int loop_count);
-char **check_param(t_shell *shell, int loop_count);
+void	check_param(t_shell *shell, int loop_count);
 char **param_to_arr(t_token *token, int loop_count);
 char *check_path(t_envp *paths, char **param, t_shell *shell);
 void check_command_access(char **param, t_shell *shell);
-int	is_directory(char *path, char **param, t_shell *shell);
+int	is_directory(char *path, t_shell *shell);
 int is_file(char *path);
 void	pipe_and_fork(t_shell *shell, int i);
 char **envp_to_arr(t_envp *envp_copy);

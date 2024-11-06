@@ -37,6 +37,9 @@ int	free_exec(t_exec **exec)
 	}
 	//if (exec->here_doc_num <= 0)
 	// free array with here_doc pipes?
+	// ft_memset()?
+	free_str(&(*exec)->new_path);
+	free_double_arr(&(*exec)->param);
 	return(1);
 }
 

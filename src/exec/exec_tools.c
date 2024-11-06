@@ -16,7 +16,7 @@ static int	count_str(t_token *token, int loop_count);
 
 static char	**free_param_arr(char **param_arr, int i);
 
-int	is_directory(char *path, char **param, t_shell *shell)
+int	is_directory(char *path, t_shell *shell)
 {
 	int		test_fd;
 	char	buffer;
@@ -30,8 +30,7 @@ int	is_directory(char *path, char **param, t_shell *shell)
 	{
 		//printing(path, "", ": Is a directory\n", 2);
 		close(test_fd);
-		free_double_arr(&param);
-		error_printer(shell, "", IS_DIR_COMM, true);
+		error_printer(shell, path, IS_DIR_COMM, true);
 		//free_and_exit(shell, 1);
 	}
 	close(test_fd);
@@ -96,8 +95,7 @@ void	check_command_access(char **param, t_shell *shell)
 	if (access(command, F_OK) == -1 && errno == ENOENT)
 	{
 		//printing(command, "", ": No such file or directory\n", 2);
-		free_double_arr(&param);
-		error_printer(shell, "", NO_FILE_DIR_COMM, true);
+		error_printer(shell, command, NO_FILE_DIR_COMM, true);
 		//free_and_exit(shell, 127);
 	}
 }

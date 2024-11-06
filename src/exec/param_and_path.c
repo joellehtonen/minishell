@@ -14,15 +14,14 @@
 
 static void	check_empty(t_token *token, int loop_count, t_shell *shell);
 
-static char	*get_exec_path(t_envp *envp_copy, char *command, char **param, t_shell *shell);
+static char	*get_exec_path(t_envp *envp_copy, char *command, t_shell *shell);
 
-char	**check_param(t_shell *shell, int loop_count)
+void	check_param(t_shell *shell, int loop_count)
 {
-	char	**param;
-
 	check_empty(shell->token_pointer, loop_count, shell);
-	param = param_to_arr(shell->token_pointer, loop_count);
-	return (param);
+	shell->exec->param = param_to_arr(shell->token_pointer, loop_count);
+	if (shell->exec->param == NULL)
+		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
 char	*check_path(t_envp *paths, char **param, t_shell *shell)
@@ -33,19 +32,18 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell)
 	command = param[0];
 	if (ft_strrchr(command, '/'))
 	{
-		is_directory(command, param, shell);
+		is_directory(command, shell);
 		check_command_access(param, shell);
 		return (command);
 	}
 	
 	if (paths == NULL)
 	{
-		free_double_arr(&param);
 		//printing(command, "", ": No such file or directory\n", 2);
 		//free_and_exit(shell, 127);
 		error_printer(shell, command, NO_FILE_DIR_COMM, true);
 	}
-	exec_path = get_exec_path(paths, command, param, shell);
+	exec_path = get_exec_path(paths, command, shell);
 	return (exec_path);
 }
 
@@ -72,7 +70,7 @@ static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 	}
 }
 
-static char	*get_exec_path(t_envp *paths, char *command, char **param, t_shell *shell)
+static char	*get_exec_path(t_envp *paths, char *command, t_shell *shell)
 {
 	char	*exec_path;
 
@@ -88,7 +86,6 @@ static char	*get_exec_path(t_envp *paths, char *command, char **param, t_shell *
 	}
 	if (exec_path == NULL)
 	{
-		free_double_arr(&param);
 		error_printer(shell, command, CMD_NOT_FOUND, true);
 		//printing(command, "", ": command not found\n", 2);
 		//free_and_exit(shell, 127);
