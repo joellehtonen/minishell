@@ -7,7 +7,6 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 	int		i;
 	t_envp	*new;
 
-	(void)shell;
 	if (envp == NULL)
 		return (1);
 	i = 0;

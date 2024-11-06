@@ -6,16 +6,16 @@ int	free_exec(t_exec **exec)
 {
 	int		i;
 	
-	if (!*exec)
+	if (!(*exec))
 		return (1);
 	if ((*exec)->pid)
 	{
 		free((*exec)->pid);
 		(*exec)->pid = NULL;
 	}
-	i = 0;
-	if ((*exec)->pipe)
-    {
+	if ((*exec)->pipe_num > 0 && (*exec)->pipe)
+	{
+		i = 0;
         // Iterate over each pipe and free its resources
         while (i < (*exec)->pipe_num)
         {
@@ -30,16 +30,30 @@ int	free_exec(t_exec **exec)
     	free((*exec)->pipe);
     	(*exec)->pipe = NULL;
 	}
+	if ((*exec)->here_doc_num > 0 && (*exec)->here_doc_pipe)
+	{
+		i = 0;
+        // Iterate over each pipe and free its resources
+        while (i < (*exec)->here_doc_num)
+        {
+            if ((*exec)->here_doc_pipe[i])  // Ensure the pipe pointer is not NULL
+            {
+                free((*exec)->here_doc_pipe[i]);  // Free the individual pipe (array of 2 ints)
+                (*exec)->here_doc_pipe[i] = NULL;  // Avoid dangling pointer
+            }
+			i++;
+        }
+        // Free the array of pipe pointers
+    	free((*exec)->here_doc_pipe);
+    	(*exec)->here_doc_pipe = NULL;
+	}
+	free_str(&(*exec)->new_path);
+	free_double_arr(&(*exec)->param);
 	if (*exec)
 	{
 		free(*exec);
 		*exec = NULL;
 	}
-	//if (exec->here_doc_num <= 0)
-	// free array with here_doc pipes?
-	// ft_memset()?
-	free_str(&(*exec)->new_path);
-	free_double_arr(&(*exec)->param);
 	return(1);
 }
 

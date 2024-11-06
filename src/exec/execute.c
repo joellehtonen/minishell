@@ -27,7 +27,7 @@ int	execute(t_shell *shell)
 	exec = shell->exec;
 	allocate_here_doc(exec, shell);
 	if (exec->here_doc_num > 0 && here_doc(shell) == 1)
-		return (free_exec(&exec)); // do we need to free exec here?
+		return (/* free_exec(&exec) */1); // do we need to free exec here?
 	if (exec->pipe_num == 0 && if_builtin(shell, 0) == 0)
 		return (only_one_builtin(shell));
 	assign_exec_values(shell);
@@ -38,7 +38,7 @@ int	execute(t_shell *shell)
 		loop_count++;
 	}
 	close_pipes_parent(&exec);
-	waiting_for_pids(exec, loop_count - 1, shell); // do we need to free exec here?
+	waiting_for_pids(exec, loop_count - 1, shell);
 	exit_status = exec->status;
 	//free_exec(&exec); // do we need to free exec here?
 	if (WIFEXITED(exit_status))
