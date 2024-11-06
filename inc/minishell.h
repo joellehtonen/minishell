@@ -108,6 +108,8 @@ typedef struct	s_exec
 	int		**here_doc_pipe;
 	int		here_doc_num;
 	int		error_node_index;
+	int		orig_in;
+	int		orig_out;
 	char	*new_path; //helper string used in cd_exec
 	char	**param; //helper double array used in child_process
 	pid_t	*pid;

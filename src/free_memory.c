@@ -10,7 +10,13 @@ void	free_shell(t_shell **shell, int free_envp)
 	free_exec(&(*shell)->exec);
 	delete_all_tokens(&(*shell)->token_pointer);
 	if (free_envp == true)
+	{
 		delete_envp(&(*shell)->envp_copy);
+		free_double_arr(&(*shell)->envp_str);
+		free_str(&(*shell)->uname);
+		free_str(&(*shell)->home);
+		delete_envp(&(*shell)->path);
+	}
 }
 
 void	free_double_arr(char ***arr)
@@ -22,7 +28,7 @@ void	free_double_arr(char ***arr)
 	{
 		while ((*arr)[i])
 			free_str(&(*arr)[i++]);
-		//free(*arr);
+		free(*arr);
 		*arr = NULL;
 	}
 }
