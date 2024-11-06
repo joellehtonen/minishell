@@ -239,6 +239,7 @@ int free_all(char **arr_1, char **arr_2, char *str);
 int	free_two_str(char **str1, char **str2);
 int	free_str(char **str1);
 int free_exec(t_exec **exec);
+void	delete_envp(t_envp **copy_envp);
 void	free_shell(t_shell **shell, int free_envp);
 
 #endif /* MINISHELL_H */

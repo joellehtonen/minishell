@@ -10,8 +10,7 @@ void	free_shell(t_shell **shell, int free_envp)
 	free_exec(&(*shell)->exec);
 	delete_all_tokens(&(*shell)->token_pointer);
 	if (free_envp == true)
-		(void)free_envp;
-		//free_envp((*shell)->envp_copy);
+		delete_envp(&(*shell)->envp_copy);
 }
 
 void	free_double_arr(char ***arr)
