@@ -110,7 +110,6 @@ typedef struct s_exec
 	int		error_node_index;
 	char	*new_path; //helper string used in cd_exec
 	char	**param; //helper double array used in child_process
-	pid_t	*null;
 	pid_t	*pid;
 }	t_exec;
 

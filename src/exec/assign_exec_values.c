@@ -21,7 +21,6 @@ void	assign_exec_values(t_shell *shell)
 	exec = shell->exec;
 	if (exec->pipe_num > 0)
 		allocate_pipes(exec, shell);
-	exec->null = NULL;
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
 	if (exec->pid == NULL)
 	    error_printer(shell, "", MALLOC_FAIL, true);

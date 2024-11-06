@@ -1,7 +1,6 @@
-
 EXECUTE
 - update / add freeing functions
-- is_directory - unified error printing?
+- copy_envp -> free_lists
 
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
