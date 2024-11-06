@@ -8,7 +8,7 @@ static void	clean_empty_node(t_shell *shell, t_token **temp, t_token **prev)
 	t_token *next;
 
 	next = (*temp)->next;
-	if (ft_strlen((*temp)->line) == 0)
+	if (ft_strlen((*temp)->line) == 0 && (*temp)->expanded == true)
 	{
 		delete_one_token(*temp);
 		if ((*prev) == NULL)
@@ -42,6 +42,7 @@ void	check_content(t_shell *shell, t_token *token)
 			expansion = create_expansion(shell, token, &index);
 			add_expansion(&replacement, expansion, &copy_index, &index);
 			free(expansion);
+			token->expanded = true;
 		}
 		else
 			replacement[copy_index++] = token->line[index++];
