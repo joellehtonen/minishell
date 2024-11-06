@@ -35,7 +35,7 @@ static int	validate_io(t_shell *shell, int index)
 		fail = true;
 	if (fail == true)
 	{
-		error_printer(shell, SYNTAX_ERROR, false);
+		error_printer(shell, "", SYNTAX_ERROR, false);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -88,7 +88,7 @@ int	input_error_check(t_shell *shell)
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 	{
-		error_printer(shell, QUOTE_ERROR, false);
+		error_printer(shell, "", QUOTE_ERROR, false);
 		return (FAILURE);
 	}
 	return (SUCCESS);

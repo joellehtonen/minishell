@@ -31,7 +31,7 @@ int	is_directory(char *path, char **param, t_shell *shell)
 		//printing(path, "", ": Is a directory\n", 2);
 		close(test_fd);
 		free_double_arr(&param);
-		error_printer(shell, IS_DIR_COMM, true);
+		error_printer(shell, "", IS_DIR_COMM, true);
 		//free_and_exit(shell, 1);
 	}
 	close(test_fd);
@@ -97,7 +97,7 @@ void	check_command_access(char **param, t_shell *shell)
 	{
 		//printing(command, "", ": No such file or directory\n", 2);
 		free_double_arr(&param);
-		error_printer(shell, NO_FILE_DIR_COMM, true);
+		error_printer(shell, "", NO_FILE_DIR_COMM, true);
 		//free_and_exit(shell, 127);
 	}
 }

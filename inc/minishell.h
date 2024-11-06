@@ -34,22 +34,23 @@
 # define MALLOC_FAIL "Allocating memory failed\n"
 # define SIGNAL_ERROR "Failed to set up a signal\n"
 # define SYNTAX_ERROR "Syntax error near unexpected token\n"
-# define NUMERIC_ERROR " numeric argument required\n"
-# define NOT_VALID_IDENT " not a valid identifier\n"
-# define TOO_MANY_ARGS " too many arguments\n"
-# define CMD_NOT_FOUND " command not found\n"
-# define NO_FILE_DIR " No such file or directory\n"
+# define NUMERIC_ERROR "Numeric argument required\n"
+# define NOT_VALID_IDENT ": not a valid identifier\n"
+# define TOO_MANY_ARGS "Too many arguments\n"
+# define CMD_NOT_FOUND ": command not found\n"
+# define NO_FILE_DIR ": No such file or directory\n"
 # define NO_FILE_DIR_COMM " No such file or directory \n"
-# define IS_DIR " Is a directory\n"
-# define IS_DIR_COMM " Is a directory \n"
-# define NOT_DIR " Is a directory\n"
-# define PERM_DENIED " Permission denied\n"
-# define PERM_DENIED_COMM " Permission denied \n"
+# define IS_DIR ": Is a directory\n"
+# define IS_DIR_COMM ": Is a directory \n"
+# define NOT_DIR " Not a directory\n"
+# define PERM_DENIED ": Permission denied\n"
+# define PERM_DENIED_COMM ": Permission denied \n"
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
 # define WAITPID_ERROR "Failed to wait for child process to end\n"
 # define FORK_FAIL "Failed to dublicate a process\n"
+# define PIPE_FAIL "Failed to create a pipe\n"
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
@@ -118,6 +119,7 @@ typedef struct	s_shell
 	t_envp	*path; //PATH from envp
 	char	*uname; //USER from envp
 	char	*pwd; //current location
+	char	*new_path; //helper string used in cd_exec
 	char	*home; //HOME from envp
 	char	*prompt; //the string to be printed as a prompt
 	t_exec	*exec; // file descriptors for pipes and forks
@@ -232,7 +234,7 @@ size_t	ft_strchr_fix(const char *s, int c);
 // exit
 void free_and_exit(t_shell *shell, int error);
 void free_double_arr(char ***arr);
-void error_printer(t_shell *shell, char *message, int exit);
+void	error_printer(t_shell *shell, char *arg, char *message, int exit);
 int free_all(char **arr_1, char **arr_2, char *str);
 int	free_two_str(char **str1, char **str2);
 int	free_str(char **str1);

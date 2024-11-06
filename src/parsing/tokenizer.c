@@ -21,7 +21,7 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 	new = ft_lstnew_token(NULL);
 	new->line = malloc(sizeof(char) * (end - start + 1));
 	if (new->line == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	while (start != end)
 		new->line[token_index++] = shell->user_input[start++];
 	new->line[token_index] = '\0';

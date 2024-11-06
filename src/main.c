@@ -14,7 +14,7 @@ int	main(int argc, char *argv[], char *envp[])
 	shell.user_input = NULL;
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
 	{
-		error_printer(&shell, MALLOC_FAIL, true);
+		error_printer(&shell, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	shell.exit_code = read_input(&shell);

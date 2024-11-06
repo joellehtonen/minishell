@@ -48,26 +48,26 @@ static int	check_access_print(t_token *token, t_shell *shell)
 		access(token->next->line, R_OK) == -1 && errno == EACCES)
 	{
 		//printing(token->next->line, "", ": Permission denied\n", 2);
-		error_printer(shell, PERM_DENIED, false);
+		error_printer(shell, token->next->line, PERM_DENIED, false);
 		return (1);
 	}
 	if (token->type == REDIR_INPUT && \
 		access(token->next->line, F_OK) == -1 && errno == ENOENT)
 	{
 		//printing(token->next->line, "", ": No such file or directory\n", 2);
-		error_printer(shell, NO_FILE_DIR, false);
+		error_printer(shell, token->next->line, NO_FILE_DIR, false);
 		return (1);
 	}
 	if (token->type == REDIR_OUTPUT && token->next->line && token->next->line[0] == '\0')
 	{
 		//printing(token->next->line, "", ": No such file or directory\n", 2);
-		error_printer(shell, NO_FILE_DIR, false);
+		error_printer(shell, token->next->line, NO_FILE_DIR, false);
 		return (1);
 	}
 	if (token->type == REDIR_OUTPUT && access(token->next->line, W_OK) == -1 \
 		&& errno == EACCES)
 	{
-		error_printer(shell, PERM_DENIED, false);
+		error_printer(shell, token->next->line, PERM_DENIED, false);
 		//printing(token->next->line, "", ": Permission denied\n", 2);
 		return (1);
 	}
@@ -79,25 +79,25 @@ static int	check_access_print_extra(t_token *token, t_shell *shell)
 	if (token->type == REDIR_OUTPUT && is_directory_new(token->next->line) == 0)
 	{
 		//printing(token->next->line, "", ": Is a directory\n", 2);
-		error_printer(shell, IS_DIR, false);
+		error_printer(shell, token->next->line, IS_DIR, false);
 		return (1);
 	}
 	if (token->type == REDIR_OUTPUT && check_output_folder(token->next->line) == 1)
 	{
 		//printing(token->next->line, "", ": No such file or directory\n", 2);
-		error_printer(shell, NO_FILE_DIR, false);
+		error_printer(shell, token->next->line, NO_FILE_DIR, false);
 		return (1);
 	}
 	if (token->type == REDIR_OUTPUT && check_output_folder(token->next->line) == 2)
 	{
 		//printing(token->next->line, "", ": Is a directory\n", 2);
-		error_printer(shell, IS_DIR, false);
+		error_printer(shell, token->next->line, IS_DIR, false);
 		return (1);
 	}
 	if (token->type == REDIR_OUTPUT && check_output_folder(token->next->line) == 3)
 	{
 		//printing(token->next->line, "", ": Permission denied\n", 2);
-		error_printer(shell, PERM_DENIED, false);
+		error_printer(shell, token->next->line, PERM_DENIED, false);
 		return (1);
 	}
 	return (0);

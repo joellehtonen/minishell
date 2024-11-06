@@ -43,7 +43,7 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell)
 		free_double_arr(&param);
 		//printing(command, "", ": No such file or directory\n", 2);
 		//free_and_exit(shell, 127);
-		error_printer(shell, NO_FILE_DIR_COMM, true);
+		error_printer(shell, command, NO_FILE_DIR_COMM, true);
 	}
 	exec_path = get_exec_path(paths, command, param, shell);
 	return (exec_path);
@@ -68,7 +68,7 @@ static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 	{
 		//printing(temp->line, "", ": command not found\n", 2);
 		//free_and_exit(shell, 127);
-		error_printer(shell, CMD_NOT_FOUND, true);
+		error_printer(shell, temp->line, CMD_NOT_FOUND, true);
 	}
 }
 
@@ -89,7 +89,7 @@ static char	*get_exec_path(t_envp *paths, char *command, char **param, t_shell *
 	if (exec_path == NULL)
 	{
 		free_double_arr(&param);
-		error_printer(shell, CMD_NOT_FOUND, true);
+		error_printer(shell, command, CMD_NOT_FOUND, true);
 		//printing(command, "", ": command not found\n", 2);
 		//free_and_exit(shell, 127);
 	}

@@ -51,7 +51,7 @@ static int get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 	if (pipe((*exec)->here_doc_pipe[i]) == -1)
 	{
 		free_str(&here_doc_input);
-   		error_printer(shell, SYNTAX_ERROR, true);
+   		error_printer(shell, "", PIPE_FAIL, true);
 	}
 	ft_putstr_fd(here_doc_input, (*exec)->here_doc_pipe[i][1]);
 	free_str(&here_doc_input);
@@ -68,7 +68,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 	new_line = NULL;
 	hd_input = ft_strdup("");
 	if (hd_input == NULL)
-	   	error_printer(shell, MALLOC_FAIL, true);
+	   	error_printer(shell, "", MALLOC_FAIL, true);
 	ft_printf("> ");
 	new_line = get_next_line(0);
 	while (new_line)
@@ -90,7 +90,7 @@ static void	new_here_doc_input(char **hd_input, char **new_line, t_shell *shell)
 	if (*hd_input == NULL)
 	{
 		free_str(new_line); // free here_doc_input?
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	}
 	*hd_input = ft_strncat(*hd_input, *new_line, \
 			ft_strlen(*hd_input) + ft_strlen(*new_line) + 1);

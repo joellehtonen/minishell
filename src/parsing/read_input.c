@@ -53,7 +53,7 @@ static void	create_prompt(t_shell *shell)
 	shell->only_one_builtin = 0;
 	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 	if (shell->prompt == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
 int read_input(t_shell *shell)

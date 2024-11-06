@@ -24,7 +24,7 @@ void	assign_exec_values(t_shell *shell)
 	exec->null = NULL;
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));
 	if (exec->pid == NULL)
-	    error_printer(shell, MALLOC_FAIL, true);
+	    error_printer(shell, "", MALLOC_FAIL, true);
 }
 
 static void	allocate_pipes(t_exec *exec, t_shell *shell)
@@ -33,14 +33,14 @@ static void	allocate_pipes(t_exec *exec, t_shell *shell)
 	
 	exec->pipe = malloc(sizeof(int *) * exec->pipe_num);  // Allocate an array of pointers to pipes
    	if (!exec->pipe)
-    	error_printer(shell, MALLOC_FAIL, true);
+    	error_printer(shell, "", MALLOC_FAIL, true);
     // Allocate each pipe (each pipe is an array of 2 integers)
 	i = 0;
     while (i < exec->pipe_num)
     {
     	exec->pipe[i] = malloc(sizeof(int) * 2);
        	if (!exec->pipe[i])
-			error_printer(shell, MALLOC_FAIL, true);
+			error_printer(shell, "", MALLOC_FAIL, true);
 		i++;
 	}
 }
@@ -53,14 +53,14 @@ void	allocate_here_doc(t_exec *exec, t_shell *shell)
 		return ;
 	exec->here_doc_pipe = malloc(sizeof(int *) * exec->here_doc_num);  // Allocate an array of pointers to pipes
    	if (!exec->here_doc_pipe)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
     // Allocate each pipe (each pipe is an array of 2 integers)
 	i = 0;
     while (i < exec->here_doc_num)
     {
     	exec->here_doc_pipe[i] = malloc(sizeof(int) * 2);
        	if (!exec->here_doc_pipe[i])
-			error_printer(shell, MALLOC_FAIL, true);
+			error_printer(shell, "", MALLOC_FAIL, true);
 		i++;
 	}
 }

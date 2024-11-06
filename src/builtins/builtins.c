@@ -57,12 +57,12 @@ static int pwd_exec(t_shell *shell)
 	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
 	{
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 		return(1);
 	}
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
 	{
-		error_printer(shell, GETCWD_FAIL, true);
+		error_printer(shell, "", GETCWD_FAIL, true);
 		return(1);
 	}
 	printf("%s\n", pwd);

@@ -29,8 +29,8 @@ void	set_up_signals(t_shell *shell)
 	protocol.sa_handler = &clear_input;
 	protocol.sa_flags = SA_RESTART;
 	if (sigaction(SIGINT, &protocol, NULL) < 0)
-		error_printer(shell, SIGNAL_ERROR, true);
+		error_printer(shell, "", SIGNAL_ERROR, true);
 	protocol.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &protocol, NULL) < 0)
-		error_printer(shell, SIGNAL_ERROR, true);
+		error_printer(shell, "", SIGNAL_ERROR, true);
 }

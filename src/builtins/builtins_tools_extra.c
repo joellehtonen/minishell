@@ -25,24 +25,24 @@ int	update_pwd(t_envp **envp_copy, t_shell *shell)
 	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
 	{
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
 	{
-		error_printer(shell, GETCWD_FAIL, true);
+		error_printer(shell, "", GETCWD_FAIL, true);
 		return (1);
 	}
 	export_new = ft_strjoin("PWD=", pwd);
 	if (export_new == NULL)
 	{
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	new = ft_lstnew_envp_no_strdup(export_new);
 	if (new == NULL)
 	{
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	ft_lstadd_back_envp(envp_copy, new);
@@ -62,13 +62,13 @@ int	update_old_pwd(t_envp **envp_copy, t_shell *shell)
 	export_new = ft_strjoin("OLDPWD=", old_pwd);
 	if (export_new == NULL)
 	{
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	new = ft_lstnew_envp_no_strdup(export_new);
 	if (new == NULL)
 	{
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	ft_lstadd_back_envp(envp_copy, new);
@@ -88,7 +88,7 @@ static char	*find_pwd(t_envp *envp_copy, t_shell *shell)
 			pwd_copy = ft_strdup(temp_envp->line + 4);
 			if (pwd_copy == NULL)
 			{
-				error_printer(shell, MALLOC_FAIL, true);
+				error_printer(shell, "", MALLOC_FAIL, true);
 				return (NULL);
 			}
 			return (pwd_copy);

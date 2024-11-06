@@ -7,6 +7,7 @@ void	free_shell(t_shell **shell, int free_envp)
 	free_str(&(*shell)->user_input);
 	free_str(&(*shell)->pwd);
 	free_str(&(*shell)->prompt);
+	free_str(&(*shell)->new_path);
 	//free_exec(&(*shell)->exec);
 	delete_all_tokens(&(*shell)->token_pointer);
 	if (free_envp == true)
