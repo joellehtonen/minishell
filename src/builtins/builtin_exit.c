@@ -8,6 +8,7 @@ int	exit_exec(t_shell *shell, t_token *token)
 	int index;
 
 	index = 0;
+	exit_code = 0; // is it correct?
 	if (token->next)
 	{
 		if (token->next->next)
