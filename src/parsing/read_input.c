@@ -2,36 +2,36 @@
 
 #include "../../inc/minishell.h"
 
-// static void	clean_empty_nodes(t_shell *shell)
-// {
-// 	t_token	*temp;
-// 	t_token	*next_node;
-// 	t_token *prev_node;
+static void	clean_empty_nodes(t_shell *shell)
+{
+	t_token	*temp;
+	t_token	*next_node;
+	t_token *prev_node;
 
-// 	temp = shell->token_pointer;
-// 	prev_node = NULL;
-// 	while (temp)
-// 	{
-// 		next_node = temp->next;
-// 		if (ft_strlen(temp->line) == 0)
-// 		{
-// 			delete_one_token(temp);
-// 			if (prev_node == NULL)
-// 				shell->token_pointer = next_node;
-// 			else
-// 				prev_node->next = next_node;
-// 		}
-// 		else
-// 			prev_node = temp;
-// 		temp = next_node;
-// 	}
-// }
+	temp = shell->token_pointer;
+	prev_node = NULL;
+	while (temp)
+	{
+		next_node = temp->next;
+		if (ft_strlen(temp->line) == 0 && temp->expanded == true)
+		{
+			delete_one_token(temp);
+			if (prev_node == NULL)
+				shell->token_pointer = next_node;
+			else
+				prev_node->next = next_node;
+		}
+		else
+			prev_node = temp;
+		temp = next_node;
+	}
+}
 
 static void	handle_input(t_shell *shell)
 {
 	tokenize_input(shell);
 	expander(shell);
-	//clean_empty_nodes(shell);
+	clean_empty_nodes(shell);
 	assign_type(&shell->token_pointer);
 	assign_level(&shell->token_pointer, &shell->exec, shell);
 	//print_node(shell->token_pointer); //for testing

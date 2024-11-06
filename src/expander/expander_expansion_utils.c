@@ -74,6 +74,7 @@ char	*create_expansion(t_shell *shell, t_token *token, int *index)
 		(*index)++;
 		return (NULL);
 	}
+	token->expanded = true;
 	key_len = calculate_key_len(token, *index + 1);
 	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);
