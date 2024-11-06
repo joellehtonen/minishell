@@ -21,7 +21,7 @@ char	*expand_variable(t_shell *shell, char *pointer)
 	len = ft_strlen(pointer);
 	expansion = malloc(sizeof(char) * (len + 1));
 	if (!expansion)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, pointer, len + 1);
 	return (expansion);
 }

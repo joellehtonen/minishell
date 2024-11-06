@@ -29,7 +29,8 @@ static void	write_error_code(t_shell *shell, char *message)
 		|| (ft_strncmp(NOT_VALID_IDENT, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(PERM_DENIED, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(IS_DIR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(NOT_DIR, message, ft_strlen(message)) == 0))
+		|| (ft_strncmp(NOT_DIR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(PIPE_FAIL, message, ft_strlen(message)) == 0))
 		shell->exit_code = 1;
 	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
@@ -38,8 +39,9 @@ static void	write_error_code(t_shell *shell, char *message)
 		shell->exit_code = -1; //not necessary?
 }
 
-void	error_printer(t_shell *shell, char *message, int exit)
+void	error_printer(t_shell *shell, char *arg, char *message, int exit)
 {
+	write(2, arg, ft_strlen(arg));
 	write(2, message, ft_strlen(message));
 	write_error_code(shell, message);
 	if (exit == true)

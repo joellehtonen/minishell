@@ -44,7 +44,7 @@ char	*init_replacement(t_shell *shell, t_token *token)
 	reset_quotes(shell);
 	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
 	if (!replacement)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_memset(replacement, 0, ft_strlen(token->line) + 1);
 	return (replacement);
 }

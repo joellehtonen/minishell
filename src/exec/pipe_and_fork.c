@@ -23,7 +23,7 @@ void	pipe_and_fork(t_shell *shell, int loop_count)
 		if (pipe(exec->pipe[loop_count]) == -1)
 		{
 			close_pipes_parent(&exec);
-			error_printer(shell, MALLOC_FAIL, true);
+			error_printer(shell, "", PIPE_FAIL, true);
 		}
 		exec->pipe_flag = 1;
 	}
@@ -31,7 +31,7 @@ void	pipe_and_fork(t_shell *shell, int loop_count)
 	if (exec->pid[loop_count] == -1)
 	{
 		close_pipes_parent(&exec);
-		error_printer(shell, FORK_FAIL, true);
+		error_printer(shell, "", FORK_FAIL, true);
 	}
 	if (exec->pid[loop_count] == 0)
 		child_process(&shell, loop_count);

@@ -37,7 +37,7 @@ char	*get_pwd(char *home, t_shell *shell)
 		return (pwd - pwd_move);
 	new_pwd = ft_strjoin("~/", pwd);
 	if (new_pwd == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	free(pwd - pwd_move); //this is maybe causing crashes
 	return(new_pwd);
 }
@@ -49,9 +49,9 @@ static char	*get_pwd_extra(char *home, t_shell *shell)
 	
 	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (pwd == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
-		error_printer(shell, GETCWD_FAIL, true);
+		error_printer(shell, "", GETCWD_FAIL, true);
 	if (ft_strncmp(pwd, "/", 1) == 0 && ft_strlen(pwd) == 1)
 	{
 		free(pwd);
@@ -63,7 +63,7 @@ static char	*get_pwd_extra(char *home, t_shell *shell)
 		free(pwd);
 		new_pwd = ft_strdup("/home");
 		if (new_pwd == NULL)
-			error_printer(shell, MALLOC_FAIL, true);
+			error_printer(shell, "", MALLOC_FAIL, true);
 		return (new_pwd);
 	}
 	if (home == NULL)
@@ -73,7 +73,7 @@ static char	*get_pwd_extra(char *home, t_shell *shell)
 		free(pwd);
 		new_pwd = ft_strdup("~");
 		if (new_pwd == NULL)
-			error_printer(shell, MALLOC_FAIL, true);
+			error_printer(shell, "", MALLOC_FAIL, true);
 		return (new_pwd);
 	}
 	return (pwd);

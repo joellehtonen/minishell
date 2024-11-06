@@ -74,12 +74,12 @@ static int	only_one_builtin(t_shell *shell)
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 {
 	if (waitpid(exec->pid[count], &exec->status, 0) == -1)
-		error_printer(shell, WAITPID_ERROR, true);
+		error_printer(shell, "", WAITPID_ERROR, true);
 	count = 0;
 	while (count < exec->pipe_num)
 	{
 		if (waitpid(exec->pid[count], NULL, 0) == -1)
-			error_printer(shell, WAITPID_ERROR, true);
+			error_printer(shell, "", WAITPID_ERROR, true);
 		count++;
 	}
 }

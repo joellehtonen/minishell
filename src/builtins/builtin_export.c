@@ -35,7 +35,7 @@ int	export_exec(t_envp **envp_copy, t_token *export, int loop_count, t_shell *sh
 	}
 	if (error_check_export(arg->line) == 1)
 	{
-		error_printer(shell, NOT_VALID_IDENT, true);
+		error_printer(shell, arg->line, NOT_VALID_IDENT, true);
 		//printing("export: `", arg->line, "': not a valid identifier\n", 2);
 		//free_and_exit(shell, true);
 		return (1);

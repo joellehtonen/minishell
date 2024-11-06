@@ -105,7 +105,7 @@ static int	get_input_fd(t_shell **shell, int loop_count, int here_doc_index)
 		if (dup2(exec->here_doc_pipe[here_doc_index][0], 0) == -1)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
-			error_printer(*shell, DUP2_ERROR, true);
+			error_printer(*shell, "", DUP2_ERROR, true);
 			return (1);
 		}
 	}
@@ -115,7 +115,7 @@ static int	get_input_fd(t_shell **shell, int loop_count, int here_doc_index)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->in);
-			error_printer(*shell, DUP2_ERROR, true); // DUP2_ERROR
+			error_printer(*shell, "", DUP2_ERROR, true); // DUP2_ERROR
 			return (1);
 		}
 		close(exec->in);
@@ -126,7 +126,7 @@ static int	get_input_fd(t_shell **shell, int loop_count, int here_doc_index)
 	else if (loop_count > 0 && dup2(exec->pipe[loop_count - 1][0], 0) == -1)
 	{
 		close_pipes_child(loop_count, &exec); // free pids?
-		error_printer(*shell, DUP2_ERROR, true);
+		error_printer(*shell, "", DUP2_ERROR, true);
 		return (1);
 	}
 	return (0);
@@ -143,7 +143,7 @@ static int	get_output_fd(t_shell **shell, int loop_count)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
 			close(exec->out);
-			error_printer(*shell, DUP2_ERROR, true);
+			error_printer(*shell, "", DUP2_ERROR, true);
 		}
 		close(exec->out);
 	}
@@ -155,7 +155,7 @@ static int	get_output_fd(t_shell **shell, int loop_count)
 		if (dup2(exec->pipe[loop_count][1], 1) == -1)
 		{
 			close_pipes_child(loop_count, &exec); // free pids?
-			error_printer(*shell, DUP2_ERROR, true);
+			error_printer(*shell, "", DUP2_ERROR, true);
 		}
 		exec->pipe_flag = 0;
 	}

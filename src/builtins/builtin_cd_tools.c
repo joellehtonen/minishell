@@ -35,10 +35,10 @@ static char	*handle_home(t_shell *shell, t_token *arg)
 	char	*new_path;
 	
 	if (shell->home == NULL)
-	   	error_printer(shell, "cd: HOME not set\n", true);
+	   	error_printer(shell, "", "cd: HOME not set\n", true);
 	new_path = ft_strjoin(shell->home, arg->line + 1);
 	if (new_path == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	return (new_path);
 }
 
@@ -50,16 +50,16 @@ static char	*new_pwd(t_token *arg, t_shell *shell)
 	
 	old_path = (char *)malloc(BUFF_SIZE * sizeof(char));
 	if (old_path == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	if (getcwd(old_path, BUFF_SIZE) == NULL)
-		error_printer(shell, GETCWD_FAIL, true);
+		error_printer(shell, "", GETCWD_FAIL, true);
 	len = ft_strlen(old_path) + ft_strlen(arg->line) + 2;
 	new_path = (char *)malloc(len * sizeof(char));
 	if (new_path == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	new_path = ft_strjoin_four(old_path, "/", arg->line, "");
 	if (new_path == NULL)
-		error_printer(shell, MALLOC_FAIL, true);
+		error_printer(shell, "", MALLOC_FAIL, true);
 	free(old_path);
 	return(new_path);
 }
@@ -76,11 +76,11 @@ static char	*get_old_pwd(t_envp *envp_copy, t_shell *shell)
 		{
 			old_pwd_copy = ft_strdup(temp_envp->line + 7);
 			if (old_pwd_copy == NULL)
-				error_printer(shell, MALLOC_FAIL, true);
+				error_printer(shell, "", MALLOC_FAIL, true);
 			return (old_pwd_copy);
 		}
 		temp_envp = temp_envp->next;
 	}
-   	error_printer(shell, "cd: OLDPWD not set\n", true);
+   	error_printer(shell, "", "cd: OLDPWD not set\n", true);
 	return (NULL);
 }
