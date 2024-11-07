@@ -6,25 +6,11 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 16:14:11 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:18:59 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
-{
-	size_t	len;
-
-	if (exp == NULL)
-		return ;
-	len = ft_strlen(*replace) + ft_strlen(exp) + 1;
-	ft_strlcat(*replace, exp, len);
-	*copy_index += ft_strlen(exp);
-	if (ft_strncmp(exp, "$", ft_strlen(exp)) == 0 && ft_strlen(exp) != 0)
-		(*index)++;
-	return ;
-}
 
 void	reallocate_replacement(t_shell *shell, char **replace, char *expansion, t_token *tok)
 {
