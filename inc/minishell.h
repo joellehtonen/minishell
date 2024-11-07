@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/07 11:57:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:12:03 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,13 +188,13 @@ void	check_content(t_shell *shell, t_token *token);
 char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i);
 int		calculate_key_len(t_token *token, int index);
 char	*find_variable(t_shell *shell, char *key, int len);
-char	*expand_variable(t_shell *shell, char **replacement, char *pointer);
+char	*expand_variable(t_shell *shell, char **replacement, char *pointer, t_token *tok);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
 int 	handle_quotes(t_shell *shell, t_token *token, int index);
 int		is_exception(t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
-void	reallocate_replacement(t_shell *shell, char **replacement, char *expansion);
+void	reallocate_replacement(t_shell *shell, char **replacement, char *expansion, t_token *tok);
 // syntax check
 int		count_io(t_shell *shell, int index);
 int		check_consecutive_io(t_shell *shell, int index);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 13:56:40 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:11:27 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	clear_input(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+	//add closing the pipes and file descriptors
+	//free_and exit?
 }
 
 void	set_up_signals(t_shell *shell)

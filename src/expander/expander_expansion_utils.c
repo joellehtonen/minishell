@@ -3,36 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 13:22:45 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:14:11 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	reallocate_replacement(t_shell *shell, char **replacement, char *exp)
+void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
+{
+	size_t	len;
+
+	if (exp == NULL)
+		return ;
+	len = ft_strlen(*replace) + ft_strlen(exp) + 1;
+	ft_strlcat(*replace, exp, len);
+	*copy_index += ft_strlen(exp);
+	if (ft_strncmp(exp, "$", ft_strlen(exp)) == 0 && ft_strlen(exp) != 0)
+		(*index)++;
+	return ;
+}
+
+void	reallocate_replacement(t_shell *shell, char **replace, char *expansion, t_token *tok)
 {
 	char	*new_replacement;
 	size_t	size_now;
 	size_t	new_size;
 
-	size_now = ft_strlen(*replacement) + 1;
-	new_size = size_now + ft_strlen(exp) + 1;
-	// printf("size now is %ld\n", size_now);
-	// printf("new size is %ld\n", new_size);
-	if (size_now >= new_size)
+	size_now = ft_strlen(tok->line) + 1;
+	new_size = size_now + ft_strlen(expansion) + 1;
+	if (size_now >= new_size - 1)
 		return ;
 	new_replacement = malloc(sizeof(char) * new_size);
 	if (!new_replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	ft_strlcpy(new_replacement, *replacement, size_now); //LEAKS?
-	free(*replacement);
-	*replacement = new_replacement;
+	ft_memset(new_replacement, 0, new_size);
+	ft_strlcpy(new_replacement, *replace, size_now); //LEAKS?
+	free(*replace);
+	*replace = NULL;
+	*replace = new_replacement;
 }
 
-char	*expand_variable(t_shell *shell, char **replacement, char *pointer)
+char	*expand_variable(t_shell *shell, char **replacement, char *pointer, t_token *tok)
 {
 	char	*expansion;
 	int		len;
@@ -42,7 +56,7 @@ char	*expand_variable(t_shell *shell, char **replacement, char *pointer)
 	if (!expansion)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, pointer, len + 1);
-	reallocate_replacement(shell, replacement, expansion);
+	reallocate_replacement(shell, replacement, expansion, tok);
 	return (expansion);
 }
 

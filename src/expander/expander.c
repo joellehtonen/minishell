@@ -51,7 +51,7 @@ char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i)
 	*i += key_len + 1;
 	if (!value_pointer)
 		return (ft_strdup(""));
-	expansion = expand_variable(she, replace, value_pointer);
+	expansion = expand_variable(she, replace, value_pointer, tok);
 	free(value_pointer);
 	return (expansion);
 }
