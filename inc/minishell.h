@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/06 15:57:58 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 09:36:33 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ typedef struct s_exec
 	int		**here_doc_pipe;
 	int		here_doc_num;
 	int		error_node_index;
+	int		orig_in;
+	int		orig_out;
 	char	*new_path; //helper string used in cd_exec
 	char	**param; //helper double array used in child_process
 	pid_t	*pid;
@@ -150,6 +152,8 @@ int		update_pwd(t_envp **envp_copy, t_shell *shell);
 int		update_old_pwd(t_envp **envp_copy, t_shell *shell);
 void	envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
 void	envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
+void	delete_envp(t_envp **copy_envp);
+void	delete_envp_part(t_envp **copy_envp, int i);
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);

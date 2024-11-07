@@ -53,6 +53,14 @@ void	free_and_exit(t_shell *shell, int error)
 	if (shell->only_one_builtin == 1 && shell->token_pointer && \
 		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
 		return ;
+	if (shell->only_one_builtin == 1 && shell->token_pointer && \
+		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) == 0)
+	{
+		dup2(shell->exec->orig_in, STDIN_FILENO);
+		dup2(shell->exec->orig_out, STDOUT_FILENO);
+    	close(shell->exec->orig_in);
+    	close(shell->exec->orig_out);
+	}
 	free_shell(&shell, true);
 	if (shell->exit_code)
 		exit(shell->exit_code);

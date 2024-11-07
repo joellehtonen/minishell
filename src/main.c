@@ -18,7 +18,11 @@ int	main(int argc, char *argv[], char *envp[])
 		return (1);
 	}
 	shell.exit_code = read_input(&shell);
-	//free_envp((*shell)->envp_copy);
+	delete_envp(&shell.envp_copy);
+	free_double_arr(&shell.envp_str);
+	free_str(&shell.uname);
+	free_str(&shell.home);
+	delete_envp(&shell.path);
 	return (0);
 }
 

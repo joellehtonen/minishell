@@ -29,8 +29,10 @@ int ft_split_list(t_envp **path, char const *s, char c)
 {
 	t_envp	*new;
 	char	*temp;
+	int		i;
 
 	*path = NULL;
+	i = 0;
 	while (*s)
 	{
 		if (*s == c)
@@ -40,17 +42,13 @@ int ft_split_list(t_envp **path, char const *s, char c)
 			temp = ft_substr(s, 0, nextc(s, c));
 			if (temp == NULL)
 			{
-				//free_lists(...);
+				delete_envp_part(path, i - 1);
 				return(1);
 			}
-			new = ft_lstnew_envp(temp);
-			if (new == NULL)
-			{
-				//free_lists(...);
-				return(1);
-			}
+			new = ft_lstnew_envp_no_strdup(temp);
 			ft_lstadd_back_envp(path, new);
 			s = s + nextc(s, c);
+			i++;
 		}
 	}
 	return (0);

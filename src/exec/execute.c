@@ -49,25 +49,23 @@ int	execute(t_shell *shell)
 static int	only_one_builtin(t_shell *shell)
 {
 	int		exit_status;
-	int		orig_in;
-	int		orig_out;
 
 	shell->only_one_builtin = 1;
-	orig_in = dup(STDIN_FILENO);
-	orig_out = dup(STDOUT_FILENO);
+	shell->exec->orig_in = dup(STDIN_FILENO);
+	shell->exec->orig_out = dup(STDOUT_FILENO);
 	if (get_input_and_output(&shell, 0) == 1)
 	{
-		dup2(orig_in, STDIN_FILENO);
-		dup2(orig_out, STDOUT_FILENO);
-    	close(orig_in);
-    	close(orig_out);
+		dup2(shell->exec->orig_in, STDIN_FILENO);
+		dup2(shell->exec->orig_out, STDOUT_FILENO);
+    	close(shell->exec->orig_in);
+    	close(shell->exec->orig_out);
 		return (1);
 	}
 	exit_status = exec_builtins(shell, 0);
-	dup2(orig_in, STDIN_FILENO);
-	dup2(orig_out, STDOUT_FILENO);
-    close(orig_in);
-    close(orig_out);
+	dup2(shell->exec->orig_in, STDIN_FILENO);
+	dup2(shell->exec->orig_out, STDOUT_FILENO);
+    close(shell->exec->orig_in);
+    close(shell->exec->orig_out);
 	return (exit_status);
 }
 

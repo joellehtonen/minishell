@@ -1,7 +1,3 @@
-EXECUTE
-- update / add freeing functions
-- copy_envp -> free_lists
-
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
 - in input mode D exits bash and prints "exit"
@@ -10,6 +6,9 @@ SIGNALS:
 - in input mode \ does nothing, same in heredoc
 - if we press Ctrl+C during here_doc, it doesn't close properly
 - grep );$ and then Ctrl+C
+
+LEAKS:
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
 
 if cd into directory and removing an upper directory, handle it somehow
 
