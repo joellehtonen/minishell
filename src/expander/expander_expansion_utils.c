@@ -4,10 +4,12 @@
 
 void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
 {
+	size_t	len;
 
 	if (exp == NULL)
 		return ;
-	ft_strlcat(*replace, exp, ft_strlen(*replace) + ft_strlen(exp) + 1);
+	len = ft_strlen(*replace) + ft_strlen(exp) + 1;
+	ft_strlcat(*replace, exp, len);
 	*copy_index += ft_strlen(exp);
 	if (ft_strncmp(exp, "$", ft_strlen(exp)) == 0 && ft_strlen(exp) != 0)
 		(*index)++;
@@ -17,11 +19,17 @@ void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
 void	reallocate_replacement(t_shell *shell, char **replace, char *expansion)
 {
 	char *new_replacement; 
+	size_t size_now;
+	size_t new_size;
 
-	new_replacement = malloc(sizeof(char) * (ft_strlen(*replace) + ft_strlen(expansion) + 10)); //LEAKS?
+	size_now = ft_strlen(*replace) + 1;
+	new_size = size_now + ft_strlen(expansion) + 1;
+	if (size_now >= new_size)
+		return ;
+	new_replacement = malloc(sizeof(char) * new_size);
 	if (!new_replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	ft_strlcpy(new_replacement, *replace, ft_strlen(*replace) + 1); //LEAKS?
+	ft_strlcpy(new_replacement, *replace, size_now); //LEAKS?
 	free(*replace);
 	*replace = new_replacement;
 }

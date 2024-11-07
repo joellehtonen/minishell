@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 09:54:28 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/05/06 10:34:12 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:01:32 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		src++;
 		i++;
 	}
-	*dst = 0;
+	*dst = '\0';
 	return (lensrc);
 }

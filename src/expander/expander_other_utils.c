@@ -40,11 +40,13 @@ int	handle_quotes(t_shell *shell, t_token *token, int index)
 char	*init_replacement(t_shell *shell, t_token *token)
 {
 	char	*replacement;
-
+	size_t	len;
+	
+	len = ft_strlen(token->line);
 	reset_quotes(shell);
-	replacement = malloc(sizeof(char) * (ft_strlen(token->line) + 1));
+	replacement = malloc(sizeof(char) * (len + 1));
 	if (!replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	ft_memset(replacement, 0, ft_strlen(token->line) + 1);
+	ft_memset(replacement, 0, len + 1);
 	return (replacement);
 }
