@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 10:28:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/05/06 10:33:22 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:17:58 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 	dstlen = ft_strlen(dst);
 	if (dstsize < dstlen)
 		return (dstsize + ft_strlen(src));
-	while (*dst)
-		dst++;
+	while (dst[i])
+		i++;
 	while (i + 1 < dstsize - dstlen && *src)
 	{
-		*dst = *src;
-		dst++;
-		src++;
+		dst[i] = src[i];
 		i++;
 	}
-	*dst = '\0';
+	dst[i] = '\0';
 	return (totallen);
 }

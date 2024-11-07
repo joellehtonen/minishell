@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 09:54:28 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/05/06 10:34:12 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 10:14:28 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,9 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 		return (lensrc);
 	while (i + 1 < dstsize && (*src))
 	{
-		*dst = *src;
-		dst++;
-		src++;
+		dst[i] = src[i];
 		i++;
 	}
-	*dst = 0;
+	dst[i] = '\0';
 	return (lensrc);
 }
