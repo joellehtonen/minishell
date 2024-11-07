@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_tools_extra.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:21:27 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 11:44:08 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 16:04:50 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,13 @@ int is_file(char *path)
 		return (1);
 	result = read(fd, &buffer, 1);
 	if (result < 0 && errno == EISDIR)
+	{
+		close(fd);
 		return (1);
+	}
 	else
+	{
+		close(fd);
 		return (0);
+	}
 }

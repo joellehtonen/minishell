@@ -40,8 +40,8 @@ static void	handle_input(t_shell *shell)
 
 static void	null_signal(t_shell *shell)
 {
-	printf("exit\n");
-	shell->exit_code = 130;
+	printf("exit\n"); // commented out for a larger tester
+	shell->exit_code = 130; // commented out for a larger tester
 	free_and_exit(shell, 0);
 }
 
@@ -64,7 +64,19 @@ int read_input(t_shell *shell)
 	{
 		create_prompt(shell);
 		set_up_signals(shell);
-		shell->user_input = readline(shell->prompt);
+		shell->user_input = readline(shell->prompt); //commented out for a larger tester
+
+		/* if (isatty(fileno(stdin)))
+			shell->user_input = readline(shell->prompt);
+		else
+		{
+			char *line;
+			line = get_next_line(fileno(stdin));
+			shell->user_input = ft_strtrim(line, "\n");
+			free(line);
+		} */
+
+
 		if (shell->user_input == NULL)
 			null_signal(shell);
 		if (input_error_check(shell) == SUCCESS)

@@ -16,25 +16,27 @@ void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
 	return ;
 }
 
-void	reallocate_replacement(t_shell *shell, char **replace, char *expansion)
+void	reallocate_replacement(t_shell *shell, char **replace, char *expansion, t_token *tok)
 {
 	char *new_replacement; 
 	size_t size_now;
 	size_t new_size;
 
-	size_now = ft_strlen(*replace) + 1;
+	size_now = ft_strlen(tok->line) + 1;
 	new_size = size_now + ft_strlen(expansion) + 1;
-	if (size_now >= new_size)
+	if (size_now >= new_size - 1)
 		return ;
 	new_replacement = malloc(sizeof(char) * new_size);
 	if (!new_replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
+	ft_memset(new_replacement, 0, new_size);
 	ft_strlcpy(new_replacement, *replace, size_now); //LEAKS?
 	free(*replace);
+	*replace = NULL;
 	*replace = new_replacement;
 }
 
-char	*expand_variable(t_shell *shell, char **replacement, char *pointer)
+char	*expand_variable(t_shell *shell, char **replacement, char *pointer, t_token *tok)
 {
 	char	*expansion;
 	int		len;
@@ -44,7 +46,7 @@ char	*expand_variable(t_shell *shell, char **replacement, char *pointer)
 	if (!expansion)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, pointer, len + 1);
-	reallocate_replacement(shell, replacement, expansion);
+	reallocate_replacement(shell, replacement, expansion, tok);
 	return (expansion);
 }
 

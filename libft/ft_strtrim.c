@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:42:28 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/05/22 13:03:53 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:07:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ char	*ft_strtrim(char const *s1, char const *set)
 	size_t	newlen;
 	char	*new_s;
 
+	if (!s1 || !set)
+		return (NULL);
+	if (*s1 == '\0')
+		return (ft_strdup(""));
 	newlen = checklen(s1, set);
 	new_s = (char *)malloc((newlen + 1) * sizeof(char));
 	if (new_s == NULL)
