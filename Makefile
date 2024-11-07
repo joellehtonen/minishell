@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/05 15:38:51 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/07 13:28:13 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,9 @@ SRC 		= ./src/main.c \
 			./src/envp/envp_tools_extra.c \
 			./src/envp/list_tools_envps.c \
 			./src/envp/ft_split_list.c \
-			./src/parsing/list_tools_tokens.c \
-			./src/parsing/list_tools_tokens_delete.c \
-			./src/parsing/list_tools_tokens_extra.c \
+			./src/list_tools/list_tools_tokens.c \
+			./src/list_tools/list_tools_tokens_delete.c \
+			./src/list_tools/list_tools_tokens_extra.c \
 			./src/parsing/read_input.c \
 			./src/parsing/tokenizer.c \
 			./src/parsing/check_syntax.c \
@@ -64,9 +64,8 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtin_cd_tools.c \
 			./src/builtins/builtin_echo.c \
 			./src/builtins/builtin_exit.c \
-			./src/str_join_four.c \
-			./src/printing_tools.c \
-			./src/signals.c \
+			./src//misc/str_join_four.c \
+			./src/misc/signals.c \
 			./src/exec/execute.c \
 			./src/exec/child_process.c \
 			./src/exec/assign_exec_values.c \
@@ -81,9 +80,9 @@ SRC 		= ./src/main.c \
 			./src/exec/redir_tools.c \
 			./src/exec/redir_tools_2.c \
 			./src/exec/check_files.c \
-			./src/exit.c \
-			./src/free_memory.c \
-			./src/free_memory_extra.c
+			./src/free/exit.c \
+			./src/free/free_memory.c \
+			./src/free/free_memory_extra.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
 INCLUDE		= -I "./inc"

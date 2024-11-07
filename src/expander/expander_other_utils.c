@@ -1,4 +1,14 @@
-//42 HEADER
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander_other_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/07 13:23:00 by jlehtone         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -41,7 +51,7 @@ char	*init_replacement(t_shell *shell, t_token *token)
 {
 	char	*replacement;
 	size_t	len;
-	
+
 	len = ft_strlen(token->line);
 	reset_quotes(shell);
 	replacement = malloc(sizeof(char) * (len + 1));

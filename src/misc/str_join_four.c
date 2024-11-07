@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_join_four.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:27:13 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/23 14:38:59 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:43:38 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

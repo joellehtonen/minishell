@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/05 15:10:18 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:16:56 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ static void	write_error_code(t_shell *shell, char *message)
 	else if (ft_strncmp(IS_DIR_COMM, message, ft_strlen(message)) == 0
 		|| ft_strncmp(PERM_DENIED_COMM, message, ft_strlen(message)) == 0)
 		shell->exit_code = 126;
+	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
+		shell->exit_code = 2;
 	else if ((ft_strncmp(EMPTY_INPUT, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(QUOTE_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(MALLOC_FAIL, message, ft_strlen(message)) == 0)
@@ -32,9 +35,6 @@ static void	write_error_code(t_shell *shell, char *message)
 		|| (ft_strncmp(NOT_DIR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(PIPE_FAIL, message, ft_strlen(message)) == 0))
 		shell->exit_code = 1;
-	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
-		shell->exit_code = 2;
 	else
 		shell->exit_code = -1; //not necessary?
 }
@@ -50,16 +50,20 @@ void	error_printer(t_shell *shell, char *arg, char *message, int exit)
 
 void	free_and_exit(t_shell *shell, int error)
 {
-	if (shell->only_one_builtin == 1 && shell->token_pointer && \
-		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
+	if (shell->only_one_builtin == 1 && shell->token_pointer
+		&& shell->token_pointer->line \
+		&& ft_strncmp(shell->token_pointer->line, "exit", 4) != 0)
+	{
 		return ;
-	if (shell->only_one_builtin == 1 && shell->token_pointer && \
-		shell->token_pointer->line && ft_strncmp(shell->token_pointer->line, "exit", 4) == 0)
+	}
+	if (shell->only_one_builtin == 1 && shell->token_pointer
+		&& shell->token_pointer->line \
+		&& ft_strncmp(shell->token_pointer->line, "exit", 4) == 0)
 	{
 		dup2(shell->exec->orig_in, STDIN_FILENO);
 		dup2(shell->exec->orig_out, STDOUT_FILENO);
-    	close(shell->exec->orig_in);
-    	close(shell->exec->orig_out);
+		close(shell->exec->orig_in);
+		close(shell->exec->orig_out);
 	}
 	free_shell(&shell, true);
 	if (shell->exit_code)

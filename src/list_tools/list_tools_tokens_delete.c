@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/06 10:05:36 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:48:52 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,15 @@
 
 void	print_node(t_token *lst)
 {
-	const char *type_names[] = {"COMM", "ARG", "REDIR_INPUT", "REDIR_OUTPUT","DELIM", "INPUT", \
-	"OUTPUT", "PIPE", "FLAG", "SPACES"};
-	
-	// if (lst == NULL)
-	// {
-	// 	printf("The list is empty\n");
-	// 	return ;
-	// }
+	const char	*type_names[] = {"COMM", "ARG", "REDIR_INPUT", \
+	"REDIR_OUTPUT", "DELIM", "INPUT", "OUTPUT", "PIPE", "FLAG", "SPACES"};
+
+	if (lst == NULL)
+		return ;
 	while (lst != NULL)
 	{
-		printf("Token #%d: %s, type %s, level %d\n", lst->token_number, lst->line, \
-			type_names[lst->type - 1], lst->level);
+		printf("Token #%d: %s, type %s, level %d\n", lst->token_number, \
+			lst->line, type_names[lst->type - 1], lst->level);
 		lst = lst->next;
 	}
 }

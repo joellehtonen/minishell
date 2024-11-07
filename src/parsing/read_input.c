@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   read_input.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/07 12:55:42 by jlehtone         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -6,7 +16,7 @@ static void	clean_empty_nodes(t_shell *shell)
 {
 	t_token	*temp;
 	t_token	*next_node;
-	t_token *prev_node;
+	t_token	*prev_node;
 
 	temp = shell->token_pointer;
 	prev_node = NULL;
@@ -57,10 +67,10 @@ static void	create_prompt(t_shell *shell)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
-int read_input(t_shell *shell)
+int	read_input(t_shell *shell)
 {
 	shell->pwd = get_pwd(shell->home, shell);
-	while (true) 
+	while (true)
 	{
 		create_prompt(shell);
 		set_up_signals(shell);

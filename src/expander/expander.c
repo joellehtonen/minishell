@@ -1,6 +1,31 @@
-// 42 HEADER
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/07 13:17:39 by jlehtone         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	add_expansion(char **replace, char **exp, int *copy_index, int *index)
+{
+	size_t	len;
+
+	if (exp == NULL)
+		return ;
+	len = ft_strlen(*replace) + ft_strlen(*exp) + 1;
+	ft_strlcat(*replace, *exp, len);
+	*copy_index += ft_strlen(*exp);
+	if (ft_strncmp(*exp, "$", ft_strlen(*exp)) == 0 && ft_strlen(*exp) != 0)
+		(*index)++;
+	free(*exp);
+	return ;
+}
 
 char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i)
 {
@@ -47,12 +72,12 @@ void	check_content(t_shell *shell, t_token *token)
 			index++;
 		else if (token->line[index] == '$' && shell->single_quote == false)
 		{
+			// printf("replacement size is %ld\n", ft_strlen(replacement));
 			expansion = create_expansion(shell, token, &replacement, &index);
-			add_expansion(&replacement, expansion, &copy_index, &index);
-			free(expansion);
+			add_expansion(&replacement, &expansion, &copy_index, &index);
 		}
 		else
-			replacement[copy_index++] = token->line[index++]; //LEAKS?
+			replacement[copy_index++] = token->line[index++];
 	}
 	replacement[copy_index] = '\0';
 	free(token->line);
@@ -73,5 +98,5 @@ void	expander(t_shell *shell)
 			check_content(shell, temp);
 		}
 		temp = temp->next;
-	} 
+	}
 }

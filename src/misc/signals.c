@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/10/02 11:17:39 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:56:40 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	clear_input(int signal)
 void	set_up_signals(t_shell *shell)
 {
 	struct sigaction	protocol;
-	
+
 	sigemptyset(&protocol.sa_mask);
 	protocol.sa_handler = &clear_input;
-	protocol.sa_flags = SA_RESTART;
+	protocol.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGINT, &protocol, NULL) < 0)
 		error_printer(shell, "", SIGNAL_ERROR, true);
 	protocol.sa_handler = SIG_IGN;

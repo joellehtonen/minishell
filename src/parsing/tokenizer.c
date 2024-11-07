@@ -6,17 +6,17 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/06 11:14:21 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/07 12:54:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	create_new_token(t_shell *shell, int end, int start, int token_number)
+static int	create_new_token(t_shell *shell, int end, int start, int token_num)
 {
-	t_token *new;
+	t_token	*new;
 	int		token_index;
-	
+
 	token_index = 0;
 	new = ft_lstnew_token(NULL);
 	new->line = malloc(sizeof(char) * (end - start + 1));
@@ -25,40 +25,40 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_number
 	while (start != end)
 		new->line[token_index++] = shell->user_input[start++];
 	new->line[token_index] = '\0';
-	new->token_number = token_number;
+	new->token_number = token_num;
 	new->expanded = false;
 	ft_lstadd_back_token(&shell->token_pointer, new);
 	return (start);
 }
 
-static int handle_argument(t_shell *shell, int end)
+static int	handle_argument(t_shell *shell, int end)
 {
-	int		IO_met;
+	int		io_met;
 
 	reset_quotes(shell);
-	IO_met = false;
-	while (shell->user_input[end] != '\0' 
-			&& (is_space(shell->user_input[end]) == false 
+	io_met = false;
+	while (shell->user_input[end] != '\0'
+		&& (is_space(shell->user_input[end]) == false
 			|| shell->single_quote == true || shell->double_quote == true))
 	{
 		if (is_quote(shell->user_input[end]) == S_QUOTE)
 			shell->single_quote = !shell->single_quote;
 		else if (is_quote(shell->user_input[end]) == D_QUOTE)
 			shell->double_quote = !shell->double_quote;
-		if (is_io(shell->user_input[end]) != false 
+		if (is_io(shell->user_input[end]) != false
 			&& (shell->single_quote == false && shell->double_quote == false))
-			{
-				if (IO_met == true)
-					end++;
-				IO_met = !IO_met;
-				break ;
-			}
+		{
+			if (io_met == true)
+				end++;
+			io_met = !io_met;
+			break ;
+		}
 		end++;
 	}
 	return (end);
 }
 
-static int increment_io(t_shell *shell, int end)
+static int	increment_io(t_shell *shell, int end)
 {
 	end++;
 	if (shell->user_input[end] == shell->user_input[end - 1])
@@ -66,7 +66,7 @@ static int increment_io(t_shell *shell, int end)
 	return (end);
 }
 
-void tokenize_input(t_shell *shell)
+void	tokenize_input(t_shell *shell)
 {
 	int		start;
 	int		end;

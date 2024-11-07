@@ -1,37 +1,35 @@
-//42 HEADER
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expander_expansion_utils.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/07 13:22:45 by jlehtone         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_expansion(char **replace, char *exp, int *copy_index, int *index)
+void	reallocate_replacement(t_shell *shell, char **replacement, char *exp)
 {
-	size_t	len;
+	char	*new_replacement;
+	size_t	size_now;
+	size_t	new_size;
 
-	if (exp == NULL)
-		return ;
-	len = ft_strlen(*replace) + ft_strlen(exp) + 1;
-	ft_strlcat(*replace, exp, len);
-	*copy_index += ft_strlen(exp);
-	if (ft_strncmp(exp, "$", ft_strlen(exp)) == 0 && ft_strlen(exp) != 0)
-		(*index)++;
-	return ;
-}
-
-void	reallocate_replacement(t_shell *shell, char **replace, char *expansion)
-{
-	char *new_replacement; 
-	size_t size_now;
-	size_t new_size;
-
-	size_now = ft_strlen(*replace) + 1;
-	new_size = size_now + ft_strlen(expansion) + 1;
+	size_now = ft_strlen(*replacement) + 1;
+	new_size = size_now + ft_strlen(exp) + 1;
+	// printf("size now is %ld\n", size_now);
+	// printf("new size is %ld\n", new_size);
 	if (size_now >= new_size)
 		return ;
 	new_replacement = malloc(sizeof(char) * new_size);
 	if (!new_replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	ft_strlcpy(new_replacement, *replace, size_now); //LEAKS?
-	free(*replace);
-	*replace = new_replacement;
+	ft_strlcpy(new_replacement, *replacement, size_now); //LEAKS?
+	free(*replacement);
+	*replacement = new_replacement;
 }
 
 char	*expand_variable(t_shell *shell, char **replacement, char *pointer)
