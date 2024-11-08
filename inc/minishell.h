@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/07 16:19:07 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:49:52 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,12 +125,12 @@ typedef struct s_shell
 	char	*home; //HOME from envp
 	char	*prompt; //the string to be printed as a prompt
 	t_exec	*exec; // file descriptors for pipes and forks
-	char 	*user_input; //whatever readline reads is saved into this array
+	char	*user_input; //whatever readline reads is saved into this array
 	t_token	*token_pointer; //pointer to the head of the linked list containing the arguments parsed from user input
 	int		single_quote; //whether single quotes are "active"
 	int		double_quote; //whether double quotes are "active"
 	int		only_one_builtin; //whether we have one command to run and it's a builtin
-	int		exit_code; 
+	int		exit_code;
 }	t_shell;
 
 // FUNCTIONS
@@ -162,14 +162,14 @@ void	delete_one_token(t_token *lst);
 void	delete_all_tokens(t_token **lst);
 void	print_node(t_token *lst);
 // builtin functions
-int		exec_builtins(t_shell *shell, int loop_count);
+int		exec_builtins(t_shell *shell, int loop);
 int		cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char	*get_pwd(char *home, t_shell *shell);
 int		echo(t_shell *shell, t_token *echo_pointer);
 int		env_exec(t_envp *envp_copy, t_shell *shell);
 int		unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int		exit_exec(t_shell *shell, t_token *token);
-int		export_exec(t_envp **envp_copy, t_token *export, int loop_count, t_shell *shell);
+int		export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell);
 int		if_builtin(t_shell *shell, int loop_count);
 char	*get_new_path(t_shell *shell, t_token *arg);
 int		is_directory_new(char *path);
@@ -191,7 +191,7 @@ char	*find_variable(t_shell *shell, char *key, int len);
 char	*expand_variable(t_shell *shell, char **replacement, char *pointer, t_token *tok);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
-int 	handle_quotes(t_shell *shell, t_token *token, int index);
+int		handle_quotes(t_shell *shell, t_token *token, int index);
 int		is_exception(t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
 void	reallocate_replacement(t_shell *shell, char **replacement, char *expansion, t_token *tok);
@@ -202,7 +202,7 @@ int		check_redir_location(t_shell *shell, int index);
 int		check_pipe_location(t_shell *shell, int old_index);
 // execute functions
 int		execute(t_shell *shell);
-int		get_input_and_output(t_shell **shell, int loop_count);
+int		get_input_and_output(t_shell **shell, int loop);
 void	check_param(t_shell *shell, int loop_count);
 char	**param_to_arr(t_token *token, int loop_count);
 char	*check_path(t_envp *paths, char **param, t_shell *shell);
@@ -216,24 +216,24 @@ void	close_pipes_child(int loop_count, t_exec **exec);
 void	assign_exec_values(t_shell *shell);
 int		here_doc(t_shell *shell);
 t_token	*find_here_doc_token(t_token *token);
-int		check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag);
-int		check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag);
+int		check_for_input(t_shell *shell, t_token *token, int loop, int input);
+int		check_for_output(t_shell *shell, t_token *token, int loop, int output);
 void	allocate_here_doc(t_exec *exec, t_shell *shell);
 void	check_file_access(t_shell *shell, char	*path, int loop_count);
-void	check_all_files(t_token *token, t_exec *exec, int loop_count, t_shell *shell);
-int		check_for_output_no_recur(t_shell *shell, t_token *token, int loop_count, \
-	int error_node);
+void	check_all_files(t_token *token, t_exec *exec, int loop, t_shell *shell);
+int		check_out_no_recur(t_shell *s, t_token *t, int loop, int error_node);
 t_token	*find_token_index(t_token *token, int loop_count, \
 	int token_type, int error_node);
-int		check_output_folder(char *path);
+int		check_out_folder(char *path);
 void	close_pipes_parent(t_exec **exec);
+int		open_file(t_shell *shell, t_token *temp, char *outfile, int loop);
+int		check_for_here_doc(t_shell *shell, t_token *token, int loop);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
-t_token	*find_token_line(t_token *token, int loop_count, int token_type, char *line);
+t_token	*find_token_line(t_token *token, int loop, int token_type, char *line);
 int		count_nodes_type(t_token *start, int token_type, int loop_count);
 int		ft_split_list(t_envp **path, char const *s, char c);
-char	*ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4);
-//void printing(char *cmd, char *dest, char *result, int fd);
+char	*ft_strjoin_four(char *s1, char *s2, char *s3, char *s4);
 void	set_up_signals(t_shell *shell);
 void	clear_input(int signal);
 size_t	ft_strchr_fix(const char *s, int c);
@@ -246,5 +246,6 @@ int		free_two_str(char **str1, char **str2);
 int		free_str(char **str1);
 int		free_exec(t_exec **exec);
 void	free_shell(t_shell **shell, int free_envp);
+char	**free_double_arr_part(char ***arr, int count);
 
 #endif

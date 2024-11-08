@@ -6,72 +6,54 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:04:25 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/10/30 15:06:57 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:32:25 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	check_for_input(t_shell *shell, t_token *token, int loop_count, int input_flag)
+int	check_for_input(t_shell *shell, t_token *token, int loop, int input)
 {
 	t_token	*temp;
 
-	temp = find_token_line(token, loop_count, REDIR_INPUT, "<\0");
-	if (input_flag == 0 && (!temp || !temp->next || temp->next->type != INPUT))
+	temp = find_token_line(token, loop, REDIR_INPUT, "<\0");
+	if (input == 0 && (!temp || !temp->next || temp->next->type != INPUT))
 		return (2);
-	if (input_flag == 1 && (!temp || !temp->next || temp->next->type != INPUT))
+	if (input == 1 && (!temp || !temp->next || temp->next->type != INPUT))
 		return (0);
-	if (input_flag == 1)
+	if (input == 1)
 		close(shell->exec->in);
-	/* if (access(temp->next->line, R_OK) == -1 && errno == EACCES)
-		printing(temp->next->line, "", ": Permission denied\n", 2);
-	if (access(temp->next->line, F_OK) == -1 && errno == ENOENT)
-		printing(temp->next->line, "", ": No such file or directory\n", 2); */
 	shell->exec->in = open(temp->next->line, O_RDONLY);
 	if (shell->exec->in == -1)
 	{
-		close_pipes_child(loop_count, &shell->exec); // free pids?
+		close_pipes_child(loop, &shell->exec);
 		free_and_exit(shell, 1);
 		return (1);
 	}
-	return (check_for_input(shell, temp->next, loop_count, 1));
+	return (check_for_input(shell, temp->next, loop, 1));
 }
 
-int	check_for_output(t_shell *shell, t_token *token, int loop_count, int output_flag)
+int	check_for_output(t_shell *shell, t_token *token, int loop, int output)
 {
 	t_token	*temp;
 	char	*outfile;
-	
-	temp = find_token(token, loop_count, REDIR_OUTPUT);
-	if (output_flag == 0 && (!temp || !temp->next || temp->next->type != OUTPUT))
+
+	temp = find_token(token, loop, REDIR_OUTPUT);
+	if (output == 0 && (!temp || !temp->next || temp->next->type != OUTPUT))
 		return (2);
-	if (output_flag == 1 && (!temp || !temp->next || temp->next->type != OUTPUT))
+	if (output == 1 && (!temp || !temp->next || temp->next->type != OUTPUT))
 		return (0);
-	if (output_flag == 1)
+	if (output == 1)
 		close(shell->exec->out);
 	outfile = temp->next->line;
-	if ((outfile && check_output_folder(outfile)) ||  (outfile && outfile[0] == '\0'))
+	if ((outfile && check_out_folder(outfile)) || \
+		(outfile && outfile[0] == '\0'))
 	{
-		//printing(outfile, "", ": No such file or directory\n", 2); // what if $HOME?
-		close_pipes_child(loop_count, &shell->exec); // free pids?
+		close_pipes_child(loop, &shell->exec);
 		free_and_exit(shell, 1);
 		return (1);
 	}
-	else
-	{
-		if (ft_strncmp(temp->line, ">\0", 2) == 0)
-			shell->exec->out = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0777);
-		else
-			shell->exec->out = open(outfile, O_WRONLY | O_APPEND | O_CREAT, 0777);
-		if (shell->exec->out == -1)
-		{
-			//is_directory(outfile, *shell->exec, 0, NULL);
-			/* if (access(outfile, W_OK) == -1 && errno == EACCES)
-				printing(outfile, "", ": Permission denied\n", 2); */
-			close_pipes_child(loop_count, &shell->exec); // free pids?
-			free_and_exit(shell, 1);
-			return (1);
-		}
-	}
-	return (check_for_output(shell, temp->next, loop_count, 1) == 1);
+	else if (open_file(shell, temp, outfile, loop) == 1)
+		return (1);
+	return (check_for_output(shell, temp->next, loop, 1) == 1);
 }

@@ -1,14 +1,24 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envp_tools.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 12:41:35 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/11/08 12:42:33 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
+int	copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 {
 	int		i;
 	t_envp	*new;
 
 	if (envp == NULL)
-		return (1);
+		return (2);
 	i = 0;
 	*envp_copy = NULL;
 	while (envp[i])
@@ -17,7 +27,7 @@ int copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 		if (new == NULL)
 		{
 			delete_envp_part(envp_copy, i - 1);
-			return(1);
+			return (1);
 		}
 		ft_lstadd_back_envp(envp_copy, new);
 		i++;
@@ -47,7 +57,8 @@ int	copy_home(char **home, t_envp *envp_copy)
 	{
 		if (ft_strncmp(envp_copy->line, "HOME=", 5) == 0)
 		{
-			*home = ft_substr(envp_copy->line, 5, ft_strlen(envp_copy->line + 5));
+			*home = ft_substr(envp_copy->line, 5, \
+				ft_strlen(envp_copy->line + 5));
 			if (*home == NULL)
 				return (1);
 			return (0);
@@ -64,14 +75,16 @@ int	copy_uname(char **uname, t_envp *envp_copy)
 	{
 		if (ft_strncmp(envp_copy->line, "USERNAME=", 9) == 0)
 		{
-			*uname = ft_substr(envp_copy->line, 9, ft_strlen(envp_copy->line + 9));
+			*uname = ft_substr(envp_copy->line, 9, \
+				ft_strlen(envp_copy->line + 9));
 			if (*uname == NULL)
 				return (1);
 			return (0);
 		}
 		if (ft_strncmp(envp_copy->line, "USER=", 5) == 0)
 		{
-			*uname = ft_substr(envp_copy->line, 5, ft_strlen(envp_copy->line + 5));
+			*uname = ft_substr(envp_copy->line, 5, \
+				ft_strlen(envp_copy->line + 5));
 			if (*uname == NULL)
 				return (1);
 			return (0);

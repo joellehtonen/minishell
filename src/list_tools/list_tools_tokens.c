@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/07 12:50:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:48:54 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,21 @@ t_token	*find_token(t_token *token, int loop_count, int token_type)
 	return ((void *) 0);
 }
 
-t_token	*find_token_line(t_token *token, int loop_count, \
-	int token_type, char *line)
+t_token	*find_token_line(t_token *token, int loop, int token_type, char *line)
 {
 	t_token	*temp;
 
 	temp = token;
-	while (temp && temp->level != loop_count)
+	while (temp && temp->level != loop)
 		temp = temp->next;
-	while (temp && temp->level == loop_count)
+	while (temp && temp->level == loop)
 	{
 		if (temp->type == token_type && \
 			ft_strncmp(temp->line, line, ft_strlen(line) + 1) == 0)
 			return (temp);
 		temp = temp->next;
 	}
-	if (!temp || temp->level != loop_count)
+	if (!temp || temp->level != loop)
 		return ((void *) 0);
 	return ((void *) 0);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/07 13:28:13 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/08 08:32:59 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,6 @@ SRC 		= ./src/main.c \
 			./src/exec/exec_tools_extra.c \
 			./src/exec/param_and_path.c \
 			./src/exec/pipe_and_fork.c \
-			./src/exec/free_exec.c \
 			./src/exec/here_doc.c \
 			./src/exec/here_doc_tools.c \
 			./src/exec/redir.c \
@@ -82,7 +81,8 @@ SRC 		= ./src/main.c \
 			./src/exec/check_files.c \
 			./src/free/exit.c \
 			./src/free/free_memory.c \
-			./src/free/free_memory_extra.c
+			./src/free/free_memory_extra.c \
+			./src/free/free_exec.c
 OBJ 		= $(SRC:%.c=$(OBJ_DIR)/%.o)
 OBJ_DIR		= obj
 INCLUDE		= -I "./inc"

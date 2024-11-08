@@ -1,8 +1,22 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_process.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/11/08 12:59:11 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	check_no_command(t_token *token, int loop_count);
+
+static void	empty_path(t_envp **path_to_curr, t_shell *shell);
+
+static void	call_execve(t_shell **shell, char *path);
 
 void	child_process(t_shell **shell, int loop_count)
 {
@@ -11,49 +25,31 @@ void	child_process(t_shell **shell, int loop_count)
 	int		exit_code;
 
 	exec = (*shell)->exec;
-
 	if (check_no_command((*shell)->token_pointer, loop_count) == 1)
 	{
 		close_pipes_child(loop_count, &exec);
 		free_and_exit(*shell, false);
 	}
-	
 	get_input_and_output(shell, loop_count);
-
 	close_pipes_child(loop_count, &exec);
-
 	if (if_builtin(*shell, loop_count) == 0)
 	{
 		exit_code = exec_builtins(*shell, loop_count);
 		free_and_exit(*shell, exit_code);
 	}
-
 	check_param(*shell, loop_count);
-		
+	if (!(*shell)->path)
+		empty_path(&(*shell)->path, *shell);
 	path = check_path((*shell)->path, (*shell)->exec->param, *shell);
 	if (path == NULL)
 		error_printer(*shell, "", MALLOC_FAIL, true);
-	/* if ((*shell)->envp_str)
-		free_double_arr((*shell)->envp_str); */
-	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
-	if ((*shell)->envp_str == NULL)
-	{
-		free_double_arr(&(*shell)->envp_str);
-		error_printer(*shell, "", MALLOC_FAIL, true);
-	}
-	if (execve(path, (*shell)->exec->param, (*shell)->envp_str) == -1)
-	{
-		free_double_arr(&(*shell)->envp_str); // free path?
-		error_printer(*shell, (*shell)->exec->param[0], PERM_DENIED_COMM, true);
-		//printing(param[0], "", ": Permission denied\n", 2);
-		//free_and_exit(*shell, 126);
-	}
+	call_execve(shell, path);
 }
 
 static int	check_no_command(t_token *token, int loop_count)
 {
 	t_token	*temp;
-	
+
 	temp = token;
 	while (temp && temp->level != loop_count)
 		temp = temp->next;
@@ -66,3 +62,31 @@ static int	check_no_command(t_token *token, int loop_count)
 	return (1);
 }
 
+static void	empty_path(t_envp **path_to_curr, t_shell *shell)
+{
+	char	*pwd;
+	t_envp	*new;
+
+	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
+	if (pwd == NULL)
+		error_printer(shell, "", MALLOC_FAIL, true);
+	if (getcwd(pwd, BUFF_SIZE) == NULL)
+	{
+		free_str(&pwd);
+		error_printer(shell, "", GETCWD_FAIL, true);
+	}
+	new = ft_lstnew_envp_no_strdup(pwd);
+	ft_lstadd_back_envp(path_to_curr, new);
+}
+
+static void	call_execve(t_shell **shell, char *path)
+{
+	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
+	if ((*shell)->envp_str == NULL)
+		error_printer(*shell, "", MALLOC_FAIL, true);
+	if (execve(path, (*shell)->exec->param, (*shell)->envp_str) == -1)
+	{
+		free_double_arr(&(*shell)->envp_str);
+		error_printer(*shell, (*shell)->exec->param[0], PERM_DENIED_COMM, true);
+	}
+}

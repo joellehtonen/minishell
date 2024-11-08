@@ -1,3 +1,9 @@
+EXECUTE:
+- free any possible temporary variables before execve
+
+BUILTINS:
+- export +=
+
 SIGNALS: 
 - in heredoc C quits heredoc and returns to input mode
 - in input mode D exits bash and prints "exit"
@@ -6,28 +12,11 @@ SIGNALS:
 - in input mode \ does nothing, same in heredoc
 - if we press Ctrl+C during here_doc, it doesn't close properly
 - grep );$ and then Ctrl+C
+- exit code for Ctrl+C (130?)
 
 LEAKS:
 - valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
 
-- leaks in cd
-	
--	cd $HOME/Desktop/
-	pwd
-
-	cd "$HOME"/Desktop/
-	pwd
-
-	cd "$H"O"ME"/Desktop/
-	echo $?
-
-	cd --
-
-	export L=amazing L=ok L=cool
-	export L=ok
-	echo $L
-
-- test "no environment" in a bigger tester
 
 if cd into directory and removing an upper directory, handle it somehow
 

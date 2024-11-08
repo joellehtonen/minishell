@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 12:55:42 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:57:09 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	handle_input(t_shell *shell)
 
 static void	null_signal(t_shell *shell)
 {
-	printf("exit\n"); // commented out for a larger tester
-	shell->exit_code = 130; // commented out for a larger tester
+	//printf("exit\n"); // commented out for a larger tester
+	//shell->exit_code = 130; // commented out for a larger tester
 	free_and_exit(shell, 0);
 }
 
@@ -62,6 +62,8 @@ static void	create_prompt(t_shell *shell)
 	shell->envp_str = NULL;
 	shell->exec = NULL;
 	shell->only_one_builtin = 0;
+	if (!shell->uname)
+		shell->uname = ft_strdup("user");
 	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 	if (shell->prompt == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
@@ -74,9 +76,9 @@ int	read_input(t_shell *shell)
 	{
 		create_prompt(shell);
 		set_up_signals(shell);
-		shell->user_input = readline(shell->prompt); //commented out for a larger tester
+		//shell->user_input = readline(shell->prompt); //commented out for a larger tester
 
-		/* if (isatty(fileno(stdin)))
+		if (isatty(fileno(stdin)))
 			shell->user_input = readline(shell->prompt);
 		else
 		{
@@ -84,7 +86,7 @@ int	read_input(t_shell *shell)
 			line = get_next_line(fileno(stdin));
 			shell->user_input = ft_strtrim(line, "\n");
 			free(line);
-		} */
+		}
 
 
 		if (shell->user_input == NULL)

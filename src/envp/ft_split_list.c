@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:12:55 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/09/27 10:02:28 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 12:43:04 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static size_t	nextc(char const *s, char c)
 	return (i);
 }
 
-int ft_split_list(t_envp **path, char const *s, char c)
+int	ft_split_list(t_envp **path, char const *s, char c)
 {
 	t_envp	*new;
 	char	*temp;
@@ -43,7 +43,7 @@ int ft_split_list(t_envp **path, char const *s, char c)
 			if (temp == NULL)
 			{
 				delete_envp_part(path, i - 1);
-				return(1);
+				return (1);
 			}
 			new = ft_lstnew_envp_no_strdup(temp);
 			ft_lstadd_back_envp(path, new);

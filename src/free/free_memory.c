@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:16:06 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 13:16:08 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:11:51 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	free_shell(t_shell **shell, int free_envp)
 {
@@ -41,6 +41,21 @@ void	free_double_arr(char ***arr)
 		free(*arr);
 		*arr = NULL;
 	}
+}
+
+char	**free_double_arr_part(char ***arr, int count)
+{
+	int		i;
+
+	i = 0;
+	if (*arr)
+	{
+		while ((*arr)[i] && i <= count)
+			free_str(&(*arr)[i++]);
+		free(*arr);
+		*arr = NULL;
+	}
+	return (NULL);
 }
 
 int	free_two_str(char **str1, char **str2)

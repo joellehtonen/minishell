@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 10:21:47 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/11/08 10:22:36 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -10,9 +20,9 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 {
 	t_token	*arg;
 	int		arg_error;
-	
+
 	if (count_nodes_type(cd, ARG, loop_count) > 1)
-   	{
+	{
 		error_printer(shell, "", "cd: too many arguments\n", true);
 		return (1);
 	}
@@ -32,23 +42,15 @@ static int	check_arg(t_shell *shell, t_token *arg)
 		return (cd_no_arg(shell));
 	if (ft_strlen(arg->line) == 0)
 		return (0);
-	/* if (arg->line[0] == '/' && ft_strlen(arg->line) > 1 && arg->line[1] != '/')
-	{
-		printing("cd: ", arg->line, ": No such file or directory\n", 2);
-		//free_and_exit();
-		return (1);
-	} */
 	if (ft_strncmp(arg->line, "~", 1) != 0 && is_file(arg->line) == 0)
 	{
-		//printing("cd: ", arg->line, ": Not a directory\n", 2);
-		//free_and_exit(shell, true);
 		error_printer(shell, arg->line, NOT_DIR, true);
 		return (1);
 	}
 	return (2);
 }
 
-static int cd_no_arg(t_shell *shell)
+static int	cd_no_arg(t_shell *shell)
 {
 	if (shell->home == NULL)
 	{
@@ -57,8 +59,6 @@ static int cd_no_arg(t_shell *shell)
 	}
 	if (is_directory_new(shell->home) == 1)
 	{
-		//printing("cd: ", shell->home, ": No such file or directory\n", 2);
-		//free_and_exit(shell, true);
 		error_printer(shell, shell->home, NO_FILE_DIR, true);
 		return (1);
 	}
@@ -77,22 +77,14 @@ static int	access_new_path(t_shell *shell, t_token *arg)
 	if (access(shell->exec->new_path, F_OK) == -1 && errno == ENOENT)
 	{
 		if (arg->line[0] == '~')
-		{
-			//printing("cd: ", new_path, ": No such file or directory\n", 2);
 			error_printer(shell, shell->exec->new_path, NO_FILE_DIR, true);
-		}
 		else
-		{
-			//printing("cd: ", arg->line, ": No such file or directory\n", 2);
 			error_printer(shell, arg->line, NO_FILE_DIR, true);
-		}
-		//free_and_exit(shell, true);
 		return (1);
 	}
-	//set pwd in env
 	if (chdir(shell->exec->new_path) == -1)
 	{
-	   	error_printer(shell, "", CHDIR_ERROR, true);
+		error_printer(shell, "", CHDIR_ERROR, true);
 		return (1);
 	}
 	else

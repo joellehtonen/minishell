@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 14:30:25 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:13:09 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,8 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell)
 		check_command_access(param, shell);
 		return (command);
 	}
-	
 	if (paths == NULL)
-	{
-		//printing(command, "", ": No such file or directory\n", 2);
-		//free_and_exit(shell, 127);
 		error_printer(shell, command, NO_FILE_DIR_COMM, true);
-	}
 	exec_path = get_exec_path(paths, command, shell);
 	return (exec_path);
 }
@@ -50,7 +45,7 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell)
 static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 {
 	t_token	*temp;
-	
+
 	temp = token;
 	while (temp && temp->level != loop_count)
 		temp = temp->next;
@@ -63,11 +58,7 @@ static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 	if (!temp || temp->level != loop_count)
 		return ;
 	if (temp->line[0] == '\0' || temp->line[0] == ' ')
-	{
-		//printing(temp->line, "", ": command not found\n", 2);
-		//free_and_exit(shell, 127);
 		error_printer(shell, temp->line, CMD_NOT_FOUND, true);
-	}
 }
 
 static char	*get_exec_path(t_envp *paths, char *command, t_shell *shell)
@@ -85,10 +76,6 @@ static char	*get_exec_path(t_envp *paths, char *command, t_shell *shell)
 		paths = paths->next;
 	}
 	if (exec_path == NULL)
-	{
 		error_printer(shell, command, CMD_NOT_FOUND, true);
-		//printing(command, "", ": command not found\n", 2);
-		//free_and_exit(shell, 127);
-	}
 	return (exec_path);
 }

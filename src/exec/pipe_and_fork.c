@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 10:35:19 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:13:18 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	pipe_and_fork(t_shell *shell, int loop_count)
 {
 	t_exec	*exec;
-	
+
 	exec = shell->exec;
 	exec->pipe_flag = 0;
 	if (loop_count < exec->pipe_num)

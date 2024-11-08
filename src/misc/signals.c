@@ -6,11 +6,11 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 16:11:27 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:40:23 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	clear_input(int signal)
 {

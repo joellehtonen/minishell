@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/05 13:46:42 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/08 13:05:49 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	only_one_builtin(t_shell *shell);
 
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell);
 
-void	close_pipes_parent(t_exec **exec);
+void		close_pipes_parent(t_exec **exec);
 
 int	execute(t_shell *shell)
 {
@@ -27,7 +27,7 @@ int	execute(t_shell *shell)
 	exec = shell->exec;
 	allocate_here_doc(exec, shell);
 	if (exec->here_doc_num > 0 && here_doc(shell) == 1)
-		return (/* free_exec(&exec) */1); // do we need to free exec here?
+		return (1);
 	if (exec->pipe_num == 0 && if_builtin(shell, 0) == 0)
 		return (only_one_builtin(shell));
 	assign_exec_values(shell);
@@ -40,7 +40,6 @@ int	execute(t_shell *shell)
 	close_pipes_parent(&exec);
 	waiting_for_pids(exec, loop_count - 1, shell);
 	exit_status = exec->status;
-	//free_exec(&exec); // do we need to free exec here?
 	if (WIFEXITED(exit_status))
 		return (WEXITSTATUS(exit_status));
 	return (0);
@@ -57,15 +56,15 @@ static int	only_one_builtin(t_shell *shell)
 	{
 		dup2(shell->exec->orig_in, STDIN_FILENO);
 		dup2(shell->exec->orig_out, STDOUT_FILENO);
-    	close(shell->exec->orig_in);
-    	close(shell->exec->orig_out);
+		close(shell->exec->orig_in);
+		close(shell->exec->orig_out);
 		return (1);
 	}
 	exit_status = exec_builtins(shell, 0);
 	dup2(shell->exec->orig_in, STDIN_FILENO);
 	dup2(shell->exec->orig_out, STDOUT_FILENO);
-    close(shell->exec->orig_in);
-    close(shell->exec->orig_out);
+	close(shell->exec->orig_in);
+	close(shell->exec->orig_out);
 	return (exit_status);
 }
 
@@ -90,14 +89,9 @@ void	close_pipes_parent(t_exec **exec)
 	while (i < (*exec)->pipe_num)
 	{
 		close((*exec)->pipe[i][0]);
-		close((*exec)->pipe[i][1]);
-		i++;
+		close((*exec)->pipe[i++][1]);
 	}
 	i = 0;
 	while (i < (*exec)->here_doc_num)
-	{
-		close((*exec)->here_doc_pipe[i][0]);
-		//close((*exec)->here_doc[i][1]);
-		i++;
-	}
+		close((*exec)->here_doc_pipe[i++][0]);
 }

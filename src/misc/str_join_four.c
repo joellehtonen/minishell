@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   str_join_four.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 14:27:13 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/07 12:43:38 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:50:13 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-char	*ft_strjoin_four(char const *s1, char const *s2, char const *s3, char const *s4)
+char	*ft_strjoin_four(char *s1, char *s2, char *s3, char *s4)
 {
 	char	*new_s;
 	size_t	totallen;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:50:33 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 13:27:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/08 14:41:38 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	parse_here_doc(t_token *token)
 	int		count;
 
 	count = 0;
-	//temp = find_token(token, loop_count, REDIR_INPUT);
 	temp = token;
 	while (temp)
 	{
@@ -95,7 +94,5 @@ void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_memset(*exec, 0, sizeof(t_exec));
 	(*exec)->pipe_num = level;
-	/* exec_temp->pipe_flag = 0;
-	exec_temp->pipe = NULL; */
 	(*exec)->here_doc_num = parse_here_doc(*token);
 }

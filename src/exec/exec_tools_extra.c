@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_tools_extra.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/08 12:56:43 by aklimchu          #+#    #+#             */
+/*   Updated: 2024/11/08 13:11:36 by aklimchu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
@@ -19,7 +29,7 @@ char	**envp_to_arr(t_envp *envp_copy)
 	{
 		envp_arr[i] = ft_strdup(temp->line);
 		if (envp_arr[i] == NULL)
-			return (NULL/* free_m(envp_arr, i) */);
+			return (free_double_arr_part(&envp_arr, i - 1));
 		i++;
 		temp = temp->next;
 	}
@@ -44,29 +54,27 @@ static int	count_str(t_envp *envp_copy)
 
 int	if_builtin(t_shell *shell, int loop_count)
 {
-	if ((find_token_line(shell->token_pointer, loop_count, COMM, "cd")) ||\
-		(find_token_line(shell->token_pointer, loop_count, COMM, "exit")) ||\
-		(find_token_line(shell->token_pointer, loop_count, COMM, "env")) ||\
-		(find_token_line(shell->token_pointer, loop_count, COMM, "export")) ||\
-		(find_token_line(shell->token_pointer, loop_count, COMM, "unset")) ||\
-		(find_token_line(shell->token_pointer, loop_count, COMM, "echo")) ||\
+	if ((find_token_line(shell->token_pointer, loop_count, COMM, "cd")) || \
+		(find_token_line(shell->token_pointer, loop_count, COMM, "exit")) || \
+		(find_token_line(shell->token_pointer, loop_count, COMM, "env")) || \
+		(find_token_line(shell->token_pointer, loop_count, COMM, "export")) || \
+		(find_token_line(shell->token_pointer, loop_count, COMM, "unset")) || \
+		(find_token_line(shell->token_pointer, loop_count, COMM, "echo")) || \
 		(find_token_line(shell->token_pointer, loop_count, COMM, "pwd")))
-		return(0);
-	return(1);
+		return (0);
+	return (1);
 }
 
 void	check_file_access(t_shell *shell, char	*path, int loop_count)
 {
 	if (access(path, R_OK) == -1 && errno == EACCES)
 	{
-		//printing(path, "", ": Permission denied\n", 2);
-		close_pipes_child(loop_count, &shell->exec); // free pids?
+		close_pipes_child(loop_count, &shell->exec);
 		free_and_exit(shell, 1);
 	}
 	if (access(path, F_OK) == -1 && errno == ENOENT)
 	{
-		//printing(path, "", ": No such file or directory\n", 2);
-		close_pipes_child(loop_count, &shell->exec); // free pids?
+		close_pipes_child(loop_count, &shell->exec);
 		free_and_exit(shell, 1);
 	}
 }
