@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 14:49:52 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:06:10 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 
 // ERROR MESSAGES
 # define EMPTY_INPUT "Empty input\n"
-// # define PIPE_ERROR "Pipe cannot be first or last, or follow another pipe"
-// # define REDIR_ERROR "Redir can't come last, or before a pipe or another redir"
 # define QUOTE_ERROR "Odd number of quotes (only even amount accepted)\n"
 # define MALLOC_FAIL "Allocating memory failed\n"
 # define SIGNAL_ERROR "Failed to set up a signal\n"
@@ -54,6 +52,8 @@
 # define GETCWD_FAIL "Getting current working directory failed\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
+
+extern sig_atomic_t	g_signal;
 
 enum e_success
 {
@@ -110,26 +110,27 @@ typedef struct s_exec
 	int		error_node_index;
 	int		orig_in;
 	int		orig_out;
-	char	*new_path; //helper string used in cd_exec
-	char	**param; //helper double array used in child_process
+	char	*new_path;
+	char	**param;
 	pid_t	*pid;
 }	t_exec;
 
 typedef struct s_shell
 {
 	t_envp	*envp_copy;
-	char	**envp_str; // envp in the form of double array
-	t_envp	*path; //PATH from envp
-	char	*uname; //USER from envp
-	char	*pwd; //current location
-	char	*home; //HOME from envp
-	char	*prompt; //the string to be printed as a prompt
-	t_exec	*exec; // file descriptors for pipes and forks
-	char	*user_input; //whatever readline reads is saved into this array
-	t_token	*token_pointer; //pointer to the head of the linked list containing the arguments parsed from user input
-	int		single_quote; //whether single quotes are "active"
-	int		double_quote; //whether double quotes are "active"
-	int		only_one_builtin; //whether we have one command to run and it's a builtin
+	char	**envp_str;
+	t_envp	*path;
+	char	*uname;
+	char	*pwd;
+	char	*home;
+	char	*prompt;
+	t_exec	*exec;
+	char	*user_input;
+	t_token	*token_pointer;
+	int		single_quote;
+	int		double_quote;
+	int		only_one_builtin;
+	int		in_here_doc;
 	int		exit_code;
 }	t_shell;
 
@@ -188,13 +189,13 @@ void	check_content(t_shell *shell, t_token *token);
 char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i);
 int		calculate_key_len(t_token *token, int index);
 char	*find_variable(t_shell *shell, char *key, int len);
-char	*expand_variable(t_shell *shell, char **replacement, char *pointer, t_token *tok);
+char	*expand_variable(t_shell *sh, char **replace, char *ptr, t_token *tok);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
 int		handle_quotes(t_shell *shell, t_token *token, int index);
 int		is_exception(t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
-void	reallocate_replacement(t_shell *shell, char **replacement, char *expansion, t_token *tok);
+void	realloc_space(t_shell *sh, char **replace, char *exp, t_token *tok);
 // syntax check
 int		count_io(t_shell *shell, int index);
 int		check_consecutive_io(t_shell *shell, int index);

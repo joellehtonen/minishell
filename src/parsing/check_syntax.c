@@ -6,36 +6,37 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/04 13:52:58 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:07:56 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	validate_io(t_shell *shell, int index)
-{
-	int	fail;
+static void	count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote);
+static int	validate_io(t_shell *shell, int index);
 
-	fail = false;
-	if (shell->single_quote == true || shell->double_quote == true)
-		return (SUCCESS);
-	if (is_io(shell->user_input[index]) == false)
-		return (SUCCESS);
-	if (shell->user_input[index] == '|')
+int	input_error_check(t_shell *shell)
+{
+	int	single_quotes;
+	int	double_quotes;
+	int	index;
+
+	index = 0;
+	single_quotes = 0;
+	double_quotes = 0;
+	reset_quotes(shell);
+	if (ft_strlen(shell->user_input) == 0)
+		return (FAILURE);
+	while (shell->user_input[index] != '\0')
 	{
-		if (check_pipe_location(shell, index) == FAILURE)
-			fail = true;
+		count_quotes(shell, index, &single_quotes, &double_quotes);
+		if (validate_io(shell, index) == FAILURE)
+			return (FAILURE);
+		index++;
 	}
-	if (shell->user_input[index] == '<' || shell->user_input[index] == '>')
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
 	{
-		if (check_redir_location(shell, index) == FAILURE)
-			fail = true;
-	}
-	if (check_consecutive_io(shell, index) == FAILURE)
-		fail = true;
-	if (fail == true)
-	{
-		error_printer(shell, "", SYNTAX_ERROR, false);
+		error_printer(shell, "", QUOTE_ERROR, false);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -67,28 +68,31 @@ static void	count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
 	}
 }
 
-int	input_error_check(t_shell *shell)
+//validates i/o operators based on their location and count
+static int	validate_io(t_shell *shell, int index)
 {
-	int	single_quotes;
-	int	double_quotes;
-	int	index;
+	int	fail;
 
-	index = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	reset_quotes(shell);
-	if (ft_strlen(shell->user_input) == 0)
-		return (FAILURE);
-	while (shell->user_input[index] != '\0')
+	fail = false;
+	if (shell->single_quote == true || shell->double_quote == true)
+		return (SUCCESS);
+	if (is_io(shell->user_input[index]) == false)
+		return (SUCCESS);
+	if (shell->user_input[index] == '|')
 	{
-		count_quotes(shell, index, &single_quotes, &double_quotes);
-		if (validate_io(shell, index) == FAILURE)
-			return (FAILURE);
-		index++;
+		if (check_pipe_location(shell, index) == FAILURE)
+			fail = true;
 	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+	if (shell->user_input[index] == '<' || shell->user_input[index] == '>')
 	{
-		error_printer(shell, "", QUOTE_ERROR, false);
+		if (check_redir_location(shell, index) == FAILURE)
+			fail = true;
+	}
+	if (check_consecutive_io(shell, index) == FAILURE)
+		fail = true;
+	if (fail == true)
+	{
+		error_printer(shell, "", SYNTAX_ERROR, false);
 		return (FAILURE);
 	}
 	return (SUCCESS);

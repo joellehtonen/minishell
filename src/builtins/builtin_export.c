@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 10:33:31 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:51:34 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	error_check_export(char *line);
-
 static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
-
 static int	only_digits_or_empty(char *str);
 
 int	export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell)

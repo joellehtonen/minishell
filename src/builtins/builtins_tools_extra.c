@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_tools_extra.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:21:27 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 10:40:35 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:51:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	update_pwd_extra(t_envp **envp_copy, char **pwd, t_shell *shell);
-
 static char	*find_pwd(t_envp *envp_copy, t_shell *shell);
 
 int	update_pwd(t_envp **envp_copy, t_shell *shell)

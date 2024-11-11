@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:50:01 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 10:50:28 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:51:46 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static char	*current_location(t_shell *shell);
-
 static char	*get_pwd_extra(char *home, t_shell *shell);
-
 static char	*pwd_home(char **pwd, char *home, t_shell *shell);
-
 static char	*join_pwd(char *pwd, int pwd_move, t_shell *shell);
 
 char	*get_pwd(char *home, t_shell *shell)
