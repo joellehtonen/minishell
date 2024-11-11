@@ -1,6 +1,3 @@
-EXECUTE:
-- free any possible temporary variables before execve
-
 BUILTINS:
 - export +=
 

@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 12:59:11 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 09:52:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	check_no_command(t_token *token, int loop_count);
 static void	empty_path(t_envp **path_to_curr, t_shell *shell);
 
 static void	call_execve(t_shell **shell, char *path);
+
+static void	free_temp(t_shell **shell);
 
 void	child_process(t_shell **shell, int loop_count)
 {
@@ -84,9 +86,19 @@ static void	call_execve(t_shell **shell, char *path)
 	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
 	if ((*shell)->envp_str == NULL)
 		error_printer(*shell, "", MALLOC_FAIL, true);
+	free_temp(shell);
 	if (execve(path, (*shell)->exec->param, (*shell)->envp_str) == -1)
 	{
 		free_double_arr(&(*shell)->envp_str);
 		error_printer(*shell, (*shell)->exec->param[0], PERM_DENIED_COMM, true);
 	}
+}
+
+static void	free_temp(t_shell **shell)
+{
+	free_str(&(*shell)->user_input);
+	free_str(&(*shell)->home);
+	delete_envp(&(*shell)->path);
+	delete_all_tokens(&(*shell)->token_pointer);
+	delete_envp(&(*shell)->envp_copy);
 }
