@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 15:39:21 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:07:00 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_shell
 	int		double_quote;
 	int		only_one_builtin;
 	int		in_subprocess;
+	int		in_subprocess;
 	int		exit_code;
 }	t_shell;
 
@@ -155,6 +156,8 @@ void	envp_remove_if_line(t_envp **lst, char *data, int (*cmp)());
 void	envp_remove_if_export(t_envp **lst, char *data, int (*cmp)());
 void	delete_envp(t_envp **copy_envp);
 void	delete_envp_part(t_envp **copy_envp, int i);
+char	choose_char(char *data);
+t_envp	*find_envp_line(t_envp *envp, char *line);
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
@@ -174,6 +177,8 @@ int		export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell);
 int		if_builtin(t_shell *shell, int loop_count);
 char	*get_new_path(t_shell *shell, t_token *arg);
 int		is_directory_new(char *path);
+char	*remove_plus(char *data);
+char	*append_export_line(char *existing, char *to_append);
 // parsing functions
 void	tokenize_input(t_shell *shell);
 int		is_io(char c);
@@ -183,6 +188,7 @@ int		is_valid_redir(t_shell *shell, int index1, int index2);
 void	reset_quotes(t_shell *shell);
 void	assign_type(t_token **token);
 void	assign_level(t_token **token, t_exec **exec, t_shell *shell);
+int		fill_values_before_prompt(t_shell **shell);
 // expander functions
 void	expander(t_shell *shell);
 void	check_content(t_shell *shell, t_token *token);
@@ -237,7 +243,7 @@ int		ft_split_list(t_envp **path, char const *s, char c);
 char	*ft_strjoin_four(char *s1, char *s2, char *s3, char *s4);
 void	set_up_signals(t_shell *shell);
 void	clear_input_normal(int signal);
-void	clear_input_here_doc(int signal);
+void	clear_input_subprocess(int signal);
 size_t	ft_strchr_fix(const char *s, int c);
 void	null_signal(t_shell *shell, char *arg);
 // exit

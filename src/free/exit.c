@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 15:11:34 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:05:30 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,8 @@ static void	write_error_code(t_shell *shell, char *message)
 	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
 		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
 		shell->exit_code = 2;
-	else if ((ft_strncmp(EMPTY_INPUT, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(QUOTE_ERROR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(MALLOC_FAIL, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(SIGNAL_ERROR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(TOO_MANY_ARGS, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(NO_FILE_DIR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(NOT_VALID_IDENT, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(PERM_DENIED, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(IS_DIR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(NOT_DIR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(PIPE_FAIL, message, ft_strlen(message)) == 0))
-		shell->exit_code = 1;
 	else
-		shell->exit_code = -1; //not necessary?
+		shell->exit_code = 1;
 }
 
 void	error_printer(t_shell *shell, char *arg, char *message, int exit)

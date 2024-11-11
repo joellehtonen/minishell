@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 10:34:20 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 10:40:46 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:35:12 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,56 @@ int	is_directory_new(char *path)
 		close(fd);
 		return (1);
 	}
+}
+
+char	*remove_plus(char *data)
+{
+	char	*new_data;
+	int		plus_flag;
+	int		data_len;
+	
+	data_len = ft_strlen(data);
+	new_data = (char *)malloc(data_len * sizeof(char));
+	if (!new_data)
+		return (NULL);
+	plus_flag = false;
+	while (*data)
+	{
+		if (*data == '+' && plus_flag == false)
+		{
+			data++;
+			plus_flag = true;
+		}
+		*new_data = *data;
+		new_data++;
+		data++;
+	}
+	*new_data = '\0';
+	return (new_data - (data_len - 1));
+}
+
+char	*append_export_line(char *existing, char *to_append)
+{
+	char	*new_data;
+	int		new_data_len;
+	
+	new_data_len = ft_strlen(existing) + ft_strlen(ft_strchr(to_append, '=')) - 1;
+	new_data = (char *)malloc((new_data_len + 1) * sizeof(char));
+	if (!new_data)
+		return (NULL);
+	while (*existing)
+	{
+		*new_data = *existing;
+		new_data++;
+		existing++;
+	}
+	to_append = ft_strchr(to_append, '=') + 1;
+	while (*to_append)
+	{
+		*new_data = *to_append;
+		new_data++;
+		to_append++;
+	}
+	*new_data = '\0';
+	return (new_data - new_data_len);
 }

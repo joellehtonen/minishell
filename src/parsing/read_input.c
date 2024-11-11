@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 15:41:06 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:04:54 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	read_input(t_shell *shell)
 		create_prompt(shell);
 		set_up_signals(shell);
 		shell->user_input = readline(shell->prompt); //commented out for a larger tester
+		free_str(&shell->prompt);
 		if (g_signal == SIGINT)
 		{
 			g_signal = 0;
@@ -52,13 +53,11 @@ int	read_input(t_shell *shell)
 static void	create_prompt(t_shell *shell)
 {
 	free_str(&shell->pwd);
-	shell->pwd = get_pwd(shell->home, shell);
-	shell->envp_str = NULL;
-	shell->exec = NULL;
-	shell->only_one_builtin = 0;
-	if (!shell->uname)
-		shell->uname = ft_strdup("user");
+	if (fill_values_before_prompt(&shell) == 1)
+		error_printer(shell, "", MALLOC_FAIL, true);
 	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
+	free_str(&shell->uname);
+	free_str(&shell->pwd);
 	if (shell->prompt == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }

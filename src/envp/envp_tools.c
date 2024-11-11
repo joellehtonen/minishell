@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:41:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 12:42:33 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 09:10:21 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ int	copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 		ft_lstadd_back_envp(envp_copy, new);
 		i++;
 	}
-	if (copy_path(&shell->path, *envp_copy) == 1)
+	(void)shell; // delete
+	/* if (copy_path(&shell->path, *envp_copy) == 1)
 		return (1);
 	if (copy_home(&shell->home, *envp_copy) == 1)
-		return (1);
-	return (copy_uname(&shell->uname, *envp_copy));
+		return (1); */
+	return (/* copy_uname(&shell->uname, *envp_copy) */0);
 }
 
 int	copy_path(t_envp **path, t_envp *envp_copy)
@@ -91,6 +92,8 @@ int	copy_uname(char **uname, t_envp *envp_copy)
 		}
 		envp_copy = envp_copy->next;
 	}
-	*uname = NULL;
+	*uname = ft_strdup("");
+	if (!*uname)
+		return (1);
 	return (0);
 }

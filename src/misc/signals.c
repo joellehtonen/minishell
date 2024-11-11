@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 15:42:03 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:06:10 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 sig_atomic_t	g_signal = 0;
 
 void	clear_input_normal(int signal);
-void	clear_input_here_doc(int signal);
+void	clear_input_child(int signal);
 
 void	set_up_signals(t_shell *shell)
 {
@@ -24,8 +24,8 @@ void	set_up_signals(t_shell *shell)
 	//cleanup_here_doc(shell);
 	sigemptyset(&protocol.sa_mask);
 	protocol.sa_flags = SA_SIGINFO;
-	if (shell->in_subprocess== true)
-		protocol.sa_handler = &clear_input_here_doc;
+	if (shell->in_subprocess == true)
+		protocol.sa_handler = &clear_input_subprocess;
 	else
 		protocol.sa_handler = &clear_input_normal;
 	if (sigaction(SIGINT, &protocol, NULL) < 0)
@@ -46,7 +46,7 @@ void	clear_input_normal(int signal)
 	//free_and exit?
 }
 
-void	clear_input_here_doc(int signal)
+void	clear_input_subprocess(int signal)
 {
 	g_signal = signal;
 	write(1, "\n", 1);

@@ -23,16 +23,9 @@ int	main(int argc, char *argv[], char *envp[])
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.user_input = NULL;
 	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
-	{
 		error_printer(&shell, "", MALLOC_FAIL, true);
-		return (1);
-	}
 	shell.exit_code = read_input(&shell);
 	delete_envp(&shell.envp_copy);
-	free_double_arr(&shell.envp_str);
-	free_str(&shell.uname);
-	free_str(&shell.home);
-	delete_envp(&shell.path);
 	return (0);
 }
 

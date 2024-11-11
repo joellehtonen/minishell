@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 11:01:59 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:37:48 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,14 @@ static int	only_one_builtin(t_shell *shell)
 
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 {
-	if (waitpid(exec->pid[count], &exec->status, 0) == -1)
+	int	wait_error;
+
+	shell->in_subprocess = true;
+	set_up_signals(shell);
+	wait_error = waitpid(exec->pid[count], &exec->status, 0);
+	if (wait_error == -1 && errno == EINTR)
+		return ;
+	else if (wait_error == -1)
 		error_printer(shell, "", WAITPID_ERROR, true);
 	count = 0;
 	while (count < exec->pipe_num)
@@ -79,6 +86,8 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 			error_printer(shell, "", WAITPID_ERROR, true);
 		count++;
 	}
+	shell->in_subprocess = false;
+	set_up_signals(shell);
 }
 
 void	close_pipes_parent(t_exec **exec)
