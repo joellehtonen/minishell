@@ -3,28 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 16:18:55 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:00:49 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	add_expansion(char **replace, char **exp, int *copy_index, int *index)
-{
-	size_t	len;
+void	check_content(t_shell *shell, t_token *token);
+char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i);
+void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 
-	if (exp == NULL)
-		return ;
-	len = ft_strlen(*replace) + ft_strlen(*exp) + 1;
-	ft_strlcat(*replace, *exp, len);
-	*copy_index += ft_strlen(*exp);
-	if (ft_strncmp(*exp, "$", ft_strlen(*exp)) == 0 && ft_strlen(*exp) != 0)
-		(*index)++;
-	free(*exp);
-	return ;
+void	expander(t_shell *shell)
+{
+	t_token	*temp;
+
+	temp = shell->token_pointer;
+	while (temp != NULL)
+	{
+		if (ft_strchr(temp->line, '\'') != NULL
+			|| ft_strchr(temp->line, '\"') != NULL
+			|| ft_strchr(temp->line, '$') != NULL)
+		{
+			check_content(shell, temp);
+		}
+		temp = temp->next;
+	}
+}
+
+void	check_content(t_shell *shell, t_token *token)
+{	
+	int		index;
+	int		copy_index;
+	char	*replacement;
+	char	*expansion;
+
+	index = 0;
+	copy_index = 0;
+	replacement = init_replacement(shell, token);
+	while (token->line[index] != '\0')
+	{
+		if (handle_quotes(shell, token, index) == true)
+			index++;
+		else if (token->line[index] == '$' && shell->single_quote == false)
+		{
+			// printf("replacement size is %ld\n", ft_strlen(replacement));
+			expansion = create_expansion(shell, token, &replacement, &index);
+			add_expansion(&replacement, &expansion, &copy_index, &index);
+		}
+		else
+			replacement[copy_index++] = token->line[index++];
+	}
+	replacement[copy_index] = '\0';
+	free(token->line);
+	token->line = replacement;
 }
 
 char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i)
@@ -56,47 +90,17 @@ char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i)
 	return (expansion);
 }
 
-void	check_content(t_shell *shell, t_token *token)
-{	
-	int		index;
-	int		copy_index;
-	char	*replacement;
-	char	*expansion;
-
-	index = 0;
-	copy_index = 0;
-	replacement = init_replacement(shell, token);
-	while (token->line[index] != '\0')
-	{
-		if (handle_quotes(shell, token, index) == true)
-			index++;
-		else if (token->line[index] == '$' && shell->single_quote == false)
-		{
-			// printf("replacement size is %ld\n", ft_strlen(replacement));
-			expansion = create_expansion(shell, token, &replacement, &index);
-			add_expansion(&replacement, &expansion, &copy_index, &index);
-		}
-		else
-			replacement[copy_index++] = token->line[index++];
-	}
-	replacement[copy_index] = '\0';
-	free(token->line);
-	token->line = replacement;
-}
-
-void	expander(t_shell *shell)
+void	add_expansion(char **replace, char **exp, int *copy_index, int *index)
 {
-	t_token	*temp;
+	size_t	len;
 
-	temp = shell->token_pointer;
-	while (temp != NULL)
-	{
-		if (ft_strchr(temp->line, '\'') != NULL
-			|| ft_strchr(temp->line, '\"') != NULL
-			|| ft_strchr(temp->line, '$') != NULL)
-		{
-			check_content(shell, temp);
-		}
-		temp = temp->next;
-	}
+	if (exp == NULL)
+		return ;
+	len = ft_strlen(*replace) + ft_strlen(*exp) + 1;
+	ft_strlcat(*replace, *exp, len);
+	*copy_index += ft_strlen(*exp);
+	if (ft_strncmp(*exp, "$", ft_strlen(*exp)) == 0 && ft_strlen(*exp) != 0)
+		(*index)++;
+	free(*exp);
+	return ;
 }

@@ -6,11 +6,78 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:36:44 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:58:16 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static void	create_prompt(t_shell *shell);
+static void	null_signal(t_shell *shell);
+static void	handle_input(t_shell *shell);
+static void	clean_empty_nodes(t_shell *shell);
+
+int	read_input(t_shell *shell)
+{
+	shell->pwd = get_pwd(shell->home, shell);
+	while (true)
+	{
+		create_prompt(shell);
+		set_up_signals(shell);
+		shell->user_input = readline(shell->prompt); //commented out for a larger tester
+		if (g_signal == SIGINT)
+		{
+			g_signal = 0;
+			shell->exit_code = 130;
+		}
+		// if (isatty(fileno(stdin)))
+		// 	shell->user_input = readline(shell->prompt);
+		// else
+		// {
+		// 	char *line;
+		// 	line = get_next_line(fileno(stdin));
+		// 	shell->user_input = ft_strtrim(line, "\n");
+		// 	free(line);
+		// }
+		if (shell->user_input == NULL)
+			null_signal(shell);
+		if (input_error_check(shell) == SUCCESS)
+			handle_input(shell);
+		add_history(shell->user_input);
+		free_shell(&shell, false);
+	}
+	return (shell->exit_code);
+}
+
+static void	create_prompt(t_shell *shell)
+{
+	free_str(&shell->pwd);
+	if (fill_values_before_prompt(&shell) == 1)
+		error_printer(shell, "", MALLOC_FAIL, true);
+	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
+	free_str(&shell->uname);
+	free_str(&shell->pwd);
+	if (shell->prompt == NULL)
+		error_printer(shell, "", MALLOC_FAIL, true);
+}
+
+static void	null_signal(t_shell *shell)
+{
+	printf("exit\n"); // commented out for a larger tester
+	shell->exit_code = 130; // commented out for a larger tester
+	free_and_exit(shell, 0);
+}
+
+static void	handle_input(t_shell *shell)
+{
+	tokenize_input(shell);
+	expander(shell);
+	clean_empty_nodes(shell);
+	assign_type(&shell->token_pointer);
+	assign_level(&shell->token_pointer, &shell->exec, shell);
+	//print_node(shell->token_pointer); //for testing
+	shell->exit_code = execute(shell);
+}
 
 static void	clean_empty_nodes(t_shell *shell)
 {
@@ -35,68 +102,4 @@ static void	clean_empty_nodes(t_shell *shell)
 			prev_node = temp;
 		temp = next_node;
 	}
-}
-
-static void	handle_input(t_shell *shell)
-{
-	tokenize_input(shell);
-	expander(shell);
-	clean_empty_nodes(shell);
-	assign_type(&shell->token_pointer);
-	assign_level(&shell->token_pointer, &shell->exec, shell);
-	//print_node(shell->token_pointer); //for testing
-	shell->exit_code = execute(shell);
-}
-
-static void	null_signal(t_shell *shell)
-{
-	// printf("exit\n"); // commented out for a larger tester
-	// shell->exit_code = 130; // commented out for a larger tester
-	free_and_exit(shell, 0);
-}
-
-static void	create_prompt(t_shell *shell)
-{
-	free_str(&shell->pwd);
-	if (fill_values_before_prompt(&shell) == 1)
-		error_printer(shell, "", MALLOC_FAIL, true);
-	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
-	free_str(&shell->uname);
-	free_str(&shell->pwd);
-	if (shell->prompt == NULL)
-		error_printer(shell, "", MALLOC_FAIL, true);
-}
-
-int	read_input(t_shell *shell)
-{
-	shell->pwd = get_pwd(shell->home, shell);
-	while (true)
-	{
-		create_prompt(shell);
-		set_up_signals(shell);
-		// shell->user_input = readline(shell->prompt); //commented out for a larger tester
-		// free_str(&shell->prompt); //commented out for a larger tester
-		if (isatty(fileno(stdin)))
-		{
-			shell->user_input = readline(shell->prompt);
-			free_str(&shell->prompt);
-		}
-		else
-		{
-			char *line;
-			line = get_next_line(fileno(stdin));
-			shell->user_input = ft_strtrim(line, "\n");
-			free(line);
-			free_str(&shell->prompt);
-		}
-
-
-		if (shell->user_input == NULL)
-			null_signal(shell);
-		if (input_error_check(shell) == SUCCESS)
-			handle_input(shell);
-		add_history(shell->user_input);
-		free_shell(&shell, false);
-	}
-	return (shell->exit_code);
 }

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 12:39:00 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:10:32 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	exec_builtins_extra(t_shell *shell, t_token	*token, int loop);
-
 static int	pwd_exec(t_shell *shell);
 
 int	exec_builtins(t_shell *shell, int loop)

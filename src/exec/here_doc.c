@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 13:10:52 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:46:16 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell);
-
 static char	*get_here_doc_input(char *delim, t_shell *shell);
-
 static void	new_input(char **input, char **new_line, t_shell *shell);
-
 static char	*add_here_doc_memory(char *str, size_t add_len);
 
 int	here_doc(t_shell *shell)
@@ -64,20 +61,24 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 	char	*new_line;
 	char	*here_doc_input;
 
+	shell->in_here_doc = true;
+	set_up_signals(shell);
 	new_line = NULL;
 	here_doc_input = ft_strdup("");
 	if (here_doc_input == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	ft_printf("> ");
+	printf("> ");
 	new_line = get_next_line(0);
 	while (new_line)
 	{
-		if (!ft_strncmp(new_line, delim, ft_strlen(delim)) && \
-			ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
+		if (!ft_strncmp(new_line, delim, ft_strlen(delim))
+			&& ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
 			break ;
 		new_input(&here_doc_input, &new_line, shell);
 	}
 	free_str(&new_line);
+	shell->in_here_doc = false;
+	set_up_signals(shell);
 	return (here_doc_input);
 }
 

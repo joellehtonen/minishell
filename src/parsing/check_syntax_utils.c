@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:56:21 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 12:56:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:39:55 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ int	check_consecutive_io(t_shell *shell, int index)
 		index++;
 		if (is_io(shell->user_input[index]) == PIPE)
 		{
-			index++;
-			if (is_io(shell->user_input[index]) == PIPE)
-				return (FAILURE);
+			return (FAILURE);
 		}
 		if (is_io(shell->user_input[index]) == false)
 			return (SUCCESS);

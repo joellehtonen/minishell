@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_tools.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:57:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 10:20:47 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:51:20 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static char	*handle_home(t_shell *shell, t_token *arg);
-
 static char	*new_pwd(t_token *arg, t_shell *shell);
-
 static char	*get_old_pwd(t_envp *envp_copy, t_shell *shell);
 
 char	*get_new_path(t_shell *shell, t_token *arg)

@@ -1,4 +1,14 @@
-//42 header
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/11 12:53:34 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/11 13:01:28 by jlehtone         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
@@ -7,7 +17,7 @@ static void	argc_check(int argc);
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_shell	shell;
-	
+
 	(void)argv;
 	argc_check(argc);
 	ft_memset(&shell, 0, sizeof(t_shell));
@@ -25,7 +35,8 @@ static void	argc_check(int argc)
 	{
 		printf("Correct input to start the shell: \n");
 		printf("./minishell\n");
-		printf("No extra arguments needed\n");
+		printf("No other arguments needed\n");
 		exit(1);
 	}
+	return ;
 }

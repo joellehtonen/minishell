@@ -6,7 +6,7 @@
 #    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/11 09:04:30 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/11 13:56:06 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtins_extra.c \
 			./src/builtins/builtins_tools.c \
 			./src/builtins/builtins_tools_extra.c \
-			./src/builtins/builtins.c \
+			./src/builtins/execute_builtins.c \
 			./src/builtins/builtin_cd.c \
 			./src/builtins/builtin_export.c \
 			./src/builtins/builtin_cd_tools.c \

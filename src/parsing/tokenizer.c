@@ -6,29 +6,46 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 12:54:42 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 12:44:29 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	create_new_token(t_shell *shell, int end, int start, int token_num)
-{
-	t_token	*new;
-	int		token_index;
+static int	increment_io(t_shell *shell, int end);
+static int	handle_argument(t_shell *shell, int end);
+static int	create_new_token(t_shell *shell, int end, int start, int token_num);
 
-	token_index = 0;
-	new = ft_lstnew_token(NULL);
-	new->line = malloc(sizeof(char) * (end - start + 1));
-	if (new->line == NULL)
-		error_printer(shell, "", MALLOC_FAIL, true);
-	while (start != end)
-		new->line[token_index++] = shell->user_input[start++];
-	new->line[token_index] = '\0';
-	new->token_number = token_num;
-	new->expanded = false;
-	ft_lstadd_back_token(&shell->token_pointer, new);
-	return (start);
+void	tokenize_input(t_shell *shell)
+{
+	int		start;
+	int		end;
+	int		token_number;
+
+	start = 0;
+	token_number = 0;
+	while (shell->user_input[start] != '\0')
+	{
+		while (is_space(shell->user_input[start]) == true)
+			start++;
+		if (shell->user_input[start] == '\0')
+			break ;
+		end = start;
+		if (is_io(shell->user_input[end]) != false)
+			end = increment_io(shell, end);
+		else
+			end = handle_argument(shell, end);
+		start = create_new_token(shell, end, start, token_number);
+		token_number++;
+	}
+}
+
+static int	increment_io(t_shell *shell, int end)
+{
+	end++;
+	if (shell->user_input[end] == shell->user_input[end - 1])
+		end++;
+	return (end);
 }
 
 static int	handle_argument(t_shell *shell, int end)
@@ -58,34 +75,21 @@ static int	handle_argument(t_shell *shell, int end)
 	return (end);
 }
 
-static int	increment_io(t_shell *shell, int end)
+static int	create_new_token(t_shell *shell, int end, int start, int token_num)
 {
-	end++;
-	if (shell->user_input[end] == shell->user_input[end - 1])
-		end++;
-	return (end);
-}
+	t_token	*new;
+	int		token_index;
 
-void	tokenize_input(t_shell *shell)
-{
-	int		start;
-	int		end;
-	int		token_number;
-
-	start = 0;
-	token_number = 0;
-	while (shell->user_input[start] != '\0')
-	{
-		while (is_space(shell->user_input[start]) == true)
-			start++;
-		if (shell->user_input[start] == '\0')
-			break ;
-		end = start;
-		if (is_io(shell->user_input[end]) != false)
-			end = increment_io(shell, end);
-		else
-			end = handle_argument(shell, end);
-		start = create_new_token(shell, end, start, token_number);
-		token_number++;
-	}
+	token_index = 0;
+	new = ft_lstnew_token(NULL);
+	new->line = malloc(sizeof(char) * (end - start + 1));
+	if (new->line == NULL)
+		error_printer(shell, "", MALLOC_FAIL, true);
+	while (start != end)
+		new->line[token_index++] = shell->user_input[start++];
+	new->line[token_index] = '\0';
+	new->token_number = token_num;
+	new->expanded = false;
+	ft_lstadd_back_token(&shell->token_pointer, new);
+	return (start);
 }

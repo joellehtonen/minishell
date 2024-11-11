@@ -6,14 +6,13 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:40:10 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 13:53:26 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	error_check_export(char *line);
-
 static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
 
 static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc);
