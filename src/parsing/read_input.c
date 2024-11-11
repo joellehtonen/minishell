@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:58:16 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:57:31 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	read_input(t_shell *shell)
 		create_prompt(shell);
 		set_up_signals(shell);
 		shell->user_input = readline(shell->prompt); //commented out for a larger tester
+		free_str(&shell->prompt);
 		if (g_signal == SIGINT)
 		{
 			g_signal = 0;

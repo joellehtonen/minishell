@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:46:16 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:29:32 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 	char	*new_line;
 	char	*here_doc_input;
 
-	shell->in_here_doc = true;
+	shell->in_subprocess = true;
 	set_up_signals(shell);
 	new_line = NULL;
 	here_doc_input = ft_strdup("");
 	if (here_doc_input == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	printf("> ");
+	ft_printf("> ");
 	new_line = get_next_line(0);
 	while (new_line)
 	{
@@ -77,7 +77,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 		new_input(&here_doc_input, &new_line, shell);
 	}
 	free_str(&new_line);
-	shell->in_here_doc = false;
+	shell->in_subprocess = false;
 	set_up_signals(shell);
 	return (here_doc_input);
 }
