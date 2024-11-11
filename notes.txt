@@ -33,3 +33,7 @@ ambiguous redirect
 should be error, error code 1
 
 sometimes takes many exits / ctrl Ds to exit minishell
+
+if you press CTRL + D while in here_doc
+bash: warning: here-document at line 30 delimited by end-of-file (wanted `HI')
+

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:06:10 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:39:21 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ typedef struct s_shell
 	int		single_quote;
 	int		double_quote;
 	int		only_one_builtin;
-	int		in_here_doc;
+	int		in_subprocess;
 	int		exit_code;
 }	t_shell;
 
@@ -236,8 +236,10 @@ int		count_nodes_type(t_token *start, int token_type, int loop_count);
 int		ft_split_list(t_envp **path, char const *s, char c);
 char	*ft_strjoin_four(char *s1, char *s2, char *s3, char *s4);
 void	set_up_signals(t_shell *shell);
-void	clear_input(int signal);
+void	clear_input_normal(int signal);
+void	clear_input_here_doc(int signal);
 size_t	ft_strchr_fix(const char *s, int c);
+void	null_signal(t_shell *shell, char *arg);
 // exit
 void	free_and_exit(t_shell *shell, int error);
 void	free_double_arr(char ***arr);

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 12:52:44 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:42:03 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	set_up_signals(t_shell *shell)
 	//cleanup_here_doc(shell);
 	sigemptyset(&protocol.sa_mask);
 	protocol.sa_flags = SA_SIGINFO;
-	if (shell->in_here_doc == true)
+	if (shell->in_subprocess== true)
 		protocol.sa_handler = &clear_input_here_doc;
 	else
 		protocol.sa_handler = &clear_input_normal;

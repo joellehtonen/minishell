@@ -6,14 +6,14 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 12:46:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:41:06 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static void	create_prompt(t_shell *shell);
-static void	null_signal(t_shell *shell);
+void		null_signal(t_shell *shell, char *arg);
 static void	handle_input(t_shell *shell);
 static void	clean_empty_nodes(t_shell *shell);
 
@@ -40,7 +40,7 @@ int	read_input(t_shell *shell)
 		// 	free(line);
 		// }
 		if (shell->user_input == NULL)
-			null_signal(shell);
+			null_signal(shell, "");
 		if (input_error_check(shell) == SUCCESS)
 			handle_input(shell);
 		add_history(shell->user_input);
@@ -63,11 +63,19 @@ static void	create_prompt(t_shell *shell)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
-static void	null_signal(t_shell *shell)
+void	null_signal(t_shell *shell, char *arg)
 {
-	printf("exit\n"); // commented out for a larger tester
-	shell->exit_code = 130; // commented out for a larger tester
-	free_and_exit(shell, 0);
+	shell->exit_code = 130;
+	if (shell->in_subprocess == false)
+	{
+		printf("exit\n");
+		free_and_exit(shell, 0);
+	}
+	if (shell->in_subprocess == true)
+	{
+		printf("Warning: here-document delimited by end-of-file ");
+		printf("(wanted '%s')\n", arg);
+	}
 }
 
 static void	handle_input(t_shell *shell)
