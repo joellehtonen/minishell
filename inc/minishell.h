@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:36:01 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:47:17 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,6 @@
 # define WAITPID_ERROR "Failed to wait for child process to end\n"
 # define FORK_FAIL "Failed to dublicate a process\n"
 # define PIPE_FAIL "Failed to create a pipe\n"
-# define GETCWD_FAIL "Getting current working directory failed\n"
-# define CHDIR_ERROR "Changing working directory failed\n"
-# define DUP2_ERROR "Failed to duplicate a file descriptor\n"
 
 extern sig_atomic_t	g_signal;
 
@@ -169,7 +166,7 @@ int		exec_builtins(t_shell *shell, int loop);
 int		cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char	*get_pwd(char *home, t_shell *shell);
 int		echo(t_shell *shell, t_token *echo_pointer);
-int		env_exec(t_envp *envp_copy, t_shell *shell);
+int		env_exec(t_envp *envp, t_shell *shell, t_token *env, int loop);
 int		unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
 int		exit_exec(t_shell *shell, t_token *token);
 int		export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell);

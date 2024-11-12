@@ -6,18 +6,26 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 10:34:20 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:28:38 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:47:33 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	env_exec(t_envp *envp_copy, t_shell *shell)
+int	env_exec(t_envp *envp, t_shell *shell, t_token *env, int loop)
 {
-	while (envp_copy)
+	t_token	*arg;
+
+	arg = find_token(env, loop, ARG);
+	if (arg)
 	{
-		printf("%s\n", envp_copy->line);
-		envp_copy = envp_copy->next;
+		error_printer(shell, arg->line, NO_FILE_DIR_COMM, true);
+		return (127);
+	}
+	while (envp)
+	{
+		printf("%s\n", envp->line);
+		envp = envp->next;
 	}
 	free_and_exit(shell, 0);
 	return (0);
