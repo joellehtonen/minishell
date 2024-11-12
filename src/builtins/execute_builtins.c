@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:41:20 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:53:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ static int	pwd_exec(t_shell *shell)
 	}
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
 	{
-		error_printer(shell, "", GETCWD_FAIL, true);
-		return (1);
+		printf("%s\n", shell->pwd);
+		free_str(&pwd);
+		//error_printer(shell, "", GETCWD_FAIL, true);
+		return (0);
 	}
 	printf("%s\n", pwd);
 	free(pwd);

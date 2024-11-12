@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:16:06 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 10:08:42 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:39:51 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	free_shell(t_shell **shell, int free_envp)
 	delete_envp(&(*shell)->path);
 	delete_all_tokens(&(*shell)->token_pointer);
 	if (free_envp == true)
+	{
+		free_str(&(*shell)->pwd);
 		delete_envp(&(*shell)->envp_copy);
+	}
 }
 
 void	free_double_arr(char ***arr)

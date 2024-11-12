@@ -6,15 +6,15 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:53:26 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:41:40 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	error_check_export(char *line);
-static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
-
+static void	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
+static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell);
 static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc);
 
 static int	only_digits_or_empty(char *str);
@@ -39,21 +39,40 @@ int	export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell)
 		}
 		return (0);
 	}
-	if (error_check_export(arg->line) == 1)
-	{
-		error_printer(shell, arg->line, NOT_VALID_IDENT, true);
-		return (1);
-	}
-	return (export_exec_extra(arg->line, &temp, shell));
+	arg = exp->next;
+	edit_envp(temp, arg, shell);
+	return (shell->exec->export_exit);
 }
 
-static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell)
+static int	error_check_export(char *str)
+{
+	if (ft_strncmp(str, "=\0", 2) == 0)
+		return (1);
+	if (only_digits_or_empty(str) == 1)
+		return (1);
+	return(check_str(str, -1, -1, -1));
+}
+
+static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell)
+{
+	while (arg && arg->type == ARG)
+	{
+		if (error_check_export(arg->line) == 1)
+		{
+			error_printer(shell, arg->line, NOT_VALID_IDENT, false);
+			shell->exec->export_exit = 1;
+		}
+		else if (ft_strchr(arg->line, '='))
+			export_exec_extra(arg->line, &temp, shell);
+		arg = arg->next;
+	}
+}
+
+static void	export_exec_extra(char *line, t_envp **temp, t_shell *shell)
 {
 	t_envp	*existing_node;
 	int		alloc_flag;
 
-	if (ft_strchr(line, '=') == NULL)
-		return (0);
 	alloc_flag = false;
 	existing_node = NULL;
 	if (choose_char(line) == '+')
@@ -68,9 +87,7 @@ static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell)
 		line = remove_plus(line);
 		alloc_flag = true;
 	}
-	
-	return (export_exec_cont(line, temp, shell, alloc_flag));
-
+	export_exec_cont(line, temp, shell, alloc_flag);
 }
 
 static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc)
@@ -93,15 +110,6 @@ static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc
 	}
 	ft_lstadd_back_envp(temp, new);
 	return (0);
-}
-
-static int	error_check_export(char *str)
-{
-	if (ft_strncmp(str, "=\0", 2) == 0)
-		return (1);
-	if (only_digits_or_empty(str) == 1)
-		return (1);
-	return(check_str(str, -1, -1, -1));
 }
 
 static int	check_str(char *str, int minus, int plus, int equal)

@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 09:12:40 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:29:26 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 int	fill_values_before_prompt(t_shell **shell)
 {
-	(*shell)->pwd = get_pwd((*shell)->home, *shell);
+	char	*new_pwd;	
+	
+	new_pwd = get_pwd((*shell)->home, *shell);
+	if (new_pwd)
+	{
+		free_str(&(*shell)->pwd);
+		(*shell)->pwd = new_pwd;
+	}
 	(*shell)->envp_str = NULL;
 	(*shell)->exec = NULL;
 	(*shell)->only_one_builtin = 0;

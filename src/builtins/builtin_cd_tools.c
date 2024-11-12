@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd_tools.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:57:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 12:51:20 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:22:16 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,20 @@ static char	*new_pwd(t_token *arg, t_shell *shell)
 	if (old_path == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	if (getcwd(old_path, BUFF_SIZE) == NULL)
+	{
 		error_printer(shell, "", GETCWD_FAIL, true);
-	new_path = ft_strjoin_four(old_path, "/", arg->line, "");
-	free_str(&old_path);
-	if (new_path == NULL)
-		error_printer(shell, "", MALLOC_FAIL, true);
-	return (new_path);
+		free(old_path);
+		old_path = ft_strdup(shell->home);
+		return (old_path);
+	}
+	else
+	{
+		new_path = ft_strjoin_four(old_path, "/", arg->line, "");
+		free_str(&old_path);
+		if (new_path == NULL)
+			error_printer(shell, "", MALLOC_FAIL, true);
+		return (new_path);
+	}
 }
 
 static char	*get_old_pwd(t_envp *envp_copy, t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 10:34:20 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:42:38 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:16:49 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,21 @@ int	env_exec(t_envp *envp, t_shell *shell, t_token *env, int loop)
 
 int	unset_exec(t_envp **envp_copy, t_token *unset, int loop_count)
 {
-	t_token	*arg;
-
-	arg = find_token(unset, loop_count, ARG);
-	if (!arg)
-		return (0);
-	envp_remove_if_line(envp_copy, arg->line, ft_strncmp);
+	t_token	*temp;
+	
+	loop_count = loop_count; //REMOVE THIS?
+	temp = unset->next;
+	while (temp && temp->type == ARG)
+	{
+		envp_remove_if_line(envp_copy, temp->line, ft_strncmp);
+		temp = temp->next;
+	}
+	// arg = find_token(unset, loop_count, ARG);
+	// while (arg)
+	// {
+	// 	envp_remove_if_line(envp_copy, arg->line, ft_strncmp);
+	// 	arg = find_token(unset, loop_count, ARG);
+	// }
 	return (0);
 }
 
