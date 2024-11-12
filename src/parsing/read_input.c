@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 09:36:49 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:52:52 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,11 @@ int	read_input(t_shell *shell)
 
 static void	create_prompt(t_shell *shell)
 {
-	free_str(&shell->pwd);
+	//free_str(&shell->pwd);
 	if (fill_values_before_prompt(&shell) == 1)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
 	free_str(&shell->uname);
-	free_str(&shell->pwd);
 	if (shell->prompt == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 12:47:17 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 12:51:54 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define NOT_DIR " Not a directory\n"
 # define PERM_DENIED ": Permission denied\n"
 # define PERM_DENIED_COMM ": Permission denied \n"
-# define GETCWD_FAIL "Getting current working directory failed\n"
+# define GETCWD_FAIL "Error retrieving current directory\n"
 # define CHDIR_ERROR "Changing working directory failed\n"
 # define DUP2_ERROR "Failed to duplicate a file descriptor\n"
 # define WAITPID_ERROR "Failed to wait for child process to end\n"
@@ -105,6 +105,7 @@ typedef struct s_exec
 	int		**here_doc_pipe;
 	int		here_doc_num;
 	int		error_node_index;
+	int		export_exit;
 	int		orig_in;
 	int		orig_out;
 	char	*new_path;

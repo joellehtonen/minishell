@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:50:01 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 12:51:46 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:32:40 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ static char	*current_location(t_shell *shell)
 	}
 	if (getcwd(pwd, BUFF_SIZE) == NULL)
 	{
-		error_printer(shell, "", GETCWD_FAIL, true);
+		free(pwd);
+		//error_printer(shell, "", GETCWD_FAIL, false);
 		return (NULL);
 	}
 	return (pwd);

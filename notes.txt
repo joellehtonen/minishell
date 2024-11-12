@@ -1,9 +1,10 @@
+BUILTINS: 
+- need to be able export or unset many at the same time
+
 LEAKS:
 - valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
 
-if cd into directory and removing an upper directory, handle it somehow
-
-need to be able export or unset many at the same time
+FIXED: if cd into directory and removing an upper directory, handle it somehow
 
 export | grep 'HOME 
 this doesnt work
@@ -18,9 +19,9 @@ should be error, error code 1
 
 sometimes takes many exits / ctrl Ds to exit minishell
 
+FIXED env what
+
+FIXED  cd--
+
 export T=e E=c S=h L=o
 $T$E$S$L
-
-jlehtone@c2r5p3:~/Desktop/git_home/minishell$ echo hi | exit 321 | exit 123
-jlehtone@c2r5p3:~/Desktop/git_home/minishell$ echo $?
-123

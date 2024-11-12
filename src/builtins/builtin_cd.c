@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 10:21:47 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 10:22:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:50:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 
 static int	check_arg(t_shell *shell, t_token *arg)
 {
-	if (!arg || ft_strlen(arg->line) == 0)
+	if (!arg || ft_strlen(arg->line) == 0 || \
+		ft_strncmp(arg->line, "--\0", 3) == 0)
 		return (cd_no_arg(shell));
 	if (ft_strlen(arg->line) == 0)
 		return (0);

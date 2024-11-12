@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:53:34 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:01:28 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 10:39:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char *argv[], char *envp[])
 		error_printer(&shell, "", MALLOC_FAIL, true);
 	shell.exit_code = read_input(&shell);
 	delete_envp(&shell.envp_copy);
+	free_str(&shell.pwd);
 	return (0);
 }
 
