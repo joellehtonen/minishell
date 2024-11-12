@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:44:18 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:45:19 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ typedef struct s_shell
 	int		single_quote;
 	int		double_quote;
 	int		only_one_builtin;
-	int		in_subprocess;
 	int		in_subprocess;
 	int		exit_code;
 }	t_shell;
