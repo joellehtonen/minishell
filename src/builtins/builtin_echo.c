@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 12:51:04 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:33:11 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ static void	echo_printing_loop(t_token *temp)
 		{
 			if (ft_strlen(temp->line) != 0
 				|| (ft_strlen(temp->line) == 0 && temp->expanded == false))
-			printf(" ");
+			{
+				printf(" ");
+			}
 		}
 		temp = temp->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_tools_extra.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:39:23 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:27:13 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:25:27 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
 	c = choose_char(data);
 	len = ft_strlen(data) - ft_strlen(ft_strchr(data, c));
 	if (c == '=')
-		len++; 
+		len++;
 	if (cmp(temp->line, data, len) == 0)
 	{
 		*lst = temp->next;
@@ -78,8 +78,8 @@ void	envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
 
 char	choose_char(char *data)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (*data)
 	{

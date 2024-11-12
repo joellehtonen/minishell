@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:53:26 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:56:45 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,8 @@
 
 static int	error_check_export(char *line);
 static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
-
-static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc);
-
+static int	export_exec_cont(char *line, t_envp **temp, t_shell *s, int alloc);
 static int	only_digits_or_empty(char *str);
-
-static int	check_str(char *str, int minus, int plus, int equal);
 
 int	export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell)
 {
@@ -68,18 +64,16 @@ static int	export_exec_extra(char *line, t_envp **temp, t_shell *shell)
 		line = remove_plus(line);
 		alloc_flag = true;
 	}
-	
 	return (export_exec_cont(line, temp, shell, alloc_flag));
-
 }
 
-static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc)
+static int	export_exec_cont(char *line, t_envp **temp, t_shell *s, int alloc)
 {
 	t_envp	*new;
 
 	if (!line)
 	{
-		error_printer(shell, "", MALLOC_FAIL, true);
+		error_printer(s, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	envp_remove_if_export(temp, line, ft_strncmp);
@@ -88,7 +82,7 @@ static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc
 		free_str(&line);
 	if (new == NULL)
 	{
-		error_printer(shell, "", MALLOC_FAIL, true);
+		error_printer(s, "", MALLOC_FAIL, true);
 		return (1);
 	}
 	ft_lstadd_back_envp(temp, new);
@@ -101,32 +95,7 @@ static int	error_check_export(char *str)
 		return (1);
 	if (only_digits_or_empty(str) == 1)
 		return (1);
-	return(check_str(str, -1, -1, -1));
-}
-
-static int	check_str(char *str, int minus, int plus, int equal)
-{
-	int	i;
-	
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '-')
-			minus = i;
-		if (str[i] == '+')
-			plus = i;
-		if (str[i] == '=')
-			equal = i;
-		if (minus > -1 && (equal == -1 || \
-			minus < equal))
-			return (1);
-		if (plus > -1 && \
-			((equal == -1 && str[i + 1] != '=') || \
-			plus + 1 < equal))
-			return (1);
-		i++;
-	}
-	return (0);
+	return (check_str(str, -1, -1, -1));
 }
 
 static int	only_digits_or_empty(char *str)

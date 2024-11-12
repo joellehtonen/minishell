@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 16:07:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:36:01 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ typedef struct s_shell
 	int		double_quote;
 	int		only_one_builtin;
 	int		in_subprocess;
-	int		in_subprocess;
 	int		exit_code;
 }	t_shell;
 
@@ -179,6 +178,7 @@ char	*get_new_path(t_shell *shell, t_token *arg);
 int		is_directory_new(char *path);
 char	*remove_plus(char *data);
 char	*append_export_line(char *existing, char *to_append);
+int		check_str(char *str, int minus, int plus, int equal);
 // parsing functions
 void	tokenize_input(t_shell *shell);
 int		is_io(char c);

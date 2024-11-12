@@ -3,21 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 09:52:35 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:40:23 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	check_no_command(t_token *token, int loop_count);
-
 static void	empty_path(t_envp **path_to_curr, t_shell *shell);
-
 static void	call_execve(t_shell **shell, char *path);
-
 static void	free_temp(t_shell **shell);
 
 void	child_process(t_shell **shell, int loop_count)

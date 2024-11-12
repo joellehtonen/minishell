@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 16:06:10 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:24:55 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 sig_atomic_t	g_signal = 0;
 
 void	clear_input_normal(int signal);
-void	clear_input_child(int signal);
+void	clear_input_subprocess(int signal);
 
 void	set_up_signals(t_shell *shell)
 {

@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 15:37:48 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:40:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	only_one_builtin(t_shell *shell);
-
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell);
-
 void		close_pipes_parent(t_exec **exec);
 
 int	execute(t_shell *shell)

@@ -6,13 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:05:29 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:31:54 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	realloc_space(t_shell *sh, char **replace, char *exp, t_token *tok)
+void	realloc_space(t_shell *s, char **replace, char *exp, t_token *tok)
 {
 	char	*new_replacement;
 	size_t	size_now;
@@ -24,7 +24,7 @@ void	realloc_space(t_shell *sh, char **replace, char *exp, t_token *tok)
 		return ;
 	new_replacement = malloc(sizeof(char) * new_size);
 	if (!new_replacement)
-		error_printer(sh, "", MALLOC_FAIL, true);
+		error_printer(s, "", MALLOC_FAIL, true);
 	ft_memset(new_replacement, 0, new_size);
 	ft_strlcpy(new_replacement, *replace, size_now);
 	free(*replace);
@@ -32,7 +32,7 @@ void	realloc_space(t_shell *sh, char **replace, char *exp, t_token *tok)
 	*replace = new_replacement;
 }
 
-char	*expand_variable(t_shell *sh, char **replace, char *ptr, t_token *tok)
+char	*expand_variable(t_shell *s, char **replace, char *ptr, t_token *tok)
 {
 	char	*expansion;
 	int		len;
@@ -40,9 +40,9 @@ char	*expand_variable(t_shell *sh, char **replace, char *ptr, t_token *tok)
 	len = ft_strlen(ptr);
 	expansion = malloc(sizeof(char) * (len + 1));
 	if (!expansion)
-		error_printer(sh, "", MALLOC_FAIL, true);
+		error_printer(s, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, ptr, len + 1);
-	realloc_space(sh, replace, expansion, tok);
+	realloc_space(s, replace, expansion, tok);
 	return (expansion);
 }
 

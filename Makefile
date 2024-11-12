@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/11 13:56:06 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/12 09:42:43 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,11 +62,11 @@ SRC 		= ./src/main.c \
 			./src/builtins/execute_builtins.c \
 			./src/builtins/builtin_cd.c \
 			./src/builtins/builtin_export.c \
+			./src/builtins/builtin_export_utils.c \
 			./src/builtins/builtin_cd_tools.c \
 			./src/builtins/builtin_echo.c \
 			./src/builtins/builtin_exit.c \
-			./src//misc/str_join_four.c \
-			./src/misc/signals.c \
+			./src/signals/signals.c \
 			./src/exec/execute.c \
 			./src/exec/child_process.c \
 			./src/exec/assign_exec_values.c \

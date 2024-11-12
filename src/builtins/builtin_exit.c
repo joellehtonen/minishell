@@ -6,11 +6,11 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:10:53 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 11:45:43 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../inc/minishell.h"
 
 int	exit_exec(t_shell *shell, t_token *token)
 {
@@ -18,10 +18,10 @@ int	exit_exec(t_shell *shell, t_token *token)
 	int	index;
 
 	index = 0;
-	exit_code = 0; // is it correct?
+	exit_code = 0;
 	if (token->next)
 	{
-		if (token->next->next)
+		if (token->next->next && token->next->next->type != PIPE)
 			error_printer(shell, "", TOO_MANY_ARGS, true);
 		while (token->next->line[index] != '\0')
 		{

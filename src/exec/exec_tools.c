@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:39:08 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 13:04:15 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:40:16 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	count_str(t_token *token, int loop_count);
-
 static char	**free_param_arr(char **param_arr, int i);
 
 int	is_directory(char *path, t_shell *shell)

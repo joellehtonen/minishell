@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   param_and_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 13:13:09 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:40:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static void	check_empty(t_token *token, int loop_count, t_shell *shell);
-
 static char	*get_exec_path(t_envp *envp_copy, char *command, t_shell *shell);
 
 void	check_param(t_shell *shell, int loop_count)

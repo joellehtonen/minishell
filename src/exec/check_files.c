@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   check_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 12:50:31 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:40:27 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	check_access_print(t_token *token, t_shell *shell);
-
 static int	slash_count(char *path);
-
 static int	check_access_print_extra(t_token *token, t_shell *shell);
 
 void	check_all_files(t_token *token, t_exec *exec, int loop, t_shell *shell)

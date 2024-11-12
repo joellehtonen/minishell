@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 16:04:54 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:36:49 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	read_input(t_shell *shell)
 	{
 		create_prompt(shell);
 		set_up_signals(shell);
-		shell->user_input = readline(shell->prompt); //commented out for a larger tester
+		shell->user_input = readline(shell->prompt);
 		free_str(&shell->prompt);
 		if (g_signal == SIGINT)
 		{
