@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:53:34 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 10:39:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:01:11 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[], char *envp[])
 	argc_check(argc);
 	ft_memset(&shell, 0, sizeof(t_shell));
 	shell.user_input = NULL;
-	if (copy_envp(&shell, &shell.envp_copy, envp) == 1)
+	if (copy_envp(&shell.envp_copy, envp) == 1)
 		error_printer(&shell, "", MALLOC_FAIL, true);
 	shell.exit_code = read_input(&shell);
 	delete_envp(&shell.envp_copy);

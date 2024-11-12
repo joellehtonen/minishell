@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   envp_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:41:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 09:10:21 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:00:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
+int	copy_envp(t_envp **envp_copy, char *envp[])
 {
 	int		i;
 	t_envp	*new;
@@ -32,12 +32,7 @@ int	copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[])
 		ft_lstadd_back_envp(envp_copy, new);
 		i++;
 	}
-	(void)shell; // delete
-	/* if (copy_path(&shell->path, *envp_copy) == 1)
-		return (1);
-	if (copy_home(&shell->home, *envp_copy) == 1)
-		return (1); */
-	return (/* copy_uname(&shell->uname, *envp_copy) */0);
+	return (0);
 }
 
 int	copy_path(t_envp **path, t_envp *envp_copy)

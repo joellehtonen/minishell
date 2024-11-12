@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_tools_tokens_delete.c                         :+:      :+:    :+:   */
+/*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:04:53 by jlehtone         ###   ########.fr       */
+/*   Created: 2024/11/12 12:54:06 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/12 13:02:02 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	delete_one_token(t_token *lst)
-{
-	if (!lst || !lst->line)
-		return ;
-	free(lst->line);
-	free(lst);
-}
-
-void	delete_all_tokens(t_token **lst)
+int	unset_exec(t_envp **envp_copy, t_token *unset)
 {
 	t_token	*temp;
 
-	if (!lst)
-		return ;
-	while (*lst)
+	temp = unset->next;
+	while (temp && temp->type == ARG)
 	{
-		temp = (*lst)->next;
-		delete_one_token(*lst);
-		*lst = temp;
+		envp_remove_if_line(envp_copy, temp->line, ft_strncmp);
+		temp = temp->next;
 	}
-	*lst = NULL;
+	return (0);
 }

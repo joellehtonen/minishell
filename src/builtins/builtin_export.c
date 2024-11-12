@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 12:52:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:11:15 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static int	error_check_export(char *line);
 static void	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
 static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell);
-static int	export_exec_cont(char *line, t_envp **temp, t_shell *shell, int alloc);
-
-static int	only_digits_or_empty(char *str);
+static int	export_exec_cont(char *line, t_envp **temp, t_shell *s, int alloc);
 
 int	export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell)
 {
@@ -48,7 +46,7 @@ static int	error_check_export(char *str)
 		return (1);
 	if (only_digits_or_empty(str) == 1)
 		return (1);
-	return(check_str(str, -1, -1, -1));
+	return (check_str(str, -1, -1, -1));
 }
 
 static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell)
@@ -107,48 +105,5 @@ static int	export_exec_cont(char *line, t_envp **temp, t_shell *s, int alloc)
 		return (1);
 	}
 	ft_lstadd_back_envp(temp, new);
-	return (0);
-}
-
-static int	check_str(char *str, int minus, int plus, int equal)
-{
-	int	i;
-	
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '-')
-			minus = i;
-		if (str[i] == '+')
-			plus = i;
-		if (str[i] == '=')
-			equal = i;
-		if (minus > -1 && (equal == -1 || \
-			minus < equal))
-			return (1);
-		if (plus > -1 && \
-			((equal == -1 && str[i + 1] != '=') || \
-			plus + 1 < equal))
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-static int	only_digits_or_empty(char *str)
-{
-	int	i;
-	int	count;
-
-	i = 0;
-	count = 0;
-	while (str[i])
-	{
-		if (str[i] >= 48 && str[i] <= 57)
-			count++;
-		i++;
-	}
-	if (i == count)
-		return (1);
 	return (0);
 }

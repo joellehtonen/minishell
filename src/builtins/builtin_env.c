@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_tools_tokens_delete.c                         :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:04:53 by jlehtone         ###   ########.fr       */
+/*   Created: 2024/11/12 12:57:29 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/12 12:57:51 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	delete_one_token(t_token *lst)
+int	env_exec(t_envp *envp, t_shell *shell, t_token *env, int loop)
 {
-	if (!lst || !lst->line)
-		return ;
-	free(lst->line);
-	free(lst);
-}
+	t_token	*arg;
 
-void	delete_all_tokens(t_token **lst)
-{
-	t_token	*temp;
-
-	if (!lst)
-		return ;
-	while (*lst)
+	arg = find_token(env, loop, ARG);
+	if (arg)
 	{
-		temp = (*lst)->next;
-		delete_one_token(*lst);
-		*lst = temp;
+		error_printer(shell, arg->line, NO_FILE_DIR_COMM, true);
+		return (127);
 	}
-	*lst = NULL;
+	while (envp)
+	{
+		printf("%s\n", envp->line);
+		envp = envp->next;
+	}
+	free_and_exit(shell, 0);
+	return (0);
 }

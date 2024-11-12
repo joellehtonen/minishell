@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 12:52:38 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:11:44 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	fill_values_before_prompt(t_shell **shell)
 {
 	char	*new_pwd;	
-	
+
 	new_pwd = get_pwd((*shell)->home, *shell);
 	if (new_pwd)
 	{

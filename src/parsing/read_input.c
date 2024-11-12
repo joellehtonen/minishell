@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 12:52:52 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:04:32 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,6 @@ int	read_input(t_shell *shell)
 			g_signal = 0;
 			shell->exit_code = 130;
 		}
-		// if (isatty(fileno(stdin)))
-		// 	shell->user_input = readline(shell->prompt);
-		// else
-		// {
-		// 	char *line;
-		// 	line = get_next_line(fileno(stdin));
-		// 	shell->user_input = ft_strtrim(line, "\n");
-		// 	free(line);
-		// }
 		if (shell->user_input == NULL)
 			null_signal(shell, "");
 		if (input_error_check(shell) == SUCCESS)
@@ -52,7 +43,6 @@ int	read_input(t_shell *shell)
 
 static void	create_prompt(t_shell *shell)
 {
-	//free_str(&shell->pwd);
 	if (fill_values_before_prompt(&shell) == 1)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	shell->prompt = ft_strjoin_four(shell->uname, ":", shell->pwd, "$ ");
@@ -83,7 +73,6 @@ static void	handle_input(t_shell *shell)
 	clean_empty_nodes(shell);
 	assign_type(&shell->token_pointer);
 	assign_level(&shell->token_pointer, &shell->exec, shell);
-	//print_node(shell->token_pointer); //for testing
 	shell->exit_code = execute(shell);
 }
 

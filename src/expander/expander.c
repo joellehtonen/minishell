@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:00:49 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:12:08 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	check_content(t_shell *shell, t_token *token)
 			index++;
 		else if (token->line[index] == '$' && shell->single_quote == false)
 		{
-			// printf("replacement size is %ld\n", ft_strlen(replacement));
 			expansion = create_expansion(shell, token, &replacement, &index);
 			add_expansion(&replacement, &expansion, &copy_index, &index);
 		}

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 09:24:55 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:00:08 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	set_up_signals(t_shell *shell)
 {
 	struct sigaction	protocol;
 
-	//cleanup_here_doc(shell);
 	sigemptyset(&protocol.sa_mask);
 	protocol.sa_flags = SA_SIGINFO;
 	if (shell->in_subprocess == true)
@@ -42,8 +41,6 @@ void	clear_input_normal(int signal)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-	//add closing the pipes and file descriptors
-	//free_and exit?
 }
 
 void	clear_input_subprocess(int signal)

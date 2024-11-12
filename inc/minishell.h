@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 12:51:54 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:13:51 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ enum e_token_type
 	ARG,
 	REDIR_INPUT,
 	REDIR_OUTPUT,
-	DELIM, //needed?
+	DELIM,
 	INPUT,
 	OUTPUT,
 	PIPE,
-	FLAG, //needed?
+	FLAG,
 	SPACES
 };
 
@@ -137,7 +137,7 @@ typedef struct s_shell
 int		read_input(t_shell *shell);
 int		input_error_check(t_shell *shell);
 // list envp functions
-int		copy_envp(t_shell *shell, t_envp **envp_copy, char *envp[]);
+int		copy_envp(t_envp **envp_copy, char *envp[]);
 void	ft_lstadd_back_envp(t_envp **lst, t_envp *new);
 t_envp	*ft_lstnew_envp(char *content);
 t_envp	*ft_lstnew_envp_no_strdup(char *content);
@@ -161,14 +161,13 @@ t_token	*ft_lstnew_token(char *content);
 t_token	*ft_lstlast_token(t_token *lst);
 void	delete_one_token(t_token *lst);
 void	delete_all_tokens(t_token **lst);
-void	print_node(t_token *lst);
 // builtin functions
 int		exec_builtins(t_shell *shell, int loop);
 int		cd_exec(t_shell *shell, t_token *cd, int loop_count);
 char	*get_pwd(char *home, t_shell *shell);
 int		echo(t_shell *shell, t_token *echo_pointer);
 int		env_exec(t_envp *envp, t_shell *shell, t_token *env, int loop);
-int		unset_exec(t_envp **envp_copy, t_token *unset, int loop_count);
+int		unset_exec(t_envp **envp_copy, t_token *unset);
 int		exit_exec(t_shell *shell, t_token *token);
 int		export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell);
 int		if_builtin(t_shell *shell, int loop_count);
@@ -177,6 +176,8 @@ int		is_directory_new(char *path);
 char	*remove_plus(char *data);
 char	*append_export_line(char *existing, char *to_append);
 int		check_str(char *str, int minus, int plus, int equal);
+int		only_digits_or_empty(char *str);
+int		pwd_exec(t_shell *shell);
 // parsing functions
 void	tokenize_input(t_shell *shell);
 int		is_io(char c);
@@ -248,7 +249,6 @@ void	null_signal(t_shell *shell, char *arg);
 void	free_and_exit(t_shell *shell, int error);
 void	free_double_arr(char ***arr);
 void	error_printer(t_shell *shell, char *arg, char *message, int exit);
-int		free_all(char **arr_1, char **arr_2, char *str);
 int		free_two_str(char **str1, char **str2);
 int		free_str(char **str1);
 int		free_exec(t_exec **exec);

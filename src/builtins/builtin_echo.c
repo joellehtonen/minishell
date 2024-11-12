@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:33:11 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:01:37 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	echo_printing_loop(t_token *temp)
 	printed = false;
 	while (temp)
 	{
-		if (temp->type == PIPE) //maybe not extensive enough
+		if (temp->type == PIPE)
 			break ;
 		if (temp->type == ARG && ft_strlen(temp->line) != 0)
 		{

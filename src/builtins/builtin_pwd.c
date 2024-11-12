@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_tools_tokens_delete.c                         :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 15:59:02 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:04:53 by jlehtone         ###   ########.fr       */
+/*   Created: 2024/11/12 12:55:34 by jlehtone          #+#    #+#             */
+/*   Updated: 2024/11/12 13:14:09 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	delete_one_token(t_token *lst)
+int	pwd_exec(t_shell *shell)
 {
-	if (!lst || !lst->line)
-		return ;
-	free(lst->line);
-	free(lst);
-}
+	char	*pwd;
 
-void	delete_all_tokens(t_token **lst)
-{
-	t_token	*temp;
-
-	if (!lst)
-		return ;
-	while (*lst)
+	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
+	if (pwd == NULL)
 	{
-		temp = (*lst)->next;
-		delete_one_token(*lst);
-		*lst = temp;
+		error_printer(shell, "", MALLOC_FAIL, true);
+		return (1);
 	}
-	*lst = NULL;
+	if (getcwd(pwd, BUFF_SIZE) == NULL)
+	{
+		printf("%s\n", shell->pwd);
+		free_str(&pwd);
+		return (0);
+	}
+	printf("%s\n", pwd);
+	free(pwd);
+	return (0);
 }

@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:32:40 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 14:51:01 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:08:31 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static void	free_pipes(t_exec **exec);
-
 static void	free_here_doc_pipes(t_exec **exec);
 
 int	free_exec(t_exec **exec)
@@ -77,17 +76,6 @@ static void	free_here_doc_pipes(t_exec **exec)
 		free((*exec)->here_doc_pipe);
 		(*exec)->here_doc_pipe = NULL;
 	}
-}
-
-int	free_all(char **arr_1, char **arr_2, char *str)
-{
-	if (arr_1)
-		free_double_arr(&arr_1);
-	if (arr_2)
-		free_double_arr(&arr_2);
-	if (str)
-		free_str(&str);
-	return (1);
 }
 
 void	close_pipes_child(int loop_count, t_exec **exec)

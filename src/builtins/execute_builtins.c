@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 10:53:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:13:29 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	exec_builtins_extra(t_shell *shell, t_token	*token, int loop);
-static int	pwd_exec(t_shell *shell);
 
 int	exec_builtins(t_shell *shell, int loop)
 {
@@ -48,7 +47,7 @@ static int	exec_builtins_extra(t_shell *shell, t_token	*token, int loop)
 	if (find_token_line(token, loop, COMM, "unset"))
 	{
 		builtins = find_token_line(token, loop, COMM, "unset");
-		return (unset_exec(&shell->envp_copy, builtins, loop));
+		return (unset_exec(&shell->envp_copy, builtins));
 	}
 	if (find_token_line(token, loop, COMM, "echo"))
 	{
@@ -57,27 +56,5 @@ static int	exec_builtins_extra(t_shell *shell, t_token	*token, int loop)
 	}
 	if (find_token_line(token, loop, COMM, "pwd"))
 		return (pwd_exec(shell));
-	return (0);
-}
-
-static int	pwd_exec(t_shell *shell)
-{
-	char	*pwd;
-
-	pwd = (char *)malloc(BUFF_SIZE * sizeof(char));
-	if (pwd == NULL)
-	{
-		error_printer(shell, "", MALLOC_FAIL, true);
-		return (1);
-	}
-	if (getcwd(pwd, BUFF_SIZE) == NULL)
-	{
-		printf("%s\n", shell->pwd);
-		free_str(&pwd);
-		//error_printer(shell, "", GETCWD_FAIL, true);
-		return (0);
-	}
-	printf("%s\n", pwd);
-	free(pwd);
 	return (0);
 }

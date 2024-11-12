@@ -1,27 +1,29 @@
-BUILTINS: 
-- need to be able export or unset many at the same time
-
 LEAKS:
 - valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
 
-FIXED: if cd into directory and removing an upper directory, handle it somehow
 
-export | grep 'HOME 
-this doesnt work
 
-put env in alphabetical order?
+jlehtone:/home/jlehtone/Desktop/git_home/minishell/dir1/dir2$ cd dir3
+jlehtone:/home/jlehtone/Desktop/git_home/minishell/dir1/dir2/dir3$ ls
+jlehtone:/home/jlehtone/Desktop/git_home/minishell/dir1/dir2/dir3$ rm -rf ../../dir2/
+jlehtone:/home/jlehtone/Desktop/git_home/minishell/dir1/dir2/dir3$ pwd
+/home/jlehtone/Desktop/git_home/minishell/dir1/dir2/dir3
+jlehtone:/home/jlehtone/Desktop/git_home/minishell/dir1/dir2/dir3$ cd
+cd: HOME not set
+jlehtone:/home/jlehtone/Desktop/git_home/minishell/dir1/dir2/dir3$ cd ..
+Error retrieving current directory
+Segmentation fault (core dumped)
 
-< Makefile ""
-this should be command not found
 
-ambiguous redirect
-should be error, error code 1
+~ should expand to $HOME
 
-sometimes takes many exits / ctrl Ds to exit minishell
+signals
+ctrl \ = nothing in heredoc
+ctrl \ = child process exits ("QUIT")
+ctrl c behaves like ctrl d in heredoc
 
-FIXED env what
+shlvl needs to update and check for overflow
 
-FIXED  cd--
+if you unset $HOME and cd $HOME = segfault
 
-export T=e E=c S=h L=o
-$T$E$S$L
+ls <> test.txt

@@ -1,0 +1,15 @@
+42_minishell_tester
+a.out
+dir1
+inc
+libft
+main.c
+Makefile
+minishell
+minishell_tester
+notes.txt
+out1.txt
+out2.txt
+readline.supp
+src
+test_files

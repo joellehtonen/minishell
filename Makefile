@@ -6,7 +6,7 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/12 09:42:43 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/12 13:10:43 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,9 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtin_cd_tools.c \
 			./src/builtins/builtin_echo.c \
 			./src/builtins/builtin_exit.c \
+			./src/builtins/builtin_env.c \
+			./src/builtins/builtin_pwd.c \
+			./src/builtins/builtin_unset.c \
 			./src/signals/signals.c \
 			./src/exec/execute.c \
 			./src/exec/child_process.c \
@@ -74,11 +77,11 @@ SRC 		= ./src/main.c \
 			./src/exec/exec_tools_extra.c \
 			./src/exec/param_and_path.c \
 			./src/exec/pipe_and_fork.c \
-			./src/exec/here_doc.c \
-			./src/exec/here_doc_tools.c \
-			./src/exec/redir.c \
-			./src/exec/redir_tools.c \
-			./src/exec/redir_tools_2.c \
+			./src/here_doc/here_doc.c \
+			./src/here_doc/here_doc_tools.c \
+			./src/redir/redir.c \
+			./src/redir/redir_tools.c \
+			./src/redir/redir_tools_2.c \
 			./src/exec/check_files.c \
 			./src/free/exit.c \
 			./src/free/free_memory.c \
