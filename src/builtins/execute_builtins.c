@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 13:10:32 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 09:41:20 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	exec_builtins(t_shell *shell, int loop)
 		return (exit_exec(shell, builtins));
 	}
 	if (find_token_line(token, loop, COMM, "env"))
-		return (env_exec(shell->envp_copy, shell));
+		return (env_exec(shell->envp_copy, shell, token, loop));
 	if (find_token_line(token, loop, COMM, "export"))
 	{
 		builtins = find_token_line(token, loop, COMM, "export");
