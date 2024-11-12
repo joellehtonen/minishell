@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:13:51 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:32:47 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void	delete_envp(t_envp **copy_envp);
 void	delete_envp_part(t_envp **copy_envp, int i);
 char	choose_char(char *data);
 t_envp	*find_envp_line(t_envp *envp, char *line);
+t_envp	*find_envp_line_simple(t_envp *envp, char *line);
 // list token functions
 void	ft_lstadd_back_token(t_token **lst, t_token *new);
 t_token	*ft_lstnew_token(char *content);
@@ -215,7 +216,7 @@ char	*check_path(t_envp *paths, char **param, t_shell *shell);
 void	check_command_access(char **param, t_shell *shell);
 int		is_directory(char *path, t_shell *shell);
 int		is_file(char *path);
-void	pipe_and_fork(t_shell *shell, int i);
+void	pipe_and_fork(t_shell *shell, int loop);
 char	**envp_to_arr(t_envp *envp_copy);
 void	child_process(t_shell **shell, int loop_count);
 void	close_pipes_child(int loop_count, t_exec **exec);
@@ -234,6 +235,8 @@ int		check_out_folder(char *path);
 void	close_pipes_parent(t_exec **exec);
 int		open_file(t_shell *shell, t_token *temp, char *outfile, int loop);
 int		check_for_here_doc(t_shell *shell, t_token *token, int loop);
+int		change_shlvl(t_envp **envp, int add, t_shell *shell);
+char	*append_shlvl_line(char *line, int add, t_shell *shell);
 // miscellaneous
 t_token	*find_token(t_token *token, int loop_count, int token_type);
 t_token	*find_token_line(t_token *token, int loop, int token_type, char *line);

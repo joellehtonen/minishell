@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/12 13:10:43 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/12 15:19:03 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ SRC 		= ./src/main.c \
 			./src/exec/assign_exec_values.c \
 			./src/exec/exec_tools.c \
 			./src/exec/exec_tools_extra.c \
+			./src/exec/exec_tools_extra_2.c \
 			./src/exec/param_and_path.c \
 			./src/exec/pipe_and_fork.c \
 			./src/here_doc/here_doc.c \
