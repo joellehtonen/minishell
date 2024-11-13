@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:42 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:39:52 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:04:13 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	get_input_fd(t_shell **shell, int loop, int here_doc);
 static int	get_output_fd(t_shell **shell, int loop);
 static int	dup2_fd(int fd_1, int fd_2, int loop, t_shell **shell);
 
+// The function checks the redirects relevant to current children process
+// and gets the file descriptors of input and output files
 int	get_input_and_output(t_shell **shell, int loop)
 {
 	int		here_doc_index;

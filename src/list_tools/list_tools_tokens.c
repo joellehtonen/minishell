@@ -6,12 +6,14 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 14:48:54 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:51:51 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function finds a token of a given type which is also
+// characterized by certain loop / child process number
 t_token	*find_token(t_token *token, int loop_count, int token_type)
 {
 	t_token	*temp;
@@ -30,6 +32,7 @@ t_token	*find_token(t_token *token, int loop_count, int token_type)
 	return ((void *) 0);
 }
 
+// The function finds a token containing a given string
 t_token	*find_token_line(t_token *token, int loop, int token_type, char *line)
 {
 	t_token	*temp;
@@ -49,7 +52,9 @@ t_token	*find_token_line(t_token *token, int loop, int token_type, char *line)
 	return ((void *) 0);
 }
 
-t_token	*find_token_index(t_token *token, int loop_count, \
+// The function the last token which index is less than provided
+// index (less then "error_node")
+ t_token	*find_token_index(t_token *token, int loop_count, \
 	int token_type, int error_node)
 {
 	t_token	*temp;

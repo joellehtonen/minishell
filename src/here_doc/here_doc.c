@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:53:59 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:44:07 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell);
 static void	new_input(char **input, char **new_line, t_shell *shell);
 static char	*add_here_doc_memory(char *str, size_t add_len);
 
+// The function implements here_doc scenario
 int	here_doc(t_shell *shell)
 {
 	int		i;
@@ -36,6 +37,7 @@ int	here_doc(t_shell *shell)
 	return (0);
 }
 
+// The function saves data from here_doc to the write end of here_doc pipe
 static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 {
 	char	*delim;
@@ -58,6 +60,7 @@ static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 	return (0);
 }
 
+// The function reads here_doc input line by line
 static char	*get_here_doc_input(char *delim, t_shell *shell)
 {
 	char	*new_line;
@@ -86,6 +89,8 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 	return (here_doc_input);
 }
 
+// The function saves input from new line to the string
+// containing input from previous lines
 static void	new_input(char **input, char **new_line, t_shell *shell)
 {
 	*input = add_here_doc_memory(*input, ft_strlen(*new_line));
@@ -101,6 +106,8 @@ static void	new_input(char **input, char **new_line, t_shell *shell)
 	*new_line = get_next_line(0);
 }
 
+// The function allocated additional memory to the string
+// which is used to save here_doc input
 static char	*add_here_doc_memory(char *str, size_t add_len)
 {
 	char	*temp;
