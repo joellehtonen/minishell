@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 15:18:34 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:38:00 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	empty_path(t_envp **path_to_curr, t_shell *shell);
 static void	call_execve(t_shell **shell, char *path, int loop);
 static void	free_temp(t_shell **shell);
 
+// The function executes the child process
 void	child_process(t_shell **shell, int loop_count)
 {
 	t_exec	*exec;
@@ -45,6 +46,7 @@ void	child_process(t_shell **shell, int loop_count)
 	call_execve(shell, path, loop_count);
 }
 
+// The function checks if there is a token with command name
 static int	check_no_command(t_token *token, int loop_count)
 {
 	t_token	*temp;
@@ -61,6 +63,8 @@ static int	check_no_command(t_token *token, int loop_count)
 	return (1);
 }
 
+// The function creates an empty PATH is it earlier unset
+// in the environment
 static void	empty_path(t_envp **path_to_curr, t_shell *shell)
 {
 	char	*pwd;
@@ -78,6 +82,7 @@ static void	empty_path(t_envp **path_to_curr, t_shell *shell)
 	ft_lstadd_back_envp(path_to_curr, new);
 }
 
+// The function executes the command using execve
 static void	call_execve(t_shell **shell, char *path, int loop)
 {
 	if (find_token_line((*shell)->token_pointer, loop, COMM, "./minishell"))
@@ -93,6 +98,7 @@ static void	call_execve(t_shell **shell, char *path, int loop)
 	}
 }
 
+// The function frees temporary allocated memory
 static void	free_temp(t_shell **shell)
 {
 	free_str(&(*shell)->user_input);

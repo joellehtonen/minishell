@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 11:00:43 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:31:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	only_one_builtin(t_shell *shell);
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell);
 void		close_pipes_parent(t_exec **exec);
 
+// The function executes the commands passed by user
 int	execute(t_shell *shell)
 {
 	t_exec	*exec;
@@ -43,6 +44,8 @@ int	execute(t_shell *shell)
 	return (0);
 }
 
+// If there is only command (no pipes),
+// and this command is a builtin
 static int	only_one_builtin(t_shell *shell)
 {
 	int		exit_status;
@@ -66,6 +69,7 @@ static int	only_one_builtin(t_shell *shell)
 	return (exit_status);
 }
 
+// The function waits for all children processes to finish
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 {
 	int	wait_error;
@@ -88,6 +92,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	set_up_signals(shell);
 }
 
+// The function closes all pipes in parent process
 void	close_pipes_parent(t_exec **exec)
 {
 	int		i;

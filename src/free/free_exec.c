@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:32:40 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:08:31 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:23:23 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	free_pipes(t_exec **exec);
 static void	free_here_doc_pipes(t_exec **exec);
 
+// The function frees the temporary struct "exec"
 int	free_exec(t_exec **exec)
 {
 	if (!(*exec))
@@ -36,6 +37,7 @@ int	free_exec(t_exec **exec)
 	return (1);
 }
 
+// The function frees the allocated pipes
 static void	free_pipes(t_exec **exec)
 {
 	int	i;
@@ -57,6 +59,7 @@ static void	free_pipes(t_exec **exec)
 	}
 }
 
+// The function frees the allocated here_doc pipes
 static void	free_here_doc_pipes(t_exec **exec)
 {
 	int	i;
@@ -78,6 +81,7 @@ static void	free_here_doc_pipes(t_exec **exec)
 	}
 }
 
+// The function closes open pipes (called in a child process)
 void	close_pipes_child(int loop_count, t_exec **exec)
 {
 	int		i;

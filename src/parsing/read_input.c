@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:00:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:31:19 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void		null_signal(t_shell *shell, char *arg);
 static void	handle_input(t_shell *shell);
 static void	clean_empty_nodes(t_shell *shell);
 
+// The function gets user input from the prompt printed by minishell
 int	read_input(t_shell *shell)
 {
 	shell->pwd = get_pwd(shell->home, shell);
@@ -41,6 +42,7 @@ int	read_input(t_shell *shell)
 	return (shell->exit_code);
 }
 
+// The function creates a minishell prompt
 static void	create_prompt(t_shell *shell)
 {
 	if (fill_values_before_prompt(&shell) == 1)
@@ -66,6 +68,7 @@ void	null_signal(t_shell *shell, char *arg)
 	}
 }
 
+// The function handles user input and then passes it to Execute
 static void	handle_input(t_shell *shell)
 {
 	tokenize_input(shell);
@@ -76,6 +79,7 @@ static void	handle_input(t_shell *shell)
 	shell->exit_code = execute(shell);
 }
 
+// The function clean empty nodes if there are any
 static void	clean_empty_nodes(t_shell *shell)
 {
 	t_token	*temp;

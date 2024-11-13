@@ -3,15 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 16:05:30 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:22:07 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static void	write_error_code(t_shell *shell, char *message);
+
+// The function prints the error message provided, locates correct exit code,
+// and calls a freeing program if requested
+void	error_printer(t_shell *shell, char *arg, char *message, int exit)
+{
+	write(2, arg, ft_strlen(arg));
+	write(2, message, ft_strlen(message));
+	write_error_code(shell, message);
+	if (exit == true)
+		free_and_exit(shell, 1);
+}
+
+// The function returns the error code based on the error message provided
 static void	write_error_code(t_shell *shell, char *message)
 {
 	if (ft_strncmp(CMD_NOT_FOUND, message, ft_strlen(message)) == 0
@@ -27,15 +41,8 @@ static void	write_error_code(t_shell *shell, char *message)
 		shell->exit_code = 1;
 }
 
-void	error_printer(t_shell *shell, char *arg, char *message, int exit)
-{
-	write(2, arg, ft_strlen(arg));
-	write(2, message, ft_strlen(message));
-	write_error_code(shell, message);
-	if (exit == true)
-		free_and_exit(shell, 1);
-}
-
+// The function closes remaining file descriptors, frees allocated memory
+// and exits
 void	free_and_exit(t_shell *shell, int error)
 {
 	if (shell->only_one_builtin == 1 && shell->token_pointer

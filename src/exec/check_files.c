@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:40:27 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:34:32 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	check_access_print(t_token *token, t_shell *shell);
 static int	slash_count(char *path);
 static int	check_access_print_extra(t_token *token, t_shell *shell);
 
+// The function checks all files passed by user in the prompt
+// for access problems
 void	check_all_files(t_token *token, t_exec *exec, int loop, t_shell *shell)
 {
 	t_token	*temp;
@@ -40,6 +42,8 @@ void	check_all_files(t_token *token, t_exec *exec, int loop, t_shell *shell)
 	}
 }
 
+// The function checks the file for access problems and prints out
+// error message if needed
 static int	check_access_print(t_token *token, t_shell *shell)
 {
 	if (token->type == REDIR_INPUT && \
@@ -69,6 +73,8 @@ static int	check_access_print(t_token *token, t_shell *shell)
 	return (check_access_print_extra(token, shell));
 }
 
+// The function checks the file for access problems and prints out
+// error message if needed
 static int	check_access_print_extra(t_token *token, t_shell *shell)
 {
 	if (token->type == REDIR_OUTPUT && is_directory_new(token->next->line) == 0)
@@ -94,6 +100,7 @@ static int	check_access_print_extra(t_token *token, t_shell *shell)
 	return (0);
 }
 
+// The function checks if the path provided by user is a folder
 int	check_out_folder(char *path)
 {
 	int		last_slash;
@@ -123,6 +130,7 @@ int	check_out_folder(char *path)
 	return (0);
 }
 
+// The function counts the number of slashes in the path
 static int	slash_count(char *path)
 {
 	int	count;

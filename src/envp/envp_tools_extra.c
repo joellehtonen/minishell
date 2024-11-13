@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:39:23 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 15:33:13 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:12:42 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	check_len(char *line, char *data);
 
+// The function remove the node from minishell environment
+// if it contains the string provided
 void	envp_remove_if_line(t_envp **lst, char *data, int (*cmp)())
 {
 	t_envp	*temp;
@@ -37,6 +39,7 @@ void	envp_remove_if_line(t_envp **lst, char *data, int (*cmp)())
 	}
 }
 
+// The function calculates the length of string to be compared
 static int	check_len(char *line, char *data)
 {
 	int	len;
@@ -49,6 +52,8 @@ static int	check_len(char *line, char *data)
 	return (len);
 }
 
+// The function remove the node from minishell environment
+// if it contains the string provided, modified for "export" command
 void	envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
 {
 	t_envp	*temp;
@@ -76,6 +81,7 @@ void	envp_remove_if_export(t_envp **lst, char *data, int (*cmp)())
 	}
 }
 
+// The function chooses the character to be used as a separator
 char	choose_char(char *data)
 {
 	int	i;
@@ -93,6 +99,8 @@ char	choose_char(char *data)
 	return ('=');
 }
 
+// The function finds the node from minishell environment
+// which contains the string provided
 t_envp	*find_envp_line(t_envp *envp, char *line)
 {
 	t_envp	*temp;
