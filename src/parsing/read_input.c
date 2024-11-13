@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:00:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:20:51 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ int	read_input(t_shell *shell)
 		set_up_signals(shell);
 		shell->user_input = readline(shell->prompt);
 		free_str(&shell->prompt);
-		if (g_signal == SIGINT)
+		if (g_signal == SIGINT || g_signal == SIGQUIT)
 		{
 			g_signal = 0;
-			shell->exit_code = 130;
+			if (g_signal == SIGINT)
+				shell->exit_code = 130;
+			if (g_signal == SIGQUIT)
+				shell->exit_code = 131;
 		}
 		if (shell->user_input == NULL)
 			null_signal(shell, "");

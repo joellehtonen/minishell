@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 11:00:43 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:10:11 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	int	wait_error;
 
 	shell->in_child = true;
+	printf("in child status is %d\n", shell->in_child);
 	set_up_signals(shell);
 	wait_error = waitpid(exec->pid[count], &exec->status, 0);
 	if (wait_error == -1 && errno == EINTR)
@@ -78,13 +79,16 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	else if (wait_error == -1)
 		error_printer(shell, "", WAITPID_ERROR, true);
 	count = 0;
+	printf("count is %d\n", count);
 	while (count < exec->pipe_num)
 	{
 		if (waitpid(exec->pid[count], NULL, 0) == -1)
 			error_printer(shell, "", WAITPID_ERROR, true);
 		count++;
+		printf("count is %d\n", count);
 	}
 	shell->in_child = false;
+	printf("in child status is %d\n", shell->in_child);
 	set_up_signals(shell);
 }
 

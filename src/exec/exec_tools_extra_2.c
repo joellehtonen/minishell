@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tools_extra_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 15:35:21 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:15:35 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*append_shlvl_line(char *line, int add, t_shell *shell)
 	char	*new_data;
 	int		old_num;
 	char	*new_num;
-	
+
 	old_num = ft_atoi(ft_strrchr(line, '=') + 1); // overflow? extra symbols?
 	new_num = ft_itoa(old_num + add);
 	new_data = ft_strjoin("SHLVL=", new_num);

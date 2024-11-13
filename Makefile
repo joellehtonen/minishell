@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/12 15:19:03 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/13 16:08:32 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SRC 		= ./src/main.c \
 			./src/builtins/builtin_pwd.c \
 			./src/builtins/builtin_unset.c \
 			./src/signals/signals.c \
+			./src/signals/signals_utils.c \
 			./src/exec/execute.c \
 			./src/exec/child_process.c \
 			./src/exec/assign_exec_values.c \

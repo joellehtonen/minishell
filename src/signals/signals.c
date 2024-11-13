@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:25:07 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:58:54 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,71 +14,48 @@
 
 sig_atomic_t	g_signal = 0;
 
-void	clear_input_normal(int signal);
-void	clear_input_subprocess(int signal);
-void	child_signals(int sig);
+static void	setup_sigint(t_shell *shell, struct sigaction *sigint);
+static void	setup_sigquit(t_shell *shell, struct sigaction *sigquit);
 
 void	set_up_signals(t_shell *shell)
 {
-	struct sigaction	protocol;
+	struct sigaction	sigint;
+	struct sigaction	sigquit;
 
-	sigemptyset(&protocol.sa_mask);
-	protocol.sa_flags = SA_SIGINFO;
+	setup_sigint(shell, &sigint);
+	if (sigaction(SIGINT, &sigint, NULL) < 0)
+		error_printer(shell, "", SIGNAL_ERROR, true);
+	setup_sigquit(shell, &sigquit);
+	if (sigaction(SIGQUIT, &sigquit, NULL) < 0)
+		error_printer(shell, "", SIGNAL_ERROR, true);
+	return ;
+}
+
+static void	setup_sigint(t_shell *shell, struct sigaction *sigint)
+{
+	sigemptyset(&sigint->sa_mask);
+	sigint->sa_flags = SA_SIGINFO;
 	if (shell->in_here_doc == true || shell->in_child == true)
-		protocol.sa_handler = &clear_input_subprocess;
+	{
+		if (shell->in_child == true)
+			sigint->sa_flags = SA_RESTART;
+		sigint->sa_handler = &clear_input_subprocess;	
+	}
 	else
-		protocol.sa_handler = &clear_input_normal;
-		
-	if (sigaction(SIGINT, &protocol, NULL) < 0)
-		error_printer(shell, "", SIGNAL_ERROR, true);
-	protocol.sa_handler = SIG_IGN;
-	if (sigaction(SIGQUIT, &protocol, NULL) < 0)
-		error_printer(shell, "", SIGNAL_ERROR, true);
-	// if (shell->in_child == true)
-	// {
-	// 	// signal(SIGINT, SIG_DFL);
-	// 	// signal(SIGQUIT, SIG_DFL);
-	// 	signal(SIGINT, child_signals);
-	// 	signal(SIGQUIT, child_signals);
-	// }
-	// else if (shell->in_here_doc == true)
-	// {
-	// 	signal(SIGINT, clear_input_subprocess);
-	// 	signal(SIGQUIT, SIG_IGN);
-	// }
-	// else 
-	// {
-	// 	signal(SIGINT, clear_input_normal);
-	// 	signal(SIGQUIT, SIG_IGN);
-	// }
+		sigint->sa_handler = &clear_input_normal;
+	return ;
 }
 
-void	clear_input_normal(int signal)
+static void	setup_sigquit(t_shell *shell, struct sigaction *sigquit)
 {
-	g_signal = signal;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	clear_input_subprocess(int signal)
-{
-	g_signal = signal;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-}
-
-void	child_signals(int sig)
-{
-	if (sig == SIGINT)
+	sigemptyset(&sigquit->sa_mask);
+	sigquit->sa_flags = SA_SIGINFO;
+	if (shell->in_child == true)
 	{
-		printf("\n");
+		sigquit->sa_flags = SA_RESTART;
+		sigquit->sa_handler = &quit_process;
 	}
-	if (sig == SIGQUIT)
-	{
-		printf("Quit\n");
-		exit(0);
-	}
+	else
+		sigquit->sa_handler = SIG_IGN;
+	return ;
 }

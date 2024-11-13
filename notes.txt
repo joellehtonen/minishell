@@ -25,8 +25,8 @@ FIXED ctrl c behaves like ctrl d in heredoc
 after sleep 1000 and ctrl c, ctrl d does not work (just adds newline)!
 ctrl c acts funky too
 
+make sure error code is 131 after "core dump"
+
 operations with shlvl - check for overflow
 
 ls <> test.txt
-
-
