@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:02:30 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:12:36 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ char	*append_shlvl_line(char *line, int add, t_shell *shell)
 	char	*new_data;
 	int		new_num;
 	char	*new_num_str;
-	
-	new_num = ft_atoi(ft_strrchr(line, '=') + 1) + add; // overflow? extra symbols?
+
+	new_num = ft_atoi(ft_strrchr(line, '=') + 1) + add;
 	if (new_num <= 0)
 		new_num = 1;
 	new_num_str = ft_itoa(new_num);

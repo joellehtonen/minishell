@@ -6,11 +6,11 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:39:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:07:33 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:11:27 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "libft.h"
+#include "libft.h"
 
 static const char	*whites(const char *str)
 {
