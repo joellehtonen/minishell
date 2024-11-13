@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:04:32 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:00:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ static void	create_prompt(t_shell *shell)
 void	null_signal(t_shell *shell, char *arg)
 {
 	shell->exit_code = 130;
-	if (shell->in_subprocess == false)
+	if (shell->in_child == false && shell->in_here_doc == false)
 	{
 		printf("exit\n");
 		free_and_exit(shell, 0);
 	}
-	if (shell->in_subprocess == true)
+	if (shell->in_here_doc == true && g_signal != SIGINT)
 	{
 		printf("Warning: here-document delimited by end-of-file ");
 		printf("(wanted '%s')\n", arg);

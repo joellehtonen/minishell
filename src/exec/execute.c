@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:40:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:00:43 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 {
 	int	wait_error;
 
-	shell->in_subprocess = true;
+	shell->in_child = true;
 	set_up_signals(shell);
 	wait_error = waitpid(exec->pid[count], &exec->status, 0);
 	if (wait_error == -1 && errno == EINTR)
@@ -84,7 +84,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 			error_printer(shell, "", WAITPID_ERROR, true);
 		count++;
 	}
-	shell->in_subprocess = false;
+	shell->in_child = false;
 	set_up_signals(shell);
 }
 
