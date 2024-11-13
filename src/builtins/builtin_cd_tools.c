@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:57:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 14:04:53 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:39:50 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static char	*handle_home(t_shell *shell, t_token *arg);
 static char	*new_pwd(t_token *arg, t_shell *shell);
 static char	*get_old_pwd(t_envp *envp_copy, t_shell *shell);
 
+// The function returns a new path based on the argument provided
 char	*get_new_path(t_shell *shell, t_token *arg)
 {
 	if (ft_strncmp(arg->line, "-\0", 2) == 0)

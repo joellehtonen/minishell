@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:35:23 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:02:25 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	set_up_signals(t_shell *shell)
 	struct sigaction	protocol;
 
 	sigemptyset(&protocol.sa_mask);
-	protocol.sa_flags = SA_SIGINFO;
+	protocol.sa_flags = SA_SIGINFO | SA_RESTART;
 	if (shell->in_here_doc == true || shell->in_child == true)
 		protocol.sa_handler = &clear_input_subprocess;
 	else
