@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:12:08 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:11:10 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,25 @@
 void	check_content(t_shell *shell, t_token *token);
 char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
+void	expand_tilde(t_shell *shell, t_token *temp);
 
 void	expander(t_shell *shell)
 {
 	t_token	*temp;
+	int		len;
 
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
+		len = ft_strlen(temp->line);
 		if (ft_strchr(temp->line, '\'') != NULL
 			|| ft_strchr(temp->line, '\"') != NULL
 			|| ft_strchr(temp->line, '$') != NULL)
 		{
 			check_content(shell, temp);
 		}
+		if (ft_strchr(temp->line, '~') != NULL && len == 1)
+			expand_tilde(shell, temp);
 		temp = temp->next;
 	}
 }
@@ -97,9 +102,28 @@ void	add_expansion(char **replace, char **exp, int *copy_index, int *index)
 		return ;
 	len = ft_strlen(*replace) + ft_strlen(*exp) + 1;
 	ft_strlcat(*replace, *exp, len);
-	*copy_index += ft_strlen(*exp);
-	if (ft_strncmp(*exp, "$", ft_strlen(*exp)) == 0 && ft_strlen(*exp) != 0)
-		(*index)++;
+	if (copy_index != NULL)
+		*copy_index += ft_strlen(*exp);
+	if (index != NULL)
+	{
+		if (ft_strncmp(*exp, "$", ft_strlen(*exp)) == 0 && ft_strlen(*exp) != 0)
+			(*index)++;
+	}
 	free(*exp);
 	return ;
+}
+
+void	expand_tilde(t_shell *shell, t_token *temp)
+{
+	char	*value_pointer;
+	char	*replacement;
+	char	*expansion;
+
+	replacement = ft_strdup("");
+	value_pointer = find_variable(shell, "HOME", 4);
+	expansion = expand_variable(shell, &replacement, value_pointer, temp);
+	add_expansion(&replacement, &expansion, 0, 0);
+	free(value_pointer);
+	free(temp->line);
+	temp->line = replacement;
 }
