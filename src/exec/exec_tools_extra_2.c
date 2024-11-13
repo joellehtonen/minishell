@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 15:35:21 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:02:30 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ int	change_shlvl(t_envp **envp, int add, t_shell *shell)
 char	*append_shlvl_line(char *line, int add, t_shell *shell)
 {
 	char	*new_data;
-	int		old_num;
-	char	*new_num;
+	int		new_num;
+	char	*new_num_str;
 	
-	old_num = ft_atoi(ft_strrchr(line, '=') + 1); // overflow? extra symbols?
-	new_num = ft_itoa(old_num + add);
-	new_data = ft_strjoin("SHLVL=", new_num);
+	new_num = ft_atoi(ft_strrchr(line, '=') + 1) + add; // overflow? extra symbols?
+	if (new_num <= 0)
+		new_num = 1;
+	new_num_str = ft_itoa(new_num);
+	new_data = ft_strjoin("SHLVL=", new_num_str);
 	if (!new_data)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	return (new_data);
