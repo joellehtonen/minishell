@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 16:06:35 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:53:59 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 	char	*delim;
 	char	*here_doc_input;
 
-	shell->in_subprocess = true;
+	shell->in_here_doc = true;
 	set_up_signals(shell);
 	delim = redir->next->line;
 	here_doc_input = get_here_doc_input(delim, shell);
@@ -81,7 +81,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 			null_signal(shell, delim);
 	}
 	free_str(&new_line);
-	shell->in_subprocess = false;
+	shell->in_here_doc = false;
 	set_up_signals(shell);
 	return (here_doc_input);
 }

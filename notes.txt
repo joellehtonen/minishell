@@ -15,13 +15,18 @@ Error retrieving current directory
 Segmentation fault (core dumped)
 
 
-~ should expand to $HOME
+FIXED ~ should expand to $HOME
 
 signals
 ctrl \ = nothing in heredoc
 ctrl \ = child process exits ("QUIT")
-ctrl c behaves like ctrl d in heredoc
+FIXED ctrl c behaves like ctrl d in heredoc
+
+after sleep 1000 and ctrl c, ctrl d does not work (just adds newline)!
+ctrl c acts funky too
 
 operations with shlvl - check for overflow
 
 ls <> test.txt
+
+

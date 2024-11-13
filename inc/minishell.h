@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:05:42 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:28:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ typedef struct s_shell
 	int		single_quote;
 	int		double_quote;
 	int		only_one_builtin;
-	int		in_subprocess;
+	int		in_child;
+	int		in_here_doc;
 	int		exit_code;
 }	t_shell;
 
@@ -202,6 +203,7 @@ int		handle_quotes(t_shell *shell, t_token *token, int index);
 int		is_exception(t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
 void	realloc_space(t_shell *sh, char **replace, char *exp, t_token *tok);
+void	expand_tilde(t_shell *shell, t_token *temp);
 // syntax check
 int		count_io(t_shell *shell, int index);
 int		check_consecutive_io(t_shell *shell, int index);
