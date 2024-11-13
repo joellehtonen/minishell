@@ -6,12 +6,13 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:12:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:39:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function changes the SHLVL value in minishell environment
 int	change_shlvl(t_envp **envp, int add, t_shell *shell)
 {
 	t_envp	*temp;
@@ -35,6 +36,7 @@ int	change_shlvl(t_envp **envp, int add, t_shell *shell)
 	return (0);
 }
 
+// The function modifies the string containing SHLVL value
 char	*append_shlvl_line(char *line, int add, t_shell *shell)
 {
 	char	*new_data;

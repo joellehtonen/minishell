@@ -6,12 +6,14 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:41:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:11:45 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:14:30 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function copies environment variables from original shell
+// to a linked list
 int	copy_envp(t_envp **envp_copy, char *envp[])
 {
 	int		i;
@@ -35,6 +37,7 @@ int	copy_envp(t_envp **envp_copy, char *envp[])
 	return (0);
 }
 
+// The function copies PATH variable from minishell environment
 int	copy_path(t_envp **path, t_envp *envp_copy)
 {
 	while (envp_copy)
@@ -47,6 +50,7 @@ int	copy_path(t_envp **path, t_envp *envp_copy)
 	return (0);
 }
 
+// The function copies HOME variable from minishell environment
 int	copy_home(char **home, t_envp *envp_copy)
 {
 	while (envp_copy)
@@ -65,6 +69,7 @@ int	copy_home(char **home, t_envp *envp_copy)
 	return (0);
 }
 
+// The function copies USER variable from minishell environment
 int	copy_uname(char **uname, t_envp *envp_copy)
 {
 	while (envp_copy)
@@ -93,6 +98,8 @@ int	copy_uname(char **uname, t_envp *envp_copy)
 	return (0);
 }
 
+// The function finds the node from minishell environment
+// which contains the string provided (simplified)
 t_envp	*find_envp_line_simple(t_envp *envp, char *line)
 {
 	t_envp	*temp;

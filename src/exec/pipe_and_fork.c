@@ -6,12 +6,13 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:12:08 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:09:49 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function creates a pipe and forks the process
 void	pipe_and_fork(t_shell *shell, int loop)
 {
 	t_exec	*exec;

@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:05:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 10:02:45 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:24:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static void	allocate_pipes(t_exec *exec, t_shell *shell);
 
+// The function allocates "exec" struct which will be used
+// to hold temporary variables for every user generated prompt
 void	assign_exec_values(t_shell *shell)
 {
 	t_exec	*exec;
@@ -26,6 +28,7 @@ void	assign_exec_values(t_shell *shell)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
+// The function allocates pipes for a new user generated prompt
 static void	allocate_pipes(t_exec *exec, t_shell *shell)
 {
 	int	i;
@@ -43,6 +46,7 @@ static void	allocate_pipes(t_exec *exec, t_shell *shell)
 	}
 }
 
+// The function allocates pipes to pass the data from here_doc
 void	allocate_here_doc(t_exec *exec, t_shell *shell)
 {
 	int		i;
