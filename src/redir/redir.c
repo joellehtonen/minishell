@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:42 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 12:04:13 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:50:11 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	get_input_and_output(t_shell **shell, int loop)
 	return (0);
 }
 
+// The function goes through input redirects and duplicates a needed
+// files descriptor to STD_IN
 static int	get_input_fd(t_shell **shell, int loop, int here_doc)
 {
 	t_exec	*exec;
@@ -61,6 +63,8 @@ static int	get_input_fd(t_shell **shell, int loop, int here_doc)
 	return (0);
 }
 
+// The function goes through input redirects and duplicates a needed
+// files descriptor to STD_OUT
 static int	get_output_fd(t_shell **shell, int loop)
 {
 	t_exec	*exec;
@@ -84,6 +88,7 @@ static int	get_output_fd(t_shell **shell, int loop)
 	return (0);
 }
 
+// The function duplicated a file descriptor using dup2
 static int	dup2_fd(int fd_1, int fd_2, int loop, t_shell **shell)
 {
 	if (dup2(fd_1, fd_2) == -1)

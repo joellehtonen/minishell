@@ -6,14 +6,16 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:21 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 14:48:00 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 13:09:34 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	get_index(t_shell *shell, t_token *token, t_token *temp, int loop);
+static int	get_index(t_shell *shell, t_token *token, t_token *temp, int loop);
 
+// The function looks for the token containing a path to output file 
+// (not using recursion) and attempts to open it
 int	check_out_no_recur(t_shell *s, t_token *tok, int loop, int error_node)
 {
 	t_token	*temp;
@@ -35,6 +37,7 @@ int	check_out_no_recur(t_shell *s, t_token *tok, int loop, int error_node)
 		return (open_file(s, temp, outfile, loop));
 }
 
+// The function attempts to open the file
 int	open_file(t_shell *shell, t_token *temp, char *outfile, int loop)
 {
 	if (ft_strncmp(temp->line, ">\0", 2) == 0)
@@ -50,6 +53,7 @@ int	open_file(t_shell *shell, t_token *temp, char *outfile, int loop)
 	return (0);
 }
 
+// The function returns the number of here_doc tokens in user input
 int	check_for_here_doc(t_shell *shell, t_token *token, int loop)
 {
 	t_token	*temp;
@@ -66,7 +70,8 @@ int	check_for_here_doc(t_shell *shell, t_token *token, int loop)
 	return (get_index(shell, token, temp, loop));
 }
 
-int	get_index(t_shell *shell, t_token *token, t_token *temp, int loop)
+// The function calculates the number of here_doc tokens
+static int	get_index(t_shell *shell, t_token *token, t_token *temp, int loop)
 {
 	t_token	*res;
 	int		here_doc_index;

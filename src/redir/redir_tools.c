@@ -6,12 +6,14 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:04:25 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 13:32:25 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 12:52:54 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function looks for the token containing a path to input file 
+// and attempts to open it
 int	check_for_input(t_shell *shell, t_token *token, int loop, int input)
 {
 	t_token	*temp;
@@ -33,6 +35,8 @@ int	check_for_input(t_shell *shell, t_token *token, int loop, int input)
 	return (check_for_input(shell, temp->next, loop, 1));
 }
 
+// The function looks for the token containing a path to output file 
+// and attempts to open it
 int	check_for_output(t_shell *shell, t_token *token, int loop, int output)
 {
 	t_token	*temp;
