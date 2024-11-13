@@ -22,8 +22,6 @@ ctrl \ = nothing in heredoc
 ctrl \ = child process exits ("QUIT")
 ctrl c behaves like ctrl d in heredoc
 
-shlvl needs to update and check for overflow
-
-if you unset $HOME and cd $HOME = segfault
+operations with shlvl - check for overflow
 
 ls <> test.txt

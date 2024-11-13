@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:57:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 11:22:16 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:04:53 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char	*new_pwd(t_token *arg, t_shell *shell)
 	{
 		error_printer(shell, "", GETCWD_FAIL, true);
 		free(old_path);
-		old_path = ft_strdup(shell->home);
+		old_path = ft_strdup("/");
 		return (old_path);
 	}
 	else

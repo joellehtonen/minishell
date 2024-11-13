@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:40:23 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:18:34 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	check_no_command(t_token *token, int loop_count);
 static void	empty_path(t_envp **path_to_curr, t_shell *shell);
-static void	call_execve(t_shell **shell, char *path);
+static void	call_execve(t_shell **shell, char *path, int loop);
 static void	free_temp(t_shell **shell);
 
 void	child_process(t_shell **shell, int loop_count)
@@ -42,7 +42,7 @@ void	child_process(t_shell **shell, int loop_count)
 	path = check_path((*shell)->path, (*shell)->exec->param, *shell);
 	if (path == NULL)
 		error_printer(*shell, "", MALLOC_FAIL, true);
-	call_execve(shell, path);
+	call_execve(shell, path, loop_count);
 }
 
 static int	check_no_command(t_token *token, int loop_count)
@@ -78,8 +78,10 @@ static void	empty_path(t_envp **path_to_curr, t_shell *shell)
 	ft_lstadd_back_envp(path_to_curr, new);
 }
 
-static void	call_execve(t_shell **shell, char *path)
+static void	call_execve(t_shell **shell, char *path, int loop)
 {
+	if (find_token_line((*shell)->token_pointer, loop, COMM, "./minishell"))
+		change_shlvl(&((*shell)->envp_copy), 1, *shell);
 	(*shell)->envp_str = envp_to_arr((*shell)->envp_copy);
 	if ((*shell)->envp_str == NULL)
 		error_printer(*shell, "", MALLOC_FAIL, true);

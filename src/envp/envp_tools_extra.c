@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_tools_extra.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:39:23 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:25:27 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:33:13 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

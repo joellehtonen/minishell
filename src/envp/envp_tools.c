@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:41:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:00:42 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:32:18 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,18 @@ int	copy_uname(char **uname, t_envp *envp_copy)
 	if (!*uname)
 		return (1);
 	return (0);
+}
+
+t_envp	*find_envp_line_simple(t_envp *envp, char *line)
+{
+	t_envp	*temp;
+
+	temp = envp;
+	while (temp)
+	{
+		if (ft_strncmp(temp->line, line, ft_strlen(line)) == 0)
+			return (temp);
+		temp = temp->next;
+	}
+	return ((void *) 0);
 }
