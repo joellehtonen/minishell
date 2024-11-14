@@ -1,16 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_input_tools.c                                 :+:      :+:    :+:   */
+/*   read_input_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:11:44 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:23:17 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	handle_readline_signal(t_shell *shell)
+{
+	if (g_signal == SIGINT || g_signal == SIGQUIT)
+	{
+		g_signal = 0;
+		if (g_signal == SIGINT)
+			shell->exit_code = 130;
+		// if (g_signal == SIGQUIT)
+		// 	shell->exit_code = 131;
+	}
+	return ;
+}
+
+void	null_signal(t_shell *shell, char *arg)
+{
+	if (shell->in_child == false && shell->in_here_doc == false)
+	{
+		shell->exit_code = 0;
+		printf("exit\n");
+		free_and_exit(shell, 0);
+	}
+	if (shell->in_here_doc == true && g_signal != SIGINT)
+	{
+		shell->exit_code = 130;
+		printf("Warning: here-document delimited by end-of-file ");
+		printf("(wanted '%s')\n", arg);
+	}
+	return ;
+}
 
 int	fill_values_before_prompt(t_shell **shell)
 {

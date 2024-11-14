@@ -18,14 +18,13 @@ Segmentation fault (core dumped)
 FIXED ~ should expand to $HOME
 
 signals
-ctrl \ = nothing in heredoc
-ctrl \ = child process exits ("QUIT")
+FIXED ctrl \ = nothing in heredoc
+FIXED ctrl \ = child process exits ("QUIT")
 FIXED ctrl c behaves like ctrl d in heredoc
 
-after sleep 1000 and ctrl c, ctrl d does not work (just adds newline)!
-ctrl c acts funky too
-
 make sure error code is 131 after "core dump"
+also ctrl c in child should be 130
+also generally it should be 130
 
 operations with shlvl - check for overflow
 

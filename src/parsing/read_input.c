@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 16:20:51 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:27:02 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ int	read_input(t_shell *shell)
 		set_up_signals(shell);
 		shell->user_input = readline(shell->prompt);
 		free_str(&shell->prompt);
+		// if (g_signal != 0)
+		// 	handle_readline_signal(shell);
 		if (g_signal == SIGINT || g_signal == SIGQUIT)
 		{
+			printf("handling signal\n");
 			g_signal = 0;
 			if (g_signal == SIGINT)
 				shell->exit_code = 130;
-			if (g_signal == SIGQUIT)
-				shell->exit_code = 131;
 		}
 		if (shell->user_input == NULL)
 			null_signal(shell, "");
@@ -52,21 +53,6 @@ static void	create_prompt(t_shell *shell)
 	free_str(&shell->uname);
 	if (shell->prompt == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
-}
-
-void	null_signal(t_shell *shell, char *arg)
-{
-	shell->exit_code = 130;
-	if (shell->in_child == false && shell->in_here_doc == false)
-	{
-		printf("exit\n");
-		free_and_exit(shell, 0);
-	}
-	if (shell->in_here_doc == true && g_signal != SIGINT)
-	{
-		printf("Warning: here-document delimited by end-of-file ");
-		printf("(wanted '%s')\n", arg);
-	}
 }
 
 static void	handle_input(t_shell *shell)
