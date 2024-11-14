@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 10:02:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:09:03 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	execute(t_shell *shell)
 	close_pipes_parent(&exec);
 	waiting_for_pids(exec, loop_count - 1, shell);
 	exit_status = exec->status;
+	if (shell->exit_code == 131)
+		return (131);
 	if (WIFEXITED(exit_status))
 		return (WEXITSTATUS(exit_status));
 	return (0);
