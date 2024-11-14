@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+// The function prints current directory
 int	pwd_exec(t_shell *shell)
 {
 	char	*pwd;

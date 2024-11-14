@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+// The function unset selected variables in minishell environment
 int	unset_exec(t_envp **envp_copy, t_token *unset)
 {
 	t_token	*temp;

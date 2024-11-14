@@ -15,6 +15,7 @@
 static int	update_pwd_extra(t_envp **envp_copy, char **pwd, t_shell *shell);
 static char	*find_pwd(t_envp *envp_copy, t_shell *shell);
 
+// The function updates PWD variable in minishell environment
 int	update_pwd(t_envp **envp_copy, t_shell *shell)
 {
 	char	*pwd;
@@ -36,6 +37,7 @@ int	update_pwd(t_envp **envp_copy, t_shell *shell)
 	return (update_pwd_extra(envp_copy, &pwd, shell));
 }
 
+// The function updates OLDPWD variable in minishell environment
 int	update_old_pwd(t_envp **envp_copy, t_shell *shell)
 {
 	t_envp	*new;
@@ -63,6 +65,8 @@ int	update_old_pwd(t_envp **envp_copy, t_shell *shell)
 	return (0);
 }
 
+// The function returns the copy of PWD value from
+// minishell environment
 static char	*find_pwd(t_envp *envp_copy, t_shell *shell)
 {
 	t_envp	*temp_envp;
@@ -86,6 +90,8 @@ static char	*find_pwd(t_envp *envp_copy, t_shell *shell)
 	return (NULL);
 }
 
+// The function adds a new PWD value to the end of linked list
+// containing minishell environment
 static int	update_pwd_extra(t_envp **envp_copy, char **pwd, t_shell *shell)
 {
 	char	*export_new;
@@ -108,6 +114,7 @@ static int	update_pwd_extra(t_envp **envp_copy, char **pwd, t_shell *shell)
 	return (0);
 }
 
+// The function checks if provided path leads to a file
 int	is_file(char *path)
 {
 	int		fd;

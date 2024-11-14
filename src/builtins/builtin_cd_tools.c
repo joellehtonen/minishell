@@ -29,6 +29,7 @@ char	*get_new_path(t_shell *shell, t_token *arg)
 		return (new_pwd(arg, shell));
 }
 
+// The function expands the symbol to HOME environment variable
 static char	*handle_home(t_shell *shell, t_token *arg)
 {
 	char	*new_path;
@@ -47,6 +48,7 @@ static char	*handle_home(t_shell *shell, t_token *arg)
 	return (new_path);
 }
 
+// The function creates a new path based on current path and user input
 static char	*new_pwd(t_token *arg, t_shell *shell)
 {
 	char	*old_path;
@@ -72,6 +74,7 @@ static char	*new_pwd(t_token *arg, t_shell *shell)
 	}
 }
 
+// The function returns a previous directory (OLDPWD)
 static char	*get_old_pwd(t_envp *envp_copy, t_shell *shell)
 {
 	t_envp	*temp_envp;

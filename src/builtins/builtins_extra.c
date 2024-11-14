@@ -12,6 +12,7 @@
 
 #include "../../inc/minishell.h"
 
+// The function checks if path leads to a directory
 int	is_directory_new(char *path)
 {
 	int		fd;
@@ -34,6 +35,7 @@ int	is_directory_new(char *path)
 	}
 }
 
+// The function removes '+' character from the string
 char	*remove_plus(char *data)
 {
 	char	*new_data;
@@ -60,6 +62,7 @@ char	*remove_plus(char *data)
 	return (new_data - (data_len - 1));
 }
 
+// The function appends a string to the end of existing string
 char	*append_export_line(char *existing, char *append)
 {
 	char	*new_data;

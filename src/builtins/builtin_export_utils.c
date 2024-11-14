@@ -12,6 +12,8 @@
 
 #include "../../inc/minishell.h"
 
+// The function checks the string for validity
+// (related to "export" function)
 int	check_str(char *str, int minus, int plus, int equal)
 {
 	int	i;
@@ -37,6 +39,8 @@ int	check_str(char *str, int minus, int plus, int equal)
 	return (0);
 }
 
+// The function checks if the string is empty or if
+// it containts only numerical characters
 int	only_digits_or_empty(char *str)
 {
 	int	i;
