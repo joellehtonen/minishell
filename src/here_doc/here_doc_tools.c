@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:06:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 15:47:25 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:20:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ size_t	ft_strchr_fix(const char *s, int c)
 {
 	char	new_c;
 	int		i;
+
 	new_c = c + '\0';
 	i = 0;
 	while (1)

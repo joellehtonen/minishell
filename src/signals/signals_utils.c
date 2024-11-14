@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:07:15 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 10:49:34 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:18:43 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	clear_input_normal(int signal)
 {
 	g_signal = signal;
 	write(1, "\n", 1);
-	//printf("signal is now %d\n", g_signal);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();

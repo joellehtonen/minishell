@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory_extra.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:15:27 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:25:43 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:18:11 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	delete_one_envp_node(t_envp *node)
 }
 
 // The function deletes the linked list containing
-// a known amount of nodes
+// the known amount of nodes
 void	delete_envp_part(t_envp **copy_envp, int count)
 {
 	t_envp	*temp;

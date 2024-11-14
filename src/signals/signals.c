@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 11:16:15 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:19:23 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	setup_sigint(t_shell *shell, struct sigaction *sigint)
 	{
 		if (shell->in_child == true)
 			sigint->sa_flags = SA_RESTART;
-		sigint->sa_handler = &clear_input_subprocess;	
+		sigint->sa_handler = &clear_input_subprocess;
 	}
 	else
 		sigint->sa_handler = &clear_input_normal;

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 10:11:10 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:28:36 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	check_content(t_shell *shell, t_token *token)
 			index++;
 		else if (token->line[index] == '$' && shell->single_quote == false)
 		{
+			token->expanded = true;
 			expansion = create_expansion(shell, token, &replacement, &index);
 			add_expansion(&replacement, &expansion, &copy_index, &index);
 		}
@@ -65,51 +66,53 @@ void	check_content(t_shell *shell, t_token *token)
 	token->line = replacement;
 }
 
-char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i)
+char	*create_expansion(t_shell *shell, t_token *token, \
+	char **replacement, int *index)
 {
 	char	*key;
 	char	*value_pointer;
 	char	*expansion;
 	int		key_len;
 
-	if (is_exception(tok, *i) == true)
+	if (is_exception(token, *index) == true)
 		return (ft_strdup("$"));
-	if (is_quote(tok->line[*i + 1]) == true)
+	if (is_quote(token->line[*index + 1]) == true)
 	{
-		(*i)++;
+		(*index)++;
 		return (NULL);
 	}
-	tok->expanded = true;
-	key_len = calculate_key_len(tok, *i + 1);
-	key = ft_substr(tok->line, (*i + 1), key_len);
-	value_pointer = find_variable(she, key, key_len);
+	key_len = calculate_key_len(token, *index + 1);
+	key = ft_substr(token->line, (*index + 1), key_len);
+	value_pointer = find_variable(shell, key, key_len);
 	free(key);
-	if (tok->line[*i + 1] == '?')
-		value_pointer = find_exit_value(she, i);
-	*i += key_len + 1;
+	if (token->line[*index + 1] == '?')
+		value_pointer = find_exit_value(shell, index);
+	*index += key_len + 1;
 	if (!value_pointer)
 		return (ft_strdup(""));
-	expansion = expand_variable(she, replace, value_pointer, tok);
+	expansion = expand_variable(shell, replacement, value_pointer, token);
 	free(value_pointer);
 	return (expansion);
 }
 
-void	add_expansion(char **replace, char **exp, int *copy_index, int *index)
+void	add_expansion(char **replacement, char **expansion, \
+	int *copy_index, int *index)
 {
 	size_t	len;
 
-	if (exp == NULL)
+	if (expansion == NULL)
 		return ;
-	len = ft_strlen(*replace) + ft_strlen(*exp) + 1;
-	ft_strlcat(*replace, *exp, len);
+	len = ft_strlen(*replacement) + ft_strlen(*expansion) + 1;
+	ft_strlcat(*replacement, *expansion, len);
 	if (copy_index != NULL)
-		*copy_index += ft_strlen(*exp);
+		*copy_index += ft_strlen(*expansion);
 	if (index != NULL)
 	{
-		if (ft_strncmp(*exp, "$", ft_strlen(*exp)) == 0 && ft_strlen(*exp) != 0)
+		if (ft_strncmp(*expansion, "$", ft_strlen(*expansion)) == 0
+			&& ft_strlen(*expansion) != 0)
 			(*index)++;
 	}
-	free(*exp);
+	free(*expansion);
 	return ;
 }
 

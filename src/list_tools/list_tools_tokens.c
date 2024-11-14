@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 15:13:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 11:51:51 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:20:37 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	*find_token_line(t_token *token, int loop, int token_type, char *line)
 
 // The function the last token which index is less than provided
 // index (less then "error_node")
- t_token	*find_token_index(t_token *token, int loop_count, \
+t_token	*find_token_index(t_token *token, int loop_count, \
 	int token_type, int error_node)
 {
 	t_token	*temp;
