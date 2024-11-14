@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens_extra.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:49:11 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:47:00 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:09:42 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// The function adds a token provided to the end of linked list
+// The function adds the token provided to the end of linked list
 void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
 	t_token	*temp;
@@ -29,8 +29,8 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	return ;
 }
 
-// The function allocates a new token containing
-// a string provided
+// The function allocates a new token 
+// and gives it the string provided
 t_token	*ft_lstnew_token(char *content)
 {
 	t_token	*new;
@@ -46,7 +46,7 @@ t_token	*ft_lstnew_token(char *content)
 	return (new);
 }
 
-// The function finds the last token in the linked link
+// The function finds the last token in the linked list
 t_token	*ft_lstlast_token(t_token *lst)
 {
 	t_token	*temp;
@@ -61,7 +61,7 @@ t_token	*ft_lstlast_token(t_token *lst)
 	return (temp);
 }
 
-// The function counts the number of nodes with given type
+// The function counts the number of nodes of a given type
 // which are related to certain loop / child process number
 int	count_nodes_type(t_token *start, int token_type, int loop_count)
 {

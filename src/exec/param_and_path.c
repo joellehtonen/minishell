@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   param_and_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 10:35:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 11:09:17 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:17:43 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_param(t_shell *shell, int loop_count)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
-// The function checks if there is any token containing a command
+// The function checks if there are tokens containing a command
 static void	check_empty(t_token *token, int loop_count, t_shell *shell)
 {
 	t_token	*temp;

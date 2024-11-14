@@ -6,12 +6,14 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 13:23:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:56:49 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// finds the exit value within shell struct
+// in case $? was typed
 char	*find_exit_value(t_shell *shell, int *index)
 {
 	char	*result;
@@ -21,6 +23,7 @@ char	*find_exit_value(t_shell *shell, int *index)
 	return (result);
 }
 
+// the exceptions where we need to "expand" $ into another $
 int	is_exception(t_token *token, int index)
 {
 	if (token->line[index + 1] == '\0')
@@ -32,6 +35,7 @@ int	is_exception(t_token *token, int index)
 		return (false);
 }
 
+// flips quote variables within shell struct, whenever encountered
 int	handle_quotes(t_shell *shell, t_token *token, int index)
 {
 	if (token->line[index] == '\'' && shell->double_quote == false)
@@ -47,6 +51,7 @@ int	handle_quotes(t_shell *shell, t_token *token, int index)
 	return (false);
 }
 
+// allocates memory for replacement string, sets it 0, and resets quotes
 char	*init_replacement(t_shell *shell, t_token *token)
 {
 	char	*replacement;

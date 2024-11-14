@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 11:15:33 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:03:41 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void		null_signal(t_shell *shell, char *arg);
 static void	handle_input(t_shell *shell);
 static void	clean_empty_nodes(t_shell *shell);
 
-// The function gets user input from the prompt printed by minishell
+// reads user input using readline, checks it for syntax errors,
+// and passes it forward, adding it to history
+// returns the final exit code for minishell
 int	read_input(t_shell *shell)
 {
 	shell->pwd = get_pwd(shell->home, shell);
@@ -39,7 +41,7 @@ int	read_input(t_shell *shell)
 	return (shell->exit_code);
 }
 
-// The function creates a minishell prompt
+// creates the minishell prompt
 static void	create_prompt(t_shell *shell)
 {
 	if (fill_values_before_prompt(&shell) == 1)
@@ -50,7 +52,9 @@ static void	create_prompt(t_shell *shell)
 		error_printer(shell, "", MALLOC_FAIL, true);
 }
 
-// The function handles user input and then passes it to Execute
+// calls the functions to tokenize, expand and clean the user input
+// assigns types and levels for each token
+// and passes them to execute function
 static void	handle_input(t_shell *shell)
 {
 	tokenize_input(shell);
@@ -61,7 +65,7 @@ static void	handle_input(t_shell *shell)
 	shell->exit_code = execute(shell);
 }
 
-// The function clean empty nodes if there are any
+// cleans empty nodes if there are any after expanding
 static void	clean_empty_nodes(t_shell *shell)
 {
 	t_token	*temp;

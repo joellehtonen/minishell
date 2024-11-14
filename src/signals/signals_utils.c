@@ -6,12 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 16:07:15 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 11:18:43 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:24:21 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// sigint behavior normally
 void	clear_input_normal(int signal)
 {
 	g_signal = signal;
@@ -21,6 +22,7 @@ void	clear_input_normal(int signal)
 	rl_redisplay();
 }
 
+// sigint behavior in here_doc or child process
 void	clear_input_subprocess(int signal)
 {
 	g_signal = signal;
@@ -29,6 +31,7 @@ void	clear_input_subprocess(int signal)
 	rl_replace_line("", 0);
 }
 
+// sigquit behavior in child process
 void	quit_process(int signal)
 {
 	g_signal = signal;

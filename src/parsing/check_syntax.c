@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 11:55:24 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 13:07:56 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:05:40 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static void	count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote);
 static int	validate_io(t_shell *shell, int index);
 
+// checks user input for syntax errors,
+// like wrongly placed i/o-operators or odd number of quotes
 int	input_error_check(t_shell *shell)
 {
 	int	single_quotes;
@@ -42,6 +44,7 @@ int	input_error_check(t_shell *shell)
 	return (SUCCESS);
 }
 
+// counts all quotes that are not within other quotes themselves
 static void	count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
 {
 	if (shell->user_input[index] == '\'')
@@ -68,7 +71,7 @@ static void	count_quotes(t_shell *shell, int index, int *s_quote, int *d_quote)
 	}
 }
 
-//validates i/o operators based on their location and count
+// validates i/o operators based on their location and count
 static int	validate_io(t_shell *shell, int index)
 {
 	int	fail;

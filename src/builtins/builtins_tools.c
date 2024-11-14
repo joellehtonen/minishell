@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:50:01 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:02:23 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:24:24 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*get_pwd_extra(char *home, t_shell *shell);
 static char	*pwd_home(char **pwd, char *home, t_shell *shell);
 static char	*join_pwd(char *pwd, int pwd_move, t_shell *shell);
 
-// The function returns a path to be printed in minishell prompt
+// The function returns a path to be printed in the minishell prompt
 char	*get_pwd(char *home, t_shell *shell)
 {
 	char	*pwd;
@@ -43,8 +43,8 @@ char	*get_pwd(char *home, t_shell *shell)
 	return (join_pwd(pwd, pwd_move, shell));
 }
 
-// The function returns current location when user
-// is in root folder or home folder
+// The function returns current location
+// when user is in root folder or home folder
 static char	*get_pwd_extra(char *home, t_shell *shell)
 {
 	char	*pwd;
@@ -72,8 +72,8 @@ static char	*get_pwd_extra(char *home, t_shell *shell)
 	return (pwd_home(&pwd, home, shell));
 }
 
-// The function returns current location when user
-// is in home folder
+// The function returns current location
+// when user is in home folder
 static char	*pwd_home(char **pwd, char *home, t_shell *shell)
 {
 	char	*new_pwd;
@@ -92,7 +92,7 @@ static char	*pwd_home(char **pwd, char *home, t_shell *shell)
 }
 
 // The function returns the full path to current location
-// of user including the '~' symbol for home directory
+// of the user including the '~' symbol for home directory
 static char	*join_pwd(char *pwd, int pwd_move, t_shell *shell)
 {
 	char	*new_pwd;
@@ -106,7 +106,7 @@ static char	*join_pwd(char *pwd, int pwd_move, t_shell *shell)
 	return (new_pwd);
 }
 
-// The function returns current location of user
+// The function returns the current location of the user
 static char	*current_location(t_shell *shell)
 {
 	char	*pwd;

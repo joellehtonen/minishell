@@ -6,13 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 10:34:20 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 12:57:46 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:25:13 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// The function checks if path leads to a directory
+// The function checks if the path leads to a directory
 int	is_directory_new(char *path)
 {
 	int		fd;

@@ -6,13 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 12:54:06 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:02:02 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:25:23 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// The function unset selected variables in minishell environment
+// The function unsets selected variables in the minishell environment
 int	unset_exec(t_envp **envp_copy, t_token *unset)
 {
 	t_token	*temp;

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 11:28:36 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:50:22 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 void	expand_tilde(t_shell *shell, t_token *temp);
 
+// goes thru each token, looking for quotes, dollar signs or tildes
+// if encountered, checks if they ought to be expanded
 void	expander(t_shell *shell)
 {
 	t_token	*temp;
@@ -38,6 +40,8 @@ void	expander(t_shell *shell)
 	}
 }
 
+// flips quote-variables and then expands any $ not within single quotes
+// otherwise just copies characters into the replacement of the original token
 void	check_content(t_shell *shell, t_token *token)
 {	
 	int		index;
@@ -66,6 +70,7 @@ void	check_content(t_shell *shell, t_token *token)
 	token->line = replacement;
 }
 
+// if found, expands $ to its value. else replaces it with empty space
 char	*create_expansion(t_shell *shell, t_token *token, \
 	char **replacement, int *index)
 {
@@ -95,6 +100,8 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	return (expansion);
 }
 
+// adds the expanded part to the end of the current replacement, 
+// updates indexes accordingly
 void	add_expansion(char **replacement, char **expansion, \
 	int *copy_index, int *index)
 {
@@ -116,6 +123,7 @@ void	add_expansion(char **replacement, char **expansion, \
 	return ;
 }
 
+// expands ~ char into value of $HOME
 void	expand_tilde(t_shell *shell, t_token *temp)
 {
 	char	*value_pointer;

@@ -6,12 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:57:05 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 12:58:19 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:10:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// checks all the possible valid configurations for redir symbols
 int	is_valid_redir(t_shell *shell, int index1, int index2)
 {
 	char	c1;

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 11:19:23 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:57:22 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ sig_atomic_t	g_signal = 0;
 static void	setup_sigint(t_shell *shell, struct sigaction *sigint);
 static void	setup_sigquit(t_shell *shell, struct sigaction *sigquit);
 
+// these three functions setup the behavior of sigint and sigquit signals
+// depending on if they are in a child process, in here_doc
+// or in a default environment
 void	set_up_signals(t_shell *shell)
 {
 	struct sigaction	sigint;

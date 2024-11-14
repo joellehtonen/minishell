@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:13:13 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:10:39 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell);
 static void	new_input(char **input, char **new_line, t_shell *shell);
 static char	*add_here_doc_memory(char *str, size_t add_len);
 
-// The function implements here_doc scenario
+// The function implements here_doc functionality
 int	here_doc(t_shell *shell)
 {
 	int		i;
@@ -105,7 +105,7 @@ static void	new_input(char **input, char **new_line, t_shell *shell)
 	*new_line = get_next_line(0);
 }
 
-// The function allocated additional memory to the string
+// The function allocates additional memory to the string
 // which is used to save here_doc input
 static char	*add_here_doc_memory(char *str, size_t add_len)
 {

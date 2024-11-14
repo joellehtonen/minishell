@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:39:23 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:12:35 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:22:52 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	check_len(char *line, char *data);
 
-// The function remove the node from minishell environment
+// The function removes the node from minishell environment
 // if it contains the string provided
 void	envp_remove_if_line(t_envp **lst, char *data, int (*cmp)())
 {

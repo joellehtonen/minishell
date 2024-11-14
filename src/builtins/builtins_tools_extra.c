@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 11:21:27 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/11 12:51:42 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:24:47 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	update_pwd_extra(t_envp **envp_copy, char **pwd, t_shell *shell);
 static char	*find_pwd(t_envp *envp_copy, t_shell *shell);
 
-// The function updates PWD variable in minishell environment
+// The function updates PWD variable in the minishell environment
 int	update_pwd(t_envp **envp_copy, t_shell *shell)
 {
 	char	*pwd;
@@ -37,7 +37,7 @@ int	update_pwd(t_envp **envp_copy, t_shell *shell)
 	return (update_pwd_extra(envp_copy, &pwd, shell));
 }
 
-// The function updates OLDPWD variable in minishell environment
+// The function updates OLDPWD variable in the minishell environment
 int	update_old_pwd(t_envp **envp_copy, t_shell *shell)
 {
 	t_envp	*new;
@@ -65,8 +65,8 @@ int	update_old_pwd(t_envp **envp_copy, t_shell *shell)
 	return (0);
 }
 
-// The function returns the copy of PWD value from
-// minishell environment
+// The function returns the copy of PWD value
+// from minishell environment
 static char	*find_pwd(t_envp *envp_copy, t_shell *shell)
 {
 	t_envp	*temp_envp;

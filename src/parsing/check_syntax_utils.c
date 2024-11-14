@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:56:21 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 12:39:55 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:06:27 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	count_io(t_shell *shell, int index)
 	return (count);
 }
 
+// checks what i/o operators can follow which operator
 int	check_consecutive_io(t_shell *shell, int index)
 {
 	int	count;

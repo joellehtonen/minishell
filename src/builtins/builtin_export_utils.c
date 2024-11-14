@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 09:35:07 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:03:24 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:25:50 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	check_str(char *str, int minus, int plus, int equal)
 	return (0);
 }
 
-// The function checks if the string is empty or if
-// it containts only numerical characters
+// The function checks if the string is empty 
+// or if it containts only numerical characters
 int	only_digits_or_empty(char *str)
 {
 	int	i;

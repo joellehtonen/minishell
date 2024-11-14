@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/11 12:44:29 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:59:15 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	increment_io(t_shell *shell, int end);
 static int	handle_argument(t_shell *shell, int end);
 static int	create_new_token(t_shell *shell, int end, int start, int token_num);
 
+// cuts the user input into smaller tokens for easier handling
 void	tokenize_input(t_shell *shell)
 {
 	int		start;
@@ -40,6 +41,7 @@ void	tokenize_input(t_shell *shell)
 	}
 }
 
+// if tokenizer meets i/o operator, increments the index
 static int	increment_io(t_shell *shell, int end)
 {
 	end++;
@@ -48,26 +50,21 @@ static int	increment_io(t_shell *shell, int end)
 	return (end);
 }
 
+// finds an end to the token by looking for non-quoted spaces/io-operators
+// to do so, flips quote variables in shell as it encounters them
 static int	handle_argument(t_shell *shell, int end)
 {
-	int		io_met;
-
 	reset_quotes(shell);
-	io_met = false;
-	while (shell->user_input[end] != '\0'
-		&& (is_space(shell->user_input[end]) == false
-			|| shell->single_quote == true || shell->double_quote == true))
+	while (shell->user_input[end] != '\0')
 	{
 		if (is_quote(shell->user_input[end]) == S_QUOTE)
 			shell->single_quote = !shell->single_quote;
 		else if (is_quote(shell->user_input[end]) == D_QUOTE)
 			shell->double_quote = !shell->double_quote;
-		if (is_io(shell->user_input[end]) != false
+		if ((is_io(shell->user_input[end]) != false
+			|| is_space(shell->user_input[end]) == true)
 			&& (shell->single_quote == false && shell->double_quote == false))
 		{
-			if (io_met == true)
-				end++;
-			io_met = !io_met;
 			break ;
 		}
 		end++;
@@ -75,6 +72,8 @@ static int	handle_argument(t_shell *shell, int end)
 	return (end);
 }
 
+// creates a new token to the end of the list, 
+// based on start and end indexes
 static int	create_new_token(t_shell *shell, int end, int start, int token_num)
 {
 	t_token	*new;

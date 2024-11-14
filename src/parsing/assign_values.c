@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assign_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:50:33 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:55:55 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:07:21 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_type(t_token *temp, t_token *previous, int *comm_flag);
 static int	parse_here_doc(t_token *token);
 
-// The function assigns type to a provided node
+// The function assigns type to the provided node
 void	assign_type(t_token **token)
 {
 	t_token	*temp;
@@ -40,8 +40,8 @@ void	assign_type(t_token **token)
 	}
 }
 
-// The function assigns level to a provided node and allocates
-// "exec" (a struct used to store temparary variables)
+// The function assigns level to the provided node
+// and allocates "exec" (a struct used to store temporary variables)
 void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 {
 	int		level;
@@ -64,7 +64,7 @@ void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 	(*exec)->here_doc_num = parse_here_doc(*token);
 }
 
-// The function choses the right type to assign to a given node
+// The function choses the right type to assign to the given node
 static void	check_type(t_token *temp, t_token *previous, int *comm_flag)
 {
 	if (ft_strncmp(temp->line, "|\0", 2) == 0)
@@ -87,7 +87,7 @@ static void	check_type(t_token *temp, t_token *previous, int *comm_flag)
 		temp->type = DELIM;
 }
 
-// The function counts the number of here_doc in user input
+// The function counts the number of here_docs in user input
 static int	parse_here_doc(t_token *token)
 {
 	t_token	*temp;

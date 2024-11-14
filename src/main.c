@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:53:34 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:57:15 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:45:00 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
-// The function checks the correctness of user input format
+// The function checks that there is 0 arguments given when starting minishell
 static void	argc_check(int argc)
 {
 	if (argc > 1)

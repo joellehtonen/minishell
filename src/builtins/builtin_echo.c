@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:37 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:26:33 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	check_newline(char *content);
 static void	echo_printing_loop(t_token *temp);
 
+// executes echo builtin
 int	echo(t_shell *shell, t_token *echo_pointer)
 {
 	int		newline;
@@ -53,7 +54,7 @@ static int	check_newline(char *content)
 		return (true);
 }
 
-// prints each ARG-type node, until it hits an IO. 
+// prints each ARG-type node, until it hits an I/O operator
 // prints spaces between ARGS, unless it hasnt printed yet
 static void	echo_printing_loop(t_token *temp)
 {

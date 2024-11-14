@@ -6,12 +6,14 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:14:40 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:07:43 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// defaults the global variable where signals are saved
+// and alters the exit code in case of ctrl+C (sigint)
 void	handle_readline_signal(t_shell *shell)
 {
 	if (g_signal == SIGINT || g_signal == SIGQUIT)
@@ -23,6 +25,7 @@ void	handle_readline_signal(t_shell *shell)
 	return ;
 }
 
+// defines how minishell behaves when it receives EOF from ctrl+D
 void	null_signal(t_shell *shell, char *arg)
 {
 	if (shell->in_child == false && shell->in_here_doc == false)

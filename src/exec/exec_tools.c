@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:39:08 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:50:08 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:19:01 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	is_directory(char *path, t_shell *shell)
 }
 
 // The function looks for the nodes containing command and arguments
-// and saves the data into double array
+// and saves the data into a double array
 char	**param_to_arr(t_token *token, int loop_count)
 {
 	char	**param_arr;
@@ -73,8 +73,8 @@ static char	**free_param_arr(char **param_arr, int i)
 	return (NULL);
 }
 
-// The function counts the number of tokens in the linked list containing 
-// tokenized user input (limited by loop / child process number)
+// The function counts the number of tokens in the linked list 
+// containing tokenized user input (limited by loop / child process number)
 static int	count_tokens(t_token *token, int loop_count)
 {
 	t_token	*temp;

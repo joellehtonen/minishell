@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:12:06 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:18:33 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	execute(t_shell *shell)
 	return (0);
 }
 
-// If there is only command (no pipes),
-// and this command is a builtin
+// this executes if there is only command, no pipes,
+// and the command is a builtin
 static int	only_one_builtin(t_shell *shell)
 {
 	int		exit_status;
@@ -99,7 +99,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	set_up_signals(shell);
 }
 
-// The function closes all pipes in parent process
+// The function closes all pipes in the parent process
 void	close_pipes_parent(t_exec **exec)
 {
 	int		i;

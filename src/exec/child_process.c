@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:38:00 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:21:37 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	child_process(t_shell **shell, int loop_count)
 	call_execve(shell, path, loop_count);
 }
 
-// The function checks if there is a token with command name
+// The function checks if there is a token of a command type
 static int	check_no_command(t_token *token, int loop_count)
 {
 	t_token	*temp;
@@ -63,8 +63,8 @@ static int	check_no_command(t_token *token, int loop_count)
 	return (1);
 }
 
-// The function creates an empty PATH is it earlier unset
-// in the environment
+// The function creates an empty PATH 
+// if it has been earlier unset in the environment
 static void	empty_path(t_envp **path_to_curr, t_shell *shell)
 {
 	char	*pwd;

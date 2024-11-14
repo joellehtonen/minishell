@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tools_extra.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:56:43 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:42:21 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:19:45 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	count_nodes(t_envp *envp_copy);
 
-// The function convert the linked list with minishell environment
-// variables to double array
+// The function converts the linked list with environment variables 
+// into a double array
 char	**envp_to_arr(t_envp *envp_copy)
 {
 	char	**envp_arr;

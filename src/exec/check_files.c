@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:34:32 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:22:29 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	check_all_files(t_token *token, t_exec *exec, int loop, t_shell *shell)
 	}
 }
 
-// The function checks the file for access problems and prints out
-// error message if needed
+// These two functions check the file for access problems
+// and print out an error message if needed
 static int	check_access_print(t_token *token, t_shell *shell)
 {
 	if (token->type == REDIR_INPUT && \
@@ -73,8 +73,6 @@ static int	check_access_print(t_token *token, t_shell *shell)
 	return (check_access_print_extra(token, shell));
 }
 
-// The function checks the file for access problems and prints out
-// error message if needed
 static int	check_access_print_extra(t_token *token, t_shell *shell)
 {
 	if (token->type == REDIR_OUTPUT && is_directory_new(token->next->line) == 0)

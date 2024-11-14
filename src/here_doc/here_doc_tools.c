@@ -6,13 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:06:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:20:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:10:48 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// The function returns the index number of given character
+// The function returns the index number of a given character
 size_t	ft_strchr_fix(const char *s, int c)
 {
 	char	new_c;

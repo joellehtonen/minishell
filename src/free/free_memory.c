@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:16:06 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 11:27:10 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:11:02 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-// The function frees memory allocated for minishell
+// The function frees all memory allocated for minishell
 void	free_shell(t_shell **shell, int free_envp)
 {
 	free_str(&(*shell)->user_input);
