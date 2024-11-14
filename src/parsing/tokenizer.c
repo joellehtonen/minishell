@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 13:59:15 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:34:23 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	handle_argument(t_shell *shell, int end)
 		else if (is_quote(shell->user_input[end]) == D_QUOTE)
 			shell->double_quote = !shell->double_quote;
 		if ((is_io(shell->user_input[end]) != false
-			|| is_space(shell->user_input[end]) == true)
+				|| is_space(shell->user_input[end]) == true)
 			&& (shell->single_quote == false && shell->double_quote == false))
 		{
 			break ;
