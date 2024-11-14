@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 09:39:08 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:40:16 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:50:08 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	count_str(t_token *token, int loop_count);
+static int	count_tokens(t_token *token, int loop_count);
 static char	**free_param_arr(char **param_arr, int i);
 
+// The function checks if provided path leads to a directory
 int	is_directory(char *path, t_shell *shell)
 {
 	int		test_fd;
@@ -34,13 +35,15 @@ int	is_directory(char *path, t_shell *shell)
 	return (0);
 }
 
+// The function looks for the nodes containing command and arguments
+// and saves the data into double array
 char	**param_to_arr(t_token *token, int loop_count)
 {
 	char	**param_arr;
 	t_token	*temp;
 	int		i;
 
-	param_arr = (char **)malloc((count_str(token, loop_count) + 1) \
+	param_arr = (char **)malloc((count_tokens(token, loop_count) + 1) \
 		* sizeof(char *));
 	if (param_arr == NULL)
 		return ((void *) 0);
@@ -61,6 +64,7 @@ char	**param_to_arr(t_token *token, int loop_count)
 	return (param_arr);
 }
 
+// The function frees double array containing a known amount of strings
 static char	**free_param_arr(char **param_arr, int i)
 {
 	while (i >= 0)
@@ -69,7 +73,9 @@ static char	**free_param_arr(char **param_arr, int i)
 	return (NULL);
 }
 
-static int	count_str(t_token *token, int loop_count)
+// The function counts the number of tokens in the linked list containing 
+// tokenized user input (limited by loop / child process number)
+static int	count_tokens(t_token *token, int loop_count)
 {
 	t_token	*temp;
 	int		count;
@@ -85,6 +91,7 @@ static int	count_str(t_token *token, int loop_count)
 	return (count);
 }
 
+// The function is checking access status to the path containing command
 void	check_command_access(char **param, t_shell *shell)
 {
 	char	*command;

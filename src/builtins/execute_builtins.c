@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtins.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:13:29 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:30:52 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	exec_builtins_extra(t_shell *shell, t_token	*token, int loop);
 
+// The function executes one of the builtins based on the token provided
 int	exec_builtins(t_shell *shell, int loop)
 {
 	t_token	*token;
@@ -40,6 +41,7 @@ int	exec_builtins(t_shell *shell, int loop)
 	return (exec_builtins_extra(shell, token, loop));
 }
 
+// The function executes one of the builtins based on the token provided
 static int	exec_builtins_extra(t_shell *shell, t_token	*token, int loop)
 {
 	t_token	*builtins;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 13:11:15 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:55:04 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	export_exec_extra(char *line, t_envp **temp, t_shell *shell);
 static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell);
 static int	export_exec_cont(char *line, t_envp **temp, t_shell *s, int alloc);
 
+// The function executes "export" builtin
 int	export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell)
 {
 	t_envp	*temp;
@@ -40,6 +41,7 @@ int	export_exec(t_envp **envp, t_token *exp, int loop, t_shell *shell)
 	return (shell->exec->export_exit);
 }
 
+// The function checks the input for errors
 static int	error_check_export(char *str)
 {
 	if (ft_strncmp(str, "=\0", 2) == 0)
@@ -49,6 +51,7 @@ static int	error_check_export(char *str)
 	return (check_str(str, -1, -1, -1));
 }
 
+// The function edits minishell environment variables
 static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell)
 {
 	while (arg && arg->type == ARG)
@@ -64,6 +67,8 @@ static void	edit_envp(t_envp *temp, t_token *arg, t_shell *shell)
 	}
 }
 
+// The function chooses the scenario of creating a new node
+// or expanding existing environmental variable
 static void	export_exec_extra(char *line, t_envp **temp, t_shell *shell)
 {
 	t_envp	*existing_node;
@@ -86,6 +91,7 @@ static void	export_exec_extra(char *line, t_envp **temp, t_shell *shell)
 	export_exec_cont(line, temp, shell, alloc_flag);
 }
 
+// The function adds a new environmental variable
 static int	export_exec_cont(char *line, t_envp **temp, t_shell *s, int alloc)
 {
 	t_envp	*new;

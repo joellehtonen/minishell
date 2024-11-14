@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 12:57:29 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 12:57:51 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:51:48 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function executes "env" builtin
 int	env_exec(t_envp *envp, t_shell *shell, t_token *env, int loop)
 {
 	t_token	*arg;

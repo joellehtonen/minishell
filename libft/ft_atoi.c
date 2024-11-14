@@ -6,9 +6,11 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:39:51 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/06/26 13:48:07 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:11:27 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 static const char	*whites(const char *str)
 {
@@ -39,10 +41,10 @@ int	ft_atoi(const char *str)
 	while (*str > 47 && *str < 58)
 	{
 		checkl = checkl * 10 + (*str - '0');
-		if (checkl < 0 && neg == 1)
-			return (-1);
-		if (checkl < 0 && neg == -1)
-			return (0);
+		if (checkl > INT_MAX || checkl < INT_MIN)
+			return (1);
+		if ((checkl < 0 && neg == 1) || (checkl < 0 && neg == -1))
+			return (1);
 		res = res * 10 + (*str - '0');
 		str++;
 	}

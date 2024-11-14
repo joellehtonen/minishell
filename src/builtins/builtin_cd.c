@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 10:21:47 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/12 09:50:35 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:35:10 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	check_arg(t_shell *shell, t_token *arg);
 static int	cd_no_arg(t_shell *shell);
 static int	access_new_path(t_shell *shell, t_token *arg);
 
+// The function executes the "cd" command
 int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 {
 	t_token	*arg;
@@ -36,6 +37,7 @@ int	cd_exec(t_shell *shell, t_token *cd, int loop_count)
 	return (access_new_path(shell, arg));
 }
 
+// The function checks for empty argument or any errors
 static int	check_arg(t_shell *shell, t_token *arg)
 {
 	if (!arg || ft_strlen(arg->line) == 0 || \
@@ -51,6 +53,7 @@ static int	check_arg(t_shell *shell, t_token *arg)
 	return (2);
 }
 
+// The function executes "cd" command with no arguments
 static int	cd_no_arg(t_shell *shell)
 {
 	if (shell->home == NULL)
@@ -73,6 +76,7 @@ static int	cd_no_arg(t_shell *shell)
 	return (0);
 }
 
+// The function accesses the path provided
 static int	access_new_path(t_shell *shell, t_token *arg)
 {
 	if (access(shell->exec->new_path, F_OK) == -1 && errno == ENOENT)

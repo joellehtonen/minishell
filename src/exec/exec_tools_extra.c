@@ -6,21 +6,23 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:56:43 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 13:11:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 10:42:21 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	count_str(t_envp *envp_copy);
+static int	count_nodes(t_envp *envp_copy);
 
+// The function convert the linked list with minishell environment
+// variables to double array
 char	**envp_to_arr(t_envp *envp_copy)
 {
 	char	**envp_arr;
 	t_envp	*temp;
 	int		i;
 
-	envp_arr = (char **)malloc((count_str(envp_copy) + 1) * sizeof(char *));
+	envp_arr = (char **)malloc((count_nodes(envp_copy) + 1) * sizeof(char *));
 	if (envp_arr == NULL)
 		return ((void *) 0);
 	i = 0;
@@ -37,7 +39,9 @@ char	**envp_to_arr(t_envp *envp_copy)
 	return (envp_arr);
 }
 
-static int	count_str(t_envp *envp_copy)
+// The function counts the number of nodes in linked list
+// containing minishell environment
+static int	count_nodes(t_envp *envp_copy)
 {
 	t_envp	*temp;
 	int		count;
@@ -52,6 +56,7 @@ static int	count_str(t_envp *envp_copy)
 	return (count);
 }
 
+// The function is checking if the command provided by user is a builtin
 int	if_builtin(t_shell *shell, int loop_count)
 {
 	if ((find_token_line(shell->token_pointer, loop_count, COMM, "cd")) || \
@@ -65,6 +70,7 @@ int	if_builtin(t_shell *shell, int loop_count)
 	return (1);
 }
 
+// The function checks the file access
 void	check_file_access(t_shell *shell, char	*path, int loop_count)
 {
 	if (access(path, R_OK) == -1 && errno == EACCES)

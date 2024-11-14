@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:53:34 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 13:01:11 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:57:15 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
+// The function checks the correctness of user input format
 static void	argc_check(int argc)
 {
 	if (argc > 1)

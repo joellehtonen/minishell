@@ -6,12 +6,13 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 12:12:55 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 12:43:04 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:17:01 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function returns the index number of given character
 static size_t	nextc(char const *s, char c)
 {
 	size_t	i;
@@ -25,6 +26,8 @@ static size_t	nextc(char const *s, char c)
 	return (i);
 }
 
+// The function splits the string provided into patches
+// and adds them into a linked list
 int	ft_split_list(t_envp **path, char const *s, char c)
 {
 	t_envp	*new;

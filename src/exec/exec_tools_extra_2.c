@@ -6,12 +6,13 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 15:14:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 15:15:35 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:13:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function changes the SHLVL value in minishell environment
 int	change_shlvl(t_envp **envp, int add, t_shell *shell)
 {
 	t_envp	*temp;
@@ -35,15 +36,18 @@ int	change_shlvl(t_envp **envp, int add, t_shell *shell)
 	return (0);
 }
 
+// The function modifies the string containing SHLVL value
 char	*append_shlvl_line(char *line, int add, t_shell *shell)
 {
 	char	*new_data;
-	int		old_num;
-	char	*new_num;
+	int		new_num;
+	char	*new_num_str;
 
-	old_num = ft_atoi(ft_strrchr(line, '=') + 1); // overflow? extra symbols?
-	new_num = ft_itoa(old_num + add);
-	new_data = ft_strjoin("SHLVL=", new_num);
+	new_num = ft_atoi(ft_strrchr(line, '=') + 1) + add;
+	if (new_num <= 0)
+		new_num = 1;
+	new_num_str = ft_itoa(new_num);
+	new_data = ft_strjoin("SHLVL=", new_num_str);
 	if (!new_data)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	return (new_data);

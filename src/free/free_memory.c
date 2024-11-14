@@ -6,12 +6,13 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:16:06 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/12 10:39:51 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:27:10 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function frees memory allocated for minishell
 void	free_shell(t_shell **shell, int free_envp)
 {
 	free_str(&(*shell)->user_input);
@@ -27,6 +28,7 @@ void	free_shell(t_shell **shell, int free_envp)
 	}
 }
 
+// The function frees memory used by provided double array
 void	free_double_arr(char ***arr)
 {
 	int		i;
@@ -41,6 +43,8 @@ void	free_double_arr(char ***arr)
 	}
 }
 
+// The function frees memory used by provided double array
+// containing a known amount of strings
 char	**free_double_arr_part(char ***arr, int count)
 {
 	int		i;
@@ -56,6 +60,7 @@ char	**free_double_arr_part(char ***arr, int count)
 	return (NULL);
 }
 
+// The function frees two strings
 int	free_two_str(char **str1, char **str2)
 {
 	if (*str1)
@@ -71,6 +76,7 @@ int	free_two_str(char **str1, char **str2)
 	return (1);
 }
 
+// The function frees a string
 int	free_str(char **str1)
 {
 	if (*str1)

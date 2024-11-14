@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools_tokens_extra.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:49:11 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/07 12:49:31 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:47:00 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function adds a token provided to the end of linked list
 void	ft_lstadd_back_token(t_token **lst, t_token *new)
 {
 	t_token	*temp;
@@ -28,6 +29,8 @@ void	ft_lstadd_back_token(t_token **lst, t_token *new)
 	return ;
 }
 
+// The function allocates a new token containing
+// a string provided
 t_token	*ft_lstnew_token(char *content)
 {
 	t_token	*new;
@@ -43,6 +46,7 @@ t_token	*ft_lstnew_token(char *content)
 	return (new);
 }
 
+// The function finds the last token in the linked link
 t_token	*ft_lstlast_token(t_token *lst)
 {
 	t_token	*temp;
@@ -57,6 +61,8 @@ t_token	*ft_lstlast_token(t_token *lst)
 	return (temp);
 }
 
+// The function counts the number of nodes with given type
+// which are related to certain loop / child process number
 int	count_nodes_type(t_token *start, int token_type, int loop_count)
 {
 	t_token	*temp;

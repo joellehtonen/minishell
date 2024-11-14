@@ -6,17 +6,17 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:06:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/08 13:07:16 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:47:25 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+// The function returns the index number of given character
 size_t	ft_strchr_fix(const char *s, int c)
 {
 	char	new_c;
 	int		i;
-
 	new_c = c + '\0';
 	i = 0;
 	while (1)
@@ -29,6 +29,7 @@ size_t	ft_strchr_fix(const char *s, int c)
 	return (0);
 }
 
+// The function locates the token containing here_doc
 t_token	*find_here_doc_token(t_token *token)
 {
 	t_token	*temp;

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:07:20 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:14:40 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	null_signal(t_shell *shell, char *arg)
 	return ;
 }
 
+// The function assigns values before printing the minishell prompt
 int	fill_values_before_prompt(t_shell **shell)
 {
 	char	*new_pwd;	
@@ -59,6 +60,7 @@ int	fill_values_before_prompt(t_shell **shell)
 	return (copy_uname(&(*shell)->uname, (*shell)->envp_copy));
 }
 
+// The function is used to join four strings into one
 char	*ft_strjoin_four(char *s1, char *s2, char *s3, char *s4)
 {
 	char	*new_s;
