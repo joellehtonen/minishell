@@ -64,34 +64,25 @@ static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 static char	*get_here_doc_input(char *delim, t_shell *shell)
 {
 	char	*new_line;
-	char	*new_line2;
 	char	*here_doc_input;
 
 	new_line = NULL;
 	here_doc_input = ft_strdup("");
 	if (here_doc_input == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
-	new_line = readline("> ");
+	ft_printf("> ");
+	new_line = get_next_line(0);
 	if (new_line == NULL)
 		null_signal(shell, delim);
-	if (new_line)
+	while (new_line)
 	{
-		new_line2 = ft_strjoin(new_line, "\n");
-		// malloc error
-		free(new_line);
-	}
-	else
-		new_line2 = new_line;
-	while (new_line2)
-	{
-		if (!ft_strncmp(new_line2, delim, ft_strlen(delim)) && \
-			ft_strchr_fix(new_line2, '\n') == ft_strlen(delim))
+		if (!ft_strncmp(new_line, delim, ft_strlen(delim)) && \
+			ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
 			break ;
-		new_input(&here_doc_input, &new_line2, shell);
-		if (new_line2 == NULL)
+		new_input(&here_doc_input, &new_line, shell);
+		if (new_line == NULL)
 			null_signal(shell, delim);
 	}
-	free_str(&new_line2);
 	shell->in_here_doc = false;
 	set_up_signals(shell);
 	return (here_doc_input);
@@ -101,8 +92,6 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 // containing input from previous lines
 static void	new_input(char **input, char **new_line, t_shell *shell)
 {
-	char	*temp;
-
 	*input = add_here_doc_memory(*input, ft_strlen(*new_line));
 	if (*input == NULL)
 	{
@@ -112,15 +101,8 @@ static void	new_input(char **input, char **new_line, t_shell *shell)
 	*input = ft_strncat(*input, *new_line, \
 			ft_strlen(*input) + ft_strlen(*new_line) + 1);
 	free_str(new_line);
-	temp = readline("> ");
-	if (temp)
-	{
-		*new_line = ft_strjoin(temp, "\n");
-		// malloc error
-		free(temp);
-	}
-	else
-		*new_line = temp;
+	ft_printf("> ");
+	*new_line = get_next_line(0);
 }
 
 // The function allocated additional memory to the string
