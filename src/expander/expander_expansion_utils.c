@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:00:25 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:33:21 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*find_variable(t_shell *shell, char *key, int len)
 			&& temp->line[len] == '=')
 		{
 			value = ft_strdup(temp->line + len + 1);
+			if (!value)
+				error_printer(shell, "", MALLOC_FAIL, true);
 			break ;
 		}
 		temp = temp->next;
@@ -94,6 +96,8 @@ void	expand_tilde(t_shell *shell, t_token *temp)
 	char	*expansion;
 
 	replacement = ft_strdup("");
+	if (!replacement)
+		error_printer(shell, "", MALLOC_FAIL, true);
 	value_pointer = find_variable(shell, "HOME", 4);
 	expansion = expand_variable(shell, &replacement, value_pointer);
 	add_expansion(&replacement, &expansion, 0, 0);

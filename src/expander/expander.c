@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:14:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:22:14 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ char	*expansion_loop(t_shell *shell, t_token *token)
 
 	replacement = init_replacement(shell, token);
 	index = 0;
+	copy_index = 0;
 	while (token->line[index] != '\0')
 	{
 		if (handle_quotes(shell, token, index) == true)
