@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 13:50:22 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:23:57 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ void	check_content(t_shell *shell, t_token *token)
 			add_expansion(&replacement, &expansion, &copy_index, &index);
 		}
 		else
+		{
 			replacement[copy_index++] = token->line[index++];
+			replacement[copy_index] = '\0';
+		}
 	}
 	replacement[copy_index] = '\0';
 	free(token->line);
@@ -95,7 +98,7 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	*index += key_len + 1;
 	if (!value_pointer)
 		return (ft_strdup(""));
-	expansion = expand_variable(shell, replacement, value_pointer, token);
+	expansion = expand_variable(shell, replacement, value_pointer);
 	free(value_pointer);
 	return (expansion);
 }
@@ -132,7 +135,7 @@ void	expand_tilde(t_shell *shell, t_token *temp)
 
 	replacement = ft_strdup("");
 	value_pointer = find_variable(shell, "HOME", 4);
-	expansion = expand_variable(shell, &replacement, value_pointer, temp);
+	expansion = expand_variable(shell, &replacement, value_pointer);
 	add_expansion(&replacement, &expansion, 0, 0);
 	free(value_pointer);
 	free(temp->line);

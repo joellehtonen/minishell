@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 14:10:39 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:16:59 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 		if (new_line == NULL)
 			null_signal(shell, delim);
 	}
+	free_str(&new_line);
 	shell->in_here_doc = false;
 	set_up_signals(shell);
 	return (here_doc_input);

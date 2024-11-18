@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:28:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:39:24 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define WAITPID_ERROR "Failed to wait for child process to end\n"
 # define FORK_FAIL "Failed to dublicate a process\n"
 # define PIPE_FAIL "Failed to create a pipe\n"
+# define FILE_ARG ": filename argument required\n"
 
 extern sig_atomic_t	g_signal;
 
@@ -198,15 +199,14 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	char **replacement, int *index);
 int		calculate_key_len(t_token *token, int index);
 char	*find_variable(t_shell *shell, char *key, int len);
-char	*expand_variable(t_shell *shell, char **replacement, char *ptr, \
-	t_token *token);
+char	*expand_variable(t_shell *shell, char **replacement, char *ptr);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
 int		handle_quotes(t_shell *shell, t_token *token, int index);
 int		is_exception(t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
 void	realloc_replacement(t_shell *shell, char **replacement, \
-	char *expansion, t_token *token);
+	char *expansion);
 void	expand_tilde(t_shell *shell, t_token *temp);
 // syntax check
 int		count_io(t_shell *shell, int index);
@@ -237,7 +237,7 @@ void	check_all_files(t_token *token, t_exec *exec, int loop, t_shell *shell);
 int		check_out_no_recur(t_shell *s, t_token *t, int loop, int error_node);
 t_token	*find_token_index(t_token *token, int loop_count, \
 	int token_type, int error_node);
-int		check_out_folder(char *path);
+int		out_folder(char *path, t_shell *shell);
 void	close_pipes_parent(t_exec **exec);
 int		open_file(t_shell *shell, t_token *temp, char *outfile, int loop);
 int		check_for_here_doc(t_shell *shell, t_token *token, int loop);

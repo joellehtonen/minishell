@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 13:54:10 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:05:54 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ char	*find_variable(t_shell *shell, char *key, int len)
 }
 
 // copies and returns the expansion of $ variable
-char	*expand_variable(t_shell *shell, char **replacement, char *ptr, \
-	t_token *token)
+char	*expand_variable(t_shell *shell, char **replacement, char *ptr)
 {
 	char	*expansion;
 	int		len;
@@ -60,20 +59,20 @@ char	*expand_variable(t_shell *shell, char **replacement, char *ptr, \
 	if (!expansion)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, ptr, len + 1);
-	realloc_replacement(shell, replacement, expansion, token);
+	realloc_replacement(shell, replacement, expansion);
 	return (expansion);
 }
 
 // reallocates more memory for the replacement string, 
 // if expansions take more space than initially allocated
 void	realloc_replacement(t_shell *shell, char **replacement, \
-	char *expansion, t_token *token)
+	char *expansion)
 {
 	char	*new_replacement;
 	size_t	size_now;
 	size_t	new_size;
 
-	size_now = ft_strlen(token->line) + 1;
+	size_now = ft_strlen(*replacement) + 1;
 	new_size = size_now + ft_strlen(expansion) + 1;
 	if (size_now >= new_size - 1)
 		return ;

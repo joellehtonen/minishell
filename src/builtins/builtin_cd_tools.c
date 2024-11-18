@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 10:57:09 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 14:39:50 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:30:01 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,25 @@ static char	*get_old_pwd(t_envp *envp_copy, t_shell *shell);
 // The function returns a new path based on the argument provided
 char	*get_new_path(t_shell *shell, t_token *arg)
 {
+	char	*old_pwd;
+	char	*new_root;
+
 	if (ft_strncmp(arg->line, "-\0", 2) == 0)
-		return (get_old_pwd(shell->envp_copy, shell));
+	{
+		old_pwd = get_old_pwd(shell->envp_copy, shell);
+		if (old_pwd)
+			printf("%s\n", old_pwd);
+		return (old_pwd);
+	}
 	if (ft_strncmp(arg->line, "~", 1) == 0)
 		return (handle_home(shell, arg));
 	if (ft_strncmp(arg->line, "/", 1) == 0)
-		return (ft_strdup(arg->line));
+	{
+		new_root = ft_strdup(arg->line);
+		if (!new_root)
+			error_printer(shell, "", MALLOC_FAIL, true);
+		return (new_root);
+	}
 	else
 		return (new_pwd(arg, shell));
 }
@@ -62,6 +75,8 @@ static char	*new_pwd(t_token *arg, t_shell *shell)
 		error_printer(shell, "", GETCWD_FAIL, true);
 		free(old_path);
 		old_path = ft_strdup("/");
+		if (old_path == NULL)
+			error_printer(shell, "", MALLOC_FAIL, true);
 		return (old_path);
 	}
 	else
