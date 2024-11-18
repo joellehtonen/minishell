@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 15:56:08 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:31:22 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_num)
 
 	token_index = 0;
 	new = ft_lstnew_token(NULL);
+	if (new == NULL)
+		error_printer(shell, "", MALLOC_FAIL, true);
 	new->line = malloc(sizeof(char) * (end - start + 1));
 	if (new->line == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
