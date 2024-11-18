@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 12:36:34 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:03:50 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,12 @@ static t_token	*skip_flags(t_token *temp, int valid_flag)
 {
 	while (valid_flag == true)
 	{
-		valid_flag = check_newline(temp->line);
-		if (valid_flag == true)
-			temp = temp->next;
+		if (temp)
+		{
+			valid_flag = check_newline(temp->line);
+			if (valid_flag == true)
+				temp = temp->next;
+		}
 		else
 			break ;
 	}
