@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 15:42:20 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:14:57 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,26 @@ void	expander(t_shell *shell)
 	}
 }
 
-// flips quote-variables and then expands any $ not within single quotes
-// otherwise just copies characters into the replacement of the original token
 void	check_content(t_shell *shell, t_token *token)
 {	
+	char	*replacement;
+
+	replacement = expansion_loop(shell, token);
+	free(token->line);
+	token->line = replacement;
+}
+
+// flips quote-variables and then expands any $ not within single quotes
+// otherwise just copies characters into the replacement of the original token
+char	*expansion_loop(t_shell *shell, t_token *token)
+{
+	char	*expansion;
+	char	*replacement;
 	int		index;
 	int		copy_index;
-	char	*replacement;
-	char	*expansion;
 
-	index = 0;
-	copy_index = 0;
 	replacement = init_replacement(shell, token);
+	index = 0;
 	while (token->line[index] != '\0')
 	{
 		if (handle_quotes(shell, token, index) == true)
@@ -69,8 +77,7 @@ void	check_content(t_shell *shell, t_token *token)
 		}
 	}
 	replacement[copy_index] = '\0';
-	free(token->line);
-	token->line = replacement;
+	return (replacement);
 }
 
 // if found, expands $ to its value. else replaces it with empty space
@@ -119,20 +126,4 @@ void	add_expansion(char **replacement, char **expansion, \
 	}
 	free(*expansion);
 	return ;
-}
-
-// expands ~ char into value of $HOME
-void	expand_tilde(t_shell *shell, t_token *temp)
-{
-	char	*value_pointer;
-	char	*replacement;
-	char	*expansion;
-
-	replacement = ft_strdup("");
-	value_pointer = find_variable(shell, "HOME", 4);
-	expansion = expand_variable(shell, &replacement, value_pointer);
-	add_expansion(&replacement, &expansion, 0, 0);
-	free(value_pointer);
-	free(temp->line);
-	temp->line = replacement;
 }

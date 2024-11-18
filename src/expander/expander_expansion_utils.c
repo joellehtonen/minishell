@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 14:05:54 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:00:25 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,20 @@ void	realloc_replacement(t_shell *shell, char **replacement, \
 	free(*replacement);
 	*replacement = NULL;
 	*replacement = new_replacement;
+}
+
+// expands ~ char into value of $HOME
+void	expand_tilde(t_shell *shell, t_token *temp)
+{
+	char	*value_pointer;
+	char	*replacement;
+	char	*expansion;
+
+	replacement = ft_strdup("");
+	value_pointer = find_variable(shell, "HOME", 4);
+	expansion = expand_variable(shell, &replacement, value_pointer);
+	add_expansion(&replacement, &expansion, 0, 0);
+	free(value_pointer);
+	free(temp->line);
+	temp->line = replacement;
 }
