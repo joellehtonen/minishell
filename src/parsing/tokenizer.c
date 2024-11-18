@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 14:34:23 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/14 15:56:08 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	tokenize_input(t_shell *shell)
 	}
 }
 
-// if tokenizer meets i/o operator, increments the index
+// if tokenizer meets I/O operator, increments the index
 static int	increment_io(t_shell *shell, int end)
 {
 	end++;
@@ -50,7 +50,7 @@ static int	increment_io(t_shell *shell, int end)
 	return (end);
 }
 
-// finds an end to the token by looking for non-quoted spaces/io-operators
+// finds an end to the token by looking for non-quoted spaces/IO-operators
 // to do so, flips quote variables in shell as it encounters them
 static int	handle_argument(t_shell *shell, int end)
 {
