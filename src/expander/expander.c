@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:45:26 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:47:29 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	int		key_len;
 
 	if (is_exception(shell, token, *index) == true)
-		return (safe_strdub(shell, "$"));
+		return (safe_strdup(shell, "$"));
 	key_len = calculate_key_len(token, *index + 1);
 	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);
@@ -101,7 +101,7 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 		value_pointer = find_exit_value(shell, index);
 	*index += key_len + 1;
 	if (!value_pointer)
-		return (safe_strdub(shell, ""));
+		return (safe_strdup(shell, ""));
 	expansion = expand_variable(shell, replacement, value_pointer);
 	free(value_pointer);
 	return (expansion);

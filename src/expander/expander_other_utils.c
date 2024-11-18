@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:45:04 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:47:18 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ char	*init_replacement(t_shell *shell, t_token *token)
 	return (replacement);
 }
 
-//  basically ft_strdub with malloc check
-char *safe_strdub(t_shell *shell, char *arg)
+//  basically ft_strdup with malloc check
+char *safe_strdup(t_shell *shell, char *arg)
 {
 	char *expansion;
 	
