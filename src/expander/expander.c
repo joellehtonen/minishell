@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:14:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:45:26 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,25 @@ void	expander(t_shell *shell)
 void	check_content(t_shell *shell, t_token *token)
 {	
 	char	*replacement;
+	int		index;
 
-	replacement = expansion_loop(shell, token);
+	index = 0;
+	reset_quotes(shell);
+	replacement = expansion_loop(shell, token, index);
 	free(token->line);
 	token->line = replacement;
 }
 
 // flips quote-variables and then expands any $ not within single quotes
 // otherwise just copies characters into the replacement of the original token
-char	*expansion_loop(t_shell *shell, t_token *token)
+char	*expansion_loop(t_shell *shell, t_token *token, int index)
 {
 	char	*expansion;
 	char	*replacement;
-	int		index;
 	int		copy_index;
 
+	copy_index = 0;
 	replacement = init_replacement(shell, token);
-	index = 0;
 	while (token->line[index] != '\0')
 	{
 		if (handle_quotes(shell, token, index) == true)
@@ -90,7 +92,7 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	int		key_len;
 
 	if (is_exception(shell, token, *index) == true)
-		return (ft_strdup("$"));
+		return (safe_strdub(shell, "$"));
 	key_len = calculate_key_len(token, *index + 1);
 	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);
@@ -99,7 +101,7 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 		value_pointer = find_exit_value(shell, index);
 	*index += key_len + 1;
 	if (!value_pointer)
-		return (ft_strdup(""));
+		return (safe_strdub(shell, ""));
 	expansion = expand_variable(shell, replacement, value_pointer);
 	free(value_pointer);
 	return (expansion);

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 15:32:04 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:45:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,20 @@ char	*init_replacement(t_shell *shell, t_token *token)
 	size_t	len;
 
 	len = ft_strlen(token->line);
-	reset_quotes(shell);
 	replacement = malloc(sizeof(char) * (len + 1));
 	if (!replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_memset(replacement, 0, len + 1);
 	return (replacement);
+}
+
+//  basically ft_strdub with malloc check
+char *safe_strdub(t_shell *shell, char *arg)
+{
+	char *expansion;
+	
+	expansion = ft_strdup(arg);
+	if (!expansion)
+		error_printer(shell, "", MALLOC_FAIL, true);
+	return (expansion);
 }
