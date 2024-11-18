@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 14:21:37 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:00:39 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ static void	empty_path(t_envp **path_to_curr, t_shell *shell)
 		error_printer(shell, "", GETCWD_FAIL, true);
 	}
 	new = ft_lstnew_envp_no_strdup(pwd);
+	if (!new)
+	{
+		free_str(&pwd);
+		error_printer(shell, "", MALLOC_FAIL, true);
+	}
 	ft_lstadd_back_envp(path_to_curr, new);
 }
 
@@ -94,6 +99,9 @@ static void	call_execve(t_shell **shell, char *path, int loop)
 	if (execve(path, (*shell)->exec->param, (*shell)->envp_str) == -1)
 	{
 		free_double_arr(&(*shell)->envp_str);
+		if (ft_strncmp((*shell)->exec->param[0], ".\0", 2) == 0 && \
+			(*shell)->exec->param[1] == NULL)
+			error_printer(*shell, (*shell)->exec->param[0], FILE_ARG, true);
 		error_printer(*shell, (*shell)->exec->param[0], PERM_DENIED_COMM, true);
 	}
 }

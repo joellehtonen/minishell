@@ -1,5 +1,5 @@
 LEAKS:
-- valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --track-fds=yes --suppressions=readline.supp ./minishell
 
 
 
@@ -29,3 +29,56 @@ also generally it should be 130
 operations with shlvl - check for overflow
 
 ls <> test.txt
+
+ctrl d should not exit if prompt is not empty in heredoc
+
+FIXED "."
+
+aklimchu:/home/aklimchu/minishell$ /bin/echo $HOME$USER
+/home/akliaklimchu
+aklimchu:/home/aklimchu/minishell$ exit
+c2r5p1% bash
+aklimchu@c2r5p1:~/minishell$ /bin/echo $HOME$USER
+/home/aklimchuaklimchu
+
+aklimchu@c2r5p1:~/minishell$ /bin/echo $HOME$USER
+/home/aklimchuaklimchu
+aklimchu@c2r5p1:~/minishell$ /bin/echo $"'HOM'E"$USER
+'HOM'Eaklimchu
+aklimchu@c2r5p1:~/minishell$ ./minishell
+aklimchu:/home/aklimchu/minishell$ /bin/echo $"'HOM'E"$USER
+$'HOM'Eaklimchu
+
+
+
+/bin/echo $"HOME"$USER
+
+/bin/echo $"HOM"E$USER
+
+/bin/echo $"'HOM'E"$USER
+
+/bin/echo $'HOM'E$USER
+
+/bin/echo $"HOME"
+
+/bin/echo $"$"
+
+/bin/echo $"42$"
+
+/bin/echo $'$'
+
+echo -n -n -n -n 42
+
+bash: exit: : numeric argument required
+c2r5p1% echo $?
+2
+
+aklimchu@c2r5p1:~/minishell$ echo $"HOME"
+HOME
+aklimchu@c2r5p1:~/minishell$ ./minishell
+aklimchu:/home/aklimchu/minishell$ echo $"HOME"
+$HOME
+
+FIXED - cd - prints destination
+
+/bin/echo \$USER

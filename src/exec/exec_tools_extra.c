@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tools_extra.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:56:43 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 14:19:45 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:31:18 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

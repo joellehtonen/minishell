@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 14:15:59 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 11:32:06 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ static void	update_error_code(t_shell *shell, char *message)
 		|| ft_strncmp(PERM_DENIED_COMM, message, ft_strlen(message)) == 0)
 		shell->exit_code = 126;
 	else if ((ft_strncmp(SYNTAX_ERROR, message, ft_strlen(message)) == 0)
-		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0))
+		|| (ft_strncmp(NUMERIC_ERROR, message, ft_strlen(message)) == 0)
+		|| (ft_strncmp(FILE_ARG, message, ft_strlen(message)) == 0))
 		shell->exit_code = 2;
 	else
 		shell->exit_code = 1;

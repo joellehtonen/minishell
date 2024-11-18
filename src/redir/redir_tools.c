@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:04:25 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 12:52:54 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/18 14:54:19 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	check_for_output(t_shell *shell, t_token *token, int loop, int output)
 	if (output == 1)
 		close(shell->exec->out);
 	outfile = temp->next->line;
-	if ((outfile && check_out_folder(outfile)) || \
+	if ((outfile && out_folder(outfile, shell)) || \
 		(outfile && outfile[0] == '\0'))
 	{
 		close_pipes_child(loop, &shell->exec);

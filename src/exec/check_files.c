@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   check_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 14:22:29 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:23:45 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static int	check_access_print(t_token *token, t_shell *shell);
-static int	slash_count(char *path);
-static int	check_access_print_extra(t_token *token, t_shell *shell);
+static int	slash_count(char *path, int *last_slash);
+static int	check_access_print_extra(t_token *token, t_shell *sh);
 
 // The function checks all files passed by user in the prompt
 // for access problems
@@ -73,52 +73,49 @@ static int	check_access_print(t_token *token, t_shell *shell)
 	return (check_access_print_extra(token, shell));
 }
 
-static int	check_access_print_extra(t_token *token, t_shell *shell)
+static int	check_access_print_extra(t_token *token, t_shell *sh)
 {
 	if (token->type == REDIR_OUTPUT && is_directory_new(token->next->line) == 0)
 	{
-		error_printer(shell, token->next->line, IS_DIR, false);
+		error_printer(sh, token->next->line, IS_DIR, false);
 		return (1);
 	}
-	if (token->type == REDIR_OUTPUT && check_out_folder(token->next->line) == 1)
+	if (token->type == REDIR_OUTPUT && out_folder(token->next->line, sh) == 1)
 	{
-		error_printer(shell, token->next->line, NO_FILE_DIR, false);
+		error_printer(sh, token->next->line, NO_FILE_DIR, false);
 		return (1);
 	}
-	if (token->type == REDIR_OUTPUT && check_out_folder(token->next->line) == 2)
+	if (token->type == REDIR_OUTPUT && out_folder(token->next->line, sh) == 2)
 	{
-		error_printer(shell, token->next->line, IS_DIR, false);
+		error_printer(sh, token->next->line, IS_DIR, false);
 		return (1);
 	}
-	if (token->type == REDIR_OUTPUT && check_out_folder(token->next->line) == 3)
+	if (token->type == REDIR_OUTPUT && out_folder(token->next->line, sh) == 3)
 	{
-		error_printer(shell, token->next->line, PERM_DENIED, false);
+		error_printer(sh, token->next->line, PERM_DENIED, false);
 		return (1);
 	}
 	return (0);
 }
 
 // The function checks if the path provided by user is a folder
-int	check_out_folder(char *path)
+int	out_folder(char *path, t_shell *shell)
 {
 	int		last_slash;
-	int		i;
 	char	*folder_path;
+	int		i;
 
-	if (slash_count(path) == 0)
-		return (0);
-	i = 0;
 	last_slash = 0;
-	while (path[i])
-	{
-		if (path[i++] == '/')
-			last_slash = i;
-	}
+	i = slash_count(path, &last_slash);
+	if (!i)
+		return (0);
 	if (last_slash == i - 1)
 		return (2);
 	if (last_slash == 0)
 		return (3);
 	folder_path = ft_substr(path, 0, last_slash);
+	if (!folder_path)
+		error_printer(shell, "", MALLOC_FAIL, true);
 	if (is_directory_new(folder_path) == 1)
 	{
 		free(folder_path);
@@ -129,16 +126,26 @@ int	check_out_folder(char *path)
 }
 
 // The function counts the number of slashes in the path
-static int	slash_count(char *path)
+static int	slash_count(char *path, int *last_slash)
 {
 	int	count;
+	int	i;
 
+	i = 0;
 	count = 0;
-	while (*path)
+	while (path[i])
 	{
-		if (*path == '/')
+		if (path[i] == '/')
 			count++;
-		path++;
+		i++;
 	}
-	return (count);
+	if (count == 0)
+		return (0);
+	i = 0;
+	while (path[i])
+	{
+		if (path[i++] == '/')
+			*last_slash = i;
+	}
+	return (i);
 }
