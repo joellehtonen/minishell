@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/13 14:51:57 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/18 12:51:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,22 @@
 int	exit_exec(t_shell *shell, t_token *token)
 {
 	int	exit_code;
-	int	index;
+	int	i;
 
-	index = 0;
+	i = 0;
 	exit_code = 0;
 	if (token->next)
 	{
 		if (token->next->next && token->next->next->type != PIPE)
-			error_printer(shell, "", TOO_MANY_ARGS, true);
-		while (token->next->line[index] != '\0')
+			error_printer(shell, "Exit: ", TOO_MANY_ARGS, true);
+		if (token->next->line[i] == '\0')
+			error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
+		while (token->next->line[i] != '\0')
 		{
-			if (ft_isdigit(token->next->line[index]) == false
-				&& token->next->line[index] != '+'
-				&& token->next->line[index] != '-')
-				error_printer(shell, "", NUMERIC_ERROR, true);
-			index++;
+			if (ft_isdigit(token->next->line[i]) == false
+				&& token->next->line[i] != '+' && token->next->line[i] != '-')
+				error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
+			i++;
 		}
 		exit_code = ft_atoi(token->next->line);
 		if (exit_code > 255)

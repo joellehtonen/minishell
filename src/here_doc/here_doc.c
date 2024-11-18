@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 14:10:39 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:39:24 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 		null_signal(shell, delim);
 	while (new_line)
 	{
-		if (!ft_strncmp(new_line, delim, ft_strlen(delim)) && \
-			ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
+		if (!ft_strncmp(new_line, delim, ft_strlen(delim))
+			&& ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
 			break ;
 		new_input(&here_doc_input, &new_line, shell);
 		if (new_line == NULL)
 			null_signal(shell, delim);
 	}
+	free_str(&new_line);
 	shell->in_here_doc = false;
 	set_up_signals(shell);
 	return (here_doc_input);

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 13:50:22 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:34:34 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,8 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	char	*expansion;
 	int		key_len;
 
-	if (is_exception(token, *index) == true)
+	if (is_exception(shell, token, *index) == true)
 		return (ft_strdup("$"));
-	if (is_quote(token->line[*index + 1]) == true)
-	{
-		(*index)++;
-		return (NULL);
-	}
 	key_len = calculate_key_len(token, *index + 1);
 	key = ft_substr(token->line, (*index + 1), key_len);
 	value_pointer = find_variable(shell, key, key_len);

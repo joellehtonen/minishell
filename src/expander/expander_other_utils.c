@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 13:56:49 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:32:04 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,22 @@ char	*find_exit_value(t_shell *shell, int *index)
 }
 
 // the exceptions where we need to "expand" $ into another $
-int	is_exception(t_token *token, int index)
+// basically only if 
+int	is_exception(t_shell *shell, t_token *token, int index)
 {
-	if (token->line[index + 1] == '\0')
+	if ((token->line[index + 1] == '\0')
+		|| (token->line[index + 1] == '\'' && shell->single_quote == true)
+		|| (token->line[index + 1] == '\"' && shell->double_quote == true))
+	{
 		return (true);
+	}
 	else if (ft_isalnum(token->line[index + 1]) == false
-		&& token->line[index + 1] != '?')
+		&& token->line[index + 1] != '?'
+		&& token->line[index + 1] != '\''
+		&& token->line[index + 1] != '\"')
+	{
 		return (true);
+	}
 	else
 		return (false);
 }

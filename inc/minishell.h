@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 11:28:57 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:03:06 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ char	*expand_variable(t_shell *shell, char **replacement, char *ptr, \
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
 int		handle_quotes(t_shell *shell, t_token *token, int index);
-int		is_exception(t_token *token, int index);
+int		is_exception(t_shell *shell, t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
 void	realloc_replacement(t_shell *shell, char **replacement, \
 	char *expansion, t_token *token);
