@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 14:32:40 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 11:23:23 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:21:02 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,5 @@ void	close_pipes_child(int loop_count, t_exec **exec)
 		close((*exec)->here_doc_pipe[i][0]);
 		i++;
 	}
+	(*exec)->here_doc_closed = true;
 }

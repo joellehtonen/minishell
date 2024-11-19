@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/19 12:58:54 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:21:21 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_exec
 	int		pipe_flag;
 	int		**here_doc_pipe;
 	int		here_doc_num;
+	int		here_doc_closed;
 	int		error_node_index;
 	int		export_exit;
 	int		orig_in;
