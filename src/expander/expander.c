@@ -6,16 +6,18 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/19 10:03:29 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:59:43 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 void	check_content(t_shell *shell, t_token *token);
-char	*create_expansion(t_shell *she, t_token *tok, char **replace, int *i);
-void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
-void	expand_tilde(t_shell *shell, t_token *temp);
+char	*expansion_loop(t_shell *shell, t_token *token, int index);
+char	*create_expansion(t_shell *shell, t_token *token, \
+	char **replacement, int *index);
+void	add_expansion(char **replacement, char **expansion, \
+	int *copy_index, int *index);
 
 // goes thru each token, looking for quotes, dollar signs or tildes
 // if encountered, checks if they ought to be expanded
@@ -23,19 +25,27 @@ void	expander(t_shell *shell)
 {
 	t_token	*temp;
 	int		len;
+	int		here_doc;
 
+	here_doc = false;
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
-		len = ft_strlen(temp->line);
-		if (ft_strchr(temp->line, '\'') != NULL
-			|| ft_strchr(temp->line, '\"') != NULL
-			|| ft_strchr(temp->line, '$') != NULL)
+		if ((ft_strchr(temp->line, '\'') != NULL
+				|| ft_strchr(temp->line, '\"') != NULL
+				|| ft_strchr(temp->line, '$') != NULL)
+			&& here_doc == false)
 		{
 			check_content(shell, temp);
 		}
-		if (ft_strchr(temp->line, '~') != NULL && len == 1)
+		len = ft_strlen(temp->line);
+		if (ft_strchr(temp->line, '~') != NULL && len == 1
+			&& here_doc == false)
 			expand_tilde(shell, temp);
+		if (ft_strncmp(temp->line, "<<\0", 3) == 0)
+			here_doc = true;
+		else
+			here_doc = false;
 		temp = temp->next;
 	}
 }
