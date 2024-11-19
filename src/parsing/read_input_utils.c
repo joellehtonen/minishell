@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 15:43:00 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 09:16:03 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	null_signal(t_shell *shell, char *arg)
 	if (shell->in_child == false && shell->in_here_doc == false)
 	{
 		shell->exit_code = 0;
-		printf("exit\n");
+		//printf("exit\n");
 		free_and_exit(shell, 0);
 	}
 	if (shell->in_here_doc == true && g_signal != SIGINT)

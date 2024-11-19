@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/19 10:04:30 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:38:27 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ char	*append_export_line(char *existing, char *to_append);
 int		check_str(char *str, int minus, int plus, int equal);
 int		only_digits_or_empty(char *str);
 int		pwd_exec(t_shell *shell);
+int		forbidden_symbols(char *str);
 // parsing functions
 void	tokenize_input(t_shell *shell);
 int		is_io(char c);

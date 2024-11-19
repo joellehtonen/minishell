@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/19 10:34:44 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:38:52 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,22 @@ int	read_input(t_shell *shell)
 	{
 		create_prompt(shell);
 		set_up_signals(shell);
-		shell->user_input = readline(shell->prompt);
+		//shell->user_input = readline(shell->prompt);
+
+		if (isatty(fileno(stdin)))
+			shell->user_input = readline(shell->prompt);
+		else
+		{
+			char *line;
+			line = get_next_line(fileno(stdin));
+			shell->user_input = ft_strtrim(line, "\n");
+			free(line);
+		}
+
+		
 		free_str(&shell->prompt);
-		if (g_signal != 0)
-			handle_readline_signal(shell);
+		// if (g_signal != 0)
+		// 	handle_readline_signal(shell);
 		if (shell->user_input == NULL)
 			null_signal(shell, "");
 		if (input_error_check(shell) == SUCCESS)

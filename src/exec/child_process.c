@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:51:29 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 15:00:39 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:17:42 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	child_process(t_shell **shell, int loop_count)
 	exec = (*shell)->exec;
 	if (check_no_command((*shell)->token_pointer, loop_count) == 1)
 	{
+		get_input_and_output(shell, loop_count);
 		close_pipes_child(loop_count, &exec);
 		free_and_exit(*shell, false);
 	}
