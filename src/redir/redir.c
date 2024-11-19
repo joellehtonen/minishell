@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:42 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/19 12:10:17 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:22:17 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ int	get_input_and_output(t_shell **shell, int loop)
 static int	get_input_fd(t_shell **shell, int loop, int here_doc)
 {
 	t_exec	*exec;
-	char	buff[BUFF_SIZE];
 
 	exec = (*shell)->exec;
-	if (here_doc >= 0 && \
-		read(exec->here_doc_pipe[here_doc][0], buff, BUFF_SIZE) < 0)
+	if (here_doc >= 0 && exec->here_doc_closed == true)
 		return (1);
 	else if (here_doc >= 0)
 	{
