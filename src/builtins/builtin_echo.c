@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 12:02:54 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 17:03:50 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:24:56 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,12 @@ static int	check_newline(char *content)
 
 	index = 0;
 	if (content[index] == '-')
-		index++;
+	{
+		if (content[index + 1] == '\0')
+			return (false);
+		else
+			index++;
+	}
 	else
 		return (false);
 	while (content[index] == 'n')
@@ -60,6 +65,7 @@ static int	check_newline(char *content)
 		return (false);
 }
 
+// skips all valid -n flags
 static t_token	*skip_flags(t_token *temp, int valid_flag)
 {
 	while (valid_flag == true)

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:47:18 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:03:20 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ char	*init_replacement(t_shell *shell, t_token *token)
 }
 
 //  basically ft_strdup with malloc check
-char *safe_strdup(t_shell *shell, char *arg)
+char	*safe_strdup(t_shell *shell, char *arg)
 {
-	char *expansion;
-	
+	char	*expansion;
+
 	expansion = ft_strdup(arg);
 	if (!expansion)
 		error_printer(shell, "", MALLOC_FAIL, true);

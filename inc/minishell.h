@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 16:47:37 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:04:30 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ char	*find_exit_value(t_shell *shell, int *index);
 void	realloc_replacement(t_shell *shell, char **replacement, \
 	char *expansion);
 void	expand_tilde(t_shell *shell, t_token *temp);
-char 	*safe_strdup(t_shell *shell, char *arg);
+char	*safe_strdup(t_shell *shell, char *arg);
 // syntax check
 int		count_io(t_shell *shell, int index);
 int		check_consecutive_io(t_shell *shell, int index);
