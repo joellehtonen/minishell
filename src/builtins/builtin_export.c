@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:01:35 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 14:55:04 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:28:01 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@ static int	error_check_export(char *str)
 	if (ft_strncmp(str, "=\0", 2) == 0)
 		return (1);
 	if (only_digits_or_empty(str) == 1)
+		return (1);
+	if (*str > 47 && *str < 58)
+		return (1);
+	if (forbidden_symbols(str) == 1)
 		return (1);
 	return (check_str(str, -1, -1, -1));
 }
