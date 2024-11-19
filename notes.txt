@@ -116,7 +116,3 @@ aklimchu:/home/aklimchu$ echo segfault <"<<<"<<amazing
 > amazing
 <<<: No such file or directory
 Failed to duplicate a file descriptor
-
-< out
-
-> out

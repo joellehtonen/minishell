@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 09:35:07 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/19 10:35:44 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:09:55 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ int	forbidden_symbols(char *str)
 			last_equal = i - 1;
 	}
 	i = 0;
-	while(i < last_equal)
+	while (i < last_equal)
 	{
 		if (str[i] == 43 && i != last_equal - 1)
 			return (1);
 		if (str[i] < 43 || (str[i] > 43 && str[i] < 48) || \
-			(str[i] > 57 && str[i] < 65) || (str[i] > 90 && str[i] < 95) \
-			|| str[i] == 96 || str[i] > 122)
+			(str[i] > 57 && str[i] < 61) || (str[i] > 90 && str[i] < 95) \
+			|| str[i] == 96 || str[i] > 122 || \
+			(str[i] > 61 && str[i] < 65))
 			return (1);
 		i++;
 	}

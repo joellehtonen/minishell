@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 14:43:42 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 15:09:26 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 12:10:17 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	get_input_fd(t_shell **shell, int loop, int here_doc);
 static int	get_output_fd(t_shell **shell, int loop);
+static int	error_input(t_shell **shell, int loop, t_exec *exec);
 static int	dup2_fd(int fd_1, int fd_2, int loop, t_shell **shell);
 
 // The function checks the redirects relevant to current children process
@@ -38,9 +39,13 @@ int	get_input_and_output(t_shell **shell, int loop)
 static int	get_input_fd(t_shell **shell, int loop, int here_doc)
 {
 	t_exec	*exec;
+	char	buff[BUFF_SIZE];
 
 	exec = (*shell)->exec;
-	if (here_doc >= 0)
+	if (here_doc >= 0 && \
+		read(exec->here_doc_pipe[here_doc][0], buff, BUFF_SIZE) < 0)
+		return (1);
+	else if (here_doc >= 0)
 	{
 		if (dup2_fd(exec->here_doc_pipe[here_doc][0], 0, loop, shell) == 1)
 			return (1);
@@ -55,11 +60,7 @@ static int	get_input_fd(t_shell **shell, int loop, int here_doc)
 		&& (*shell)->only_one_builtin == 1)
 		return (1);
 	else if (loop > 0 && dup2(exec->pipe[loop - 1][0], 0) == -1)
-	{
-		close_pipes_child(loop, &exec);
-		error_printer(*shell, "", DUP2_ERROR, true);
-		return (1);
-	}
+		return (error_input(shell, loop, exec));
 	return (0);
 }
 
@@ -86,6 +87,14 @@ static int	get_output_fd(t_shell **shell, int loop)
 		exec->pipe_flag = 0;
 	}
 	return (0);
+}
+
+// Closing the pipes and exiting with error message related to DUP2 fail
+static int	error_input(t_shell **shell, int loop, t_exec *exec)
+{
+	close_pipes_child(loop, &exec);
+	error_printer(*shell, "", DUP2_ERROR, true);
+	return (1);
 }
 
 // The function duplicated a file descriptor using dup2
