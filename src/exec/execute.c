@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/19 11:52:15 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:29:53 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	if (wait_error == -1 && errno == EINTR)
 	{
 		shell->in_child = false;
-		shell->exit_code = 131;
 		set_up_signals(shell);
+		shell->exit_code = 131;
+		reset_terminal();
 		return ;
 	}
 	else if (wait_error == -1)

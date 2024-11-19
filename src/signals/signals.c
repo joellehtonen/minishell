@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 13:32:31 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 13:57:22 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:53:46 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ static void	setup_sigquit(t_shell *shell, struct sigaction *sigquit)
 	sigemptyset(&sigquit->sa_mask);
 	sigquit->sa_flags = SA_SIGINFO;
 	if (shell->in_child == true)
+	{
+		//sigquit->sa_flags = SA_RESTART;
 		sigquit->sa_handler = &quit_process;
+		//sigquit->sa_handler = SIG_DFL;
+	}
 	else
 		sigquit->sa_handler = SIG_IGN;
 	return ;

@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/19 12:58:54 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:26:53 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,6 +260,7 @@ void	clear_input_subprocess(int signal);
 void	null_signal(t_shell *shell, char *arg);
 void	quit_process(int signal);
 void	handle_readline_signal(t_shell *shell);
+void	reset_terminal(void);
 // exit
 void	free_and_exit(t_shell *shell, int error);
 void	free_double_arr(char ***arr);

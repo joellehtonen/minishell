@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/19 12:59:43 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/19 13:04:16 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	add_expansion(char **replacement, char **expansion, \
 	int *copy_index, int *index);
 
 // goes thru each token, looking for quotes, dollar signs or tildes
-// if encountered, checks if they ought to be expanded
+// if encountered, checks if they should to be expanded
+// not expanding if right after <<
 void	expander(t_shell *shell)
 {
 	t_token	*temp;
