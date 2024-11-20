@@ -6,14 +6,15 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/19 13:04:16 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:47:01 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	check_content(t_shell *shell, t_token *token);
-char	*expansion_loop(t_shell *shell, t_token *token, int index);
+void	check_content(t_shell *shell, t_token *token, int here_doc);
+char	*expansion_loop(t_shell *shell, t_token *token, \
+	int index, int here_doc);
 char	*create_expansion(t_shell *shell, t_token *token, \
 	char **replacement, int *index);
 void	add_expansion(char **replacement, char **expansion, \
@@ -32,17 +33,15 @@ void	expander(t_shell *shell)
 	temp = shell->token_pointer;
 	while (temp != NULL)
 	{
+		len = ft_strlen(temp->line);
 		if ((ft_strchr(temp->line, '\'') != NULL
 				|| ft_strchr(temp->line, '\"') != NULL
-				|| ft_strchr(temp->line, '$') != NULL)
-			&& here_doc == false)
+				|| ft_strchr(temp->line, '$') != NULL))
 		{
-			check_content(shell, temp);
+			check_content(shell, temp, here_doc);
 		}
-		len = ft_strlen(temp->line);
-		if (ft_strchr(temp->line, '~') != NULL && len == 1
-			&& here_doc == false)
-			expand_tilde(shell, temp);
+		if (ft_strchr(temp->line, '~') != NULL && len == 1)
+			expand_tilde(shell, temp, here_doc);
 		if (ft_strncmp(temp->line, "<<\0", 3) == 0)
 			here_doc = true;
 		else
@@ -51,21 +50,22 @@ void	expander(t_shell *shell)
 	}
 }
 
-void	check_content(t_shell *shell, t_token *token)
+void	check_content(t_shell *shell, t_token *token, int here_doc)
 {	
 	char	*replacement;
 	int		index;
 
 	index = 0;
 	reset_quotes(shell);
-	replacement = expansion_loop(shell, token, index);
+	replacement = expansion_loop(shell, token, index, here_doc);
 	free(token->line);
 	token->line = replacement;
 }
 
 // flips quote-variables and then expands any $ not within single quotes
 // otherwise just copies characters into the replacement of the original token
-char	*expansion_loop(t_shell *shell, t_token *token, int index)
+char	*expansion_loop(t_shell *shell, t_token *token, \
+	int index, int here_doc)
 {
 	char	*expansion;
 	char	*replacement;
@@ -77,7 +77,8 @@ char	*expansion_loop(t_shell *shell, t_token *token, int index)
 	{
 		if (handle_quotes(shell, token, index) == true)
 			index++;
-		else if (token->line[index] == '$' && shell->single_quote == false)
+		else if (token->line[index] == '$' && shell->single_quote == false
+			&& here_doc == false)
 		{
 			token->expanded = true;
 			expansion = create_expansion(shell, token, &replacement, &index);

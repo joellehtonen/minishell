@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:33:21 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:54:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,19 +89,23 @@ void	realloc_replacement(t_shell *shell, char **replacement, \
 }
 
 // expands ~ char into value of $HOME
-void	expand_tilde(t_shell *shell, t_token *temp)
+// unless previous token was <<
+void	expand_tilde(t_shell *shell, t_token *token, int here_doc)
 {
 	char	*value_pointer;
 	char	*replacement;
 	char	*expansion;
 
-	replacement = ft_strdup("");
-	if (!replacement)
-		error_printer(shell, "", MALLOC_FAIL, true);
-	value_pointer = find_variable(shell, "HOME", 4);
-	expansion = expand_variable(shell, &replacement, value_pointer);
-	add_expansion(&replacement, &expansion, 0, 0);
-	free(value_pointer);
-	free(temp->line);
-	temp->line = replacement;
+	if (here_doc == false)
+	{
+		replacement = ft_strdup("");
+		if (!replacement)
+			error_printer(shell, "", MALLOC_FAIL, true);
+		value_pointer = find_variable(shell, "HOME", 4);
+		expansion = expand_variable(shell, &replacement, value_pointer);
+		add_expansion(&replacement, &expansion, 0, 0);
+		free(value_pointer);
+		free(token->line);
+		token->line = replacement;
+	}
 }

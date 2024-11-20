@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/20 10:38:14 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/20 13:54:21 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,8 +196,9 @@ void	assign_level(t_token **token, t_exec **exec, t_shell *shell);
 int		fill_values_before_prompt(t_shell **shell);
 // expander functions
 void	expander(t_shell *shell);
-void	check_content(t_shell *shell, t_token *token);
-char	*expansion_loop(t_shell *shell, t_token *token, int index);
+void	check_content(t_shell *shell, t_token *token, int here_doc);
+char	*expansion_loop(t_shell *shell, t_token *token, \
+	int index, int here_doc);
 char	*create_expansion(t_shell *shell, t_token *token, \
 	char **replacement, int *index);
 int		calculate_key_len(t_token *token, int index);
@@ -210,7 +211,7 @@ int		is_exception(t_shell *shell, t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
 void	realloc_replacement(t_shell *shell, char **replacement, \
 	char *expansion);
-void	expand_tilde(t_shell *shell, t_token *temp);
+void	expand_tilde(t_shell *shell, t_token *token, int here_doc);
 char	*safe_strdup(t_shell *shell, char *arg);
 // syntax check
 int		count_io(t_shell *shell, int index);
