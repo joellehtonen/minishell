@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 14:49:45 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/20 16:44:11 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void			exit_loop(t_shell *shell, t_token *token, int i);
 static int			find_exit_code(char *str, t_shell *shell);
 static long			ft_atol(const char *str);
-static const char	*white_spaces(const char *str);
+static const char	*skip_white_spaces(const char *str);
 
 // The function executes "exit" builtin
 // allowing one + or - ahead of the digit
