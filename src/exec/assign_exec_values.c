@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:05:22 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/13 10:24:35 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:12:11 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	assign_exec_values(t_shell *shell)
 	t_exec	*exec;
 
 	exec = shell->exec;
+	exec->status = -1;
 	if (exec->pipe_num > 0)
 		allocate_pipes(exec, shell);
 	exec->pid = (pid_t *)malloc((exec->pipe_num + 1) * sizeof(pid_t));

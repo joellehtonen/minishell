@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 10:40:07 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:50:55 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	clean_empty_nodes(t_shell *shell);
 int	read_input(t_shell *shell)
 {
 	shell->pwd = get_pwd(shell->home, shell);
+	shell->child_exit_code = -1;
 	while (true)
 	{
 		create_prompt(shell);
@@ -33,6 +34,7 @@ int	read_input(t_shell *shell)
 			handle_readline_signal(shell);
 		if (shell->user_input == NULL)
 			null_signal(shell, "");
+		shell->child_exit_code = -1;
 		if (input_error_check(shell) == SUCCESS)
 			handle_input(shell);
 		add_history(shell->user_input);

@@ -6,15 +6,15 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 09:40:36 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:54:28 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static void	exit_loop(t_shell *shell, t_token *token, int i);
-static int	find_exit_code(char *str, t_shell *shell);
-static long	ft_atoi_long(const char *str);
+static void			exit_loop(t_shell *shell, t_token *token, int i);
+static int			find_exit_code(char *str, t_shell *shell);
+static long			ft_atoi_long(const char *str);
 static const char	*white_spaces(const char *str);
 
 // The function executes "exit" builtin
@@ -39,7 +39,7 @@ int	exit_exec(t_shell *shell, t_token *token)
 			printf("exit\n");
 			error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
 		}
-		shell->exit_code = find_exit_code(token->next->line, shell);		
+		shell->exit_code = find_exit_code(token->next->line, shell);
 	}
 	printf("exit\n");
 	free_and_exit(shell, 0);

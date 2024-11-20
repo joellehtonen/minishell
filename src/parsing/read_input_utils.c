@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/20 10:39:55 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:51:01 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	handle_readline_signal(t_shell *shell)
 {
 	if (g_signal == SIGINT || g_signal == SIGQUIT)
 	{
-		if (g_signal == SIGINT)
+		if (g_signal == SIGINT && shell->child_exit_code != 0)
 			shell->exit_code = 130;
-		if (g_signal == SIGQUIT)
+		if (g_signal == SIGQUIT && shell->child_exit_code != 0)
 			shell->exit_code = 131;
 		g_signal = 0;
 	}

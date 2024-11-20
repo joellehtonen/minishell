@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/20 10:31:15 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:18:46 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	shell->in_child = true;
 	set_up_signals(shell);
 	wait_error = waitpid(exec->pid[count], &exec->status, 0);
+	shell->child_exit_code = exec->status;
 	if (wait_error == -1 && errno == EINTR)
 	{
 		shell->in_child = false;
@@ -91,7 +92,7 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	count = 0;
 	while (count < exec->pipe_num)
 	{
-		if (waitpid(exec->pid[count], NULL, 0) == -1)
+		if (waitpid(exec->pid[count], &shell->child_exit_code, 0) == -1)
 			error_printer(shell, "", WAITPID_ERROR, true);
 		count++;
 	}
