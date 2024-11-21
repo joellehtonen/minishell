@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/20 13:21:18 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/21 10:59:21 by aklimchu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= gcc
-CFLAGS		= -ggdb3 -Wall -Werror -Wextra -I $(LIBFT_DIR)
+CC 			= cc
+CFLAGS		= -Wall -Werror -Wextra -I $(LIBFT_DIR)
 
 RM			= rm -f
 RMDIR		= rm -rf
