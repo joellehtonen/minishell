@@ -4,5 +4,3 @@ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-chi
 make sure error code is 131 after "core dump"
 also ctrl c in child should be 130
 also generally it should be 130
-
-should we print "exit" for exit command?

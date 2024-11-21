@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_input_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 08:50:15 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/20 13:55:30 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:46:11 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	handle_readline_signal(t_shell *shell)
 }
 
 // defines how minishell behaves when it receives EOF from ctrl+D
-void	null_signal(t_shell *shell, char *arg)
+int	null_signal(t_shell *shell, char *arg)
 {
 	if (shell->in_child == false && shell->in_here_doc == false)
 	{
@@ -41,7 +41,9 @@ void	null_signal(t_shell *shell, char *arg)
 		printf("Warning: here-document delimited by end-of-file ");
 		printf("(wanted '%s')\n", arg);
 	}
-	return ;
+	if (shell->in_here_doc == true && g_signal == SIGINT)
+		return (130);
+	return (0);
 }
 
 // The function assigns values before printing the minishell prompt
