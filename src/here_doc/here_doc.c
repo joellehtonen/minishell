@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/18 15:42:40 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:08:11 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	here_doc(t_shell *shell)
 		redir = find_here_doc_token(redir);
 		if (redir == NULL)
 			return (1);
-		get_here_doc(&shell->exec, redir, i, shell);
+		if (get_here_doc(&shell->exec, redir, i, shell) == 130)
+			return (130);
 		redir = redir->next;
 		i++;
 	}
@@ -48,7 +49,7 @@ static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell)
 	delim = redir->next->line;
 	here_doc_input = get_here_doc_input(delim, shell);
 	if (!here_doc_input)
-		return (1);
+		return (130);
 	if (pipe((*exec)->here_doc_pipe[i]) == -1)
 	{
 		free_str(&here_doc_input);
@@ -65,27 +66,28 @@ static char	*get_here_doc_input(char *delim, t_shell *shell)
 {
 	char	*new_line;
 	char	*here_doc_input;
+	int		null_return;
 
 	new_line = NULL;
+	null_return = 0;
 	here_doc_input = ft_strdup("");
 	if (here_doc_input == NULL)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_printf("> ");
 	new_line = get_next_line(0);
 	if (new_line == NULL)
-		null_signal(shell, delim);
+		null_return = null_signal(shell, delim);
 	while (new_line)
 	{
 		if (!ft_strncmp(new_line, delim, ft_strlen(delim))
-			&& ft_strchr_fix(new_line, '\n') == ft_strlen(delim))
+			&& ft_strchr_index(new_line, '\n') == ft_strlen(delim))
 			break ;
 		new_input(&here_doc_input, &new_line, shell);
 		if (new_line == NULL)
-			null_signal(shell, delim);
+			null_return = null_signal(shell, delim);
 	}
-	free_str(&new_line);
-	shell->in_here_doc = false;
-	set_up_signals(shell);
+	if (free_here_doc(new_line, here_doc_input, null_return, shell) == 1)
+		return (NULL);
 	return (here_doc_input);
 }
 

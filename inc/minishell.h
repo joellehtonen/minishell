@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/20 13:55:37 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:15:34 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ void	close_pipes_child(int loop_count, t_exec **exec);
 void	assign_exec_values(t_shell *shell);
 int		here_doc(t_shell *shell);
 t_token	*find_here_doc_token(t_token *token);
+int		free_here_doc(char *line, char *input, int null_return, t_shell *shell);
 int		check_for_input(t_shell *shell, t_token *token, int loop, int input);
 int		check_for_output(t_shell *shell, t_token *token, int loop, int output);
 void	allocate_here_doc(t_exec *exec, t_shell *shell);
@@ -255,12 +256,12 @@ t_token	*find_token_line(t_token *token, int loop, int token_type, char *line);
 int		count_nodes_type(t_token *start, int token_type, int loop_count);
 int		ft_split_list(t_envp **path, char const *s, char c);
 char	*ft_strjoin_four(char *s1, char *s2, char *s3, char *s4);
-size_t	ft_strchr_fix(const char *s, int c);
+size_t	ft_strchr_index(const char *s, int c);
 // signals
 void	set_up_signals(t_shell *shell);
 void	clear_input_normal(int signal);
 void	clear_input_subprocess(int signal);
-void	null_signal(t_shell *shell, char *arg);
+int		null_signal(t_shell *shell, char *arg);
 void	quit_process(int signal);
 void	handle_readline_signal(t_shell *shell);
 // exit

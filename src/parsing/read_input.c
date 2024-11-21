@@ -6,14 +6,14 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 11:50:55 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:45:55 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static void	create_prompt(t_shell *shell);
-void		null_signal(t_shell *shell, char *arg);
+int	null_signal(t_shell *shell, char *arg);
 static void	handle_input(t_shell *shell);
 static void	clean_empty_nodes(t_shell *shell);
 

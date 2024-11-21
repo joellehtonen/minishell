@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:06:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/14 14:10:48 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:08:20 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 // The function returns the index number of a given character
-size_t	ft_strchr_fix(const char *s, int c)
+size_t	ft_strchr_index(const char *s, int c)
 {
 	char	new_c;
 	int		i;
 
 	new_c = c + '\0';
 	i = 0;
-	while (1)
+	while (*s != '\0')
 	{
 		if (*s == new_c)
 			return (i);
@@ -44,4 +44,17 @@ t_token	*find_here_doc_token(t_token *token)
 		temp = temp->next;
 	}
 	return ((void *) 0);
+}
+
+int	free_here_doc(char *line, char *input, int null_return, t_shell *shell)
+{
+	free_str(&line);
+	shell->in_here_doc = false;
+	set_up_signals(shell);
+	if (null_return == 130)
+	{
+		free_str(&input);
+		return (1);
+	}
+	return (0);
 }
