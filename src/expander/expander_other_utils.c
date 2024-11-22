@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:22:00 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/19 10:03:20 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:53:24 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ int	handle_quotes(t_shell *shell, t_token *token, int index)
 	if (token->line[index] == '\'' && shell->double_quote == false)
 	{
 		shell->single_quote = !shell->single_quote;
+		token->quotes = true;
 		return (true);
 	}
 	if (token->line[index] == '\"' && shell->single_quote == false)
 	{
 		shell->double_quote = !shell->double_quote;
+		token->quotes = true;
 		return (true);
 	}
 	return (false);

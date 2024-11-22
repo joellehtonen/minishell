@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 11:54:28 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:59:26 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void			exit_loop(t_shell *shell, t_token *token, int i);
 static int			find_exit_code(char *str, t_shell *shell);
-static long			ft_atoi_long(const char *str);
-static const char	*white_spaces(const char *str);
+static long			ft_atol(const char *str);
+static const char	*skip_white_spaces(const char *str);
 
 // The function executes "exit" builtin
 // allowing one + or - ahead of the digit
@@ -75,15 +75,15 @@ static void	exit_loop(t_shell *shell, t_token *token, int i)
 	}
 }
 
-static int	find_exit_code(char *str, t_shell *shell)
+static int	find_exit_code(char *input, t_shell *shell)
 {
 	long	exit_code_long;
 	int		exit_code;
 
 	exit_code = 0;
-	exit_code_long = ft_atoi_long(str);
-	if ((exit_code_long < 0 && str[0] != '-') || \
-		(exit_code_long == 0 && str[0] == '-'))
+	exit_code_long = ft_atol(input);
+	if ((exit_code_long < 0 && input[0] != '-')
+		|| (exit_code_long == 0 && input[0] == '-'))
 	{
 		printf("exit\n");
 		error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
@@ -95,14 +95,14 @@ static int	find_exit_code(char *str, t_shell *shell)
 	return (exit_code);
 }
 
-static long	ft_atoi_long(const char *str)
+static long	ft_atol(const char *str)
 {
 	long int	res;
 	int			neg;
 
 	res = 0;
 	neg = 1;
-	str = white_spaces(str);
+	str = skip_white_spaces(str);
 	if (*str == 45)
 	{
 		neg = neg * (-1);
@@ -120,7 +120,7 @@ static long	ft_atoi_long(const char *str)
 	return (res * neg);
 }
 
-static const char	*white_spaces(const char *str)
+static const char	*skip_white_spaces(const char *str)
 {
 	while ((*str == 32) || (*str > 8 && *str < 14))
 		str++;

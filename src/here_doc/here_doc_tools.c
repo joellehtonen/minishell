@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_tools.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 13:06:14 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/21 15:08:20 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:13:06 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

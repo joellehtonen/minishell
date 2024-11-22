@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/21 15:15:34 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:51:27 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_token
 	int				type;
 	int				token_number;
 	int				expanded;
+	int				quotes;
 	struct s_token	*next;
 }	t_token;
 
@@ -214,6 +215,7 @@ void	realloc_replacement(t_shell *shell, char **replacement, \
 	char *expansion);
 void	expand_tilde(t_shell *shell, t_token *token, int here_doc);
 char	*safe_strdup(t_shell *shell, char *arg);
+void	expand_here_doc(t_shell *shell, char **input);
 // syntax check
 int		count_io(t_shell *shell, int index);
 int		check_consecutive_io(t_shell *shell, int index);

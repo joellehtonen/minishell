@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 13:19:30 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/18 16:31:22 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/22 12:54:55 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ static int	create_new_token(t_shell *shell, int end, int start, int token_num)
 	new->line[token_index] = '\0';
 	new->token_number = token_num;
 	new->expanded = false;
+	new->quotes = false;
 	ft_lstadd_back_token(&shell->token_pointer, new);
 	return (start);
 }
