@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:13 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/22 11:49:53 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:17:52 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	*index += key_len + 1;
 	if (!value_pointer)
 		return (safe_strdup(shell, ""));
-	expansion = expand_variable(shell, replacement, value_pointer);
+	expansion = expand_variable(shell, token, replacement, value_pointer);
 	free(value_pointer);
 	return (expansion);
 }

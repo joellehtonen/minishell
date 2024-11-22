@@ -6,14 +6,14 @@
 #    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/22 12:01:59 by jlehtone         ###   ########.fr        #
+#    Updated: 2024/11/22 13:35:05 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = gcc
-CFLAGS = -ggdb3 -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = ft_isascii.c ft_memmove.c \
 	ft_strdup.c	ft_strnstr.c \

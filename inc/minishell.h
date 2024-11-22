@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 13:23:39 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/22 12:51:27 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:20:12 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,14 +205,15 @@ char	*create_expansion(t_shell *shell, t_token *token, \
 	char **replacement, int *index);
 int		calculate_key_len(t_token *token, int index);
 char	*find_variable(t_shell *shell, char *key, int len);
-char	*expand_variable(t_shell *shell, char **replacement, char *ptr);
+char	*expand_variable(t_shell *shell, t_token *token, \
+	char **replacement, char *ptr);
 void	add_expansion(char **replace, char **exp, int *copy_index, int *index);
 char	*init_replacement(t_shell *shell, t_token *token);
 int		handle_quotes(t_shell *shell, t_token *token, int index);
 int		is_exception(t_shell *shell, t_token *token, int index);
 char	*find_exit_value(t_shell *shell, int *index);
-void	realloc_replacement(t_shell *shell, char **replacement, \
-	char *expansion);
+void	realloc_replacement(t_shell *shell, t_token *token, \
+	char **replacement, char *expansion);
 void	expand_tilde(t_shell *shell, t_token *token, int here_doc);
 char	*safe_strdup(t_shell *shell, char *arg);
 void	expand_here_doc(t_shell *shell, char **input);
