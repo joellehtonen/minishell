@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/21 15:59:26 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:43:10 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 13:54:12 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:46:47 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*find_variable(t_shell *shell, char *key, int len)
 }
 
 // copies and returns the expansion of $ variable
-char	*expand_variable(t_shell *shell, char **replacement, char *ptr)
+char	*expand_variable(t_shell *shell, t_token *token, \
+	char **replacement, char *ptr)
 {
 	char	*expansion;
 	int		len;
@@ -61,24 +62,26 @@ char	*expand_variable(t_shell *shell, char **replacement, char *ptr)
 	if (!expansion)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_strlcpy(expansion, ptr, len + 1);
-	realloc_replacement(shell, replacement, expansion);
+	realloc_replacement(shell, token, replacement, expansion);
 	return (expansion);
 }
 
 // reallocates more memory for the replacement string, 
 // if expansions take more space than initially allocated
-void	realloc_replacement(t_shell *shell, char **replacement, \
-	char *expansion)
+void	realloc_replacement(t_shell *shell, t_token *token, \
+	char **replacement, char *expansion)
 {
 	char	*new_replacement;
 	size_t	size_now;
 	size_t	new_size;
+	size_t	original_size;
 
+	original_size = ft_strlen(token->line);
 	size_now = ft_strlen(*replacement) + 1;
-	new_size = size_now + ft_strlen(expansion) + 1;
-	if (size_now >= new_size - 1)
+	new_size = size_now + ft_strlen(expansion);
+	if (size_now >= new_size)
 		return ;
-	new_replacement = malloc(sizeof(char) * new_size);
+	new_replacement = malloc(sizeof(char) * (new_size + original_size));
 	if (!new_replacement)
 		error_printer(shell, "", MALLOC_FAIL, true);
 	ft_memset(new_replacement, 0, new_size);
@@ -102,7 +105,7 @@ void	expand_tilde(t_shell *shell, t_token *token, int here_doc)
 		if (!replacement)
 			error_printer(shell, "", MALLOC_FAIL, true);
 		value_pointer = find_variable(shell, "HOME", 4);
-		expansion = expand_variable(shell, &replacement, value_pointer);
+		expansion = expand_variable(shell, token, &replacement, value_pointer);
 		add_expansion(&replacement, &expansion, 0, 0);
 		free(value_pointer);
 		free(token->line);

@@ -8,3 +8,10 @@ also generally it should be 130
 
 
 remove gdb from libft
+
+
+
+"hi $USER"
+"$USER hi"
+$USER hi $USER
+$USER+hi
