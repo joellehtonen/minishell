@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+         #
+#    By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/24 11:18:05 by aklimchu          #+#    #+#              #
-#    Updated: 2024/11/21 14:46:52 by aklimchu         ###   ########.fr        #
+#    Updated: 2024/11/22 13:15:06 by jlehtone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,8 @@ WHITE = \033[0;97m
 NAME		= minishell
 
 # Compiler
-CC 			= cc
-CFLAGS		= -Wall -Werror -Wextra -I $(LIBFT_DIR)
+CC 			= gcc
+CFLAGS		= -ggdb3 -Wall -Werror -Wextra -I $(LIBFT_DIR)
 
 RM			= rm -f
 RMDIR		= rm -rf
@@ -81,6 +81,7 @@ SRC 		= ./src/main.c \
 			./src/exec/pipe_and_fork.c \
 			./src/here_doc/here_doc.c \
 			./src/here_doc/here_doc_tools.c \
+			./src/here_doc/here_doc_expansion.c \
 			./src/redir/redir.c \
 			./src/redir/redir_tools.c \
 			./src/redir/redir_tools_2.c \

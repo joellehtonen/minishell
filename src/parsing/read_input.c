@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   read_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/21 15:45:55 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:59:39 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 static void	create_prompt(t_shell *shell);
-int	null_signal(t_shell *shell, char *arg);
+int			null_signal(t_shell *shell, char *arg);
 static void	handle_input(t_shell *shell);
 static void	clean_empty_nodes(t_shell *shell);
 

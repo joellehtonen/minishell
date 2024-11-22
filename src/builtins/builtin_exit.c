@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 16:44:11 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:59:26 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	find_exit_code(char *input, t_shell *shell)
 
 	exit_code = 0;
 	exit_code_long = ft_atol(input);
-	if ((exit_code_long < 0 && input[0] != '-') 
+	if ((exit_code_long < 0 && input[0] != '-')
 		|| (exit_code_long == 0 && input[0] == '-'))
 	{
 		printf("exit\n");
