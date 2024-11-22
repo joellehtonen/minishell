@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 12:56:43 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/19 12:05:27 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:24:39 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,20 @@ void	check_file_access(t_shell *shell, char	*path, int loop_count)
 		close_pipes_child(loop_count, &shell->exec);
 		free_and_exit(shell, 1);
 	}
+}
+
+// The function closes all pipes in the parent process
+void	close_pipes_parent(t_exec **exec)
+{
+	int		i;
+
+	i = 0;
+	while (i < (*exec)->pipe_num)
+	{
+		close((*exec)->pipe[i][0]);
+		close((*exec)->pipe[i++][1]);
+	}
+	i = 0;
+	while (i < (*exec)->here_doc_num)
+		close((*exec)->here_doc_pipe[i++][0]);
 }

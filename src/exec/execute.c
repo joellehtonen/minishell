@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 11:22:41 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/21 15:31:23 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:24:48 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	only_one_builtin(t_shell *shell);
 static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell);
 static int	child_loop(t_shell *shell, t_exec *exec);
-void		close_pipes_parent(t_exec **exec);
+static void	wait_loop(t_exec *exec, t_shell *shell);
 
 // The function executes the commands passed by user
 int	execute(t_shell *shell)
@@ -111,29 +111,24 @@ static void	waiting_for_pids(t_exec *exec, int count, t_shell *shell)
 	}
 	else if (wait_error == -1)
 		error_printer(shell, "", WAITPID_ERROR, true);
-	count = 0;
-	while (count < exec->pipe_num)
-	{
-		if (waitpid(exec->pid[count], &shell->child_exit_code, 0) == -1)
-			error_printer(shell, "", WAITPID_ERROR, true);
-		count++;
-	}
+	wait_loop(exec, shell);
 	shell->in_child = false;
 	set_up_signals(shell);
 }
 
-// The function closes all pipes in the parent process
-void	close_pipes_parent(t_exec **exec)
+static void	wait_loop(t_exec *exec, t_shell *shell)
 {
-	int		i;
+	int	count;
+	int	exit_process;
 
-	i = 0;
-	while (i < (*exec)->pipe_num)
+	count = 0;
+	exit_process = -1;
+	while (count < exec->pipe_num)
 	{
-		close((*exec)->pipe[i][0]);
-		close((*exec)->pipe[i++][1]);
+		if (waitpid(exec->pid[count], &exit_process, 0) == -1)
+			error_printer(shell, "", WAITPID_ERROR, true);
+		if (exit_process == 0)
+			shell->child_exit_code = 0;
+		count++;
 	}
-	i = 0;
-	while (i < (*exec)->here_doc_num)
-		close((*exec)->here_doc_pipe[i++][0]);
 }
