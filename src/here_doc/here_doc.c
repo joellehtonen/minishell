@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:31:56 by aklimchu          #+#    #+#             */
-/*   Updated: 2024/11/22 13:01:49 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:33:13 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int	get_here_doc(t_exec **exec, t_token *redir, int i, t_shell *shell);
 static char	*get_here_doc_input(char *delim, t_shell *shell, int quotes);
-static void	new_input(char **input, char **new_line, t_shell *shell, int quotes);
+static void	new_input(char **input, char **new_line, \
+	t_shell *shell, int quotes);
 static char	*add_here_doc_memory(char *str, size_t add_len);
 
 // The function implements here_doc functionality
@@ -97,7 +98,8 @@ static char	*get_here_doc_input(char *delim, t_shell *shell, int quotes)
 
 // The function saves input from new line to the string
 // containing input from previous lines
-static void	new_input(char **input, char **new_line, t_shell *shell, int quotes)
+static void	new_input(char **input, char **new_line, \
+	t_shell *shell, int quotes)
 {
 	if (quotes == false)
 		expand_here_doc(shell, &(*new_line));
