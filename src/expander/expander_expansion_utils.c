@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_expansion_utils.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 13:17:47 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/22 14:37:38 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:46:47 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
