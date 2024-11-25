@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:50:33 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/14 14:07:21 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:33:34 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 // The function choses the right type to assign to the given node
 static void	check_type(t_token *temp, t_token *previous, int *comm_flag)
 {
+	if (temp->quotes == true)
+		return ;
 	if (ft_strncmp(temp->line, "|\0", 2) == 0)
 	{
 		temp->type = PIPE;
