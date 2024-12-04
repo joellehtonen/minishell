@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:55:09 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/12/04 12:51:11 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:12:18 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@ static void	create_prompt(t_shell *shell);
 int			null_signal(t_shell *shell, char *arg);
 static void	handle_input(t_shell *shell);
 static void	clean_empty_nodes(t_shell *shell);
-
-
-void	print_node(t_token *lst)
-{
-	const char	*type_names[] = {"COMM", "ARG", "REDIR_INPUT", \
-	"REDIR_OUTPUT", "DELIM", "INPUT", "OUTPUT", "PIPE", "FLAG", "SPACES"};
-	if (lst == NULL)
-		return ;
-	while (lst != NULL)
-	{
-		printf("Token #%d: %s, type %s, level %d\n", lst->token_number, \
-			lst->line, type_names[lst->type - 1], lst->level);
-		lst = lst->next;
-	}
-}
 
 // reads user input using readline, checks it for syntax errors,
 // and passes it forward, adding it to history
@@ -79,7 +64,6 @@ static void	handle_input(t_shell *shell)
 	clean_empty_nodes(shell);
 	assign_type(&shell->token_pointer);
 	assign_level(&shell->token_pointer, &shell->exec, shell);
-	print_node(shell->token_pointer);
 	shell->exit_code = execute(shell);
 }
 

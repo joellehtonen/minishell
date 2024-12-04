@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:50:33 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/12/04 13:08:49 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:15:47 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,18 @@ static void	check_type(t_token *temp, t_token *previous, int *comm_flag)
 		*comm_flag = 0;
 	}
 	else if ((ft_strncmp(temp->line, "<\0", 2) == 0
-		|| ft_strncmp(temp->line, "<<\0", 3) == 0)
+			|| ft_strncmp(temp->line, "<<\0", 3) == 0)
 		&& temp->quotes == false)
 		temp->type = REDIR_INPUT;
 	else if ((ft_strncmp(temp->line, ">\0", 2) == 0
-		|| ft_strncmp(temp->line, ">>\0", 3) == 0)
+			|| ft_strncmp(temp->line, ">>\0", 3) == 0)
 		&& temp->quotes == false)
 		temp->type = REDIR_OUTPUT;
 	else if (ft_strncmp(previous->line, "<\0", 2) == 0
 		&& temp->quotes == false)
 		temp->type = INPUT;
 	else if ((ft_strncmp(previous->line, ">\0", 2) == 0
-		|| ft_strncmp(previous->line, ">>\0", 3) == 0)
+			|| ft_strncmp(previous->line, ">>\0", 3) == 0)
 		&& temp->quotes == false)
 		temp->type = OUTPUT;
 	else if (ft_strncmp(previous->line, "<<\0", 3) == 0

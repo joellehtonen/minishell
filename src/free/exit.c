@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/25 14:48:08 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:17:19 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ static void	update_error_code(t_shell *shell, char *message);
 // calls the freeing/exiting program if requested
 void	error_printer(t_shell *shell, char *arg, char *message, int exit)
 {
-	if (shell->only_one_builtin == 0 && (ft_strncmp(message, TOO_MANY_ARGS, ft_strlen(message)) == 0 || \
-		ft_strncmp(message, NUMERIC_ERROR, ft_strlen(message)) == 0))
+	if (shell->only_one_builtin == 0
+		&& (ft_strncmp(message, TOO_MANY_ARGS, ft_strlen(message)) == 0
+			|| ft_strncmp(message, NUMERIC_ERROR, ft_strlen(message)) == 0))
 	{
-		
+		NULL;
 	}
 	else
 	{
