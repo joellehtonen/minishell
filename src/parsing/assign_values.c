@@ -6,7 +6,7 @@
 /*   By: jlehtone <jlehtone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:50:33 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/25 14:33:34 by jlehtone         ###   ########.fr       */
+/*   Updated: 2024/12/04 13:08:49 by jlehtone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,29 @@ void	assign_level(t_token **token, t_exec **exec, t_shell *shell)
 // The function choses the right type to assign to the given node
 static void	check_type(t_token *temp, t_token *previous, int *comm_flag)
 {
-	if (temp->quotes == true)
-		return ;
-	if (ft_strncmp(temp->line, "|\0", 2) == 0)
+	if (ft_strncmp(temp->line, "|\0", 2) == 0
+		&& temp->quotes == false)
 	{
 		temp->type = PIPE;
 		*comm_flag = 0;
 	}
-	else if (ft_strncmp(temp->line, "<\0", 2) == 0 \
+	else if ((ft_strncmp(temp->line, "<\0", 2) == 0
 		|| ft_strncmp(temp->line, "<<\0", 3) == 0)
+		&& temp->quotes == false)
 		temp->type = REDIR_INPUT;
-	else if (ft_strncmp(temp->line, ">\0", 2) == 0 \
+	else if ((ft_strncmp(temp->line, ">\0", 2) == 0
 		|| ft_strncmp(temp->line, ">>\0", 3) == 0)
+		&& temp->quotes == false)
 		temp->type = REDIR_OUTPUT;
-	else if (ft_strncmp(previous->line, "<\0", 2) == 0)
+	else if (ft_strncmp(previous->line, "<\0", 2) == 0
+		&& temp->quotes == false)
 		temp->type = INPUT;
-	else if (ft_strncmp(previous->line, ">\0", 2) == 0 \
+	else if ((ft_strncmp(previous->line, ">\0", 2) == 0
 		|| ft_strncmp(previous->line, ">>\0", 3) == 0)
+		&& temp->quotes == false)
 		temp->type = OUTPUT;
-	else if (ft_strncmp(previous->line, "<<\0", 3) == 0)
+	else if (ft_strncmp(previous->line, "<<\0", 3) == 0
+		&& previous->quotes == false)
 		temp->type = DELIM;
 }
 
