@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:40:53 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/20 09:38:35 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:48:08 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,16 @@ static void	update_error_code(t_shell *shell, char *message);
 // calls the freeing/exiting program if requested
 void	error_printer(t_shell *shell, char *arg, char *message, int exit)
 {
-	write(2, arg, ft_strlen(arg));
-	write(2, message, ft_strlen(message));
+	if (shell->only_one_builtin == 0 && (ft_strncmp(message, TOO_MANY_ARGS, ft_strlen(message)) == 0 || \
+		ft_strncmp(message, NUMERIC_ERROR, ft_strlen(message)) == 0))
+	{
+		
+	}
+	else
+	{
+		write(2, arg, ft_strlen(arg));
+		write(2, message, ft_strlen(message));
+	}
 	update_error_code(shell, message);
 	if (exit == true)
 		free_and_exit(shell, 1);

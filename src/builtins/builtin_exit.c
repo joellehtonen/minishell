@@ -6,7 +6,7 @@
 /*   By: aklimchu <aklimchu@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 12:52:56 by jlehtone          #+#    #+#             */
-/*   Updated: 2024/11/22 13:43:10 by aklimchu         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:52:35 by aklimchu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,21 @@ int	exit_exec(t_shell *shell, t_token *token)
 		exit_loop(shell, token, i);
 		if (token->next->next && token->next->next->type != PIPE)
 		{
-			printf("exit\n");
+			if (shell->only_one_builtin == 1)
+				printf("exit\n");
 			error_printer(shell, "Exit: ", TOO_MANY_ARGS, false);
 			return (1);
 		}
 		if (token->next->line[i] == '\0')
 		{
-			printf("exit\n");
+			if (shell->only_one_builtin == 1)
+				printf("exit\n");
 			error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
 		}
 		shell->exit_code = find_exit_code(token->next->line, shell);
 	}
-	printf("exit\n");
+	if (shell->only_one_builtin == 1)
+		printf("exit\n");
 	free_and_exit(shell, 0);
 	return (0);
 }
@@ -57,7 +60,8 @@ static void	exit_loop(t_shell *shell, t_token *token, int i)
 		{
 			if (sign == true)
 			{
-				printf("exit\n");
+				if (shell->only_one_builtin == 1)
+					printf("exit\n");
 				error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
 			}
 			if (sign == false)
@@ -68,7 +72,8 @@ static void	exit_loop(t_shell *shell, t_token *token, int i)
 		}
 		if (ft_isdigit(token->next->line[i]) == false)
 		{
-			printf("exit\n");
+			if (shell->only_one_builtin == 1)
+				printf("exit\n");
 			error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
 		}
 		i++;
@@ -85,7 +90,8 @@ static int	find_exit_code(char *input, t_shell *shell)
 	if ((exit_code_long < 0 && input[0] != '-')
 		|| (exit_code_long == 0 && input[0] == '-'))
 	{
-		printf("exit\n");
+		if (shell->only_one_builtin == 1)
+			printf("exit\n");
 		error_printer(shell, "Exit: ", NUMERIC_ERROR, true);
 	}
 	else if (exit_code_long > 255 || exit_code_long < 0)
