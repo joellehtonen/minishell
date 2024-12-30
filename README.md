@@ -111,6 +111,6 @@ make fclean
 
 ---
 
-## License
+## 📜 License
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the LICENSE.md file for details
