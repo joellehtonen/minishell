@@ -7,7 +7,8 @@ Minishell is a project that recreates the basic functionalities of the Bash shel
 
 
 ## 📚 Table of Contents  
-- [Features](#-features)  
+- [Features](#-features)
+- [Requirements](#-requirements)
 - [Installation](#-installation)  
 - [Building the Program](#️-build-the-program)  
 - [Running the Program](#-running-the-program)  
@@ -58,6 +59,21 @@ Minishell includes the following functionalities:
 
 ---
 
+## 📦 Requirements
+
+Depending on your system, you may need to install the following dependencies
+```bash
+libreadline
+```
+
+Using APT:
+
+```bash
+sudo apt install libreadline-dev
+```
+
+---
+
 ## 🚀 Installation  
 
 Clone the repository and navigate to the project directory:  
@@ -65,12 +81,17 @@ Clone the repository and navigate to the project directory:
 git clone https://github.com/joellehtonen/minishell.git  
 cd minishell 
 ```
+
+---
+
 ## 🛠️ Build the Program
 
 ### Use `make` command to create the program:
 ```bash
 make
 ```
+
+---
 
 ## 🎮 Running the Program
 
@@ -79,12 +100,17 @@ To run the program, execute the following command:
 ./minishell
 ```
 
+---
+
 ## 🧹 Cleaning Up
 
 To remove object files and libraries:
 ```bash
 make fclean
 ```
+
+---
+
 ## License
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the LICENSE.md file for details
